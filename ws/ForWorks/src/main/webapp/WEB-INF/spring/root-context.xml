@@ -8,6 +8,8 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
+	<context:property-placeholder location="classpath:config/database.properties" />
+	
 	<!-- SqlSessionTemplate -->
 	<bean id="sst" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="ssfb"/>
@@ -20,13 +22,12 @@
 		<!-- <property name="configLocation" value="경로"/> -->
 	</bean>	
 	
-	<!-- TODO : DB 생성하고, propertiese파일로 변경하기..?!  -->
 	<!-- 데이터 소스 -->
 	<bean id="bds" class="org.apache.commons.dbcp2.BasicDataSource">
-		<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
-		<property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:xe" />
-		<property name="username" value="C##SPRING" />
-		<property name="password" value="SPRING" />
+		<property name="driverClassName" value="${db.driver}" />
+		<property name="url" value="${db.url}" />
+		<property name="username" value="${db.username}" />
+		<property name="password" value="${db.password}" />
 	</bean>
 	
 	<!-- 암호화 -->
