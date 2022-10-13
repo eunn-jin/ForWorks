@@ -3,7 +3,7 @@
 <%@ page session="false" %>
 <html>
 <head>
-	<title>test</title>
+	<title>월 근태 현황</title>
 </head>
 <body>
 
