@@ -94,7 +94,7 @@
                             <a href="${root}/salary/payslip">급여명세서</a>
                         </li>
                         <li class="submenu-item ">
-                            <a href="${root}/salary/main">급여관리</a>
+                            <a href="${root}/salary/main">급여관리자</a>
                         </li>
                       
                     </ul>
