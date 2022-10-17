@@ -83,7 +83,37 @@
                         </li>
                     </ul>
                 </li>
+                
+                <li class="sidebar-item has-sub">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-cloud-lightning-rain"></i>
+                        <span>급여관리</span>
+                    </a>
+                    <ul class="submenu ">
+                        <li class="submenu-item">
+                            <a href="${root}/salary/payslip">급여명세서</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="${root}/salary/main">급여관리자</a>
+                        </li>
+                      
+                    </ul>
+                </li>
 
+				<li class="sidebar-item has-sub">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-cloud-lightning-rain"></i>
+                        <span>문서관리</span>
+                    </a>
+                    <ul class="submenu ">
+                        <li class="submenu-item">
+                            <a href="${root}/docManage/list">일반문서</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="component-badge.html">결재문서</a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
