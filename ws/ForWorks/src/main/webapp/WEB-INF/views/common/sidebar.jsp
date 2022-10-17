@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="${root}/resources/vendors/perfect-scrollbar/perfect-scrollbar.css">
 <!-- <link rel="stylesheet" href="resources/vendors/bootstrap-icons/bootstrap-icons.css"> -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-<!-- <link rel="stylesheet" href="resources/css/common/app.css"> -->
+<!-- <link rel="stylesheet" href="${root}/resources/css/common/app.css"> -->
 <link rel="stylesheet" href="${root}/resources/css/common.css">
 	
 <div id="sidebar" class="active">
@@ -67,11 +67,11 @@
                 </li>
                 
                 <li class="sidebar-item has-sub">
-                    <a href="#" class='sidebar-link' id="att-part">
+                    <a href="#" class='sidebar-link'>
                         <i class="bi bi-cloud-lightning-rain"></i>
                         <span>근태관리</span>
                     </a>
-                    <ul class="submenu ">
+                    <ul class="submenu" id="att-part">
                         <li class="submenu-item " id="att-day">
                             <a href="${root}/att/day">일일근태 등록</a>
                         </li>
