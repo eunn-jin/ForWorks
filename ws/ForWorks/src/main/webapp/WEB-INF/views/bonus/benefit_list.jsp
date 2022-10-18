@@ -128,10 +128,13 @@
                <section class="section">
 					<div id="wrap">
 				        <div id="search">
-				            <select name="" id="">
-				                <option value="">부서</option>
+				            <select name="depart" id="depart" onchange="changeDepart()">
+				            		<option value="">부서</option>
+				            	<c:forEach items="${departList}" var="d">
+					                <option value="${d}">${d}</option>
+				            	</c:forEach>
 				            </select>
-				            <select name="" id="">
+				            <select name="emp" id="emp">
 				                <option value="">이름</option>
 				            </select>
 				            <button>검색</button>
@@ -146,10 +149,14 @@
 				        <div class="div-top">해당 시간</div>
 				        <div class="div-top">지급액</div>
 				        
-				        <div>야근수당</div>
-				        <div><input type="text" value="20,000" class="input_css">원</div>
-				        <div>1 시간</div>
-				        <div>20,000원</div>
+				        <c:forEach items="${benefitList}" var="x">
+				        	<div>${x}</div>
+					        <div><input type="text" id="money" value="20,000" class="input_css">원</div>
+					        <div><input type="number" id="hour" class="input_css">시간</div>
+					        <div id="sum"></div>
+				        </c:forEach>
+				        
+				        
 				        <div id="save-div">
 				            <button id="save">저장</button>
 				        </div>
@@ -194,6 +201,20 @@
 
 </div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
+
+<!-- 부서에 해당하는 직원 조회 -->
+<script>
+
+function changeDepart(){
+	var x = document.getElementById("depart");
+	var x_text = x.options[x.selectedIndex].text;
+	
+	
+}; 
+
+
+
+</script>
 
 <!-- 수당 등록 ajax  -->
 <script>

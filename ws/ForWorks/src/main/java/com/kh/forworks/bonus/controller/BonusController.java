@@ -1,11 +1,13 @@
 package com.kh.forworks.bonus.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.forworks.bonus.service.BonusService;
@@ -32,7 +34,11 @@ public class BonusController {
 	}
 	
 	@GetMapping("benefit")
-	public String benefit() {
+	public String benefit(Model model) {
+		List departList = bs.selectDepartList();
+		List benefitList = bs.selectList();
+		model.addAttribute("benefitList",benefitList);
+		model.addAttribute("departList",departList);
 		return "bonus/benefit_list";
 	}
 	
