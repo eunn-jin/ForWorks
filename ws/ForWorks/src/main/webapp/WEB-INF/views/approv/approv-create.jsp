@@ -197,6 +197,12 @@
         margin-bottom: 25px;
     }
 
+    .form-btn{
+        width: 80px;
+        height: 60px;
+        color: white;
+    }
+
     
 
 </style>
@@ -208,7 +214,7 @@
 
         <%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
         
-
+		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		<link rel="stylesheet" href="${root}/resources/css/approv/common.css">
 
         <main>
@@ -219,6 +225,17 @@
 
                 <div class="approv-main">
 
+					<div class="title-area" id="form-area">
+                    
+                        <input list="" class="approv-area title-input" placeholder="양식 선택">
+                            <datalist>
+
+                            </datalist>
+                        </input>
+
+                        <button class="approv-btn form-btn">선택</button>
+
+                    </div>
                     <div class="title-area">
 
                         <div class="title-label approv-area"><div>제목</div></div>
