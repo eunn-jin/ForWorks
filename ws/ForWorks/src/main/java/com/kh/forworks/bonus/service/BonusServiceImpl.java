@@ -36,5 +36,11 @@ public class BonusServiceImpl implements BonusService {
 	public List selectDepartList() {
 		return dao.selectDepart(sst);
 	}
+	//부서별 사원조회
+	@Override
+	public List selectEmp(String depart) {
+		System.out.println("서비스에서 depart" + depart);
+		return dao.selectEmp(sst , depart);
+	}
 
 }

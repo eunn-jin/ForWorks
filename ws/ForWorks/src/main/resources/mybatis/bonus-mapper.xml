@@ -23,4 +23,12 @@
 		SELECT DEPT_NAME
 		FROM DEPARTMENT
 	</select>
+	
+	<select id="selectEmp" resultType="String">
+		SELECT E.EMP_NAME
+		FROM 
+		EMPLOYEE E JOIN DEPARTMENT D ON E.DEPT_NO = D.DEPT_NO
+		WHERE D.DEPT_NAME = #{depart}
+	</select>
+	
 </mapper>

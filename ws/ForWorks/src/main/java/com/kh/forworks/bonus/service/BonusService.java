@@ -12,4 +12,6 @@ public interface BonusService {
 	List selectList();
 	//부서조회
 	List selectDepartList();
+	//부서별 사원목록
+	List selectEmp(String depart);
 }

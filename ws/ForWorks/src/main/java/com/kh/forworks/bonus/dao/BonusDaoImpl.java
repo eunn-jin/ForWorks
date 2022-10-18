@@ -23,5 +23,14 @@ public class BonusDaoImpl implements BonusDao {
 	public List selectDepart(SqlSessionTemplate sst) {
 		return sst.selectList("bonusMapper.selectDepart");
 	}
+	//부서별 사원조회
+	@Override
+	public List selectEmp(SqlSessionTemplate sst , String depart) {
+		
+		System.out.println("dao에서 depart" + depart);
+		List result = sst.selectList("bonusMapper.selectEmp" , depart);
+		System.out.println(result);
+		return result;
+	}
 
 }

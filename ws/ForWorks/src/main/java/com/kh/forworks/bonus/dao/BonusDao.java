@@ -12,5 +12,7 @@ public interface BonusDao {
 	List selectBenefit(SqlSessionTemplate sst);
 	//부서조회
 	List selectDepart(SqlSessionTemplate sst);
+	//부서별 사원조회
+	List selectEmp(SqlSessionTemplate sst, String depart);
 
 }

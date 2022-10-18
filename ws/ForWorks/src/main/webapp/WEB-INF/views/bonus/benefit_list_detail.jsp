@@ -232,30 +232,8 @@ function changeDepart(){
 
 </script>
 
-<!-- 직원의 수당정보조회 -->
-<script>
-function empBenefit(){
-	
-	var d = document.getElementById("depart");
-	var dt = d.options[d.selectedIndex].text;
-	var e = document.getElementById("emp");
-	var et = e.options[e.selectedIndex].text;
-	
-	$.ajax({
-		url : "/ForWorks/bonus/empBenefit",
-		typd : 'POST',
-		data : {
-				depart : dt
-				emp : et	
-				}
-		success : function(){
-			alert('통신성공');
-		}
-				
-	})
-}
 
-</script>
+
 
 <!-- 수당 등록 ajax  -->
 <script>

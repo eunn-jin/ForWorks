@@ -49,4 +49,20 @@ public class BonusController {
 		int result = bs.insertBenefit(title);
 		return ""+result;
 	}
+	
+	@PostMapping("selectEmp")
+	@ResponseBody
+	public List selectEmp(String depart, Model model) {
+		System.out.println("ajax로 넘어온 depart ::" + depart);
+		List result = bs.selectEmp(depart);
+		System.out.println(result);
+		model.addAttribute("EmpList",result);
+		return result;
+	}
+	
+	@PostMapping("empBenefit")
+	public String SelectEmpBenefit(String depart, String emp) {
+		System.out.println(depart + emp);
+		return "";
+	}
 }
