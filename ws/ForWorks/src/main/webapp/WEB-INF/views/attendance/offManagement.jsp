@@ -5,6 +5,13 @@
 <head>
 	<title>휴가관리</title>
 </head>
+<!-- css -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+ 
+<!-- js -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
 <style>
 	
@@ -96,7 +103,7 @@
 								<button class="btn btn-primary btn-sm">검색</button>
 							</div>
 							<div>
-								<button class="btn btn-outline-primary btn-sm">휴가 신청</button>
+								<button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#offForm">휴가 신청</button>
 							</div>
 						</div>
 						<div class="table-responsive mt-5">
@@ -126,6 +133,47 @@
 					</div>
 				</div>
 			</section>
+
+			<div class="modal fade text-left" id="offForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true" data-bs-backdrop="false">
+				<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title" id="myModalLabel33">휴가 신청서 </h4>
+						</div>
+						<form action="#">
+							<div class="modal-body">
+								<div class="form-group">
+									<label>사원 이름: </label>
+									<span>조은진</span>
+								</div>
+								<div class="form-group">
+									<label>기간: </label>
+									<input type="text" id="demo" name="demo" value="" />
+								</div>
+								<div class="form-group">
+									<label>휴가 종류: </label>
+									<label><input type="radio" name="type" value="">연차</label>
+									<label><input type="radio" name="type" value="">조퇴</label>
+									<label><input type="radio" name="type" value="">휴가</label>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-light-secondary"
+									data-bs-dismiss="modal">
+									<i class="bx bx-x d-block d-sm-none"></i>
+									<span class="d-none d-sm-block">취소하기</span>
+								</button>
+								<button type="button" class="btn btn-primary ml-1"
+									data-bs-dismiss="modal">
+									<i class="bx bx-check d-block d-sm-none"></i>
+									<span class="d-none d-sm-block">신청하기</span>
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+
 		</div>
 		
     </div>
@@ -137,6 +185,27 @@
 	$().ready(function() {
 		$('#att-off').addClass("active");
 		$('#att-part').css("display", "block");
+
+		$('#demo').daterangepicker({
+			"locale": {
+				"format": "YYYY-MM-DD",
+				"separator": " ~ ",
+				"applyLabel": "확인",
+				"cancelLabel": "취소",
+				"fromLabel": "From",
+				"toLabel": "To",
+				"customRangeLabel": "Custom",
+				"weekLabel": "W",
+				"daysOfWeek": ["월", "화", "수", "목", "금", "토", "일"],
+				"monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+				"firstDay": 1
+			},
+			"startDate": "2020-10-21",
+			"endDate": "2020-10-23",
+			"drops": "down"
+		}, function (start, end, label) {
+			console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
+		});
 	});
 	
 </script>
