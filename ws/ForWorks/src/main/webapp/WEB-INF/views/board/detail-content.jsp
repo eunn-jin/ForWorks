@@ -44,14 +44,14 @@ table {
                                 <tr>
                                     <td class="">작성자</td>
                                     <td  style="border:1px solid black; background : white;">ㅁㅁㅁ</td>
-                                    <td class="danger">대상</td>
+                                    <td class="danger">공개범위</td>
                                     <td  style="background: white;">
                                         <div>전체</div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="danger">제목</td>
-                                    <td colspan="3"><div>전체공지사항 입니다</div></td>
+                                    <td colspan="3"><div>안녕하세요 신입 입니다</div></td>
                                 </tr>
     
     
@@ -88,7 +88,7 @@ table {
     $(function(){
         $('#upDate').click(function(){
             //해당 번호로 요청 보내기
-            location.href="${root}/notice/noticeUpdate?num=";
+            location.href="${root}/board/update?num=";
         });
     })
 </script>
@@ -98,7 +98,7 @@ table {
     $(function(){
         $('#delete').click(function(){
             //해당 번호로 요청 보내기
-            location.href="${root}/notice/noticeDelete?num=";
+            location.href="${root}/board/delete?num=";
         });
     })
 </script>

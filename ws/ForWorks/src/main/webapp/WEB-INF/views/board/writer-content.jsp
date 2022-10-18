@@ -44,14 +44,12 @@ table {
                                 <tr>
                                     <td class=""><label for="writer" class="form-label">작성자</label> </td>
                                     <td  style="border:1px solid black; background : white;">ㅁㅁㅁ</td>
-                                    <td ><label for="department" class="form-label">대상</label></td>
+                                    <td ><label for="department" class="form-label">공개범위</label></td>
                                     <td  style="background: white;">
                                         <select name="" id="department" >
-                                            <option value="" selected >부서를 선택해주세요</option>
-                                            <option>A</option>
-                                            <option>B</option>
-                                            <option>C</option>
-                                            <option>D</option>
+                                            <option value="" selected >선택</option>
+                                            <option>전체</option>
+                                            <option>나의부서</option>
                                         </select>
                                     </td>
                                 </tr>

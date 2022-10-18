@@ -5,7 +5,6 @@
 <head>
 	<title>Home</title>
 </head>
-
 <body>
 
 <div id="app">
@@ -20,7 +19,7 @@
                     <div class="row">
                         <div class="col-12 col-md-6 order-md-1 order-last">
                             <h3>전자게시판</h3>
-                            <p class="text-subtitle text-muted">공지사항 </p>
+                            <p class="text-subtitle text-muted">커뮤니티</p>
                         </div>
                         <div class="col-12 col-md-6 order-md-2 order-first">
                             <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
@@ -33,8 +32,8 @@
                     </div>
                 </div>
                 <section class="section">
-                    <div class="card">
-                        <%@include file="/WEB-INF/views/notice/noticeList-content.jsp" %>
+                    <div class="card" style="flex-direction: row;">
+                        <%@include file="/WEB-INF/views/board/list-content.jsp" %>
                     </div>
                 </section>
             </div>
@@ -52,7 +51,5 @@
 	});
 	
 </script>
-
-
 
 </html>
