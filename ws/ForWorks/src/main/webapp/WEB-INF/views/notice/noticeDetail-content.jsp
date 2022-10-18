@@ -58,7 +58,7 @@ table {
                                 <tr>
                                     <td class="danger">글내용</td>
                                     <td colspan="3" style=" background : white; text-align: left;">
-                                        <textarea id="summernote" name="content" class="form-control" style="background-color: white; text-align: left;" disabled>글 내용을 입력해봅니다 Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam, nam praesentium quaerat dignissimos nobis nihil explicabo optio amet est quos architecto, maiores quae deleniti ab accusamus. Assumenda veniam quos vero!</textarea>
+                                        <textarea id="summernote" name="content" class="form-control" style="background-color: white; text-align: left; height: 30vh;" disabled>글 내용을 입력해봅니다 Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam, nam praesentium quaerat dignissimos nobis nihil explicabo optio amet est quos architecto, maiores quae deleniti ab accusamus. Assumenda veniam quos vero!</textarea>
                                     </td>
                                 </tr>
     

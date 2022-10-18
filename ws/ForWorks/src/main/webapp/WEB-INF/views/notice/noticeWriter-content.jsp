@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="${root}/resources/css/sjy.css">    
+<script src="${root }/resources/js/summernote/summernote-lite.js"></script>
+<script src="${root }/resources/js/summernote/lang/summernote-ko-KR.js"></script>
+
+<link rel="stylesheet" href="${root }/resources/css/summernote/summernote-lite.css">
 <style>
 	table{margin: auto;}
 tr, td{
