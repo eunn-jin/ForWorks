@@ -191,3 +191,11 @@ html {
     height: 100%;
     
 }
+
+/* 커뮤니티 */
+.csearch{
+    width: 50%;
+    height: 5vh;
+    /* border: 1px solid gray; */
+    margin-left: 50%;
+}
