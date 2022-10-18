@@ -45,6 +45,9 @@
         border-radius: 20px;
         padding: 20px;
         border: 1px solid #7D6CFF;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .btn-area{
@@ -73,7 +76,64 @@
         margin-right: 10px;
     }
 
-    
+    .default-text{
+        font-weight: 800;
+    }
+
+    .detail-title{
+        height: 50px;
+        margin-bottom: 10px;
+        font-size: 30px;
+    }
+
+    .detail-approve{
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+        height: 148px;
+        margin-bottom: 15px;
+    }
+
+    .detail-content{
+        height: 533px;
+    }
+
+    .detail-etc{
+        height: 138px;
+        font-size: 14px;
+        display: grid;
+        border-top: 1px solid black;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 0.5fr);
+        width: 100%;
+    }
+
+    .detail-part, .detail-position{
+        height: 69px;
+        font-size: 27px;
+    }
+
+    .etc-item{
+        font-size: 14px;
+        height: 20px;
+        padding-top: 27.5px;
+    }
+
+    .table-area{
+        height: 125px;
+        
+    }
+
+    .approv-table td{
+        width: 85px;
+        border: 1px solid black;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    .sign-area{
+        height: 76px;
+    }
 
 </style>
 
@@ -84,7 +144,7 @@
 
         <%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
         
-
+		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		<link rel="stylesheet" href="${root}/resources/css/approv/common.css">
 
         <main>
@@ -96,8 +156,40 @@
                 <div class="approv-main">
 
                     <div class="approv-detail-div">
-
-
+                        <div class="detail-title default-text">제목</div>
+                        <div class="detail-approve default-text">
+                            <table class="approv-table">
+                                <tr>
+                                    <td>기안자</td>
+                                    <td colspan="3" style="">결제자</td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="2"></td>
+                                    <td>직위</td>
+                                    <td>직위</td>
+                                    <td>직위</td>
+                                </tr>
+                                <tr>
+                                    <!-- <td></td> -->
+                                    <td class="sign-area"></td>
+                                    <td class="sign-area"></td>
+                                    <td class="sign-area"></td>
+                                </tr>
+                                <tr>
+                                    <td>협조자</td>
+                                    <td colspan="3"></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="detail-content default-text">내용</div>
+                        <div class="detail-etc default-text">
+                            <div class="etc-item">내용</div>
+                            <div class="etc-item">내용</div>
+                            <div class="etc-item">내용</div>
+                            <div class="etc-item">내용</div>
+                        </div>
+                        <div class="detail-part default-text">처부</div>
+                        <div class="detail-position default-text">직위</div>
                     </div>
 
                     <div class="btn-area">
