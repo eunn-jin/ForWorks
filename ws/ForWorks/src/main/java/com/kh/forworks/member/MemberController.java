@@ -18,6 +18,11 @@ public class MemberController {
 	
 	@GetMapping("mypage")
 	public String mypage() {
-		return "member/mypage";
+		return "member/mypage-main";
+	}
+	
+	@GetMapping("mypage/account")
+	public String mypageAccount() {
+		return "member/mypage-account";
 	}
 }
