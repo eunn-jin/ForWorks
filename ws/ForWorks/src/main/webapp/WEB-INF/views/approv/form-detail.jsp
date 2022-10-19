@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>참조 상세</title>
+<title>양식 상세</title>
 
 <style>
 
@@ -96,6 +96,65 @@
 
     .detail-content{
         height: 533px;
+    }
+
+    .detail-etc{
+        height: 138px;
+        font-size: 14px;
+        display: grid;
+        border-top: 1px solid black;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 0.5fr);
+        width: 100%;
+    }
+
+    .detail-part, .detail-position{
+        height: 69px;
+        font-size: 27px;
+    }
+
+    .etc-item{
+        font-size: 14px;
+        height: 20px;
+        padding-top: 27.5px;
+    }
+
+    .table-area{
+        height: 125px;
+        
+    }
+
+    .approv-table td{
+        width: 85px;
+        border: 1px solid black;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    .sign-area{
+        height: 76px;
+    }
+
+    .default-text{
+        font-weight: 800;
+    }
+
+    .detail-title{
+        height: 50px;
+        margin-bottom: 10px;
+        font-size: 30px;
+    }
+
+    .detail-approve{
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+        height: 148px;
+        margin-bottom: 15px;
+    }
+
+    .detail-content{
+        height: 533px;
         width: 100%;
     }
 
@@ -154,8 +213,6 @@
         grid-column: 2/5; /*jstl로 유동적으로 늘림*/
     }
 
-    
-
 </style>
 
 </head>
@@ -172,7 +229,7 @@
             
             <div id="main-wrap">
 
-                <div id="main-header">참조상세</div>
+                <div id="main-header">양식상세</div>
 
                 <div class="approv-main">
 
@@ -209,11 +266,18 @@
                         </div>
                         <div class="detail-part default-text">처부</div>
                         <div class="detail-position default-text">직위</div>
-
                     </div>
 
                     <div class="btn-area">
                         <button class="approv-btn">목록보기</button>
+                        <div class="approv-btn-area">
+                            <button class="approv-btn approv-btn-margin">
+                                <span class="approv-btn-text">수정</span>
+                            </button>
+                            <button class="approv-btn">
+                                <span class="approv-btn-text">삭제</span>
+                            </button>
+                        </div>
                     </div>
                 
                 </div>

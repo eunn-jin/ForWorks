@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>결제-상세</title>
+<title>양식 작성</title>
 
 <style>
 
@@ -39,7 +39,7 @@
 
     .approv-detail-div{
         width: 800px;
-        height: 1000px;
+        height: 500px;
         margin-bottom: 35px;
         background-color: white;
         border-radius: 20px;
@@ -122,6 +122,9 @@
         <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
 		<link rel="stylesheet" href="${root}/resources/css/approv/common.css">
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
         <main>
             
@@ -140,8 +143,7 @@
                     </div>
 
                     <div class="approv-detail-div">
-	
-	
+                        <textarea id="summernote" name="editordata"> </textarea>
                     </div>
 
                     <div class="btn-area">
@@ -160,4 +162,31 @@
     </div>
 
 </body>
+
+
+<script>
+	
+	$(document).ready(function() {
+		$('#summernote').summernote({
+			  height: 420,                 // 에디터 높이
+			  minHeight: 420,             // 최소 높이
+			  maxHeight: 420,             // 최대 높이
+			  focus: false,                  // 에디터 로딩후 포커스를 맞출지 여부
+			  lang: "ko-KR",					// 한글 설정
+			  placeholder: '최대 2048자까지 쓸 수 있습니다',	//placeholder 설정
+			  toolbar: [
+		          ['style', ['style']],
+		          ['font', ['bold', 'underline', 'clear']],
+		          ['color', ['color']],
+		          ['para', ['ul', 'ol', 'paragraph']],
+		          ['table', ['table']],
+		          ['insert', ['link', 'picture', 'video']],
+		        ]
+	          
+		});
+	});
+
+</script>
+
+
 </html>

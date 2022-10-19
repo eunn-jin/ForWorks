@@ -33,11 +33,21 @@ public class ApprovController {
 	
 	@GetMapping("approv/form/create")
 	public String createForm() {
-		return "approv/approv-form-create";
+		return "approv/form-create";
 	}
 	
 	@GetMapping("approv/form/main")
 	public String mainForm() {
-		return "approv/approv-form-main";
+		return "approv/form-main";
+	}
+	
+	@GetMapping("approv/form/detail")
+	public String detailForm() {
+		return "approv/form-detail";
+	}
+	
+	@GetMapping("approv/form/edit")
+	public String editForm() {
+		return "approv/form-edit";
 	}
 }
