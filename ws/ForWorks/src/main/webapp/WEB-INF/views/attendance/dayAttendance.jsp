@@ -22,40 +22,14 @@
 		margin: 7px 15px;
     }
 
-	.align-center {
-    	text-align: center;
-	}
-
-	.flex-col {
-		display: flex;
-		flex-direction: column;
-		justify-content: space-around;
-	}
-
 	.work-progress {
 		display: flex;
 	    flex-wrap: wrap;
 		justify-content: flex-end;
 	}
 
-	.text-part {
-		padding-right: 15px;
-	}
-
 	.pg-part {
 		width: 200px;
-	}
-	
-	.page-heading .page-title .text-subtitle{margin-bottom: 0.3rem;}
-
-	.flex-row-side {
-		display: flex;
-		justify-content: space-between;
-	}
-
-	.flex-row {
-		display: flex;
-		justify-content: space-around;
 	}
 
 </style>
@@ -141,7 +115,7 @@
 						<div class="flex-row-side">
 							<div class>
 								<span class="text-part">근무일자</span>
-								<input type="date">
+								<input type="date" id="workDate">
 								<button class="btn btn-primary btn-sm">검색</button>
 							</div>
 							<div>
@@ -189,6 +163,7 @@
 	$().ready(function() {
 		$('#att-day').addClass("active");
 		$('#att-part').css("display", "block");
+		document.getElementById('workDate').value = new Date().toISOString().substring(0, 10);;
 	});
 	
 </script>
@@ -216,4 +191,5 @@
 	clock();
 	setInterval(clock, 1000);
 </script>
+<link rel="stylesheet" href="${root}/resources/css/attendance.css">
 </html>

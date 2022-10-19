@@ -18,37 +18,8 @@
 	    flex-wrap: wrap;
 		justify-content: space-around;
     }
-    
-	.align-center {
-    	text-align: center;
-	}
 
-	.flex-col {
-		display: flex;
-		flex-direction: column;
-		justify-content: space-around;
-	}
-	.text-part {
-		padding-right: 15px;
-	}
-
-	.pg-part {
-		width: 200px;
-	}
-	
-	.page-heading .page-title .text-subtitle{margin-bottom: 0.3rem;}
-
-	.flex-row-side {
-		display: flex;
-		justify-content: space-between;
-	}
-
-	.flex-row {
-		display: flex;
-		justify-content: space-around;
-	}
-
-    .fc-header-toolbar {
+  .fc-header-toolbar {
     padding-top: 1em;
     padding-left: 1em;
     padding-right: 1em;
@@ -85,30 +56,30 @@
 				<div class="multi-card">
 					<div class="card first-card">
 						<div class="card-body">
-                            <div id='calendar-container'>
-                                <div id='calendar'></div>
-                            </div>
+                <div id='calendar-container'>
+                    <div id='calendar'></div>
+                </div>
 						</div>
 					</div>
 					<div class="card second-card">
 						<div class="card-body flex-col">
 							<div>10월</div>
-                            <div class="text-part">
-                                <span>출근 횟수 : &ensp;</span>
-                                <span> 3 </span>
-                            </div>
-                            <div class="text-part">
-                                <span>지각 횟수 : &ensp;</span>
-                                <span> 1 </span>
-                            </div>
-                            <div class="text-part">
-                                <span>조퇴 횟수 : &ensp;</span>
-                                <span> 0 </span>
-                            </div>
-                            <div class="text-part">
-                                <span>휴가 사용 : &ensp;</span>
-                                <span> 1 </span>
-                            </div>
+                  <div class="text-part">
+                      <span>출근 횟수 : &ensp;</span>
+                      <span> 3 </span>
+                  </div>
+                  <div class="text-part">
+                      <span>지각 횟수 : &ensp;</span>
+                      <span> 1 </span>
+                  </div>
+                  <div class="text-part">
+                      <span>조퇴 횟수 : &ensp;</span>
+                      <span> 0 </span>
+                  </div>
+                  <div class="text-part">
+                      <span>휴가 사용 : &ensp;</span>
+                      <span> 1 </span>
+                  </div>
 						</div>
 					</div>
 				</div>
@@ -191,4 +162,5 @@
       });
     })();
   </script>
+<link rel="stylesheet" href="${root}/resources/css/attendance.css">
 </html>
