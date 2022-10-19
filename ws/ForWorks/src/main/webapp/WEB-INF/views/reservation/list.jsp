@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page session="false" %>
+<link rel="stylesheet" href="/forworks/resources/css/sjy.css">
 <html>
 <head>
 	<title>Home</title>
@@ -36,6 +37,8 @@
                         <%@include file="/WEB-INF/views/reservation/list-content.jsp" %>
                         
                     </div>
+                    <a href="${root}/rsv/create"><div class="right"><button class="mybtn">예약등록</button></div></a>
+                    
                 </section>
             </div>
         
