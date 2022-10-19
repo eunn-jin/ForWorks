@@ -32,7 +32,7 @@
   
     #search{
         display: inline-block;
-        background-color:white;
+        
         height: 30px;
         font-size: 20px;
         color: #7D6CFF;
@@ -67,6 +67,7 @@
     .input_css{
         width: 80px;
         font-size: 20px;
+        border: none;
     }
 
     /*모달 css*/
@@ -134,37 +135,41 @@
 					                <option value="${d}">${d}</option>
 				            	</c:forEach>
 				            </select>
-				            <select name="emp" id="emp">
-				                <option value="empName">이름</option>
-				            </select>
-				            <button onclick="empBenefit()">검색</button>
 				            
+				            <button onclick="changeDepart()">직원조회</button>
+                            
 				        </div>
 				        <div id="check-btn">
 				            <button class="btn-open-popup">수당종류 추가</button>
 				        </div>
 				        <div id="center">
-				        <div class="div-top">수당명</div>
-				        <div class="div-top">수당금/(시간)</div>
-				        <div class="div-top">해당 시간</div>
-				        <div class="div-top">지급액</div>
-				        
-				        <c:forEach items="${benefitList}" var="x">
-				        	<div>${x}</div>
-					        <div><input type="text" id="money" value="20,000" class="input_css">원</div>
-					        <div><input type="number" id="hour" class="input_css">시간</div>
-					        <div id="sum"></div>
-				        </c:forEach>
+                        
+				        <div class="div-top">부서명</div>
+				        <div class="div-top">직원명</div>
+				        <div class="div-top">직급</div>
+				        <div class="div-top">입사일</div>
 				        
 				        
-				        <div id="save-div">
-				            <button id="save">저장</button>
-				        </div>
+					        <c:forEach items="${EmpList}" var="el">
+					        	
+                                <div style="display: none;"><input type="hidden" id="no" value="1"></div>
+                                <div></div>
+						        <div><a href="${root}/bonus/detail/1">홍길동</a></div>
+						        <div>대리</div>
+                                <div>2022-01-01</div>
+					
+					        </c:forEach>
+					        
+					        
+					        <div id="save-div">
+					            <input type="submit" value="저장">
+					        </div>
+				        
 				        </div>
 				    
 					</div>
 
-                    <!--사원 등록 버튼 클릭 시 모달창-->
+                    <!--수당 등록 버튼 클릭 시 모달창-->
                                             
                     <div class="modal">
                         <div class="modal_body">
@@ -209,8 +214,6 @@ function changeDepart(){
 	var x = document.getElementById("depart");
 	var depart = x.options[x.selectedIndex].text;
 	
-	$('#emp').empty();
-	
 	$.ajax({
 		url : "/ForWorks/bonus/selectEmp",
 		dataType :'json',
@@ -232,30 +235,6 @@ function changeDepart(){
 
 </script>
 
-<!-- 직원의 수당정보조회 -->
-<script>
-function empBenefit(){
-	
-	var d = document.getElementById("depart");
-	var dt = d.options[d.selectedIndex].text;
-	var e = document.getElementById("emp");
-	var et = e.options[e.selectedIndex].text;
-	
-	$.ajax({
-		url : "/ForWorks/bonus/empBenefit",
-		typd : 'POST',
-		data : {
-				depart : dt
-				emp : et	
-				}
-		success : function(){
-			alert('통신성공');
-		}
-				
-	})
-}
-
-</script>
 
 <!-- 수당 등록 ajax  -->
 <script>

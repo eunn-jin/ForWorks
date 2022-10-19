@@ -32,7 +32,7 @@
   
     #search{
         display: inline-block;
-        background-color:white;
+        
         height: 30px;
         font-size: 20px;
         color: #7D6CFF;
@@ -69,35 +69,7 @@
         font-size: 20px;
     }
 
-    /*모달 css*/
-    .modal{
-        position:absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        display: none;
-        background-color: rgba(0,0,0,0.4);
-    }
-
-    .modal .show{
-        display: block;
-    }
-
-    .modal_body{
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 400px;
-        height: 600px;
-        padding: 40px;
-        text-align: left;
-        background-color: rgb(255,255,255);
-        border-radius: 10px;
-        box-shadow: 0 2px 3px 0 rgba(34,36,38,0.15);
-
-        transform: translateX(-50%) translateY(-50%);
-    }
+    
 </style>
 <body>
 
@@ -134,65 +106,40 @@
 					                <option value="${d}">${d}</option>
 				            	</c:forEach>
 				            </select>
-				            <select name="emp" id="emp">
-				                <option value="empName">이름</option>
-				            </select>
 				            <button onclick="empBenefit()">검색</button>
-				            
+                            <span>개발팀</span>
+				            <span>|</span>
+                            <span>홍길동</span>
+                            <span>|</span>
+                            <span>생년월일 : </span><span>1990.01.01</span>
 				        </div>
-				        <div id="check-btn">
-				            <button class="btn-open-popup">수당종류 추가</button>
-				        </div>
+                        <form action="">
+				        
 				        <div id="center">
 				        <div class="div-top">수당명</div>
 				        <div class="div-top">수당금/(시간)</div>
 				        <div class="div-top">해당 시간</div>
 				        <div class="div-top">지급액</div>
+
+                            
+                            <c:forEach items="${benefitVo}" var="bv">
+                                <div style="display: none;"><input type="hidden" name="no" value="${bv.no}"></div>
+                                <div>${bv.cate}</div>
+						        <div><input type="text" id="money" name="money" value="${bv.amount}" class="input_css" placeholder="0">원</div>
+						        <div><input type="number" id="hour" value="" class="input_css" placeholder="0">시간</div>
+						        <div id="sum"></div>
+					        </c:forEach>
+					        
+					        
+					        <div id="save-div">
+                                <input type="submit" value="저장">
+					        </div>
+                        </form>
 				        
-				        <c:forEach items="${benefitList}" var="x">
-				        	<div>${x}</div>
-					        <div><input type="text" id="money" value="20,000" class="input_css">원</div>
-					        <div><input type="number" id="hour" class="input_css">시간</div>
-					        <div id="sum"></div>
-				        </c:forEach>
-				        
-				        
-				        <div id="save-div">
-				            <button id="save">저장</button>
-				        </div>
 				        </div>
 				    
 					</div>
 
-                    <!--사원 등록 버튼 클릭 시 모달창-->
-                                            
-                    <div class="modal">
-                        <div class="modal_body">
-                            <div><h1>수당 종류 등록</h1></div>
-                            수당명
-                            <input type="text" id="title" name="title"> <br>
-                            <input type="button" value="등록하기" id="add-btn" onclick="addBenefit()">
-              
-                            <div><button class="modal_close">close</button></div>
-                        </div>
-                    </div>
-
-
-
-                    <!--모달 js-->
-                    <script>
-                        const modal = document.querySelector('.modal');
-                        const btnOpenPopup = document.querySelector('.btn-open-popup');
-
-                        btnOpenPopup.addEventListener('click',()=>{
-                            modal.style.display = 'block';
-                        })
-                        
-                        const close = document.querySelector('.modal_close');
-                        close.addEventListener('click',()=>{
-                            modal.style.display = 'none';
-                        })
-                    </script>
 
                </section>
            </div>
@@ -232,33 +179,32 @@ function changeDepart(){
 
 </script>
 
-
-
-
-<!-- 수당 등록 ajax  -->
+<!-- 직원의 수당정보조회 -->
 <script>
-
-function addBenefit(){
-	console.log('되니');
-	const bonusTitle = document.querySelector('input[name=title]').value;
+function empBenefit(){
+	
+	var d = document.getElementById("depart");
+	var dt = d.options[d.selectedIndex].text;
+	var e = document.getElementById("emp");
+	var et = e.options[e.selectedIndex].text;
+	
 	$.ajax({
-		url : "/ForWorks/bonus/addBenefit",
-		type : 'POST',
-		data : {title : bonusTitle},
-		success : function(data){
-			if(data == 1){
-				alert("등록되었습니다.");
-				modal.style.display = 'none';
-			}else{
-				alert("입력값을 확인해주세요");	
-			}
-		},
-		error : function(){
-			alert("ajax통신 실패");
+		url : "/ForWorks/bonus/empBenefit",
+		typd : 'POST',
+		data : {
+				depart : dt,
+				emp : et
+				},
+		success : function(){
+			alert('통신성공');
 		}
-	});
+				
+	})
 }
+
 </script>
+
+
 </body>
 <script>
 	
