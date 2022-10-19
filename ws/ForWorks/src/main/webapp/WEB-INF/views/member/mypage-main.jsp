@@ -4,7 +4,29 @@
 <html>
   <head>
     <title>Home</title>
-    <link rel="stylesheet" href="${root}/resources/css/member/mypage-style.css" />
+    <style>
+		.input-size {
+		    max-width: 350px;
+		}
+		
+		.img-edit-plus {
+		    top: -10px;
+		}
+		
+		.info-flex {
+			display: flex;
+			flex-direction: column;
+		}
+		
+		.info-span {
+			padding-bottom: 25px;
+		}
+		
+		.user-edit {
+			margin-left: 20px;
+		}
+		
+    </style>
   </head>
   <body>
     <div id="app">
@@ -24,56 +46,69 @@
           <div class="page-content">
             <section class="section d-flex">
               <%@ include file="/WEB-INF/views/member/mypage-sidebar.jsp" %>
-              <div class="card" style="width: calc(100% - 300px); min-width: 300px">
+              <div class="card" style="width: calc(100% - 300px); min-width: 300px; padding: 5px;">
                 <div class="card-header mt-1">
                   <h4>내 정보 조회</h4>
                 </div>
                 <div class="card-body">
-                  <div class="user-info grid">
-                    <div class="user-left g-col-6">
-                      <div class="avatar avatar-xl me-3 img-edit">
-                        <button class="fs-3 img-edit-btn btn">
-                          <img src="${root}/resources/img/member-imgs/user.png" alt="이미지" />
-                          <span class="img-edit-plus">+</span>
-                        </button>
-                      </div>
-                    </div>
-                    <div class="user-right g-col-6">
-                      <div>아악</div>
-                    </div>
+                  <div class="user-info row m-3 mb-4 mt-0">
+                    <div class="row row-cols-1 row-cols-md-4">
+			      	 <div class="col themed-grid-col">
+						<div class="avatar avatar-xl img-edit">
+	                        <button class="fs-3 img-edit-btn btn">
+	                          <img src="${root}/resources/img/member-imgs/user.png" alt="이미지" />
+	                        </button>
+	                      </div>
+						</div>
+				      <div class="col themed-grid-col"><h5 class="mt-4">홍길동</h5></div>
+				      <div class="col themed-grid-col info-flex"><h6 class=" info-span">부서</h6><h6>부서</h6></div>
+				      <div class="col themed-grid-col info-flex"><span class=" info-span">개발부</span><span>개발부</span></div>
+				     </div>
+                     <div class="row row-cols-1 row-cols-md-4 gy-4 mt-0">
+				      <div class="col themed-grid-col"><h6>부서</h6></div>
+				      <div class="col themed-grid-col">개발부</div>
+				      <div class="col themed-grid-col"><h6>부서</h6></div>
+				      <div class="col themed-grid-col">개발부</div>
+				      <div class="col themed-grid-col"><h6>부서</h6></div>
+				      <div class="col themed-grid-col">개발부</div>
+				      <div class="col themed-grid-col"><h6>부서</h6></div>
+				      <div class="col themed-grid-col">개발부</div>
+				    </div>
                   </div>
                   <div class="divider divider-left mb-3">
-                    <div class="divider-text">연락처 변경</div>
+                    <div class="divider-text"><h6>연락처 변경</h6></div>
                   </div>
-                  <form>
-                    <div class="row mb-3">
-                      <label for="inputEmail3" class="col-sm-2 col-form-label" style="width: 90px">이메일</label>
-                      <div class="col-sm-10">
-                        <input type="email" class="form-control input-size" id="inputEmail3" placeholder="someone@example.com" required />
-                      </div>
-                    </div>
-                    <div class="row mb-3">
-                      <label for="inputPassword3" class="col-sm-2 col-form-label" style="width: 90px">휴대전화</label>
-                      <div class="col-sm-10">
-                        <input type="password" class="form-control input-size" id="inputPassword3" placeholder="01012345678" required />
-                      </div>
-                    </div>
-                    <div class="row mb-3">
-                      <label for="inputPassword3" class="col-sm-2 col-form-label" style="width: 90px">주소</label>
-                      <div class="col-sm-10">
-                        <div class="d-flex input-size">
-                          <input class="form-control" type="text" id="sample6_postcode" placeholder="우편번호" required />
-                          <input class="btn btn-outline-primary" type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" />
-                        </div>
-                        <input class="form-control input-size" type="text" id="sample6_address" placeholder="주소" required />
-                        <input class="form-control input-size" type="text" id="sample6_detailAddress" placeholder="상세주소" required />
-                        <div class="d-flex">
-                          <input class="form-control input-size" type="text" id="sample6_extraAddress" placeholder="참고항목" />
-                          <button type="submit" class="btn btn-primary me-1 mb-1" style="margin-left: 20px">변경하기</button>
-                        </div>
-                      </div>
-                    </div>
-                  </form>
+                  <div class="user-edit">
+	                  <form>
+	                    <div class="row mb-3">
+	                      <label for="inputEmail3" class="col-sm-2 col-form-label" style="width: 90px">이메일</label>
+	                      <div class="col-sm-10">
+	                        <input type="email" class="form-control input-size" id="inputEmail3" placeholder="someone@example.com" required />
+	                      </div>
+	                    </div>
+	                    <div class="row mb-3">
+	                      <label for="inputPassword3" class="col-sm-2 col-form-label" style="width: 90px">휴대전화</label>
+	                      <div class="col-sm-10">
+	                        <input type="password" class="form-control input-size" id="inputPassword3" placeholder="01012345678" required />
+	                      </div>
+	                    </div>
+	                    <div class="row mb-3">
+	                      <label for="inputPassword3" class="col-sm-2 col-form-label" style="width: 90px">주소</label>
+	                      <div class="col-sm-10">
+	                        <div class="d-flex input-size">
+	                          <input class="form-control" type="text" id="sample6_postcode" placeholder="우편번호" required />
+	                          <input class="btn btn-outline-primary" type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" />
+	                        </div>
+	                        <input class="form-control input-size" type="text" id="sample6_address" placeholder="주소" required />
+	                        <input class="form-control input-size" type="text" id="sample6_detailAddress" placeholder="상세주소" required />
+	                        <div class="d-flex">
+	                          <input class="form-control input-size" type="text" id="sample6_extraAddress" placeholder="참고항목" />
+	                          <button type="submit" class="btn btn-primary me-1 mb-1" style="margin-left: 20px">변경하기</button>
+	                        </div>
+	                      </div>
+	                    </div>
+	                  </form>
+                  </div>
                 </div>
               </div>
             </section>

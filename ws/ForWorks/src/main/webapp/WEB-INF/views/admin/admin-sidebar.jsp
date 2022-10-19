@@ -68,7 +68,7 @@
           </a>
           <ul class="submenu active pl-15">
             <li class="submenu-item">
-              <a href="${root}/admin/main">회사 정보 설정</a>
+              <a href="${root}/admin/main">회사 정보 설정 ? </a>
             </li>
             <li class="submenu-item">
               <a href="${root}/admin/pos">직무/직급 설정</a>

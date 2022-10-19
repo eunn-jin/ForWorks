@@ -60,7 +60,7 @@
                 <label for="saveCheck" class="form-check-label">아이디 저장</label>
               </div>
               <div class="find-idpwd">
-                <button type="button" class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#find-id-modal">아이디 찾기</button> |
+                <button type="button" class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#modalSignin">아이디 찾기</button> |
                 <button type="button" class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#find-pwd-modal">비밀번호 찾기</button>
               </div>
             </div>
@@ -84,41 +84,34 @@
     </div>
 
     <!-- 아이디 찾기 -->
-    <div
-      class="modal fade text-left"
-      id="find-id-modal"
-      data-bs-backdrop="static"
-      data-bs-keyboard="false"
-      tabindex="-1"
-      aria-labelledby="staticBackdropLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title" id="staticBackdropLabel">아이디 찾기</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="mb-1">
-                <label for="recipient-name" class="col-form-label">성명 :</label>
-                <input type="text" class="form-control" id="recipient-name" />
-              </div>
-              <div class="mb-3">
-                <label for="message-text" class="col-form-label">이메일 :</label>
-                <input type="text" class="form-control" id="message-text" />
-              </div>
-              <input style="float: right" type="button" class="btn btn-primary ml-1" data-bs-dismis="modal" value="아이디 찾기" />
-            </form>
-            <div>
-              <label for="message-text" class="col-form-label">아이디 :</label>
-              <span id="found-id"></span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div class="modal fade" tabindex="1" id="modalSignin">
+	 <div class="modal-dialog modal-dialog-centered" role="document">
+	   <div class="modal-content rounded-4 shadow">
+	     <div class="modal-header p-5 pb-4 border-bottom-0">
+	       <!-- <h1 class="modal-title fs-5" >Modal title</h1> -->
+	        <h1 class="fw-bold mb-0 fs-2">아이디 찾기</h1>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	
+	      <div class="modal-body p-5 pt-0">
+	        <form class="">
+	          <div class="form-floating mb-3">
+	            <input type="email" class="form-control rounded-4" id="floatingInput" placeholder="name@example.com">
+	            <label for="floatingInput">성명</label>
+	          </div>
+	          <div class="form-floating mb-3">
+	            <input type="password" class="form-control rounded-4" id="floatingPassword" placeholder="Password">
+	            <label for="floatingPassword">이메일</label>
+	          </div>
+	          <button class="w-100 mb-2 btn btn-lg rounded-4 btn-secondary" type="submit">아이디 찾기</button>
+	          <hr class="my-4">
+	          <small class="text-muted">아이디 : </small>
+	        </form>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+    
 
     <!-- 비밀번호 찾기(변경) -->
     <div

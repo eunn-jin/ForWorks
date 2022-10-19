@@ -1,7 +1,9 @@
-package com.kh.forworks.member;
+package com.kh.forworks.member.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import oracle.jdbc.proxy.annotation.Post;
 
 @Controller
 public class MemberController {
