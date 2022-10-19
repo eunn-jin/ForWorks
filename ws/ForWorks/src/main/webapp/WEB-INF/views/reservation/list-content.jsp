@@ -1,219 +1,382 @@
-<%@page import="java.util.Date"%>
-<%@page import="java.util.Calendar"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<%-- <%@page session="true" import="java.util.*" %> --%>
-<%
-// JSP Calendar:--
-// Created by Jason Benassi
-// jbenassi@lime-light.com
-// http://www.wakeboardutah.com
-// 7-2002
-%>
-<%
-// Global Vars
-int action = 0;  // incoming request for moving calendar up(1) down(0) for month
-int currYear = 0; // if it is not retrieved from incoming URL (month=) then it is set to current year
-int currMonth = 0; // same as year
-String boxSize = "70";  // how big to make the box for the calendar
-
-//build 2 calendars
-
-Calendar c = Calendar.getInstance();
-Calendar cal = Calendar.getInstance();
-
-	if (request.getParameter("action") == null) // Check to see if we should set the year and month to the current
-	{
-		currMonth = c.get(c.MONTH);
-		currYear = c.get(c.YEAR);
-		cal.set(currYear, currMonth,1);
-	}
-
-	else
-	{
-		if (!(request.getParameter("action") == null)) // Hove the calendar up or down in this if block
-		{
-			currMonth = Integer.parseInt(request.getParameter("month"));
-			currYear = Integer.parseInt(request.getParameter("year"));
-
-				if (Integer.parseInt( request.getParameter("action")) == 1 )
-				{
-					cal.set(currYear, currMonth, 1);
-					cal.add(cal.MONTH, 1);
-					currMonth = cal.get(cal.MONTH);
-					currYear = cal.get(cal.YEAR);
-				}
-				else
-				{
-					cal.set(currYear, currMonth ,1);
-					cal.add(cal.MONTH, -1);
-					currMonth = cal.get(cal.MONTH);
-					currYear = cal.get(cal.YEAR);
-				}
-		}
-	} 
-%>
-
-<%!
-    public boolean isDate(int m, int d, int y) // This method is used to check for a VALID date
-    {
-        m -= 1;
-        Calendar c = Calendar.getInstance();
-        c.setLenient(false);
-
-        try
-        {
-                c.set(y,m,d);
-                Date dt = c.getTime();
-        }
-          catch (IllegalArgumentException e)
-        {
-                return false;
-
-        }
-                return true;
-    }
-%>
-<%!
-   public String getDateName (int monthNumber) // This method is used to quickly return the proper name of a month
-   {
-		String strReturn = "";
-		switch (monthNumber)
-		{ 
-	case 0:
-		strReturn = "January";
-		break;
-	case 1:
-		strReturn = "February";
-		break;
-	case 2:
-		strReturn = "March";
-		break;
-	case 3:
-		strReturn = "April";
-		break;
-	case 4:
-		strReturn = "May";
-		break;
-	case 5:
-		strReturn = "June";
-		break;
-	case 6:
-		strReturn = "July";
-		break;
-	case 7:
-		strReturn = "August";
-		break;
-	case 8:
-		strReturn = "September";
-		break;
-	case 9:
-		strReturn = "October";
-		break;
-	case 10:
-		strReturn = "November";
-		break;
-	case 11:
-		strReturn = "December";
-		break;
-	}
-	return strReturn;
-    }
-%>
-<html>
-</body bgcolor='white'>
-<table border='1' width='519' celpadding='0' cellspacing='0'>
-  <tr>
-	<td width='150' align='right' valign='middle'><a href="cal.jsp?month=<%=currMonth%>&year=<%=currYear%>&action=0"><font size="1">Previous Month</font></a></td>
-	<td width='260' align='center' valign='middle'><b><%=getDateName (cal.get(cal.MONTH)) + " " + cal.get(cal.YEAR)%></b></td>
-	<td width='173' align='left' valign='middle'><a href="cal.jsp?month=<%=currMonth%>&year=<%=currYear%>&action=1"><font size="1">Next Month</font></a></td>
-  </tr>
-	</table>
-<table border="0" width="520" bordercolorlight="#C0C0C0" bordercolordark="#808080" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">
-  <td width="100%">
-    <table border="2" width="519" bordercolorlight="#C0C0C0" bordercolordark="#000000" style="border-collapse: collapse" bordercolor="#000000" cellpadding="0" cellspacing="0" bgcolor="#DFDCD8">
-  	<tr>
-    		<td width="<%=boxSize%>" align="center" nowrap bordercolor="#666666" bgcolor="#666666">
-    		<font color="#FFFFFF"><b>Sun</b></font></td>
-    		<td width="<%=boxSize%>" align="center" nowrap bordercolor="#666666" bgcolor="#666666">
-    		<font color="#FFFFFF"><b>Mon</b></font></td>
-    		<td width="<%=boxSize%>" align="center" nowrap bordercolor="#666666" bgcolor="#666666">
-    		<font color="#FFFFFF"><b>Tues</b></font></td>
-    		<td width="<%=boxSize%>" align="center" nowrap bordercolor="#666666" bgcolor="#666666">
-   		<font color="#FFFFFF"><b>Wed</b></font></td>
-    		<td width="<%=boxSize%>" align="center" nowrap bordercolor="#666666" bgcolor="#666666">
-    		<font color="#FFFFFF"><b>Thurs</b></font></td>
-    		<td width="<%=boxSize%>" align="center" nowrap bordercolor="#666666" bgcolor="#666666">
-    		<font color="#FFFFFF"><b>Fri</b></font></td>
-    		<td width="<%=boxSize%>" align="center" nowrap bordercolor="#666666" bgcolor="#666666">
-    		<font color="#FFFFFF"><b>Sat</b></font></td>
-  	</tr>
-<%
-
-//'Calendar loop
-
-
-	int currDay;
-	String todayColor;
-	int count = 1;
-	int dispDay = 1;
-
-
-	for (int w = 1; w < 7; w++)
-	{
-%>
-  	<tr>
-<% 
-  		for (int d = 1; d < 8; d++)
-		{
-			if (! (count >= cal.get(c.DAY_OF_WEEK)))
-			{ 
-
-%>
-		<td width="<%=boxSize%>" height="<%=boxSize%>" valign="top" align="left">&nbsp;</td>
-<%
-				count += 1;
-			} 
-			else
-			{
-
-				if (isDate ( currMonth + 1, dispDay, currYear) ) // use the isDate method
-				{ 
-
-					if ( dispDay == c.get(c.DAY_OF_MONTH) && c.get(c.MONTH) == cal.get(cal.MONTH) && c.get(c.YEAR) == cal.get(cal.YEAR)) // Here we check to see if the current day is today
-        				{
-							todayColor = "#6C7EAA";
-						}
-						else
-						{
-							todayColor = "#ffffff";
-						}
-%> 
-		<td bgcolor ="<%=todayColor%>" width="<%=boxSize%>" align="left" height="<%=boxSize%>" valign="top"><%=dispDay%><br>
-		</td>
-<%
-					count += 1;
-					dispDay += 1;
-				}
-				else
-				{
-%>
-		<td width="<%=boxSize%>" align="left" height="<%=boxSize%>" valign="top">&nbsp;</td>
-<%
-				} 
-			}
-
-       } 
-%>
-  	</tr> 
-<% 
+<style>
+.wrapper {
+    margin: 15px auto;
+    /* max-width: 1100px; */
 }
-%>
-</table>
-</td>
-<tr><td>
-</table>
-</body>
-</html>
+
+.container-calendar {
+    background: #ffffff;
+    padding: 15px;
+    /* max-width: 475px; */
+    margin: 0 auto;
+    overflow: auto;
+}
+
+.button-container-calendar button {
+    cursor: pointer;
+    display: inline-block;
+    zoom: 1;
+    background: #00a2b7;
+    color: #fff;
+    border: 1px solid #0aa2b5;
+    border-radius: 4px;
+    padding: 5px 10px;
+}
+
+.table-calendar {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.table-calendar td, .table-calendar th {
+    padding: 5px;
+    border: 1px solid #e2e2e2;
+    text-align: center;
+    vertical-align: top;
+}
+
+.date-picker.selected {
+    font-weight: bold;
+    outline: 1px dashed #00BCD4;
+}
+
+.date-picker.selected span {
+    border-bottom: 2px solid currentColor;
+}
+
+/* sunday */
+.date-picker:nth-child(1) {
+  color: red;
+}
+
+/* friday */
+.date-picker:nth-child(6) {
+  color: green;
+}
+
+#monthAndYear {
+    text-align: center;
+    margin-top: 0;
+}
+
+.button-container-calendar {
+    position: relative;
+    margin-bottom: 1em;
+    overflow: hidden;
+    clear: both;
+}
+
+#previous {
+    float: left;
+}
+
+#next {
+    float: right;
+}
+
+.footer-container-calendar {
+    margin-top: 1em;
+    border-top: 1px solid #dadada;
+    padding: 10px 0;
+}
+
+.footer-container-calendar select {
+    cursor: pointer;
+    display: inline-block;
+    zoom: 1;
+    background: #ffffff;
+    color: #585858;
+    border: 1px solid #bfc5c5;
+    border-radius: 3px;
+    padding: 5px 1em;
+}
+.date-picker:hover{
+    cursor: pointer;
+}
+</style>
+<div class="wrapper">
+
+<div class="container-calendar">
+    <h3 id="monthAndYear"></h3>
+
+    <div class="button-container-calendar">
+        <button id="previous" onclick="previous()">&#8249;</button>
+        <button id="next" onclick="next()">&#8250;</button>
+    </div>
+
+    <table class="table-calendar" id="calendar" data-lang="en">
+        <thead id="thead-month"></thead>
+        <tbody id="calendar-body"></tbody>
+    </table>
+
+    <div class="footer-container-calendar ">
+        <label for="month">Jump To: </label>
+        <select id="month" onchange="jump()">
+            <option value=0>Jan</option>
+            <option value=1>Feb</option>
+            <option value=2>Mar</option>
+            <option value=3>Apr</option>
+            <option value=4>May</option>
+            <option value=5>Jun</option>
+            <option value=6>Jul</option>
+            <option value=7>Aug</option>
+            <option value=8>Sep</option>
+            <option value=9>Oct</option>
+            <option value=10>Nov</option>
+            <option value=11>Dec</option>
+        </select>
+        <select id="year" onchange="jump()"></select>
+    </div>
+
+</div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">[시간 날짜]_예약 </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="md-3"> 
+                    <label for="title" class="form-label">분류</label>
+                    <div class="md-3 ">
+                        <label for="campAdd" class="form-label">* 분류/자산명:</label> 
+                        <select name="cls" class="form-select" id="cls" ></select> 
+                        <select name="asset" class="form-select" id="asset"></select>
+                    </div>
+
+                    <label for="title" class="form-label">예약내용</label>
+                    <div class="md-3 ">
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function generate_year_range(start, end) {
+    var years = "";
+    for (var year = start; year <= end; year++) {
+        years += "<option value='" + year + "'>" + year + "</option>";
+    }
+    return years;
+}
+
+today = new Date();
+currentMonth = today.getMonth();
+currentYear = today.getFullYear();
+selectYear = document.getElementById("year");
+selectMonth = document.getElementById("month");
+
+
+createYear = generate_year_range(1970, 2050);
+/** or
+ * createYear = generate_year_range( 1970, currentYear );
+ */
+
+document.getElementById("year").innerHTML = createYear;
+
+var calendar = document.getElementById("calendar");
+var lang = calendar.getAttribute('data-lang');
+
+var months = "";
+var days = "";
+
+var monthDefault = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+var dayDefault = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+if (lang == "en") {
+    months = monthDefault;
+    days = dayDefault;
+} else if (lang == "id") {
+    months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+    days = ["Ming", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"];
+} else if (lang == "fr") {
+    months = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
+    days = ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"];
+} else {
+    months = monthDefault;
+    days = dayDefault;
+}
+
+
+var $dataHead = "<tr>";
+for (dhead in days) {
+    $dataHead += "<th data-days='" + days[dhead] + "'>" + days[dhead] + "</th>";
+}
+$dataHead += "</tr>";
+
+//alert($dataHead);
+document.getElementById("thead-month").innerHTML = $dataHead;
+
+
+monthAndYear = document.getElementById("monthAndYear");
+showCalendar(currentMonth, currentYear);
+
+
+
+function next() {
+    currentYear = (currentMonth === 11) ? currentYear + 1 : currentYear;
+    currentMonth = (currentMonth + 1) % 12;
+    showCalendar(currentMonth, currentYear);
+}
+
+function previous() {
+    currentYear = (currentMonth === 0) ? currentYear - 1 : currentYear;
+    currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
+    showCalendar(currentMonth, currentYear);
+}
+
+function jump() {
+    currentYear = parseInt(selectYear.value);
+    currentMonth = parseInt(selectMonth.value);
+    showCalendar(currentMonth, currentYear);
+}
+
+function showCalendar(month, year) {
+
+    var firstDay = ( new Date( year, month ) ).getDay();
+
+    tbl = document.getElementById("calendar-body");
+
+    
+    tbl.innerHTML = "";
+
+    
+    monthAndYear.innerHTML = months[month] + " " + year;
+    selectYear.value = year;
+    selectMonth.value = month;
+
+    // creating all cells
+    var date = 1;
+    for ( var i = 0; i < 6; i++ ) {
+        
+        var row = document.createElement("tr");
+
+        
+        for ( var j = 0; j < 7; j++ ) {
+            if ( i === 0 && j < firstDay ) {
+                cell = document.createElement( "td" );
+                cellText = document.createTextNode("");
+                cell.appendChild(cellText);
+                row.appendChild(cell);
+            } else if (date > daysInMonth(month, year)) {
+                break;
+            } else {
+                cell = document.createElement("td");
+                cell.setAttribute("data-bs-toggle","modal");
+                cell.setAttribute("data-bs-target","#staticBackdrop");
+                cell.setAttribute("data-date", date);
+                cell.setAttribute("data-month", month + 1);
+                cell.setAttribute("data-year", year);
+                cell.setAttribute("data-month_name", months[month]);
+                cell.className = "date-picker";
+                cell.innerHTML = "<span>" + date + "</span>";
+
+                if ( date === today.getDate() && year === today.getFullYear() && month === today.getMonth() ) {
+                    cell.className = "date-picker selected";
+                }
+                row.appendChild(cell);
+                date++;
+            }
+
+
+        }
+
+        tbl.appendChild(row);
+    }
+
+}
+
+function daysInMonth(iMonth, iYear) {
+    return 32 - new Date(iYear, iMonth, 32).getDate();
+}
+</script>
+
+<script>	
+    console.log("hi");
+        $('document')
+                .ready(
+                        function() {
+                            var area0 = [ "분류 선택", "회의실","전자","편의시설"  ];
+                            var area1 = [ "_층 a회의실","_층 b회의실","_층 c회의실", "_층 a회의실","_층 b회의실","_층 c회의실", "_층 a회의실","_층 b회의실","_층 c회의실", "_층 a회의실","_층 b회의실","_층 c회의실"];
+                            var area2 = ["_ _ _ 실 컴퓨터 a호", "_ _ _ 실 컴퓨터 b호", "_ _ _ 실 컴퓨터 c호", "_ _ _실 에어컨", "_ _ _실 ㅁㅁㅁ"];
+                            var area3 = [ ];
+                            var area4 = [ ];
+                            var area5 = [ ];
+                            var area6 = [  ];
+                            var area7 = [ ];
+                            var area8 = [  ];
+                            var area9 = [  ];
+                            var area10 = [  ];
+                            var area11 = [ ];
+                            var area12 = [  ];
+                            var area13 = [  ];
+                            var area14 = [  ];
+                            var area15 = [  ];
+                            var area16 = [  ];
+    
+                            // 시/도 선택 박스 초기화
+    
+                            $("select[name^=cls]")
+                                    .each(
+                                            function() {
+                                                $selsido = $(this);
+                                                $
+                                                        .each(
+                                                                eval(area0),
+                                                                function() {
+                                                                    $selsido
+                                                                            .append("<option value='" + this + "'>"
+                                                                                    + this
+                                                                                    + "</option>");
+                                                                });
+                                                $selsido.next().append("<option value=''>자산명</option>");
+                                            });
+    
+                            // 시/도 선택시 구/군 설정
+    
+                            $("select[name^=cls]")
+                                    .change(
+                                            function() {
+                                                var area = "area"
+                                                        + $("option", $(this))
+                                                                .index(
+                                                                        $(
+                                                                                "option:selected",
+                                                                                $(this))); // 선택지역의 구군 Array
+                                                var $asset = $(this).next(); // 선택영역 군구 객체
+                                                $("option", $asset).remove(); // 구군 초기화
+    
+                                                if (area == "area0")
+                                                    $asset.append("<option value=''>자산명</option>"); 
+                                                else {
+                                                    $
+                                                            .each(
+                                                                    eval(area),
+                                                                    function() {
+                                                                        $asset
+                                                                                .append("<option value='" + this + "'>"
+                                                                                        + this
+                                                                                        + "</option>");
+                                                                    });
+                                                }
+                                            });
+    
+                        });
+    </script>

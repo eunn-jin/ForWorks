@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page session="false" %>
-<link rel="stylesheet" href="/forworks/resources/css/sjy.css">
+<link rel="stylesheet" href="${root}/resources/css/sjy.css">
 <html>
 <head>
 	<title>Home</title>
 </head>
-<body>
+<body style="display: inline;">
 
 <div id="app">
 
@@ -19,8 +19,8 @@
                 <div class="page-title">
                     <div class="row">
                         <div class="col-12 col-md-6 order-md-1 order-last">
-                            <h3>자산</h3>
-                            <p class="text-subtitle text-muted">자산정보 조회</p>
+                            <h3>예약</h3>
+                            <p class="text-subtitle text-muted">예약등록</p>
                         </div>
                         <div class="col-12 col-md-6 order-md-2 order-first">
                             <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
@@ -32,17 +32,21 @@
                         </div>
                     </div>
                 </div>
-                <section class="section">
-                    <div class="card" style="flex-direction: row;">
-                        <%@include file="/WEB-INF/views/reservation/list-content.jsp" %>
+                <section class="section" >
+                    <div class="card" >
                         
+                        <%@include file="/WEB-INF/views/reservation/create-content.jsp" %>
                     </div>
-                    <a href="${root}/rsv/create"><div class="right"><button class="mybtn">예약등록</button></div></a>
-                    
+                            <div style="text-align: right;"> 
+                                <button class="myBtn">예약등록</button>
+                                <button class="myBtn">취소</button>
+                                
+                            </div>
+                        
                 </section>
             </div>
         
-            </div>
+</div>
 
 </div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
