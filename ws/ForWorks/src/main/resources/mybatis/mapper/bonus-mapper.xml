@@ -23,4 +23,19 @@
 		SELECT DEPT_NAME
 		FROM DEPARTMENT
 	</select>
+	
+	<select id="selectEmp" resultType="String">
+		SELECT E.EMP_NAME
+		FROM 
+		EMPLOYEE E JOIN DEPARTMENT D ON E.DEPT_NO = D.DEPT_NO
+		WHERE D.DEPT_NAME = #{depart}
+	</select>
+	
+	<select id="selectOne" resultType="BenefitVo">
+		SELECT 
+		B.NO AS NO, B.EMP_NO AS EMP_NO, C.CATE AS CATE, B.AMOUNT AS AMOUNT 
+		FROM BENEFIT B JOIN BENEFIT_CATE C ON B.BENEFIT_CATE = C.NO 
+		WHERE B.EMP_NO='1'
+	</select>
+	
 </mapper>

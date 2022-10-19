@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.forworks.bonus.dao.BonusDao;
+import com.kh.forworks.bonus.vo.BenefitVo;
 
 @Service
 public class BonusServiceImpl implements BonusService {
@@ -35,6 +36,23 @@ public class BonusServiceImpl implements BonusService {
 	@Override
 	public List selectDepartList() {
 		return dao.selectDepart(sst);
+	}
+	//부서별 사원조회
+	@Override
+	public List selectEmp(String depart) {
+		System.out.println("서비스에서 depart" + depart);
+		return dao.selectEmp(sst , depart);
+	}
+	//삭제???
+	@Override
+	public BenefitVo selectEmpBenefit(String depart, String emp) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	//받아온 회원번호 직원의 수당조회
+	@Override
+	public List<BenefitVo> selectOne(String no) {
+		return dao.selectOne(sst, no);
 	}
 
 }
