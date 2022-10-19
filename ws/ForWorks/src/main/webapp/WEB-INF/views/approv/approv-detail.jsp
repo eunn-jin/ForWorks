@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>결제-상세</title>
+<title>결제 상세</title>
 
 <style>
 
@@ -96,6 +96,7 @@
 
     .detail-content{
         height: 533px;
+        width: 100%;
     }
 
     .detail-etc{
@@ -124,8 +125,14 @@
         
     }
 
-    .approv-table td{
-        width: 85px;
+    .approv-table{
+        display: grid;
+        grid-template-columns: repeat(4, 85px); /*jstl로 유동적으로 늘림*/
+        grid-template-rows: 24px 24px 76px 24px;
+        
+    }
+
+    .approv-table div{
         border: 1px solid black;
         text-align: center;
         font-size: 14px;
@@ -133,6 +140,18 @@
 
     .sign-area{
         height: 76px;
+    }
+
+    #approv-member{
+        grid-column: 2/5; /*jstl로 유동적으로 늘림*/
+    }
+
+    #creater-sign{
+        grid-row: 2/4;
+    }
+
+    #coop-member{
+        grid-column: 2/5; /*jstl로 유동적으로 늘림*/
     }
 
 </style>
@@ -158,30 +177,28 @@
                     <div class="approv-detail-div">
                         <div class="detail-title default-text">제목</div>
                         <div class="detail-approve default-text">
-                            <table class="approv-table">
-                                <tr>
-                                    <td>기안자</td>
-                                    <td colspan="3" style="">결제자</td>
-                                </tr>
-                                <tr>
-                                    <td rowspan="2"></td>
-                                    <td>직위</td>
-                                    <td>직위</td>
-                                    <td>직위</td>
-                                </tr>
-                                <tr>
-                                    <!-- <td></td> -->
-                                    <td class="sign-area"></td>
-                                    <td class="sign-area"></td>
-                                    <td class="sign-area"></td>
-                                </tr>
-                                <tr>
-                                    <td>협조자</td>
-                                    <td colspan="3"></td>
-                                </tr>
-                            </table>
+                            <div class="approv-table">
+
+                                    <div>기안자</div>
+                                    <div id="approv-member">결제자</div>
+
+                                    <div id="creater-sign"></div>
+                                    <div>직위</div>
+                                    <div>직위</div>
+                                    <div>직위</div>
+
+                                    <div class="sign-area"></div>
+                                    <div class="sign-area"></div>
+                                    <div class="sign-area"></div>
+
+                                    <div>협조자</div>
+                                    <div id="coop-member"></div>
+
+                            </div>
                         </div>
-                        <div class="detail-content default-text">내용</div>
+                        <div class="detail-content">
+                            <p>내용</p>
+                        </div>
                         <div class="detail-etc default-text">
                             <div class="etc-item">내용</div>
                             <div class="etc-item">내용</div>

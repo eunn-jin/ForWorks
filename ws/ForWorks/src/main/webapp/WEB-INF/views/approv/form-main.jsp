@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>결제-상세</title>
+<title>양식</title>
 
 <style>
 
@@ -194,12 +194,15 @@
                             <div class="form-list-item">
 
                                 <div class="item-no item-text">1</div>
+                                
+                                    
+                                    <div class="item-title item-text"><a href="">9글자까지</a></div>
+                                    
 
-                                <div class="item-title item-text">9글자까지</div>
+                                    <button class="approv-list-btn approv-btn-margin">
+                                        <span class="approv-btn-text">미리보기</span>
+                                    </button>
 
-                                <button class="approv-list-btn approv-btn-margin">
-                                    <span class="approv-btn-text">미리보기</span>
-                                </button>
                             </div>
                             <div class="page-area">
 								<button class="approv-page-btn approv-btn-margin">
