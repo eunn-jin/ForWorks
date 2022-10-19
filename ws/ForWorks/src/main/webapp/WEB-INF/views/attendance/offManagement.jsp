@@ -4,57 +4,19 @@
 <html>
 <head>
 	<title>휴가관리</title>
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 </head>
-<!-- css -->
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
- 
-<!-- js -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
 <style>
-	
-	.multi-card {
-		display: flex;
-	    flex-wrap: wrap;
-		justify-content: space-around;
-    }
-
-	.align-center {
-    	text-align: center;
-	}
-
-	.flex-col {
-		display: flex;
-		flex-direction: column;
-		justify-content: space-around;
-	}
-
-	.text-part {
-		padding-right: 15px;
-	}
-
-	.pg-part {
-		width: 200px;
-	}
-	
-	.page-heading .page-title .text-subtitle{margin-bottom: 0.3rem;}
-
-	.flex-row-side {
-		display: flex;
-		justify-content: space-between;
-	}
-
-	.flex-row {
-		display: flex;
-		justify-content: space-around;
-	}
 
     .first-card {
         width: 80%;
         margin: auto;
     }
+
+	#demo {
+		width: 230px;
+	}
 
 </style>
 
@@ -99,7 +61,7 @@
 					<div class="card-body">
 						<div class="flex-row-side">
 							<div class>
-								<input type="year">
+								<input type="text" id="usedOffYear" name="usedOffYear" value="" />
 								<button class="btn btn-primary btn-sm">검색</button>
 							</div>
 							<div>
@@ -123,7 +85,7 @@
 										<td>2022/10/17</td>
 										<td>2022/10/20</td>
 										<td>2022/10/30</td>
-										<td>10</td>
+										<td>11</td>
                                         <td>연차</td>
 										<td>승인 대기</td>	
 									</tr>
@@ -153,8 +115,13 @@
 								<div class="form-group">
 									<label>휴가 종류: </label>
 									<label><input type="radio" name="type" value="">연차</label>
+									<label><input type="radio" name="type" value="">오전반차</label>
+									<label><input type="radio" name="type" value="">오후반차</label>
 									<label><input type="radio" name="type" value="">조퇴</label>
-									<label><input type="radio" name="type" value="">휴가</label>
+									<label><input type="radio" name="type" value="">경조사</label>
+									<label><input type="radio" name="type" value="">보건휴가</label>
+									<label><input type="radio" name="type" value="">출산휴가</label>
+									<label><input type="radio" name="type" value="">육아휴직</label>
 								</div>
 							</div>
 							<div class="modal-footer">
@@ -180,6 +147,8 @@
 	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </div>
 </body>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script>
 	
 	$().ready(function() {
@@ -200,8 +169,6 @@
 				"monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
 				"firstDay": 1
 			},
-			"startDate": "2020-10-21",
-			"endDate": "2020-10-23",
 			"drops": "down"
 		}, function (start, end, label) {
 			console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
@@ -209,5 +176,5 @@
 	});
 	
 </script>
-
+<link rel="stylesheet" href="${root}/resources/css/attendance.css">
 </html>
