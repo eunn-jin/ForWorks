@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>罹�由곕��</title>
+<title>캘린더</title>
 <style>
     * {
         margin: 0;
@@ -31,7 +31,7 @@
     .calendar {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
-        gap: 20px;
+        gap: 15px;
         padding: 40px;
     }
 
@@ -40,9 +40,22 @@
     }
 
     .calendar-top {
-        padding: 20px;
+        padding: 10px 20px;
         font-weight: 900;
+        color: white;
+        background: #6F5CFA;
+        text-align: center;
     }
+
+    .calendar-top:first-of-type {
+        background: red;
+    }
+
+    .calendar-top:last-of-type {
+        background: blue;
+    }
+
+    
 
 </style>
 </head>
