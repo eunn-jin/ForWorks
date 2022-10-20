@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.forworks.bonus.vo.BenefitVo;
+import com.kh.forworks.bonus.vo.BonusVo;
 
 public interface BonusService {
 	
@@ -20,4 +21,9 @@ public interface BonusService {
 	BenefitVo selectEmpBenefit(String depart, String emp);
 	//받아온 회원번호 직원의 수당조회
 	List<BenefitVo> selectOne(String no);
+	//수당 수정
+	List<BenefitVo> edit(BenefitVo vo);
+	
+	//상여금 목록조회(화면)
+	List<BonusVo> bonusList();
 }

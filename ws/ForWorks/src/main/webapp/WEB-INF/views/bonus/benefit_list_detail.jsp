@@ -113,29 +113,22 @@
                             <span>|</span>
                             <span>생년월일 : </span><span>1990.01.01</span>
 				        </div>
-                        <form action="">
-				        
+                        
 				        <div id="center">
 				        <div class="div-top">수당명</div>
 				        <div class="div-top">수당금/(시간)</div>
-				        <div class="div-top">해당 시간</div>
-				        <div class="div-top">지급액</div>
+                        <div class="div-top">등록일자</div>
+				        <div class="div-top">저장</div>
 
                             
                             <c:forEach items="${benefitVo}" var="bv">
-                                <div style="display: none;"><input type="hidden" name="no" value="${bv.no}"></div>
-                                <div>${bv.cate}</div>
+                                <div style="display: none;"><input type="hidden" name="no" id="no" value="${bv.no}"></div>
+                                <div id="cate">${bv.cate}</div>
 						        <div><input type="text" id="money" name="money" value="${bv.amount}" class="input_css" placeholder="0">원</div>
-						        <div><input type="number" id="hour" value="" class="input_css" placeholder="0">시간</div>
-						        <div id="sum"></div>
+						        <div>2022-10-10</div>
+                                <div><input type="button" value="저장" onclick="editBenefit()"></div>
 					        </c:forEach>
-					        
-					        
-					        <div id="save-div">
-                                <input type="submit" value="저장">
-					        </div>
-                        </form>
-				        
+					      
 				        </div>
 				    
 					</div>
@@ -149,36 +142,31 @@
 </div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 
-<!-- 부서에 해당하는 직원 조회 -->
+<!-- 항목 별 값 저장 -->
 <script>
-
-function changeDepart(){
-	var x = document.getElementById("depart");
-	var depart = x.options[x.selectedIndex].text;
-	
-	$('#emp').empty();
+function editBenefit(){
+	var no = document.getElementById("no").value;
+	var cate = document.getElementById("cate").innerText;
+	var money = document.getElementById("money").value;
 	
 	$.ajax({
-		url : "/ForWorks/bonus/selectEmp",
-		dataType :'json',
-		type : 'POST',
-		data : {depart : depart},
+		url : "/ForWorks/bonus/detail/edit",
+		type : "POST",
+		data : {
+			no : no,
+            empNo : 1,/*test위한 값. empNo 받아오기!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+			cate : cate,
+			amount : money
+		},
 		success : function(data){
-		$.each(data, function(index,value){
-			var option = $("<option>"+value+"</option>");
-			$('#emp').append(option);
-			
-		})
-			
-			
-			
+			alert("통신성공");
+		},
+        error : function(data){
+			alert("통신실패");
 		}
 	})
-	
-}; 
-
+}
 </script>
-
 <!-- 직원의 수당정보조회 -->
 <script>
 function empBenefit(){
