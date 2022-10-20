@@ -71,20 +71,26 @@
             <div class="calendar-top">FRI</div>
             <div class="calendar-top">SAT</div>
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
     </div>
-
+    <script>Calendar.init();</script>
+ <script>
+   class schedule {
+    	
+    }
+    
+    const Canendar = {
+    		
+    		int() {
+    			const today = new Date();
+    			Calendar.showDates();
+    		},
+    		
+    		showDates(y,m) {
+    			for(let i = -(today.getDay()); i )
+    		}		
+    };
+    
+   </script>
 
 </body>
 </html>
