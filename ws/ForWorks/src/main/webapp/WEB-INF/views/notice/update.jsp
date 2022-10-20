@@ -5,10 +5,12 @@
 <head>
 	<title>Home</title>
 </head>
-
+<link rel="stylesheet" href="${root}/resources/css/sjy.css">
 <body>
+
 <div id="app">
-    <%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
+
+	<%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
 
 	<div id="main">
         <%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -18,7 +20,7 @@
                     <div class="row">
                         <div class="col-12 col-md-6 order-md-1 order-last">
                             <h3>전자게시판</h3>
-                            <p class="text-subtitle text-muted">공지사항 상세정보</p>
+                            <p class="text-subtitle text-muted">공지사항 수정</p>
                         </div>
                         <div class="col-12 col-md-6 order-md-2 order-first">
                             <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
@@ -32,7 +34,7 @@
                 </div>
                 <section class="section">
                     <div class="card">
-                        <%@include file="/WEB-INF/views/notice/noticeDetail-content.jsp" %>
+                        <%@include file="/WEB-INF/views/notice/update-content.jsp" %>
                     </div>
                 </section>
             </div>

@@ -43,22 +43,24 @@ table {
                             <table class="table table-striped">
                                 <tr>
                                     <td class="">작성자</td>
-                                    <td  style="border:1px solid black; background : white;">ㅁㅁㅁ</td>
+                                    <td  style="border:1px solid black; background : white;">${ntvo.empNo}</td>
                                     <td class="danger">대상</td>
                                     <td  style="background: white;">
-                                        <div>전체</div>
+                                        <div>${ntvo.ntAccess}</div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="danger">제목</td>
-                                    <td colspan="3"><div>전체공지사항 입니다</div></td>
+                                    <td colspan="3"><div>${ntvo.ntTitle}zzz</div></td>
                                 </tr>
     
     
                                 <tr>
                                     <td class="danger">글내용</td>
                                     <td colspan="3" style=" background : white; text-align: left;">
-                                        <textarea id="summernote" name="content" class="form-control" style="background-color: white; text-align: left; height: 30vh;" disabled>글 내용을 입력해봅니다 Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam, nam praesentium quaerat dignissimos nobis nihil explicabo optio amet est quos architecto, maiores quae deleniti ab accusamus. Assumenda veniam quos vero!</textarea>
+                                        <textarea id="summernote" name="content" class="form-control" style="background-color: white; text-align: left; height: 30vh;" disabled
+                                        >${ntvo.ntContent} Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam, nam praesentium quaerat dignissimos nobis nihil explicabo optio amet est quos architecto, maiores quae deleniti ab accusamus. Assumenda veniam quos vero!
+                                        </textarea>
                                     </td>
                                 </tr>
     
@@ -70,8 +72,8 @@ table {
                                 <tr>
                                     <td colspan="4" class="text-end" style="border:none; background : white; ">
                                         <input type="hidden" name="num" value="">
-                                        <button type="button" id="upDate" class="mybtn">수정</button>
-                                        <button type="button" id="delete" class="myBtn">삭제하기</button>
+                                        <a href="${root}/notice/update/${ntvo.ntno}"><button type="button" id="upDate" class="mybtn">수정</button></a>
+                                        <a href="${root}/notice/delete/${ntvo.ntno}" ><button type="button" id="delete" class="myBtn">삭제하기</button></a>
     
                                     </td>
                                     
@@ -82,24 +84,5 @@ table {
                 </div>
             </div>
         </div>
-    
-<!-- 수정하기 버튼클릭 이벤트 -->
-<script>
-    $(function(){
-        $('#upDate').click(function(){
-            //해당 번호로 요청 보내기
-            location.href="${root}/notice/noticeUpdate?num=";
-        });
-    })
-</script>
 
-<!-- 삭제하기 버튼클릭 이벤트 -->
-<script>
-    $(function(){
-        $('#delete').click(function(){
-            //해당 번호로 요청 보내기
-            location.href="${root}/notice/noticeDelete?num=";
-        });
-    })
-</script>
 

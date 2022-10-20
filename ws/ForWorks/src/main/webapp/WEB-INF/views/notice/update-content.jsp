@@ -1,10 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<link rel="stylesheet" href="${root}/resources/css/sjy.css">    
-<script src="${root }/resources/js/summernote/summernote-lite.js"></script>
-<script src="${root }/resources/js/summernote/lang/summernote-ko-KR.js"></script>
-
-<link rel="stylesheet" href="${root }/resources/css/summernote/summernote-lite.css">
+<link rel="stylesheet" href="${root}/resources/css/sjy.css">
 <style>
 	table{margin: auto;}
 tr, td{
@@ -29,9 +25,13 @@ table {
     border-color: grey;
 }
 </style>
+<link rel="stylesheet" href="${root}/resources/css/sjy.css">
+<script src="${root }/resources/js/summernote/summernote-lite.js"></script>
+<script src="${root }/resources/js/summernote/lang/summernote-ko-KR.js"></script>
 
+<link rel="stylesheet" href="${root }/resources/css/summernote/summernote-lite.css">
 
-<form action="" method="post">
+<form action="">
     
     
         <div id="wcontent">
@@ -40,13 +40,13 @@ table {
                 <div class="col-md-8">
                     <form action="" method="post">
                         <div class="table table-responsive">
-                            <table class="table table-striped">
+                            <table class="table table-striped" >
                                 <tr>
-                                    <td class=""><label for="writer" class="form-label">작성자</label> </td>
-                                    <td  style="border:1px solid black; background : white;">ㅁㅁㅁ</td>
-                                    <td ><label for="department" class="form-label">대상</label></td>
+                                    <td class="">작성자</td>
+                                    <td  style="border:1px solid black; background : white;">${ntvo.empNo}</td>
+                                    <td class="danger">대상</td>
                                     <td  style="background: white;">
-                                        <select name="" id="department" >
+                                        <select name="" id="" >
                                             <option value="" selected >부서를 선택해주세요</option>
                                             <option>A</option>
                                             <option>B</option>
@@ -56,25 +56,26 @@ table {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td ><label for="title" class="form-label">제목</label></td>
-                                    <td colspan="3"><input type="text" class="form-control" name="title" id="title" value=""></td>
+                                    <td class="danger">제목</td>
+                                    <td colspan="3"><input type="text" class="form-control" name="subject" value="${ntvo.ntTitle}"></td>
                                 </tr>
     
     
                                 <tr>
-                                    <td ><label for="cotent" class="form-label">내용</label></td>
-                                    <td colspan="3" style=" background : white; text-align: left;"><textarea id="summernote" name="content" class="form-control" style="background-color: white;" ></textarea></td>
+                                    <td class="danger">글내용</td>
+                                    <td colspan="3" style=" background : white; text-align: left;"><textarea id="summernote" name="content" class="form-control" style="background-color: white;" 
+                                        >${ntvo.ntContent}</textarea></td>
                                 </tr>
     
                                 <tr>
-                                    <td ><label for="nf" class="form-label">첨부파일</label></td>
-                                    <td colspan="3"><input type="file" class="form-control" name="nf"></td>
+                                    <td class="danger">첨부파일</td>
+                                    <td colspan="3"><input type="file" class="form-control" name="f"></td>
                                 </tr>
                                 
                                 <tr>
                                     <td colspan="4" class="text-end" style="border:none; background : white;">
-                                        <input type="hidden" name="num" value="현재글번호">
-                                        <input type="submit" value="작성하기" class="myBtn">
+                                        <input type="hidden" name="num" value="">
+                                        <input type="submit" value="수정하기" class="myBtn" >
     
                                     </td>
                                 </tr>
@@ -96,7 +97,18 @@ $(document).ready(function() {
 		  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
 		  lang: "ko-KR",					// 한글 설정
 		  placeholder: '최대 2048자까지 쓸 수 있습니다'	//placeholder 설정
-          
+        
 	});
 });
 </script>   
+
+<script>
+    $(function(){
+        $('#upDate').click(function(){
+            //해당 번호로 요청 보내기
+            location.href="${root}/notice/update?num=" ;
+            
+            
+        });
+    })
+</script>
