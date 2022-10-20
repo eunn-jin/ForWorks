@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="noticeMapper">
+
+	<select id="selectTotalCount" resultType="int">
+		SELECT COUNT(NTNO)
+		FROM NOTICE
+		WHERE NT_STATUS='N'
+	</select>
+
+	<select id="selectList" resultType="com.kh.forworks.notice.vo.NoticeVo">
+		SELECT  
+			NTNO
+			,EMP_NO
+			,NT_TITLE
+			,NT_CONTENT
+			,NT_ENROLL_DATE
+			,NT_MODIFIY_DATE
+			,NT_CNT
+			,NT_ACCESS
+			,NT_STATUS
+			FROM NOTICE
+			WHERE NT_STATUS = 'N'
+			ORDER BY NTNO DESC
+	</select>
+	
+	<update id="increaseCnt">
+		UPDATE NOTICE
+			SET NT_CNT = NT_CNT+1
+		WHERE NTNO = #{no}
+		AND NT_STATUS = 'N'	
+		
+	</update>
+	
+	<select id="selectOne" resultType="com.kh.forworks.notice.vo.NoticeVo">
+		SELECT *
+		FROM NOTICE
+		WHERE NT_STATUS ='N'
+		AND NTNO = #{ntno}
+	</select>
+	
+	<insert id="insertNotice">
+		INSERT INTO NOTICE(NTNO, EMP_NO, NT_TITLE, NT_CONTENT, NT_ACCESS , NT_FILE_NAME)
+		VALUES(SEQ_NOTICE_NTNO.NEXTVAL, #{empNo}, #{ntTitle}, #{ntContent}, #{ntAccess}, #{ntFileName})
+	</insert>
+	
+	<insert id="insertNtAt">
+		INSERT INTO NOTICE_ATTACHMENTS
+		(NTAT_NO, NTAT_CHANGE, NTAT_ORIGIN, NTAT_PATH, NTNO)
+		VALUES
+		(SEQ_NTATTACHMENTS_NTATNO, #{ntatChange}, #{ntatOrigin}, #{ntatPath}, SEQ_NOTICE_NTNO.CURRVAL)
+		
+		
+		
+	</insert>
+</mapper>
