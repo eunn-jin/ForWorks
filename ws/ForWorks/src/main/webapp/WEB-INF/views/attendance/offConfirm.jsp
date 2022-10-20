@@ -46,13 +46,15 @@
 								<button class="btn btn-primary btn-sm">검색</button>
 							</div>
 							<div>
-								<button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#offForm">휴가 신청</button>
+								<button class="btn btn-outline-primary btn-sm">휴가 승락</button>
+								<button class="btn btn-outline-primary btn-sm">휴가 거절</button>
 							</div>
 						</div>
 						<div class="table-responsive mt-5">
 							<table class="table table-bordered mb-0">
 								<thead>
 									<tr>
+										<th>신청인</th>
 										<th>신청 날짜</th>
 										<th>시작일</th>
 										<th>종료일</th>
@@ -63,6 +65,7 @@
 								</thead>
 								<tbody>
 									<tr>
+										<td>조은진</td>
 										<td>2022/10/17</td>
 										<td>2022/10/20</td>
 										<td>2022/10/30</td>
@@ -83,4 +86,5 @@
 	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </div>
 </body>
+<link rel="stylesheet" href="${root}/resources/css/attendance.css">
 </html>
