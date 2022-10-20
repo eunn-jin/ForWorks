@@ -62,14 +62,14 @@
 										<span>출근&ensp;</span>
 										<span> 00 : 00 </span>
 									</div>
-									<button class="btn btn-primary btn-sm">출근하기</button>
+									<button class="btn btn-primary btn-sm" id="goWorkBtn">출근하기</button>
 								</div>
 								<div class="align-center">
 									<div class="mt-3 mb-2">
 										<span>퇴근&ensp;</span>
 										<span> 00 : 00 </span>
 									</div>
-									<button class="btn btn-primary btn-sm">퇴근하기</button>
+									<button class="btn btn-primary btn-sm" id="outWorkBtn">퇴근하기</button>
 								</div>
 							</div>
 						</div>
@@ -190,6 +190,11 @@
 	}
 	clock();
 	setInterval(clock, 1000);
+</script>
+<script>
+	$("button[id='goWorkBtn']").click(function(){
+		location.href="${root}/att/goWork";
+	});
 </script>
 <link rel="stylesheet" href="${root}/resources/css/attendance.css">
 </html>
