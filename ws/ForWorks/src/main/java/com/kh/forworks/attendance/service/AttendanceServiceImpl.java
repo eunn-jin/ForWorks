@@ -17,6 +17,14 @@ public class AttendanceServiceImpl implements AttendanceService {
 		this.sst = sst;
 		this.dao = dao;
 	}
+
+	@Override
+	public int goWork(String inTime) {
+		
+		int result = dao.insertInTime(sst, inTime);
+		
+		return result;
+	}
 	
 	
 
