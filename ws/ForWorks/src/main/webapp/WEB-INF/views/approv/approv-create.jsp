@@ -265,6 +265,7 @@
 
                     <div class="btn-area">
                         <button class="approv-btn">뒤로가기</button>
+                        <button class="approv-btn">작성하기</button>
                     </div>
                 
                 </div>
