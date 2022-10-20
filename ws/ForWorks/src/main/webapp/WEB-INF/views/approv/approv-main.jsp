@@ -287,6 +287,24 @@
 
         </main>        
     </div>
-
+<!-- 
+    <div class="modal fade" tabindex="-1" id="non-sign-modal" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">저장된 서명 없음</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>[주의] 현재 저장된 서명이 없습니다.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+              <button type="button" class="btn btn-primary" style="background-color: #6F5CFA;">서명 저장하기</button>
+            </div>
+          </div>
+        </div>
+      </div>
+ -->
 </body>
 </html>
