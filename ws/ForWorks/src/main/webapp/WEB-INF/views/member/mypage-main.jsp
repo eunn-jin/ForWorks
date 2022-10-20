@@ -61,17 +61,17 @@
 	                      </div>
 						</div>
 				      <div class="col themed-grid-col"><h5 class="mt-4">홍길동</h5></div>
-				      <div class="col themed-grid-col info-flex"><h6 class=" info-span">부서</h6><h6>부서</h6></div>
-				      <div class="col themed-grid-col info-flex"><span class=" info-span">개발부</span><span>개발부</span></div>
+				      <div class="col themed-grid-col info-flex"><h6 class=" info-span">부서</h6><h6>직급</h6></div>
+				      <div class="col themed-grid-col info-flex"><span class=" info-span">개발부</span><span>팀장</span></div>
 				     </div>
                      <div class="row row-cols-1 row-cols-md-4 gy-4 mt-0">
-				      <div class="col themed-grid-col"><h6>부서</h6></div>
+				      <div class="col themed-grid-col"><h6>아이디</h6></div>
 				      <div class="col themed-grid-col">개발부</div>
-				      <div class="col themed-grid-col"><h6>부서</h6></div>
+				      <div class="col themed-grid-col"><h6>내선번호</h6></div>
 				      <div class="col themed-grid-col">개발부</div>
-				      <div class="col themed-grid-col"><h6>부서</h6></div>
+				      <div class="col themed-grid-col"><h6>주민번호</h6></div>
 				      <div class="col themed-grid-col">개발부</div>
-				      <div class="col themed-grid-col"><h6>부서</h6></div>
+				      <div class="col themed-grid-col"><h6>입사일</h6></div>
 				      <div class="col themed-grid-col">개발부</div>
 				    </div>
                   </div>

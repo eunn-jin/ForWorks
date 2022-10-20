@@ -83,7 +83,7 @@
       </div>
     </div>
 
-    <!-- 아이디 찾기 -->
+    <!-- 아이디 찾기 모달 -->
     <div class="modal fade" tabindex="1" id="modalSignin">
 	 <div class="modal-dialog modal-dialog-centered" role="document">
 	   <div class="modal-content rounded-4 shadow">
@@ -113,7 +113,7 @@
 	</div>
     
 
-    <!-- 비밀번호 찾기(변경) -->
+    <!-- 비밀번호 찾기(변경) 모달-->
     <div
       class="modal fade"
       id="find-pwd-modal"
