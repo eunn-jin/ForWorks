@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.forworks.bonus.dao.BonusDao;
 import com.kh.forworks.bonus.vo.BenefitVo;
+import com.kh.forworks.bonus.vo.BonusVo;
 
 @Service
 public class BonusServiceImpl implements BonusService {
@@ -53,6 +54,22 @@ public class BonusServiceImpl implements BonusService {
 	@Override
 	public List<BenefitVo> selectOne(String no) {
 		return dao.selectOne(sst, no);
+	}
+	//수당 수정
+	@Override
+	public List<BenefitVo> edit(BenefitVo vo) {
+		int result = dao.updateOne(sst,vo);
+		List<BenefitVo> updatedBenefit = null;
+		if(result ==1 ) {
+			updatedBenefit = this.selectOne(vo.getEmpNo());
+		}
+		return updatedBenefit; 
+	}
+	
+	//상여금 목록조회(화면)
+	@Override
+	public List<BonusVo> bonusList() {
+		return dao.selectList(sst);
 	}
 
 }

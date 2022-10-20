@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.forworks.bonus.vo.BenefitVo;
+import com.kh.forworks.bonus.vo.BonusVo;
 
 @Repository
 public class BonusDaoImpl implements BonusDao {
@@ -38,6 +39,17 @@ public class BonusDaoImpl implements BonusDao {
 	@Override
 	public List<BenefitVo> selectOne(SqlSessionTemplate sst, String no) {
 		return sst.selectList("bonusMapper.selectOne" , no);
+	}
+	//수당수정
+	@Override
+	public int updateOne(SqlSessionTemplate sst, BenefitVo vo) {
+		return sst.update("bonusMapper.updateOne" , vo);
+	}
+	
+	//상여금 목록조회(화면)
+	@Override
+	public List<BonusVo> selectList(SqlSessionTemplate sst) {
+		return sst.selectList("bonusMapper.bonusList");
 	}
 
 }

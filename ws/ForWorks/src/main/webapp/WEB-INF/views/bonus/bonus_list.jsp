@@ -123,7 +123,7 @@
 				        <div id="check-date">
 				            <form action="">
 				                상여금 목록 
-				                <select name="year" id="year" title="년도">
+				                <select name="year" id="year" title="년도" onchange="changeYear()">
 				                    <option value="">2022</option>
 				                </select> 
 				            </form>
@@ -137,11 +137,12 @@
 				        <div class="div-top">상여 내용</div>
 				        <div class="div-top">발생월</div>
 				
-				        
-				        <div>1</div>
-				        <div>2022 상반기-1</div>
-				        <div>상반기 인센티브</div>
-				        <div>2022.10</div>
+				        <c:forEach items="${bonusList}" var="b">
+					        <div>${b.no}</div>
+					        <div>${b.title}</div>
+					        <div>${b.content}</div>
+					        <div>${b.bdate}</div>
+				        </c:forEach>
 				    
 				        
 				        </div>
@@ -176,12 +177,13 @@
                     <div class="modal_body">
                         <div><h1>상여금 등록</h1></div>
                         상여제목
-                        <input type="text"> <br>
+                        <input type="text" id="bt" > <br>
                         발생월
-                        <input type="date"> <br>
+                        <input type="date" id="date" value="2022-02-02"> <br>
                         상여내용
-                        <textarea name="" id="" cols="30" rows="10"></textarea>
-
+                        <textarea name="" id="content" cols="30" rows="10"></textarea>
+                        <input type="button" onclick="addBonus()" value="등록">
+                        
                         <div><button class="modal_close">close</button></div>
                     </div>
                 </div>
@@ -209,6 +211,44 @@
        </div>
 
 </div>
+<!--상여금 등록 ajax-->
+<script>
+   
+    function addBonus(){
+        var bt = $('#bt').val();
+        var date = document.getElementById("date").value;
+        var content = document.getElementById("content").value;
+        $.ajax({
+            url : ,
+            type: ,
+            data : {
+                title : bt,
+                date : date,
+                content : content
+            },
+            success : function(data){
+                alert("통신성공");
+            },
+            error : function(){
+                alert("통신실패")
+            }
+            
+        })
+    }
+</script>
+
+<!--연도 별 상여금 조회 ajax-->
+<script>
+
+    function changeYear(){
+        var x = document.getElementById("year");
+        var year = x.options[x.selectedIndes].text;
+    }
+
+
+</script>
+
+
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 <script>

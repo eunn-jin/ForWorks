@@ -8,6 +8,6 @@
 	
 	<typeAliases>
 		<typeAlias type="com.kh.forworks.bonus.vo.BenefitVo" alias="BenefitVo"/>
-		
+		<typeAlias type="com.kh.forworks.bonus.vo.BonusVo" alias="BonusVo"/>		
 	</typeAliases>
 </configuration>

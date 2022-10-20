@@ -55,15 +55,7 @@
         color: #7D6CFF;
         font-weight: bolder;
     }
-    #save{
-        font-size: 20px;
-        width: 80px;
-    }
-    #save-div{
-        position: absolute;
-        bottom: 0;
-        right:45%;
-    }
+   
     .input_css{
         width: 80px;
         font-size: 20px;
@@ -136,7 +128,7 @@
 				            	</c:forEach>
 				            </select>
 				            
-				            <button onclick="changeDepart()">직원조회</button>
+				            <!--<button onclick="changeDepart()">직원조회</button>-->
                             
 				        </div>
 				        <div id="check-btn">
@@ -144,27 +136,25 @@
 				        </div>
 				        <div id="center">
                         
-				        <div class="div-top">부서명</div>
-				        <div class="div-top">직원명</div>
-				        <div class="div-top">직급</div>
-				        <div class="div-top">입사일</div>
+                            <div class="div-top">부서명</div>
+                            <div class="div-top">직원명</div>
+                            <div class="div-top">직급</div>
+                            <div class="div-top">입사일</div>
+
+                            
 				        
 				        
 					        <c:forEach items="${EmpList}" var="el">
 					        	
                                 <div style="display: none;"><input type="hidden" id="no" value="1"></div>
-                                <div></div>
+                                <div>부서명임</div>
 						        <div><a href="${root}/bonus/detail/1">홍길동</a></div>
 						        <div>대리</div>
                                 <div>2022-01-01</div>
 					
 					        </c:forEach>
 					        
-					        
-					        <div id="save-div">
-					            <input type="submit" value="저장">
-					        </div>
-				        
+			
 				        </div>
 				    
 					</div>
@@ -205,6 +195,8 @@
        </div>
 
 </div>
+
+
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 
 <!-- 부서에 해당하는 직원 조회 -->
@@ -216,22 +208,22 @@ function changeDepart(){
 	
 	$.ajax({
 		url : "/ForWorks/bonus/selectEmp",
-		dataType :'json',
+		//dataType :'json',
 		type : 'POST',
 		data : {depart : depart},
-		success : function(data){
-		$.each(data, function(index,value){
-			var option = $("<option>"+value+"</option>");
-			$('#emp').append(option);
+		success : function(result){
+            alert("o");
+            console.log(result[0]);
+            //document.getElementById('center').appendChild('<div></div>');
+            $('#center').append('<div class="div-top">111</div><div class="div-top">22</div><div class="div-top">3</div><div class="div-top">4</div>');
+		},
+        error:function(){
+            alert("x");
+        }
+    })
+        }
 			
-		})
-			
-			
-			
-		}
-	})
-	
-}; 
+
 
 </script>
 
