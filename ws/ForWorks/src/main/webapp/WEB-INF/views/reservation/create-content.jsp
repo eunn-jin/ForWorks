@@ -45,7 +45,8 @@
 
 </div>
 
-<script>	console.log("hi");
+<script>	
+console.log("hi");
 	$('document')
 			.ready(
 					function() {
@@ -82,7 +83,7 @@
 																				+ this
 																				+ "</option>");
 															});
-											 $selsido.next().append("<option value=''>자산명</option>");
+											$selsido.next().append("<option value=''>자산명</option>");
 										});
 
 						// 시/도 선택시 구/군 설정
@@ -100,7 +101,7 @@
 											$("option", $asset).remove(); // 구군 초기화
 
 											if (area == "area0")
-												 $asset.append("<option value=''>자산명</option>"); 
+												$asset.append("<option value=''>자산명</option>"); 
 											else {
 												$
 														.each(
@@ -114,4 +115,5 @@
 											}
 										});
 
-					});</script>
+					});
+</script>
