@@ -2,48 +2,123 @@ package com.kh.forworks.notice.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.kh.forworks.FileUploader;
+import com.kh.forworks.PageVo;
+import com.kh.forworks.Pagination;
 import com.kh.forworks.notice.service.NoticeService;
 import com.kh.forworks.notice.vo.NoticeVo;
+import com.kh.forworks.noticeattachments.vo.NoticeAttachmentsVo;
 
 @Controller
 @RequestMapping("notice")
 public class NoticeController {
 	
-	private final NoticeService ntService;
+	private final NoticeService nts;
 	
-	public NoticeController(NoticeService ntService) {
-		this.ntService = ntService;
+	@Autowired
+	public NoticeController(NoticeService nts) {
+		this.nts = nts;
 	}
 
 	//공지사항 (화면)
-	@GetMapping("noticeList")
-	public String noticeList(){
+	@GetMapping("list/{pno}")
+	public String list(Model model,@PathVariable int pno){
+		
+		//공지사항 전체 갯수
+		int totalCount = nts.selectTotalCount();
+		
+		//페이징 처리
+		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
 		
 		//공지사항 리스트 가져오기
-		//List<NoticeVo> list = ntService. 
-		return "notice/noticeList";
+		List<NoticeVo> ntList = nts.selectList(pv);
+		
+		
+		if (ntList != null) {
+			model.addAttribute("ntList",ntList);
+			model.addAttribute("pv", pv);
+			return "notice/list";
+		}else {
+			return "error";
+		}
+		
+	}
+	
+	//공지사항 작성(화면)
+	@GetMapping("write")
+	public String write() {
+		return"notice/write";
 	}
 	
 	//공지사항 작성
-	@GetMapping("noticeWrite")
-	public String noticeWrite() {
-		return"notice/noticeWrite";
+	@PostMapping("write")
+	public String write(NoticeVo ntvo, NoticeAttachmentsVo ntatVo ,HttpServletRequest req) {
+		System.out.println(ntvo);
+		
+		ntvo.setEmpNo("1");
+		
+		//파일 유무 확인
+		if (ntvo.getNtFileName() != null && !ntvo.getNtFileName().isEmpty()) {
+			//파일 있음
+			//파일 업로드 후 저장된 파일명 얻기 
+			String savePath = req.getServletContext().getRealPath("/resources/upload/notice/");
+			String changeName = FileUploader.fileUpload(ntvo.getNtFileName(), savePath);
+			ntatVo.setNtatChange(changeName);
+			ntatVo.setNtatOrigin(ntvo.getNtFileName().toString());
+			ntatVo.setNtatPath(savePath);
+			
+		}
+		
+		if (ntatVo != null) {
+			System.out.println("파일있음");
+		}
+		
+		//db 공지사항 저장
+		int result = nts.insertNotice(ntvo, ntatVo);
+		
+		
+		if (result == 1) {
+			return "redirect:/notice/list";
+		}else {return "error";}
 	}
 	
 	//공지사항 상세보기
-	@GetMapping("noticeDetail")
-	public String noticeDetail() {
-		return"notice/noticeDetail";
+	@GetMapping("detail/{no}")
+	public String detail(@PathVariable String no, Model model) {
+		
+		//db 공지사항 조회
+		NoticeVo ntvo = nts.selectOne(no);
+		
+		model.addAttribute("ntvo", ntvo);
+		System.out.println(ntvo);
+		
+		return"notice/detail";
 	}
 	
 	//공지사항 수정
-	@GetMapping("noticeUpdate")
-	public String noticeUpdate() {
-		return"notice/noticeUpdate";
+	@GetMapping("update/{no}")
+	public String update(@PathVariable String no, Model model) {
+		//db 공지사항 조회
+		NoticeVo ntvo = nts.selectOne(no);
+		
+		model.addAttribute("ntvo", ntvo);
+	
+		return"notice/update";
+	}
+	
+	//공지사항 삭제
+	@GetMapping("delete/{no}")
+	public String delete(@PathVariable String no) {
+		return"redirect:/";
 	}
 }
