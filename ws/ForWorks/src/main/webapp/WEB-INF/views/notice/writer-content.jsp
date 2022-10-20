@@ -31,7 +31,7 @@ table {
 </style>
 
 
-<form action="" method="post">
+<form action="" method="post" enctype="multipart/form-data" >
     
     
         <div id="wcontent">
@@ -43,32 +43,32 @@ table {
                             <table class="table table-striped">
                                 <tr>
                                     <td class=""><label for="writer" class="form-label">작성자</label> </td>
-                                    <td  style="border:1px solid black; background : white;">ㅁㅁㅁ</td>
+                                    <td  style="border:1px solid black; background : white;">1</td>
                                     <td ><label for="department" class="form-label">대상</label></td>
                                     <td  style="background: white;">
-                                        <select name="" id="department" >
-                                            <option value="" selected >부서를 선택해주세요</option>
-                                            <option>A</option>
-                                            <option>B</option>
-                                            <option>C</option>
-                                            <option>D</option>
+                                        <select name="ntAccess" >
+                                            <option value="" selected >접근권한을 선택해주세요</option>
+                                            <option value="A">전체</option>
+                                            <option value="B">B부서</option>
+                                            <option value="C">C부서</option>
+                                            
                                         </select>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td ><label for="title" class="form-label">제목</label></td>
-                                    <td colspan="3"><input type="text" class="form-control" name="title" id="title" value=""></td>
+                                    <td ><label for="ntTitle" class="form-label">제목</label></td>
+                                    <td colspan="3"><input type="text" class="form-control" name="ntTitle"></td>
                                 </tr>
     
     
                                 <tr>
-                                    <td ><label for="cotent" class="form-label">내용</label></td>
-                                    <td colspan="3" style=" background : white; text-align: left;"><textarea id="summernote" name="content" class="form-control" style="background-color: white;" ></textarea></td>
+                                    <td ><label for="ntContent" class="form-label">내용</label></td>
+                                    <td colspan="3" style=" background : white; text-align: left;"><textarea id="summernote" name="ntContent" class="form-control" style="background-color: white;" ></textarea></td>
                                 </tr>
     
                                 <tr>
-                                    <td ><label for="nf" class="form-label">첨부파일</label></td>
-                                    <td colspan="3"><input type="file" class="form-control" name="nf"></td>
+                                    <td ><label for="ntFileName" class="form-label">첨부파일</label></td>
+                                    <td colspan="3"><input type="file" class="form-control" name="ntFileName"></td>
                                 </tr>
                                 
                                 <tr>

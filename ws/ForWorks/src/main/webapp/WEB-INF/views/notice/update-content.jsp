@@ -43,7 +43,7 @@ table {
                             <table class="table table-striped" >
                                 <tr>
                                     <td class="">작성자</td>
-                                    <td  style="border:1px solid black; background : white;">ㅁㅁㅁ</td>
+                                    <td  style="border:1px solid black; background : white;">${ntvo.empNo}</td>
                                     <td class="danger">대상</td>
                                     <td  style="background: white;">
                                         <select name="" id="" >
@@ -57,13 +57,14 @@ table {
                                 </tr>
                                 <tr>
                                     <td class="danger">제목</td>
-                                    <td colspan="3"><input type="text" class="form-control" name="subject" value="전체 공지사항"></td>
+                                    <td colspan="3"><input type="text" class="form-control" name="subject" value="${ntvo.ntTitle}"></td>
                                 </tr>
     
     
                                 <tr>
                                     <td class="danger">글내용</td>
-                                    <td colspan="3" style=" background : white; text-align: left;"><textarea id="summernote" name="content" class="form-control" style="background-color: white;" >입력되었던내용 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~!!</textarea></td>
+                                    <td colspan="3" style=" background : white; text-align: left;"><textarea id="summernote" name="content" class="form-control" style="background-color: white;" 
+                                        >${ntvo.ntContent}</textarea></td>
                                 </tr>
     
                                 <tr>
@@ -105,7 +106,7 @@ $(document).ready(function() {
     $(function(){
         $('#upDate').click(function(){
             //해당 번호로 요청 보내기
-            location.href="${root}/notice/noticeUpdate?num=" ;
+            location.href="${root}/notice/update?num=" ;
             
             
         });

@@ -40,40 +40,49 @@ tr>th:hover{
         </thead>
 
         <%int i=0; %>
-            <c:forEach begin="1" step="1" end="10">
-                <tbody>
+            <c:forEach items="${ntList }" var="nt">
+                <tbody id="tbd">
                     <tr id="center">
 
-                        <th scope="row">1</th>
-                        <td colspan="5">전체 공지사항ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</td>
+                        <th scope="row">${nt.ntno }</th>
+                        <td colspan="5">${nt.ntTitle }</td>
 
-                        <td>Mark</td>
-                        <td>전체</td>
-                        <td>11</td>
-                        <td>22-10-05</td>
+                        <td>${nt.empNo }</td>
+                        <td>${nt.ntAccess }</td>
+                        <td>${nt.ntCnt }</td>
+                        <td>${nt.ntEnrollDate }</td>
                     </tr>
                 </tbody>
             </c:forEach>
-            <td colspan="10" style="border:none; cursor: default; background: white;">
+            <td  colspan="10" style="border:none; cursor: default; background: white;">
+            
                 <ul class="pagination justify-content-center">
-                    <li class="page-item disabled">
-                        <a class="page-link"><</a>
-                    </li>
-                    <li class="page-item active" aria-current="page">
-                        <a class="page-link b" href="#">1</a>
-                    </li>
-                    <li class="page-item"><a class="page-link b" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link b" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link b" href="#">></a>
-                    </li>
+                    
+                    <c:if test="${pv.startPage ne 1 }">	
+                        <li><a href="${root}/notice/list/1" class="page-link b disabled">처음</a></li>
+                        <li class="page-item"><a href="${root}/notice/list/${pv.startPage -1 }" class="page-link">이전</a></li>
+                    </c:if>
+
+                    
+
+                    <c:forEach begin="${pv.startPage }" end="${pv.endPage }" var="i">
+                        <li class="page-item " aria-current="page">
+                            <a class="page-link b" href="${root}/notice/list/${i}">${i}</a>
+                        </li>
+                    </c:forEach>
+
+                    <c:if test="${pv.endPage ne pv.maxPage }">
+                        <li><a class="page-link b" href="${root}/notice/list/${pv.endPage +1 }">다음</a></li>
+                        <li><a href="${root}/notice/list/${pv.maxPage }" class="page-link b">끝</a></li>
+                    </c:if>
                 </ul>
+            
             </td>
 
     </table>
 </div>
 <div style="text-align: right;">
-    <a href="/forworks/notice/noticeWrite"><button class="myBtn" style="margin-right: 18%;">글작성</button></a>
+    <a href="/forworks/notice/write"><button class="myBtn" style="margin-right: 18%;">글작성</button></a>
 </div>
 
 <!-- <nav aria-label="Page navigation example">
@@ -95,14 +104,14 @@ tr>th:hover{
 </div>
 <script>
     $(function(){
-        $('#table-main>tbody>tr').click(function(){
+        $('#table-main>tbody>#center').click(function(){
             //행 클릭 되었을때, 동작할 내용
 
             //글번호 가져오기
             const num = $(this).children().eq(0).text();
             
             //해당 번호로 요청 보내기
-            location.href='${root}/notice/noticeDetail?num=' + num;
+            location.href='${root}/notice/detail/'+num;
             
         });
     })
