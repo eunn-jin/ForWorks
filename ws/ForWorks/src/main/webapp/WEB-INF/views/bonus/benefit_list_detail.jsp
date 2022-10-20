@@ -112,6 +112,7 @@
                             <span>홍길동</span>
                             <span>|</span>
                             <span>생년월일 : </span><span>1990.01.01</span>
+                            <div style="display: none;"><input type="hidden" name="empNo" id="empNo" value="${empNo}"></div>
 				        </div>
                         
 				        <div id="center">
@@ -145,6 +146,7 @@
 <!-- 항목 별 값 저장 -->
 <script>
 function editBenefit(){
+    var empNo = document.getElementById("empNo").value;
 	var no = document.getElementById("no").value;
 	var cate = document.getElementById("cate").innerText;
 	var money = document.getElementById("money").value;
@@ -154,7 +156,7 @@ function editBenefit(){
 		type : "POST",
 		data : {
 			no : no,
-            empNo : 1,/*test위한 값. empNo 받아오기!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+            empNo : empNo,/*test위한 값. empNo 받아오기!!!!!!!!!!!!!!!!!!!!!!!!!!*/
 			cate : cate,
 			amount : money
 		},

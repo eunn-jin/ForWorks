@@ -215,7 +215,12 @@ function changeDepart(){
             alert("o");
             console.log(result[0]);
             //document.getElementById('center').appendChild('<div></div>');
-            $('#center').append('<div class="div-top">111</div><div class="div-top">22</div><div class="div-top">3</div><div class="div-top">4</div>');
+            //*************************************확인하기********************
+            for(var i = 0 ; i < result.length ; i++){
+
+                $('#center').append(
+                    '<div class="div-top">'+depart+'</div><div class="div-top">'+result[0]+'</div><div class="div-top">'+3+'</div><div class="div-top">'+4+'</div>');
+            }
 		},
         error:function(){
             alert("x");

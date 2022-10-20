@@ -40,6 +40,16 @@ public class BonusController {
 	public String memlist() {
 		return "bonus/bonus_mem_list";
 	}
+	
+	//상여금 등록ajax
+	@PostMapping("add")
+	@ResponseBody
+	public String add(BonusVo bv) {
+		int result = bs.addBonus(bv);
+		return ""+result;
+	}
+	
+	
 	//수당관리 직원리스트 페이지
 	@GetMapping("benefit")
 	public String benefit(Model model) {
@@ -75,6 +85,7 @@ public class BonusController {
 	public String detail(@PathVariable String no,Model model ) {
 		List<BenefitVo> bv = bs.selectOne(no);
 		model.addAttribute("benefitVo",bv);
+		model.addAttribute("empNo",no);
 		System.out.println("출력"+bv);
 		return "bonus/benefit_list_detail";
 	}

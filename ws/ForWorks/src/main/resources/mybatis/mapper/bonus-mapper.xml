@@ -53,4 +53,11 @@
 		FROM B_INFO
 	</select>
 	
+	<insert id="insertBonus">
+		INSERT INTO B_INFO 
+			(NO , TITLE, B_DATE, CONTENT) 
+		VALUES 
+			( SEQ_B_INFO_NO.nextval,#{title}, TO_CHAR(#{bdate}, 'YYYY-MM-DD'), '#{content}')
+	</insert>
+	
 </mapper>

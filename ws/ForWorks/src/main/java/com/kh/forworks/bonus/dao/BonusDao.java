@@ -24,5 +24,7 @@ public interface BonusDao {
 
 	//상여금 목록조회(화면)
 	List<BonusVo> selectList(SqlSessionTemplate sst);
+	//상여금 등록 ajax
+	int insertBonus(SqlSessionTemplate sst, BonusVo bv);
 
 }

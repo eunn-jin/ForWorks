@@ -71,5 +71,11 @@ public class BonusServiceImpl implements BonusService {
 	public List<BonusVo> bonusList() {
 		return dao.selectList(sst);
 	}
+	
+	//상여금 등록ajax
+	@Override
+	public int addBonus(BonusVo bv) {
+		return dao.insertBonus(sst, bv);
+	}
 
 }

@@ -26,4 +26,6 @@ public interface BonusService {
 	
 	//상여금 목록조회(화면)
 	List<BonusVo> bonusList();
+	//상여금 등록 ajax
+	int addBonus(BonusVo bv);
 }
