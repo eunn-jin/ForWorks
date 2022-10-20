@@ -32,7 +32,7 @@
               <div class="card-header">
                 <h4 class="card-title">회사 정보 설정</h4>
               </div>
-              <div class="card-body">예시 참고..</div>
+              <div class="card-body">..?</div>
             </div>
           </section>
         </div>

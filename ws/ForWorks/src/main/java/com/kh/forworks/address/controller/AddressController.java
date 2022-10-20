@@ -1,4 +1,4 @@
-package com.kh.forworks.address;
+package com.kh.forworks.address.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

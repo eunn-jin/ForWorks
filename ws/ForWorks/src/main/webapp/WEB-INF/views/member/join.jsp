@@ -25,61 +25,53 @@
   <body>
     <div class="container">
       <div class="signup">
-        <form action="" class="signup-form">
+        <form action="" class="signup-form" method="post" onsubmit="return check();">
           <h1 class="title"><a href="/ForWorks/login">FOR-WORKS</a></h1>
           <h3 class="sub-title">회원가입</h3>
           <div class="input-field id-field">
             <label>* 아이디</label>
-            <input name="" type="text" placeholder="아이디를 입력해주세요" required />
+            <input name="empId" type="text" placeholder="아이디를 입력해주세요" required />
             <button id="id-dup-check" class="input-btn">중복확인</button>
           </div>
           <div class="input-field">
             <label>* 비밀번호</label>
-            <input name="" type="password" placeholder="비밀번호를 입력해주세요" required />
+            <input name="empPwd" type="password" placeholder="비밀번호를 입력해주세요" required />
           </div>
           <div class="input-field">
             <label>* 비밀번호 확인</label>
-            <input name="" type="password" placeholder="비밀번호를 한 번 더 입력해주세요" required />
+            <input name="empPwd2" type="password" placeholder="비밀번호를 한 번 더 입력해주세요" required />
           </div>
           <div class="input-field">
             <label>* 성명</label>
-            <input name="" type="text" placeholder="성함을 입력해주세요" maxlength="6" required />
+            <input name="empName" type="text" placeholder="성함을 입력해주세요" maxlength="6" required />
           </div>
           <div class="input-field usernum-field">
             <label>* 주민번호</label>
-            <input name="" type="text" size="6" placeholder="주민번호 앞자리" maxlength="6" required />
+            <input name="empRegno1" type="text" size="6" placeholder="주민번호 앞자리" maxlength="6" required />
             <span>-</span>
-            <input name="" type="password" size="7" placeholder="주민번호 뒷자리" maxlength="7" required />
+            <input name="empRegno2" type="password" size="7" placeholder="주민번호 뒷자리" maxlength="7" required />
           </div>
           <div class="input-field">
             <label>* 휴대전화</label>
-            <input name="" type="text" placeholder="'-' 를 제외한 휴대전화 번호를 입력해주세요" required maxlength="11" />
+            <input name="empPhone" type="text" placeholder="'-' 를 제외한 휴대전화 번호를 입력해주세요" required maxlength="11" />
           </div>
-          <div class="input-field email-field">
+          <div class="input-field">
             <label>* 이메일</label>
-            <input name="" type="text" placeholder="이메일 앞자리" required />
-            <select name="" id="selbox">
-              <option value="">@gmail.com</option>
-              <option value="">@naver.com</option>
-              <option value="">@daum.net</option>
-              <option value="">@hanmail.com</option>
-              <option value="direct">직접입력</option>
-            </select>
-            <input type="text" id="selboxDirect" name="" placeholder="이메일 뒷자리" />
+            <input name="empEmail" type="text" placeholder="'@'을 포함한 이메일 주소 전체를 입력해주세요" required />
           </div>
           <div class="input-field address-field">
             <label>* 주소</label>
             <div>
-              <input type="text" id="sample6_postcode" placeholder="우편번호" required />
+              <input name="empPcode" type="text" id="sample6_postcode" placeholder="우편번호" required />
               <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" /><br />
-              <input type="text" id="sample6_address" placeholder="주소" required /><br />
-              <input type="text" id="sample6_detailAddress" placeholder="상세주소" required /><br />
-              <input type="text" id="sample6_extraAddress" placeholder="참고항목" />
+              <input name="empAddr1" type="text" id="sample6_address" placeholder="주소" required /><br />
+              <input name="empAddr2" type="text" id="sample6_detailAddress" placeholder="상세주소" required /><br />
+              <input name="empAddr3" type="text" id="sample6_extraAddress" placeholder="참고항목" />
             </div>
           </div>
           <div class="input-field">
             <label>내선번호</label>
-            <input name="" type="text" placeholder="내선번호를 입력해주세요" />
+            <input name="empExphone" type="text" placeholder="내선번호를 입력해주세요" />
           </div>
 
           <input type="submit" value="가입 신청" class="btn solid" />
@@ -137,23 +129,32 @@
           },
         }).open();
       }
-
-      $(function () {
-        //직접입력 인풋박스 기존에는 숨어있다가
-        $("#selboxDirect").hide();
-
-        $("#selbox").change(function () {
-          console.log("직접입력 클릭");
-          //직접입력을 누를 때 나타남
-          if ($("#selbox").val() == "direct") {
-            $("#selbox").hide();
-            $("#selboxDirect").show();
-          } else {
-            $("#selbox").show();
-            $("#selboxDirect").hide();
-          }
-        });
-      });
-    </script>
+      </script>
+      
+      <script>
+	      //유효성 체크
+	      const pwd = document.querySelector("input[name=empPwd]");
+	      const pwd2 = document.querySelector("input[name=empPwd2]");
+	      const regno1 = document.querySelector("input[name=empRegno1]");
+	      const regno2 = document.querySelector("input[name=empRegno2]");
+	      const email = document.querySelector("input[name=empEmail]");
+	      
+	      function check() {
+	    	  if(pwd.value.length == 0 || pwd.value != pwd2.value) {
+	    		  alert("패스워드가 일치하지 않습니다.");
+	    		  return false;
+	    	  }
+	    	  
+	    	  if(regno1.value.length != 6 && regno2.value.length != 7) {
+	    		  alert("주민번호를 다시 작성해주세요.");
+	    		  return false;
+	    	  }
+	    	  
+	    	  if(regno1.value.indexOf('@') == -1) {
+	    		  alert("이메일 주소를 확인해주세요.");
+	    		  return false;
+	    	  }
+	      };
+	</script>
   </body>
 </html>

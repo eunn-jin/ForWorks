@@ -36,7 +36,9 @@
            </div>
            <div class="recent-message d-flex px-4 py-2">
              <div class="name ms-2">
-               <h6 class="mb-3">비밀번호 재설정</h6>
+             	<a data-bs-toggle="modal" data-bs-target="#modalPwdEdit">
+               		<h6 class="mb-3">비밀번호 재설정</h6>
+               	</a>
              </div>
            </div>
          </div>
@@ -74,3 +76,34 @@
          </div>
        </div>
      </div>
+     
+     <!-- 비밀전호 재설정 모달 -->
+    <div class="modal fade" tabindex="1" id="modalPwdEdit">
+	 <div class="modal-dialog modal-dialog-centered" role="document">
+	   <div class="modal-content rounded-4 shadow">
+	     <div class="modal-header p-5 pb-4 border-bottom-0">
+	       <!-- <h1 class="modal-title fs-5" >Modal title</h1> -->
+	        <h1 class="fw-bold mb-0 fs-2">비밀번호 변경</h1>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	
+	      <div class="modal-body p-5 pt-0">
+	        <form class="">
+	          <div class="form-floating mb-3">
+	            <input type="email" class="form-control rounded-4" id="floatingInput" placeholder="name@example.com">
+	            <label for="floatingInput">현재 비밀번호</label>
+	          </div>
+	          <div class="form-floating mb-3">
+	            <input type="password" class="form-control rounded-4" id="floatingPassword" placeholder="Password">
+	            <label for="floatingPassword">새 비밀번호</label>
+	          </div>
+	          <div class="form-floating mb-3">
+	            <input type="password" class="form-control rounded-4" id="floatingPassword" placeholder="Password">
+	            <label for="floatingPassword">새 비밀번호 확인</label>
+	          </div>
+	          <button class="w-100 mb-2 btn btn-lg rounded-4 btn-secondary" type="submit">비밀번호 변경</button>
+	        </form>
+	      </div>
+	    </div>
+	  </div>
+	</div>
