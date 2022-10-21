@@ -4,9 +4,10 @@
 <style>
 	table{margin: auto;}
 tr, td{
-    border: 1px solid black;
+    border: 1px solid rgba(0, 0, 0, 0.144);
     margin: auto;
     text-align: center;
+    vertical-align: middle;
 }
 
 
@@ -43,7 +44,7 @@ table {
                             <table class="table table-striped">
                                 <tr>
                                     <td class="">작성자</td>
-                                    <td  style="border:1px solid black; background : white;">${ntvo.empNo}</td>
+                                    <td  style=" background : white;">${ntvo.empNo}</td>
                                     <td class="danger">대상</td>
                                     <td  style="background: white;">
                                         <div>${ntvo.ntAccess}</div>
@@ -66,7 +67,14 @@ table {
     
                                 <tr>
                                     <td class="danger">첨부파일</td>
-                                    <td colspan="3"><div style="height: 10vh;">첨부파일이 없습니다.</div></td>
+                                    <c:if test="${ntatVo eq null}">
+                                        <td colspan="3"><div style="height: 10vh;">첨부파일이 없습니다.</div></td>
+                                    </c:if>
+                                    <c:if test="${ntatVo ne null}">
+                                        <td colspan="3"><div style="height: 10vh;">
+                                            <img src="${root}/resources/upload/notice/${ntatVo.ntatChange}" width="10%" height="100%">
+                                        </div></td>
+                                    </c:if>
                                 </tr>
                                 
                                 <tr>
@@ -84,5 +92,3 @@ table {
                 </div>
             </div>
         </div>
-
-
