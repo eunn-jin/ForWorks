@@ -1,7 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <%@ page session="false" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> 
 <html>
   <head>
-    <title>Home</title>
+    <title>ForWorks</title>
   </head>
   <body>
     <div id="app">
@@ -26,44 +26,34 @@
                   <h4>급여계좌 설정</h4>
                 </div>
                 <div class="card-body">
-                  <form>
+                  <form action="" method="post">
                     <label class="text-muted mb-2" style="font-weight: 600">은행명</label>
                     <div class="input-group mb-3">
                       <button type="button" class="input-group-text" for="" id="selboxBtn">직접입력</button>
                       <button type="button" id="selboxResetBtn" class="input-group-text" for="" id="selboxBtn">은행선택</button>
-                      <select class="form-select" id="selbox" size="5" required>
-                        <option value="1">농협</option>
-                        <option value="2">신한</option>
-                        <option value="3">IBK기업</option>
-                        <option value="3">하나</option>
-                        <option value="3">우리</option>
-                        <option value="3">국민</option>
-                        <option value="3">카카오뱅크</option>
-                        <option value="3">토스뱅크</option>
-                        <option value="3">케이뱅크</option>
-                        <option value="3">산업</option>
-                        <option value="3">수협</option>
-                        <option value="3">씨티</option>
+                      <select name="empBank" class="form-select" id="selbox" size="5">
+                        <option value="농협">농협</option>
+                        <option value="신한">신한</option>
+                        <option value="IBK기업">IBK기업</option>
+                        <option value="하나">하나</option>
+                        <option value="우리">우리</option>
+                        <option value="국민">국민</option>
+                        <option value="카카오뱅크">카카오뱅크</option>
+                        <option value="토스뱅크">토스뱅크</option>
+                        <option value="케이뱅크">케이뱅크</option>
+                        <option value="산업">산업</option>
+                        <option value="수협">수협</option>
+                        <option value="씨티">씨티</option>
                       </select>
-                      <input type="text" id="selboxDirect" class="form-control" placeholder="은행명을 입력하세요" required/>
+                      <input name="empBank" value="${loginMember.empBank}" type="text" id="selboxDirect" class="form-control" placeholder="은행명을 입력하세요"/>
                     </div>
                     <div class="form-group">
                       <label class="text-muted mb-2" for="basicInput">계좌번호</label>
-                      <input type="text" class="form-control" id="basicInput" placeholder="계좌번호를 입력해주세요" required/>
+                      <input name="empAccount" value="${loginMember.empAccount}" type="text" class="form-control" id="basicInput" placeholder="계좌번호를 입력해주세요" required/>
                     </div>
                     <div class="col-12 d-flex justify-content-end">
-                      <button
-                        type="submit"
-                        class="btn btn-primary me-1 mb-1"
-                      >
-                        변경
-                      </button>
-                      <button
-                        type="reset"
-                        class="btn btn-light-secondary me-1 mb-1"
-                      >
-                        모두 지우기
-                      </button>
+                      <button type="submit" class="btn btn-primary me-1 mb-1">변경</button>
+                      <button type="reset" class="btn btn-light-secondary me-1 mb-1">모두 지우기</button>
                     </div>
                   </form>
                 </div>
