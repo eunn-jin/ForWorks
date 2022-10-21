@@ -8,9 +8,10 @@
 <style>
 	table{margin: auto;}
 tr, td{
-    border: 1px solid black;
+    border: 1px solid rgba(0, 0, 0, 0.144);
     margin: auto;
     text-align: center;
+    vertical-align: middle;
 }
 
 
@@ -31,7 +32,7 @@ table {
 </style>
 
 
-<form action="" method="post" enctype="multipart/form-data" >
+<form action="" method="post" enctype="multipart/form-data" onsubmit="return check()">
     
     
         <div id="wcontent">
@@ -42,9 +43,9 @@ table {
                         <div class="table table-responsive">
                             <table class="table table-striped">
                                 <tr>
-                                    <td class=""><label for="writer" class="form-label">작성자</label> </td>
-                                    <td  style="border:1px solid black; background : white;">1</td>
-                                    <td ><label for="department" class="form-label">대상</label></td>
+                                    <td class=""><label for="empNo" class="form-label">작성자</label> </td>
+                                    <td  style=" background : white;">1</td>
+                                    <td ><label for="ntAccess" class="form-label">대상</label></td>
                                     <td  style="background: white;">
                                         <select name="ntAccess" >
                                             <option value="" selected >접근권한을 선택해주세요</option>
@@ -57,13 +58,13 @@ table {
                                 </tr>
                                 <tr>
                                     <td ><label for="ntTitle" class="form-label">제목</label></td>
-                                    <td colspan="3"><input type="text" class="form-control" name="ntTitle"></td>
+                                    <td colspan="3"><input type="text" class="form-control" name="ntTitle" required></td>
                                 </tr>
     
     
                                 <tr>
                                     <td ><label for="ntContent" class="form-label">내용</label></td>
-                                    <td colspan="3" style=" background : white; text-align: left;"><textarea id="summernote" name="ntContent" class="form-control" style="background-color: white;" ></textarea></td>
+                                    <td colspan="3" style=" background : white; text-align: left;"><textarea id="summernote" name="ntContent" class="form-control" style="background-color: white;" required></textarea></td>
                                 </tr>
     
                                 <tr>
@@ -87,6 +88,14 @@ table {
 </form> 
 
 <script>
+    const x = document.querySelector("select[name=ntAccess].1");
+    console.log(x);
+    function check(){
+
+    }
+</script>
+
+<script>
 $(document).ready(function() {
 	//여기 아래 부분
 	$('#summernote').summernote({
@@ -95,8 +104,42 @@ $(document).ready(function() {
 		  maxHeight: null,             // 최대 높이
 		  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
 		  lang: "ko-KR",					// 한글 설정
-		  placeholder: '최대 2048자까지 쓸 수 있습니다'	//placeholder 설정
-          
+		  placeholder: '최대 2048자까지 쓸 수 있습니다'	//placeholder 설정          
 	});
 });
 </script>   
+
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#summernote').summernote({
+                    height: 300,
+                    minHeight: null,
+                    maxHeight: null,
+                    focus: true,
+                    callbacks: {
+                        onImageUpload: function (files, editor, welEditable) {
+                            for (var i = files.length - 1; i >= 0; i--) {
+                                sendFile(files[i], this);
+                            }
+                        }
+                    }
+                });
+        });
+        function sendFile(file, el) {
+            var form_data = new FormData();
+                    form_data.append('file', file);
+                    $.ajax({
+                        data: form_data,
+                        type: "POST", url: '/image',
+                        cache: false, contentType: false,
+                        enctype: 'multipart/form-data',
+                        processData: false,
+                        success: function (url) {
+                            $(el).summernote('editor.insertImage', url);
+                            $('#imageBoard > ul').append('<li><img src="' + url + '" width="480" height="auto" /></li>');
+                        }
+                    });
+                }
+            </script>
+

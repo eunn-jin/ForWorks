@@ -48,24 +48,44 @@ public class NoticeServiceImpl implements NoticeService{
 		
 		
 	}
+	//첨부파일 확인
+	@Override
+	public NoticeAttachmentsVo checkFile(String no) {
+		return dao.checkFile(sst, no);
+	}
 
+	
 	//공지사항 저장
 	@Override
 	public int insertNotice(NoticeVo ntvo, NoticeAttachmentsVo ntatVo) {
-		
-		System.out.println("서비스:: 파일이름::"+ntvo.getNtFileName());
+
 		//공지사항 테이블에 저장
 		int result = dao.insertNotice(sst, ntvo);
 		
 		int result2=0;
 		//파일이 있는경우 
-		if (ntvo.getNtFileName() != null) {
+		if (ntatVo!= null) {
+			//System.out.println("공지사항 파일insert 시작");
 			result2 = dao.insertNtAt(sst,ntatVo);
 		}
 		
-		return result*result2;
+		return result+result2;
 	}
-
+	
+	//공지사항 정보수정
+	@Override
+	public int edit(NoticeVo ntvo, NoticeAttachmentsVo ntatVo, String no) {
+		
+		//공지사항 수정
+		int result = dao.editNt(sst, ntvo);
+		
+		int result2 =0;
+		//공지사항 파일 수정
+		if (ntatVo != null) {
+			result2 = dao.editNtat(sst,ntatVo);
+		}
+		return 0;
+	}
 
 
 

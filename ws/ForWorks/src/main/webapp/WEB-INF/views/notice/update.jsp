@@ -3,7 +3,7 @@
 <%@ page session="false" %>
 <html>
 <head>
-	<title>Home</title>
+	<title>공지사항 수정</title>
 </head>
 <link rel="stylesheet" href="${root}/resources/css/sjy.css">
 <body>

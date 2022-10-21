@@ -16,9 +16,15 @@ public interface NoticeService{
 
 	//공지사항 상세조회
 	NoticeVo selectOne(String no);
+	//첨부파일 확인
+	NoticeAttachmentsVo checkFile(String no);
 	
 	//공지사항 저장
 	int insertNotice(NoticeVo ntvo, NoticeAttachmentsVo ntatVo);
+
+	//공지사항 정보수정
+	int edit(NoticeVo ntvo, NoticeAttachmentsVo ntatVo, String no);
+	
 
 
 }

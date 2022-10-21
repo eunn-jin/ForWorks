@@ -18,6 +18,9 @@ public interface NoticeDao {
 	
 	//공지사항 상세조회
 	NoticeVo selectOne(SqlSessionTemplate sst, String no);
+	//첨부파일 확인
+	NoticeAttachmentsVo checkFile(SqlSessionTemplate sst, String no);
+	
 	//공지사항 조회수 증가
 	int increaseCnt(SqlSessionTemplate sst, String no);
 	
@@ -25,6 +28,11 @@ public interface NoticeDao {
 	int insertNotice(SqlSessionTemplate sst, NoticeVo ntvo);
 	//공지사항 작성(파일)
 	int insertNtAt(SqlSessionTemplate sst, NoticeAttachmentsVo ntatVo);
+
+	//공지사항 수정
+	int editNt(SqlSessionTemplate sst, NoticeVo ntvo);
+	//공지사항 파일수정
+	int editNtat(SqlSessionTemplate sst, NoticeAttachmentsVo ntatVo);
 
 
 }
