@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.forworks.attendance.dao.AttendanceDao;
+import com.kh.forworks.attendance.vo.WorkVo;
 
 @Service
 public class AttendanceServiceImpl implements AttendanceService {
@@ -19,13 +20,19 @@ public class AttendanceServiceImpl implements AttendanceService {
 	}
 
 	@Override
-	public int goWork(String inTime) {
+	public WorkVo getWorkInfo(int empNo) {
+		WorkVo vo = dao.selectWork(sst, empNo);
+//		int x = dao.selectMonthWork(sst, empNo);
+//		vo.setMonthWorkWithNum(x);
 		
-		int result = dao.insertInTime(sst, inTime);
-		
-		return result;
+		return vo;
 	}
-	
-	
+
+	@Override
+	public int goWork(WorkVo work) {
+		return dao.insertInTime(sst, work);
+	}
+
+		
 
 }
