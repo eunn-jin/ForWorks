@@ -1,5 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
+<%
+String yy = request.getParameter("year");
+String mm = request.getParameter("month");
+
+/*Calendar cal = Calendar.getInstance();
+
+int y = cal.get(Calendar.YEAR);
+int m = cal.get(Calendar.MONTH);*/
+
+if (yy != null && mm != null && !yy.equals("") && !mm.equals("")) {
+	/*y = Integer.parseInt(yy);*/
+	/*m = Integer.parseInt(mm)-1;*/
+}
+
+%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -77,16 +92,23 @@
    class schedule {
     	
     }
-    
+
+    const $calendar = document.querySelector(".calendar");
+
     const Canendar = {
     		
     		int() {
     			const today = new Date();
-    			Calendar.showDates();
+    			Calendar.showDates(today.getFullYear(), today.getMonth()+1);
     		},
     		
     		showDates(y,m) {
-    			for(let i = -(today.getDay()); i )
+    			for(let i = -(today.getDay()); i ) <= Calendar.getLastDay(y,m)
+                const before = $calendar.querySelector(".date");
+                before.forEach(v => v.remove());
+
+                $calendar.innerHTML +=
+                
     		}		
     };
     
