@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page session="false" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="root" value="${pageContext.request.contextPath}" />
 <html>
   <head>
-    <title>Home</title>
+    <title>ForWorks</title>
     <style>
 		.input-size {
 		    max-width: 350px;
@@ -60,49 +60,49 @@
 	                        </button>
 	                      </div>
 						</div>
-				      <div class="col themed-grid-col"><h5 class="mt-4">홍길동</h5></div>
+				      <div class="col themed-grid-col"><h5 class="mt-4">${loginMember.empName}</h5></div>
 				      <div class="col themed-grid-col info-flex"><h6 class=" info-span">부서</h6><h6>직급</h6></div>
-				      <div class="col themed-grid-col info-flex"><span class=" info-span">개발부</span><span>팀장</span></div>
+				      <div class="col themed-grid-col info-flex"><span class=" info-span">${loginMember.deptName}</span><span>${loginMember.posName}</span></div>
 				     </div>
                      <div class="row row-cols-1 row-cols-md-4 gy-4 mt-0">
 				      <div class="col themed-grid-col"><h6>아이디</h6></div>
-				      <div class="col themed-grid-col">개발부</div>
+				      <div class="col themed-grid-col">${loginMember.empId}</div>
 				      <div class="col themed-grid-col"><h6>내선번호</h6></div>
-				      <div class="col themed-grid-col">개발부</div>
+				      <div class="col themed-grid-col">${loginMember.empExphone}</div>
 				      <div class="col themed-grid-col"><h6>주민번호</h6></div>
-				      <div class="col themed-grid-col">개발부</div>
+				      <div class="col themed-grid-col">${loginMember.empRegno}</div>
 				      <div class="col themed-grid-col"><h6>입사일</h6></div>
-				      <div class="col themed-grid-col">개발부</div>
+				      <div class="col themed-grid-col">${loginMember.empJdate}</div>
 				    </div>
                   </div>
                   <div class="divider divider-left mb-3">
                     <div class="divider-text"><h6>연락처 변경</h6></div>
                   </div>
                   <div class="user-edit">
-	                  <form>
+	                  <form action="" method="post">
 	                    <div class="row mb-3">
 	                      <label for="inputEmail3" class="col-sm-2 col-form-label" style="width: 90px">이메일</label>
 	                      <div class="col-sm-10">
-	                        <input type="email" class="form-control input-size" id="inputEmail3" placeholder="someone@example.com" required />
+	                        <input name="empEmail" value="${loginMember.empEmail}" type="email" class="form-control input-size" id="inputEmail3" placeholder="someone@example.com" required />
 	                      </div>
 	                    </div>
 	                    <div class="row mb-3">
-	                      <label for="inputPassword3" class="col-sm-2 col-form-label" style="width: 90px">휴대전화</label>
+	                      <label for="inputPhone" class="col-sm-2 col-form-label" style="width: 90px">휴대전화</label>
 	                      <div class="col-sm-10">
-	                        <input type="password" class="form-control input-size" id="inputPassword3" placeholder="01012345678" required />
+	                        <input name="empPhone" value="${loginMember.empPhone}" type="text" class="form-control input-size" id="inputPhone" placeholder="01012345678" maxlength="11" required />
 	                      </div>
 	                    </div>
 	                    <div class="row mb-3">
 	                      <label for="inputPassword3" class="col-sm-2 col-form-label" style="width: 90px">주소</label>
 	                      <div class="col-sm-10">
 	                        <div class="d-flex input-size">
-	                          <input class="form-control" type="text" id="sample6_postcode" placeholder="우편번호" required />
+	                          <input name="empPcode" value="${loginMember.empPcode}" class="form-control" type="text" id="sample6_postcode" placeholder="우편번호" maxlength="5" required />
 	                          <input class="btn btn-outline-primary" type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" />
 	                        </div>
-	                        <input class="form-control input-size" type="text" id="sample6_address" placeholder="주소" required />
-	                        <input class="form-control input-size" type="text" id="sample6_detailAddress" placeholder="상세주소" required />
+	                        <input name="empAddr1" value="${loginMember.empAddr1}" class="form-control input-size" type="text" id="sample6_address" placeholder="주소" required />
+	                        <input name="empAddr2" value="${loginMember.empAddr2}" class="form-control input-size" type="text" id="sample6_detailAddress" placeholder="상세주소" required />
 	                        <div class="d-flex">
-	                          <input class="form-control input-size" type="text" id="sample6_extraAddress" placeholder="참고항목" />
+	                          <input name="empAddr3" value="${loginMember.empAddr3}" class="form-control input-size" type="text" id="sample6_extraAddress" placeholder="참고항목" />
 	                          <button type="submit" class="btn btn-primary me-1 mb-1" style="margin-left: 20px">변경하기</button>
 	                        </div>
 	                      </div>
@@ -158,7 +158,7 @@
             }
             // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
             if (extraAddr !== "") {
-              extraAddr = " (" + extraAddr + ")";
+              extraAddr = "(" + extraAddr + ")";
             }
             // 조합된 참고항목을 해당 필드에 넣는다.
             document.getElementById("sample6_extraAddress").value = extraAddr;

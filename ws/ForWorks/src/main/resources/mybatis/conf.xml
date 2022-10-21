@@ -8,7 +8,15 @@
 	
 	<typeAliases>
 		<typeAlias type="com.kh.forworks.bonus.vo.BenefitVo" alias="BenefitVo"/>
-		<typeAlias type="com.kh.forworks.bonus.vo.BonusVo" alias="BonusVo"/>
-		<typeAlias type="com.kh.forworks.attendance.vo.WorkVo" alias="WorkVo"/>		
+		<typeAlias type="com.kh.forworks.bonus.vo.BonusVo" alias="BonusVo"/>	
+		<typeAlias type="com.kh.forworks.approv.vo.ApprovDocumentVo" alias="ApprovDocumentVo"/>
+		<typeAlias type="com.kh.forworks.approv.vo.DocApprovVo" alias="DocApprovVo"/>
+		<typeAlias type="com.kh.forworks.approv.vo.DocCoopVo" alias="DocCoopVo"/>
+		<typeAlias type="com.kh.forworks.approv.vo.DocFileVo" alias="DocFileVo"/>
+		<typeAlias type="com.kh.forworks.approv.vo.DocFormVo" alias="DocFormVo"/>
+		<typeAlias type="com.kh.forworks.approv.vo.DocReferVo" alias="DocReferVo"/>
+		<typeAlias type="com.kh.forworks.approv.vo.DocSignVo" alias="DocSignVo"/>
+		<typeAlias type="com.kh.forworks.approv.vo.NoElecDocVo" alias="NoElecDocVo"/>
+    <typeAlias type="com.kh.forworks.attendance.vo.WorkVo" alias="WorkVo"/>
 	</typeAliases>
 </configuration>
