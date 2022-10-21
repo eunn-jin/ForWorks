@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <header style="width: 100%">
   <nav class="navbar navbar-expand navbar-light navbar-top pt-4" style="padding-left: 0; padding-right: 0">
     <div class="container-fluid" style="padding-left: 0">

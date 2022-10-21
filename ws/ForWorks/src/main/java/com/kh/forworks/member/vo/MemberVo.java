@@ -1,5 +1,7 @@
 package com.kh.forworks.member.vo;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import lombok.Data;
 
 @Data
@@ -14,7 +16,9 @@ public class MemberVo {
 	private String empEmail;
 	private String empPhone;
 	private String empPcode;
-	private String empAddr;
+	private String empAddr1;
+	private String empAddr2;
+	private String empAddr3;
 	private String empExphone;
 	private String empBank;
 	private String empAccount;
@@ -31,7 +35,13 @@ public class MemberVo {
 	
 	private String empRegno1;
 	private String empRegno2;
-	private String empAddr1;
-	private String empAddr2;
-	private String empAddr3;
+	
+	private String posName;
+	private String deptName;
+	
+	private String nowPwd;
+	
+	public void encodePwd(PasswordEncoder pwdEnc) {
+		this.empPwd = pwdEnc.encode(this.empPwd);
+	}
 }
