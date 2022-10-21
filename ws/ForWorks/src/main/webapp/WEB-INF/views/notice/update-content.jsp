@@ -4,9 +4,10 @@
 <style>
 	table{margin: auto;}
 tr, td{
-    border: 1px solid black;
+    border: 1px solid rgba(0, 0, 0, 0.144);
     margin: auto;
     text-align: center;
+    vertical-align: middle;
 }
 
 
@@ -31,7 +32,7 @@ table {
 
 <link rel="stylesheet" href="${root }/resources/css/summernote/summernote-lite.css">
 
-<form action="">
+<form action="" method="post" enctype="multipart/form-data">
     
     
         <div id="wcontent">
@@ -42,34 +43,56 @@ table {
                         <div class="table table-responsive">
                             <table class="table table-striped" >
                                 <tr>
-                                    <td class="">작성자</td>
-                                    <td  style="border:1px solid black; background : white;">${ntvo.empNo}</td>
-                                    <td class="danger">대상</td>
+                                    <td class=""><label for="empNo" class="form-label">작성자</label> </td>
+                                    <td  style="background : white;">${ntvo.empNo}</td>
+                                    <td ><label for="ntAccess" class="form-label">대상</label></td>
                                     <td  style="background: white;">
-                                        <select name="" id="" >
+                                        <select name="ntAccess" id="" >
                                             <option value="" selected >부서를 선택해주세요</option>
-                                            <option>A</option>
-                                            <option>B</option>
-                                            <option>C</option>
-                                            <option>D</option>
+                                            <option value="A">전체</option>
+                                            <option value="B">부서B</option>
+                                            <option value="C">부서C</option>
+                                            <option value="D">부서D</option>
                                         </select>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="danger">제목</td>
-                                    <td colspan="3"><input type="text" class="form-control" name="subject" value="${ntvo.ntTitle}"></td>
+                                    <td ><label for="ntTitle" class="form-label">제목</label></td>
+                                    <td colspan="3"><input type="text" class="form-control" name="ntTitle" value="${ntvo.ntTitle}"></td>
                                 </tr>
     
     
                                 <tr>
-                                    <td class="danger">글내용</td>
-                                    <td colspan="3" style=" background : white; text-align: left;"><textarea id="summernote" name="content" class="form-control" style="background-color: white;" 
+                                    <td ><label for="ntContent" class="form-label">내용</label></td>
+                                    <td colspan="3" style=" background : white; text-align: left;"><textarea id="summernote" name="ntContent" class="form-control" style="background-color: white;" 
                                         >${ntvo.ntContent}</textarea></td>
                                 </tr>
-    
+                                
+                                
+                                <tr >
+                                    <td ><label for="ntFileName" class="form-label">첨부<br>파일</label></td>
+                                    <td colspan="3" style="background: white;"><input type="file" class="form-control" name="ntFileName"></td>
+                                </tr>
+
                                 <tr>
-                                    <td class="danger">첨부파일</td>
-                                    <td colspan="3"><input type="file" class="form-control" name="f"></td>
+                                    <td style="width:10%;">선택<br>파일</td>
+                                    <td style="width:40%; background: white;"><img id="notice_img" src="" alt=""></td>
+
+                                    <td style="width:10%;">등록<br>파일</td>
+                                    <td style="width:40%; background: white;">
+                                        
+                                        <c:if test="${ntatVo eq null}">
+                                            <div>첨부파일이 없습니다.</div>
+                                        </c:if>
+                                        <c:if test="${ntatVo ne null}">
+                                            <div>
+                                                <img src="${root}/resources/upload/notice/${ntatVo.ntatChange}" width="128px" height="128px">
+                                            </div>
+                                        </c:if>
+                                    </td>
+
+                                    
+
                                 </tr>
                                 
                                 <tr>
@@ -86,6 +109,7 @@ table {
     
 
 </form> 
+
 
 <script>
 $(document).ready(function() {
@@ -111,4 +135,42 @@ $(document).ready(function() {
             
         });
     })
+</script>
+
+<script>
+    console.log('${ntvo.ntAccess}');
+    const ac = '${ntvo.ntAccess}';
+    if(ac === 'A'){
+        //document.querySelector('input[value="F"]').checked = true;
+        $('option[value="A"]').prop('selected',true);
+    }else if(ac === 'B'){
+        //document.querySelector('input[value="M"]').checked = true;
+        $('option[value="B"]').prop('selected',true);
+    }
+</script>
+
+<script>
+	//파일 태그 가져와서
+	const fileInputTag = document.querySelector('input[name=ntFileName]');
+	
+	//파일 변화가 일어나면 어떤행동
+	fileInputTag.onchange = function(){
+		const imgTag = document.querySelector('#notice_img');
+		
+		if(fileInputTag.files.length>0){
+			//파일 선택 되었을때
+			const fr = new FileReader();
+			//파라미터로 방금 로드한 데이터를 받기
+			fr.onload = function(data){
+				console.log(data);
+				
+				imgTag.src= data.target.result; //target의 result값 가져오기
+			}
+			fr.readAsDataURL(fileInputTag.files[0]);//파일 읽기
+		}else{
+			imgTag.src = "";
+		}
+	
+	}
+	
 </script>
