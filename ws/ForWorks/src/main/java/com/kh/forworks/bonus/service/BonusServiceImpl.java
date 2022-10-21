@@ -53,7 +53,13 @@ public class BonusServiceImpl implements BonusService {
 	//수당 수정
 	@Override
 	public List<BenefitVo> edit(BenefitVo vo) {
-		int result = dao.updateOne(sst,vo);
+		int result = 0;
+		int no = Integer.parseInt(vo.getNo());
+		if(no == 0) {
+			result = dao.insertBenefitEmp(sst,vo);
+		}else {
+			result = dao.updateOne(sst,vo);			
+		}
 		List<BenefitVo> updatedBenefit = null;
 		if(result ==1 ) {
 			updatedBenefit = this.selectOne(vo.getEmpNo());

@@ -21,6 +21,8 @@ public interface BonusDao {
 	List<BenefitVo> selectOne(SqlSessionTemplate sst, String no);
 	//수당수정
 	int updateOne(SqlSessionTemplate sst, BenefitVo vo);
+	//직원의 수당내역등록
+	int insertBenefitEmp(SqlSessionTemplate sst, BenefitVo vo);
 
 	//상여금 목록조회(화면)
 	List<BonusVo> selectList(SqlSessionTemplate sst);

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.forworks.bonus.vo.BenefitVo;
 import com.kh.forworks.bonus.vo.BonusVo;
+import com.kh.forworks.member.vo.MemberVo;
 
 @Repository
 public class BonusDaoImpl implements BonusDao {
@@ -55,6 +56,11 @@ public class BonusDaoImpl implements BonusDao {
 	@Override
 	public int insertBonus(SqlSessionTemplate sst,BonusVo bv) {
 		return sst.insert("bonusMapper.insertBonus" , bv);
+	}
+	//직원의 수당정보등록
+	@Override
+	public int insertBenefitEmp(SqlSessionTemplate sst, BenefitVo vo) {
+		return sst.insert("bonusMapper.insertBenefit" , vo);
 	}
 
 }

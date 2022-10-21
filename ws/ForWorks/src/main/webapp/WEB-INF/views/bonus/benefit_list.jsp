@@ -212,7 +212,7 @@ function changeDepart(){
 		type : 'POST',
 		data : {depart : depart},
 		success : function(result){
-            alert("o");
+            $('#center').empty();
             console.log(result[0]);
             //document.getElementById('center').appendChild('<div></div>');
             //*************************************확인하기********************

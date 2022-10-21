@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import com.kh.forworks.bonus.service.BonusService;
 import com.kh.forworks.bonus.vo.BenefitVo;
 import com.kh.forworks.bonus.vo.BonusVo;
+import com.kh.forworks.member.vo.MemberVo;
 
 @Controller
 @RequestMapping("bonus")
