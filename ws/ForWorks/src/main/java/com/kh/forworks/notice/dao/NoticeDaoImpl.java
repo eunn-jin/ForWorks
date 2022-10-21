@@ -34,6 +34,12 @@ public class NoticeDaoImpl implements NoticeDao{
 	public NoticeVo selectOne(SqlSessionTemplate sst, String no) {
 		return sst.selectOne("noticeMapper.selectOne",no);
 	}
+	//첨부파일 확인
+	@Override
+	public NoticeAttachmentsVo checkFile(SqlSessionTemplate sst, String no) {
+		return sst.selectOne("noticeMapper.checkFile",no);
+	}
+	
 	//게시글 조회수 증가
 	@Override
 	public int increaseCnt(SqlSessionTemplate sst, String no) {
@@ -50,6 +56,20 @@ public class NoticeDaoImpl implements NoticeDao{
 	public int insertNtAt(SqlSessionTemplate sst, NoticeAttachmentsVo ntatVo) {
 		return sst.insert("noticeMapper.insertNtAt", ntatVo);
 	}
+	
+	//공지사항 수정
+	@Override
+	public int editNt(SqlSessionTemplate sst, NoticeVo ntvo) {
+		return sst.update("noticeMapper.editNt",ntvo);
+	}
+	
+	//공지사항파일 수정
+	@Override
+	public int editNtat(SqlSessionTemplate sst, NoticeAttachmentsVo ntatVo) {
+		return sst.update("noticeMapper.editNtat",ntatVo);
+	}
+
+
 
 
 }
