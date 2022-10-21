@@ -104,8 +104,7 @@
         font-size: 14px;
         display: grid;
         border-top: 1px solid black;
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(2, 0.5fr);
+        grid-template-columns: repeat(3, 1fr);
         width: 100%;
     }
 
@@ -200,10 +199,9 @@
                             <p>내용</p>
                         </div>
                         <div class="detail-etc default-text">
-                            <div class="etc-item">내용</div>
-                            <div class="etc-item">내용</div>
-                            <div class="etc-item">내용</div>
-                            <div class="etc-item">내용</div>
+                            <div class="etc-item">문서번호</div>
+                            <div class="etc-item">문서생성일자</div>
+                            <div class="etc-item">문서결제일자</div>
                         </div>
                         <div class="detail-part default-text">처부</div>
                         <div class="detail-position default-text">직위</div>
