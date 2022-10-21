@@ -100,18 +100,12 @@
                <section class="section">
 					<div id="wrap">
 				        <div id="search">
-				            <select name="depart" id="depart" onchange="changeDepart()">
-				            		<option value="">부서</option>
-				            	<c:forEach items="${departList}" var="d">
-					                <option value="${d}">${d}</option>
-				            	</c:forEach>
-				            </select>
-				            <button onclick="empBenefit()">검색</button>
                             <span>개발팀</span>
 				            <span>|</span>
                             <span>홍길동</span>
                             <span>|</span>
                             <span>생년월일 : </span><span>1990.01.01</span>
+                            <div style="display: none;"><input type="hidden" name="empNo" id="empNo" value="${empNo}"></div>
 				        </div>
                         
 				        <div id="center">
@@ -121,13 +115,23 @@
 				        <div class="div-top">저장</div>
 
                             
-                            <c:forEach items="${benefitVo}" var="bv">
-                                <div style="display: none;"><input type="hidden" name="no" id="no" value="${bv.no}"></div>
-                                <div id="cate">${bv.cate}</div>
-						        <div><input type="text" id="money" name="money" value="${bv.amount}" class="input_css" placeholder="0">원</div>
-						        <div>2022-10-10</div>
-                                <div><input type="button" value="저장" onclick="editBenefit()"></div>
-					        </c:forEach>
+                          <!--<c:forEach items="${benefitVo}" var="bv" varStatus="st">
+                                    <div style="display: none;"><input type="hidden" name="no" id="no" value="${bv.no}"></div>
+                                    <div id="cate">"${bv.cate}"</div>
+                                    <div><input type="text" id="money-${st.index}" name="money" value="${bv.amount}" class="input_css" placeholder="0">원</div>
+                                    <div>2022-10-10</div>
+                                    <div><input type="button" value="저장" onclick="editBenefit($[st.index])"></div>
+					        </c:forEach>-->
+                            
+                            <c:forEach items="${benefitVo}" var="bv" varStatus = "st">
+                                <div style="display: none;"><input type="hidden" name="no" id="no-${st.index}" value="${bv.no}"></div>
+                                <div id="cate-${st.index}">${bv.cate}</div>
+                                <div><input type="text" id="money-${st.index}" name="money" value="${bv.amount}" class="input_css" placeholder="0">원</div>
+                                <div>2022-10-10</div>
+                                <div><input type="button" value="저장" onclick="editBenefit(${st.index})"></div>
+                        </c:forEach>
+                           
+
 					      
 				        </div>
 				    
@@ -144,17 +148,18 @@
 
 <!-- 항목 별 값 저장 -->
 <script>
-function editBenefit(){
-	var no = document.getElementById("no").value;
-	var cate = document.getElementById("cate").innerText;
-	var money = document.getElementById("money").value;
+function editBenefit(num){
+    var empNo = document.getElementById("empNo").value;
+	var no = document.getElementById("no-"+num).value;
+	var cate = document.getElementById("cate-"+num).innerText;
+	var money = document.getElementById("money-" + num).value;
 	
 	$.ajax({
 		url : "/ForWorks/bonus/detail/edit",
 		type : "POST",
 		data : {
 			no : no,
-            empNo : 1,/*test위한 값. empNo 받아오기!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+            empNo : empNo,/*test위한 값. empNo 받아오기!!!!!!!!!!!!!!!!!!!!!!!!!!*/
 			cate : cate,
 			amount : money
 		},

@@ -51,5 +51,10 @@ public class BonusDaoImpl implements BonusDao {
 	public List<BonusVo> selectList(SqlSessionTemplate sst) {
 		return sst.selectList("bonusMapper.bonusList");
 	}
+	//상여금 등록 ajax
+	@Override
+	public int insertBonus(SqlSessionTemplate sst,BonusVo bv) {
+		return sst.insert("bonusMapper.insertBonus" , bv);
+	}
 
 }

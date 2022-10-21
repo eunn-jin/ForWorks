@@ -40,12 +40,22 @@ public class BonusController {
 	public String memlist() {
 		return "bonus/bonus_mem_list";
 	}
+	
+	//상여금 등록ajax
+	@PostMapping("add")
+	@ResponseBody
+	public String add(BonusVo bv) {
+		System.out.println(bv);
+		int result = bs.addBonus(bv);
+		return ""+result;
+	}
+	
+	
 	//수당관리 직원리스트 페이지
 	@GetMapping("benefit")
 	public String benefit(Model model) {
 		List departList = bs.selectDepartList();
-		List benefitList = bs.selectList();
-		model.addAttribute("benefitList",benefitList);
+		
 		model.addAttribute("departList",departList);
 		return "bonus/benefit_list";
 	}
@@ -73,8 +83,13 @@ public class BonusController {
 	//직원별 수당정보조회
 	@GetMapping("detail/{no}")
 	public String detail(@PathVariable String no,Model model ) {
+		//수당카테고리 조회
+		List benefitList = bs.selectList();
+		model.addAttribute("benefitList",benefitList);
+		
 		List<BenefitVo> bv = bs.selectOne(no);
 		model.addAttribute("benefitVo",bv);
+		model.addAttribute("empNo",no);
 		System.out.println("출력"+bv);
 		return "bonus/benefit_list_detail";
 	}
@@ -88,10 +103,5 @@ public class BonusController {
 		return "redirect:/bonus/detail/" + vo.getEmpNo();
 	}
 	
-	//???????
-	@PostMapping("empBenefit")
-	public String SelectEmpBenefit(String depart, String emp) {
-		BenefitVo bv = bs.selectEmpBenefit(depart, emp);
-		return "";
-	}
+	
 }

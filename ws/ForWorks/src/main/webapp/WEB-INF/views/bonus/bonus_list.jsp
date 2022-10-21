@@ -19,6 +19,7 @@
         grid-template-rows: repeat(11,30px);
         text-align: center;
         background-color: white;
+        overflow: scroll;
     }
     .div-top{
         font-size: larger;
@@ -211,6 +212,10 @@
        </div>
 
 </div>
+<!--현재날짜 기본설정-->
+<script>
+    document.getElementById("date").valueAsDate = new Date();
+</script>
 <!--상여금 등록 ajax-->
 <script>
    
@@ -219,15 +224,19 @@
         var date = document.getElementById("date").value;
         var content = document.getElementById("content").value;
         $.ajax({
-            url : ,
-            type: ,
+            url : "/ForWorks/bonus/add",
+            type: "POST",
             data : {
                 title : bt,
-                date : date,
+                bdate : date,
                 content : content
             },
             success : function(data){
-                alert("통신성공");
+                if(data == 1){
+                    alert("등록되었습니다");
+                }else{
+                    alert("다시 시도해주세요");
+                }
             },
             error : function(){
                 alert("통신실패")
