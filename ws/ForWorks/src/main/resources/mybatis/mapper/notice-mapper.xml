@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="noticeMapper">
 
+	<!--  -->
 	<select id="selectTotalCount" resultType="int">
 		SELECT COUNT(NTNO)
 		FROM NOTICE
@@ -39,18 +40,28 @@
 		AND NTNO = #{ntno}
 	</select>
 	
+	<select id="checkFile"  resultType="com.kh.forworks.noticeattachments.vo.NoticeAttachmentsVo">
+		SELECT *
+		FROM NOTICE_ATTACHMENTS
+		WHERE NTNO = #{no}
+	</select>
+	
 	<insert id="insertNotice">
-		INSERT INTO NOTICE(NTNO, EMP_NO, NT_TITLE, NT_CONTENT, NT_ACCESS , NT_FILE_NAME)
-		VALUES(SEQ_NOTICE_NTNO.NEXTVAL, #{empNo}, #{ntTitle}, #{ntContent}, #{ntAccess}, #{ntFileName})
+		INSERT INTO NOTICE(NTNO, EMP_NO, NT_TITLE, NT_CONTENT, NT_ACCESS )
+		VALUES(SEQ_NOTICE_NTNO.NEXTVAL, #{empNo}, #{ntTitle}, #{ntContent}, #{ntAccess} )
 	</insert>
 	
 	<insert id="insertNtAt">
 		INSERT INTO NOTICE_ATTACHMENTS
 		(NTAT_NO, NTAT_CHANGE, NTAT_ORIGIN, NTAT_PATH, NTNO)
 		VALUES
-		(SEQ_NTATTACHMENTS_NTATNO, #{ntatChange}, #{ntatOrigin}, #{ntatPath}, SEQ_NOTICE_NTNO.CURRVAL)
-		
-		
-		
+		(SEQ_NTATTACHMENTS_NTATNO.NEXTVAL, #{ntatChange}, #{ntatOrigin}, #{ntatPath}, SEQ_NOTICE_NTNO.CURRVAL)
 	</insert>
+	
+	
+	<update id="editNt">
+	</update>
+	
+	<update id="editNtat">
+	</update>
 </mapper>
