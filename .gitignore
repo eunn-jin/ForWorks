@@ -100,3 +100,4 @@ replay_pid*
 
 # End of https://www.toptal.com/developers/gitignore/api/eclipse,java
 ws/ForWorks/src/main/resources/config/database.properties
+ws/ForWorks/src/main/webapp/META-INF/MANIFEST.MF

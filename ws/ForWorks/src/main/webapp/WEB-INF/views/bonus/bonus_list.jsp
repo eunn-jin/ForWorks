@@ -19,6 +19,7 @@
         grid-template-rows: repeat(11,30px);
         text-align: center;
         background-color: white;
+        overflow: scroll;
     }
     .div-top{
         font-size: larger;

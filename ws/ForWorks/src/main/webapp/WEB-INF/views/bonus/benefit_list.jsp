@@ -219,7 +219,7 @@ function changeDepart(){
             for(var i = 0 ; i < result.length ; i++){
 
                 $('#center').append(
-                    '<div class="div-top">'+depart+'</div><div class="div-top">'+result[0]+'</div><div class="div-top">'+3+'</div><div class="div-top">'+4+'</div>');
+                    '<div class="div-top">'+depart+'</div><div class="div-top"><a href="${root}/bonus/detail">'+result[i]+'</a></div><div class="div-top">'+3+'</div><div class="div-top">'+4+'</div>');
             }
 		},
         error:function(){

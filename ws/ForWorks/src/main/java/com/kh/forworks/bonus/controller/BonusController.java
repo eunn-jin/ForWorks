@@ -45,6 +45,7 @@ public class BonusController {
 	@PostMapping("add")
 	@ResponseBody
 	public String add(BonusVo bv) {
+		System.out.println(bv);
 		int result = bs.addBonus(bv);
 		return ""+result;
 	}
@@ -54,8 +55,7 @@ public class BonusController {
 	@GetMapping("benefit")
 	public String benefit(Model model) {
 		List departList = bs.selectDepartList();
-		List benefitList = bs.selectList();
-		model.addAttribute("benefitList",benefitList);
+		
 		model.addAttribute("departList",departList);
 		return "bonus/benefit_list";
 	}
@@ -83,6 +83,10 @@ public class BonusController {
 	//직원별 수당정보조회
 	@GetMapping("detail/{no}")
 	public String detail(@PathVariable String no,Model model ) {
+		//수당카테고리 조회
+		List benefitList = bs.selectList();
+		model.addAttribute("benefitList",benefitList);
+		
 		List<BenefitVo> bv = bs.selectOne(no);
 		model.addAttribute("benefitVo",bv);
 		model.addAttribute("empNo",no);
@@ -99,10 +103,5 @@ public class BonusController {
 		return "redirect:/bonus/detail/" + vo.getEmpNo();
 	}
 	
-	//???????
-	@PostMapping("empBenefit")
-	public String SelectEmpBenefit(String depart, String emp) {
-		BenefitVo bv = bs.selectEmpBenefit(depart, emp);
-		return "";
-	}
+	
 }

@@ -44,12 +44,7 @@ public class BonusServiceImpl implements BonusService {
 		System.out.println("서비스에서 depart" + depart);
 		return dao.selectEmp(sst , depart);
 	}
-	//삭제???
-	@Override
-	public BenefitVo selectEmpBenefit(String depart, String emp) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 	//받아온 회원번호 직원의 수당조회
 	@Override
 	public List<BenefitVo> selectOne(String no) {
@@ -62,6 +57,7 @@ public class BonusServiceImpl implements BonusService {
 		List<BenefitVo> updatedBenefit = null;
 		if(result ==1 ) {
 			updatedBenefit = this.selectOne(vo.getEmpNo());
+			System.out.println("수정 후 vo ::: " + updatedBenefit);
 		}
 		return updatedBenefit; 
 	}
