@@ -1,6 +1,7 @@
 package com.kh.forworks.member.vo;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
 
@@ -10,7 +11,6 @@ public class MemberVo {
 	private String opLevel;
 	private String empId;
 	private String empPwd;
-	private String empPwd2;
 	private String empName;
 	private String empRegno;
 	private String empEmail;
@@ -33,13 +33,21 @@ public class MemberVo {
 	private String empEdate;
 	private String color;
 	
+	private String posName;
+	private String deptName;
+
+	//회원가입
 	private String empRegno1;
 	private String empRegno2;
 	
-	private String posName;
-	private String deptName;
-	
+	//비밀번호 재설정
 	private String nowPwd;
+	
+	//프로필사진
+	private MultipartFile profile;
+	
+	//주소록 중요
+	private String bmEmpNo;
 	
 	public void encodePwd(PasswordEncoder pwdEnc) {
 		this.empPwd = pwdEnc.encode(this.empPwd);

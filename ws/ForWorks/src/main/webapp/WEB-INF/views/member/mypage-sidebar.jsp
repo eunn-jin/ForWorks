@@ -9,7 +9,7 @@
              <div class="ms-3 name">
                <h5 class="font-bold">${loginMember.empName}</h5>
                <h6 class="text-muted mb-1">4조 주식회사</h6>
-               <h6 class="text-muted mb-0">${loginMember.posName}</h6>
+               <h6 class="text-muted mb-0">${loginMember.deptName} ${loginMember.posName}</h6>
              </div>
            </div>
          </div>
@@ -93,14 +93,14 @@
 	            <label for="floatingInput">현재 비밀번호</label>
 	          </div>
 	          <div class="form-floating mb-3">
-	            <input name="empPwd" type="password" class="form-control rounded-4" id="changePwd">
+	            <input name="changePwd" type="password" class="form-control rounded-4" id="changePwd">
 	            <label for="floatingPassword">새 비밀번호</label>
 	          </div>
 	          <div class="form-floating mb-3">
-	            <input name="empPwd2" type="password" class="form-control rounded-4" id="changePwd2">
+	            <input name="changePwd2" type="password" class="form-control rounded-4" id="changePwd2">
 	            <label for="floatingPassword">새 비밀번호 확인</label>
 	          </div>
-	          <button class="w-100 mb-2 btn btn-lg rounded-4 btn-secondary" type="button" onclick="changePwd();">비밀번호 변경</button>
+	          <button class="w-100 mb-2 btn btn-lg rounded-4 btn-secondary" type="button" onclick="pwdChange();">비밀번호 변경</button>
 	        </form>
 	      </div>
 	    </div>
@@ -108,31 +108,41 @@
 	</div>
 	
 	<script>
-      //비밀번호 재설정
-      function changePwd() {
-        const nowPwd = document.querySelector("#nowPwd").value;
-        const empPwd = document.querySelector("#changePwd").value;
-        const empPwd2 = document.querySelector("#changePwd2").value;
+      function pwdChange() {
+        const nowPwd = document.querySelector("input[name=nowPwd]").value;
+        const changePwd = document.querySelector("input[name=changePwd]").value;
+        const changePwd2 = document.querySelector("input[name=changePwd2]").value;
 		
-        console.log("버튼")
+        if(changePwd.length == 0 || changePwd != changePwd2) {
+  		  alert("비밀번호 확인이 일치하지 않습니다.");
+  		  return false;
+  		};
         
         $.ajax({
           url: "${root}/changePwd",
           type: "post",
           data: {
         	nowPwd: nowPwd,
-        	empPwd: empPwd,
+        	changePwd: changePwd
           },
-          success: function (data) {
-            if (data == 1) {
-            	alert("패스워드 변경에 성공했습니다.")
+          success: function (result) {
+            if (result == 1) {
+            	$('#modalPwdEdit').modal('hide');
+            	toastContent.innerText = "비밀번호를 변경하였습니다.";
             } else {
-            	alert("패스워드 변경에 실패했습니다.")
+            	toastContent.innerText = "비밀번호 변경에 실패했습니다.";
             }
           },
           error: function (e) {
-            alert("통신에 실패했습니다.");
+            alert("통신 실패 ..");
           },
         });
       };
+    </script>
+    
+    <script>
+    	//모달 초기화
+	    $('.modal').on('hidden.bs.modal', function (e) {
+	    	$(this).find('form')[0].reset();
+	    });
     </script>

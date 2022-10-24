@@ -36,7 +36,6 @@
 		SELECT COUNT(EMP_NO)
 		FROM EMPLOYEE
 		WHERE EMP_ID = #{empId}
-		AND EMP_STATUS = 'Y'
 	</select>
 	
 	<select id="selectOneById" resultType="com.kh.forworks.member.vo.MemberVo">
@@ -74,7 +73,6 @@
 		LEFT JOIN POSITION P
 			ON E.POS_NO = P.POS_NO
 		WHERE E.EMP_ID = #{empId}
-		AND E.EMP_STATUS = 'Y'
 	</select>
 	
 	<update id="updateFromMember">
@@ -96,7 +94,7 @@
 	
 	<select id="selectIdByName" resultType="string">
 		SELECT EMP_ID FROM EMPLOYEE
-		WHERE EMP_NAME = #{empName} AND EMP_EMAIL = #{empEmail}
+		WHERE EMP_NAME = #{empName} AND EMP_EMAIL = #{empEmail} AND EMP_STATUS = 'Y'
 	</select>
 	
 	<update id="updatePwdByNo">

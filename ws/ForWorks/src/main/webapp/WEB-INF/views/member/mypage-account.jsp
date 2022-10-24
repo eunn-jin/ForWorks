@@ -25,35 +25,34 @@
                 <div class="card-header mt-1">
                   <h4>급여계좌 설정</h4>
                 </div>
-                <div class="card-body">
-                  <form action="" method="post">
+                <div class="card-body" style="max-width: 900px">
+                  <form action="" method="post" onsubmit="return checkAccount();">
                     <label class="text-muted mb-2" style="font-weight: 600">은행명</label>
                     <div class="input-group mb-3">
                       <button type="button" class="input-group-text" for="" id="selboxBtn">직접입력</button>
                       <button type="button" id="selboxResetBtn" class="input-group-text" for="" id="selboxBtn">은행선택</button>
-                      <select name="empBank" class="form-select" id="selbox" size="5">
-                        <option value="농협">농협</option>
-                        <option value="신한">신한</option>
-                        <option value="IBK기업">IBK기업</option>
-                        <option value="하나">하나</option>
-                        <option value="우리">우리</option>
-                        <option value="국민">국민</option>
-                        <option value="카카오뱅크">카카오뱅크</option>
-                        <option value="토스뱅크">토스뱅크</option>
-                        <option value="케이뱅크">케이뱅크</option>
-                        <option value="산업">산업</option>
-                        <option value="수협">수협</option>
-                        <option value="씨티">씨티</option>
+                      <select name="" class="form-select" id="selbox" size="5">
+                        <option value="농협" <c:if test="${loginMember.empBank eq '농협'}">selected</c:if>>농협</option>
+                        <option value="신한" <c:if test="${loginMember.empBank eq '신한'}">selected</c:if>>신한</option>
+                        <option value="IBK기업" <c:if test="${loginMember.empBank eq 'IBK기업'}">selected</c:if>>IBK기업</option>
+                        <option value="하나" <c:if test="${loginMember.empBank eq '하나'}">selected</c:if>>하나</option>
+                        <option value="우리" <c:if test="${loginMember.empBank eq '우리'}">selected</c:if>>우리</option>
+                        <option value="국민" <c:if test="${loginMember.empBank eq '국민'}">selected</c:if>>국민</option>
+                        <option value="카카오뱅크" <c:if test="${loginMember.empBank eq '카카오뱅크'}">selected</c:if>>카카오뱅크</option>
+                        <option value="토스뱅크" <c:if test="${loginMember.empBank eq '토스뱅크'}">selected</c:if>>토스뱅크</option>
+                        <option value="케이뱅크" <c:if test="${loginMember.empBank eq '케이뱅크'}">selected</c:if>>케이뱅크</option>
+                        <option value="산업" <c:if test="${loginMember.empBank eq '산업'}">selected</c:if>>산업</option>
+                        <option value="수협" <c:if test="${loginMember.empBank eq '수협'}">selected</c:if>>수협</option>
+                        <option value="씨티" <c:if test="${loginMember.empBank eq '씨티'}">selected</c:if>>씨티</option>
                       </select>
-                      <input name="empBank" value="${loginMember.empBank}" type="text" id="selboxDirect" class="form-control" placeholder="은행명을 입력하세요"/>
+                      <input name="" value="${loginMember.empBank}" type="text" id="selboxDirect" class="form-control" placeholder="은행명을 입력하세요"/>
                     </div>
                     <div class="form-group">
                       <label class="text-muted mb-2" for="basicInput">계좌번호</label>
-                      <input name="empAccount" value="${loginMember.empAccount}" type="text" class="form-control" id="basicInput" placeholder="계좌번호를 입력해주세요" required/>
+                      <input name="empAccount" value="${loginMember.empAccount}" type="text" class="form-control" id="basicInput" placeholder="'-' 을 제외한 본인 명의의 계좌번호를 입력해주세요" required/>
                     </div>
                     <div class="col-12 d-flex justify-content-end">
-                      <button type="submit" class="btn btn-primary me-1 mb-1">변경</button>
-                      <button type="reset" class="btn btn-light-secondary me-1 mb-1">모두 지우기</button>
+                      <button type="submit" class="btn btn-primary me-1 mb-1">급여계좌 변경</button>
                     </div>
                   </form>
                 </div>
@@ -66,10 +65,48 @@
     <%@ include file="/WEB-INF/views/common/footer.jsp" %>
   </body>
   <script>
-    $().ready(function () {
-      console.log("test:");
-      $("#ex1").addClass("active");
-    });
+		function checkAccount() {
+			const account = document.querySelector("input[name=empAccount]");
+			if(account.value.indexOf('-') != -1) {
+			  toastContent.innerText = "계좌번호에 '-'를 사용할 수 없습니다.";
+			  return false;
+			}
+		}
+  </script>
+  <script>
+	  $(function () {
+	      if(${empty empBank}) {
+	    	  $("#selbox").hide();
+	    	  $("#selboxBtn").hide();
+	    	  $("#selbox").attr("name", "");
+	    	  $("#selboxDirect").attr("name", "empBank");
+	      } else {
+		      $("#selboxDirect").hide();
+	    	  $("#selboxResetBtn").hide();
+	    	  $("#selboxDirect").attr("name", "");
+	    	  $("#selbox").attr("name", "empBank");
+	      }
+	
+	      //직접입력
+	      $("#selboxBtn").click(function () {
+	        $("#selbox").hide();
+	        $("#selboxBtn").hide();
+	        $("#selbox").attr("name", "");
+	        $("#selboxDirect").show();
+	        $("#selboxResetBtn").show();
+	        $("#selboxDirect").attr("name", "empBank");
+	      });
+	      
+	      //은행선택
+	      $("#selboxResetBtn").click(function () {
+	        $("#selboxDirect").hide();
+	        $("#selboxResetBtn").hide();
+	        $("#selboxDirect").attr("name", "");
+	        $("#selbox").show();
+	        $("#selboxBtn").show();
+	        $("#selbox").attr("name", "empBank");
+	      });
+	    });
   </script>
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <script type="text/javascript">
@@ -121,27 +158,5 @@
         },
       }).open();
     }
-
-    $(function () {
-      //직접입력 인풋박스 기존에는 숨어있다가
-      $("#selboxDirect").hide();
-      $("#selboxResetBtn").hide();
-
-      $("#selboxBtn").click(function () {
-        //직접입력을 누를 때 나타남
-        $("#selbox").hide();
-        $("#selboxBtn").hide();
-        $("#selboxDirect").show();
-        $("#selboxResetBtn").show();
-      });
-      
-      $("#selboxResetBtn").click(function () {
-        //직접입력을 누를 때 나타남
-        $("#selboxDirect").hide();
-        $("#selboxResetBtn").hide();
-        $("#selbox").show();
-        $("#selboxBtn").show();
-      });
-    });
   </script>
 </html>

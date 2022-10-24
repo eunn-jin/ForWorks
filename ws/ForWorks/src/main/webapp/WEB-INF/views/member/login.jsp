@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="root" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -37,6 +38,8 @@
     </style>
   </head>
   <body>
+    <%@ include file="/WEB-INF/views/common/toastify.jsp" %>
+
     <div class="container">
       <div class="form-container">
         <div class="signin">
@@ -57,8 +60,8 @@
                 <label for="saveCheck" class="form-check-label">아이디 저장</label>
               </div>
               <div class="find-idpwd">
-                <button type="button" class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#modalSignin">아이디 찾기</button> |
-                <button type="button" class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#find-pwd-modal">비밀번호 찾기</button>
+                <button type="button" class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#modalFindId">아이디 찾기</button> |
+                <button type="button" class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#modalFindPwd">비밀번호 찾기</button>
               </div>
             </div>
             <input type="submit" value="로그인" class="login-btn solid" />
@@ -81,7 +84,7 @@
     </div>
 
     <!-- 아이디 찾기 모달 -->
-    <div class="modal fade" tabindex="1" id="modalSignin">
+    <div class="modal fade" tabindex="1" id="modalFindId">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content rounded-4 shadow">
           <div class="modal-header p-5 pb-4 border-bottom-0">
@@ -91,82 +94,73 @@
           </div>
 
           <div class="modal-body p-5 pt-0">
-          	<form>
-	            <div class="form-floating mb-3">
-	              <input type="text" class="form-control rounded-4" id="findIdName" placeholder="name@example.com" />
-	              <label for="findIdName">성명</label>
-	            </div>
-	            <div class="form-floating mb-3">
-	              <input type="email" class="form-control rounded-4" id="findIdEmail" placeholder="Password" />
-	              <label for="findIdEmail">이메일</label>
-	            </div>
-	            <button class="w-100 mb-2 btn btn-lg rounded-4 btn-secondary" type="button" onclick="findId();">아이디 찾기</button>
-	            <hr class="my-4" />
-	            <strong class="text-muted" id="foundId"></strong>
-          	</form>
+            <form>
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control rounded-4" id="findIdName" placeholder="name@example.com" />
+                <label for="findIdName">성명</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="email" class="form-control rounded-4" id="findIdEmail" placeholder="Password" />
+                <label for="findIdEmail">이메일</label>
+              </div>
+              <button class="w-100 mb-2 btn btn-lg rounded-4 btn-secondary" type="button" onclick="findId();">아이디 찾기</button>
+              <hr class="my-4" />
+              <strong class="text-muted" id="foundId">
+                <div id="findid-spinner" class="spinner-border spinner-border-sm text-primary" style="display: none" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </strong>
+            </form>
           </div>
         </div>
       </div>
     </div>
 
     <!-- 비밀번호 찾기(변경) 모달-->
-    <div
-      class="modal fade"
-      id="find-pwd-modal"
-      data-bs-backdrop="static"
-      data-bs-keyboard="false"
-      tabindex="-1"
-      aria-labelledby="staticBackdropLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="staticBackdropLabel">비밀번호 변경</h1>
+    <div class="modal fade" tabindex="1" id="modalFindPwd">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content rounded-4 shadow">
+          <div class="modal-header p-5 pb-4 border-bottom-0">
+            <!-- <h1 class="modal-title fs-5" >Modal title</h1> -->
+            <h1 class="fw-bold mb-0 fs-2">비밀번호 찾기</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="modal-body">
+
+          <div class="modal-body p-5 pt-0">
             <form>
-              <div class="mb-1">
-                <label for="recipient-name" class="col-form-label">아이디 :</label>
-                <input type="text" class="form-control" id="" />
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control rounded-4" id="findPwdId" placeholder="name@example.com" />
+                <label for="findIdName">아이디</label>
               </div>
-              <div class="mb-1">
-                <label for="recipient-name" class="col-form-label">이름 :</label>
-                <input type="text" class="form-control" id="" />
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control rounded-4" id="findPwdName" placeholder="name@example.com" />
+                <label for="findIdName">성명</label>
               </div>
-              <div class="mb-3">
-                <label for="recipient-name" class="col-form-label">이메일 :</label>
-                <input type="text" class="form-control" id="" />
+              <div class="form-floating mb-3">
+                <input type="email" class="form-control rounded-4" id="findPwdEmail" placeholder="Password" />
+                <label for="findIdEmail">이메일</label>
               </div>
-              <span>고민</span>
-              <input style="float: right" type="submit" class="btn btn-primary" value="회원 확인" />
-            </form>
-            <br />
-            <form>
-              <div class="mb-1">
-                <label for="message-text" class="col-form-label">새 비밀번호 :</label>
-                <input type="password" class="form-control" id="" />
-              </div>
-              <div class="mb-3">
-                <label for="message-text" class="col-form-label">새 비밀번호 확인 :</label>
-                <input type="password" class="form-control" id="" />
-              </div>
-              <input style="float: right" type="submit" class="btn btn-primary" value="비밀번호 변경" />
+              
+              <button class="w-100 mb-2 btn btn-lg rounded-4 btn-secondary" type="button" onclick="">회원 확인</button>
+              <strong class="text-muted" id="foundId">
+                <div id="findid-spinner" class="spinner-border spinner-border-sm text-primary" style="display: none" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </strong>
             </form>
           </div>
         </div>
       </div>
     </div>
-    
+
     <script>
-    	//모달 초기화
-	    $('.modal').on('hidden.bs.modal', function (e) {
-	    	$(this).find('form')[0].reset();
-	    	
-	    	const foundId = document.querySelector("#foundId");
-	    	foundId.innerText = "";
-	    });
+      //모달 초기화
+      $(".modal").on("hidden.bs.modal", function (e) {
+        $(this).find("form")[0].reset();
+
+        const foundId = document.querySelector("#foundId");
+        foundId.innerText = "";
+      });
     </script>
 
     <script>
@@ -175,6 +169,8 @@
         const empName = document.querySelector("#findIdName").value;
         const empEmail = document.querySelector("#findIdEmail").value;
         const foundId = document.querySelector("#foundId");
+
+        $("#findid-spinner").show();
 
         $.ajax({
           url: "${root}/findId",
@@ -185,12 +181,15 @@
           },
           success: function (data) {
             if (data == "") {
+              $("#findid-spinner").hide();
               foundId.innerText = "아이디를 찾을 수 없습니다.";
             } else {
+              $("#findid-spinner").hide();
               foundId.innerText = "아이디 : " + data;
             }
           },
           error: function (e) {
+        	sessionStorage.setItem("toastMsg", "통신에 실패했습니다.");
             alert("통신에 실패했습니다.");
           },
         });
