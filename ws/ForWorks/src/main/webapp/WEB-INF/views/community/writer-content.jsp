@@ -8,9 +8,10 @@
 <style>
 	table{margin: auto;}
 tr, td{
-    border: 1px solid black;
+    border: 1px solid rgba(0, 0, 0, 0.144);
     margin: auto;
     text-align: center;
+    vertical-align: middle;
 }
 
 
@@ -31,7 +32,7 @@ table {
 </style>
 
 
-<form action="" method="post">
+<form action="" method="post" enctype="multipart/form-data" onsubmit="return check()">
     
     
         <div id="wcontent">
@@ -42,31 +43,33 @@ table {
                         <div class="table table-responsive">
                             <table class="table table-striped">
                                 <tr>
-                                    <td class=""><label for="writer" class="form-label">작성자</label> </td>
-                                    <td  style="border:1px solid black; background : white;">ㅁㅁㅁ</td>
-                                    <td ><label for="department" class="form-label">공개범위</label></td>
-                                    <td  style="background: white;">
-                                        <select name="" id="department" >
-                                            <option value="" selected >선택</option>
-                                            <option>전체</option>
-                                            <option>나의부서</option>
+                                    <td class="" style="width: 15%;"><label for="empNo" class="form-label">작성자</label> </td>
+                                    <td  style=" background : white;" style="width: 30%;">1</td>
+                                    <td style="width: 15%;"><label for="cmuRead" class="form-label">대상</label></td>
+                                    <td  style="background: white; width: 30%;">
+                                        
+                                        <select name="cmuRead" id="cmuRead" class="form-select form-select-sm" aria-label=".form-select-sm example" style="width: auto;" >
+                                            <option value="nu"  >대상을 선택해주세요</option>
+                                            <option value="전체">전체</option>
+                                            <option value="my">_ _부서</option>
+                                            
                                         </select>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td ><label for="title" class="form-label">제목</label></td>
-                                    <td colspan="3"><input type="text" class="form-control" name="title" id="title" value=""></td>
+                                    <td ><label for="cmuTitle" class="form-label">제목</label></td>
+                                    <td colspan="3"><input type="text" class="form-control" name="cmuTitle" required></td>
                                 </tr>
     
     
                                 <tr>
-                                    <td ><label for="cotent" class="form-label">내용</label></td>
-                                    <td colspan="3" style=" background : white; text-align: left;"><textarea id="summernote" name="content" class="form-control" style="background-color: white;" ></textarea></td>
+                                    <td ><label for="cmuContent" class="form-label">내용</label></td>
+                                    <td colspan="3" style=" background : white; text-align: left;"><textarea id="summernote" name="cmuContent" class="form-control" style="background-color: white;" required></textarea></td>
                                 </tr>
     
                                 <tr>
-                                    <td ><label for="nf" class="form-label">첨부파일</label></td>
-                                    <td colspan="3"><input type="file" class="form-control" name="nf"></td>
+                                    <td ><label for="cmuFileName" class="form-label">첨부파일</label></td>
+                                    <td colspan="3"><input type="file" class="form-control" name="cmuFileName"></td>
                                 </tr>
                                 
                                 <tr>
@@ -84,6 +87,21 @@ table {
 
 </form> 
 
+<!-- 공지사항 작성시 대상 선택여부확인 -->
+<script>
+	var x;
+	$("select[name=cmuRead]").change(function(){
+		x= $(this).val();
+		console.log(x);
+	}); 
+    function check(){
+        if (x== "nu" || x ==null) {
+            alert('대상을 선택해주세요!');
+            return false;
+        }
+    }
+</script>
+
 <script>
 $(document).ready(function() {
 	//여기 아래 부분
@@ -93,8 +111,42 @@ $(document).ready(function() {
 		  maxHeight: null,             // 최대 높이
 		  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
 		  lang: "ko-KR",					// 한글 설정
-		  placeholder: '최대 2048자까지 쓸 수 있습니다'	//placeholder 설정
-          
+		  placeholder: '최대 2048자까지 쓸 수 있습니다'	//placeholder 설정          
 	});
 });
 </script>   
+
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#summernote').summernote({
+                    height: 300,
+                    minHeight: null,
+                    maxHeight: null,
+                    focus: true,
+                    callbacks: {
+                        onImageUpload: function (files, editor, welEditable) {
+                            for (var i = files.length - 1; i >= 0; i--) {
+                                sendFile(files[i], this);
+                            }
+                        }
+                    }
+                });
+        });
+        function sendFile(file, el) {
+            var form_data = new FormData();
+                    form_data.append('file', file);
+                    $.ajax({
+                        data: form_data,
+                        type: "POST", url: '/image',
+                        cache: false, contentType: false,
+                        enctype: 'multipart/form-data',
+                        processData: false,
+                        success: function (url) {
+                            $(el).summernote('editor.insertImage', url);
+                            $('#imageBoard > ul').append('<li><img src="' + url + '" width="480" height="auto" /></li>');
+                        }
+                    });
+                }
+            </script>
+
