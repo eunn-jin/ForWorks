@@ -49,6 +49,20 @@ public class ApprovServiceImpl implements ApprovService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	//전자문서 생성
+	@Override
+	public int insertApprovDoc(ApprovDocumentVo vo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	//전자문서 결재
+	@Override
+	public int updateApprov(String dno) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 	
 
