@@ -43,11 +43,11 @@ table {
                         <div class="table table-responsive">
                             <table class="table table-striped" >
                                 <tr>
-                                    <td class=""><label for="empNo" class="form-label">작성자</label> </td>
-                                    <td  style="background : white;">${ntvo.empNo}</td>
-                                    <td ><label for="ntAccess" class="form-label">대상</label></td>
-                                    <td  style="background: white;">
-                                        <select name="ntAccess" id="" >
+                                    <td class="" style="width: 15%;"><label for="empNo" class="form-label">작성자</label> </td>
+                                    <td  style="background : white; width: 30%;">${ntvo.empNo}</td>
+                                    <td style="width: 15%;"><label for="ntAccess" class="form-label" >대상</label></td>
+                                    <td  style="background: white;" style="width: 30%;">
+                                        <select name="ntAccess" id=""  class="form-select form-select-sm" aria-label=".form-select-sm example">
                                             <option value="" selected >부서를 선택해주세요</option>
                                             <option value="A">전체</option>
                                             <option value="B">부서B</option>

@@ -43,12 +43,12 @@ table {
                         <div class="table table-responsive">
                             <table class="table table-striped">
                                 <tr>
-                                    <td class=""><label for="empNo" class="form-label">작성자</label> </td>
-                                    <td  style=" background : white;">1</td>
-                                    <td ><label for="ntAccess" class="form-label">대상</label></td>
-                                    <td  style="background: white;">
-                                        <select name="ntAccess" >
-                                            <option value="" selected >접근권한을 선택해주세요</option>
+                                    <td class="" style="width: 15%;"><label for="empNo" class="form-label">작성자</label> </td>
+                                    <td  style=" background : white;" style="width: 30%;">1</td>
+                                    <td style="width: 15%;"><label for="ntAccess" class="form-label">대상</label></td>
+                                    <td  style="background: white; width: 30%;">
+                                        <select name="ntAccess" id="ntAccess" class="form-select form-select-sm" aria-label=".form-select-sm example" style="width: auto;">
+                                            <option value="nu" selected >접근권한을 선택해주세요</option>
                                             <option value="A">전체</option>
                                             <option value="B">B부서</option>
                                             <option value="C">C부서</option>
@@ -87,11 +87,18 @@ table {
 
 </form> 
 
+<!-- 공지사항 작성시 대상 선택여부확인 -->
 <script>
-    const x = document.querySelector("select[name=ntAccess].1");
-    console.log(x);
+	var x;
+	$("select[name=ntAccess]").change(function(){
+		x= $(this).val();
+		// console.log(x);
+	}); 
     function check(){
-
+        if (x== "nu") {
+            alert('대상을 선택해주세요!');
+            return false;
+        }
     }
 </script>
 

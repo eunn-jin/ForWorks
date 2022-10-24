@@ -43,10 +43,10 @@ table {
                         <div class="table table-responsive">
                             <table class="table table-striped">
                                 <tr>
-                                    <td class="">작성자</td>
-                                    <td  style=" background : white;">${ntvo.empNo}</td>
-                                    <td class="danger">대상</td>
-                                    <td  style="background: white;">
+                                    <td class="" style="width: 15%;">작성자</td>
+                                    <td  style=" background : white; width: 30%;">${ntvo.empNo}</td>
+                                    <td style="width: 15%;" class="danger">대상</td>
+                                    <td  style="background: white; width: 30%;">
                                         <div>${ntvo.ntAccess}</div>
                                     </td>
                                 </tr>
