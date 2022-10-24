@@ -34,5 +34,8 @@ public interface NoticeDao {
 	//공지사항 파일수정
 	int editNtat(SqlSessionTemplate sst, NoticeAttachmentsVo ntatVo);
 
+	//공지사항 삭제
+	int delete(SqlSessionTemplate sst, String no);
+
 
 }

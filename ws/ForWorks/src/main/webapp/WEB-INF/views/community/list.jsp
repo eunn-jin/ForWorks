@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page session="false" %>
+
 <html>
 <head>
 	<title>Home</title>
@@ -33,7 +34,7 @@
                 </div>
                 <section class="section">
                     <div class="card" style="flex-direction: row;">
-                        <%@include file="/WEB-INF/views/board/list-content.jsp" %>
+                        <%@include file="/WEB-INF/views/community/list-content.jsp" %>
                     </div>
                 </section>
             </div>

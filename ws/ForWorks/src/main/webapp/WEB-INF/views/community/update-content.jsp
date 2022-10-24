@@ -32,46 +32,45 @@ table {
 
 <link rel="stylesheet" href="${root }/resources/css/summernote/summernote-lite.css">
 
-<form action="" method="post" enctype="multipart/form-data">
+<form action="" method="post" enctype="multipart/form-data" onsubmit="return check()">
     
     
         <div id="wcontent">
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-8">
-                    <form action="" method="post">
+                    
                         <div class="table table-responsive">
                             <table class="table table-striped" >
                                 <tr>
                                     <td class="" style="width: 15%;"><label for="empNo" class="form-label">작성자</label> </td>
-                                    <td  style="background : white; width: 30%;">${ntvo.empNo}</td>
+                                    <td  style="background : white; width: 30%;">${cmuvo.empNo}</td>
                                     <td style="width: 15%;"><label for="ntAccess" class="form-label" >대상</label></td>
                                     <td  style="background: white;" style="width: 30%;">
-                                        <select name="ntAccess" id=""  class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                            <option value="" selected >부서를 선택해주세요</option>
-                                            <option value="A">전체</option>
-                                            <option value="B">부서B</option>
-                                            <option value="C">부서C</option>
-                                            <option value="D">부서D</option>
-                                        </select>
+                                        <input type="text" value="${cmuvo.cmuRead}" disabled>
+                                        <!-- <select name="cmuRead" id=""  class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                            <option value="nu"  >대상을 선택해주세요</option>
+                                            <option value="전체">전체</option>
+                                            <option value="MY">_ _부서</option>
+                                        </select> -->
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td ><label for="ntTitle" class="form-label">제목</label></td>
-                                    <td colspan="3"><input type="text" class="form-control" name="ntTitle" value="${ntvo.ntTitle}"></td>
+                                    <td ><label for="cmuTitle" class="form-label">제목</label></td>
+                                    <td colspan="3"><input type="text" class="form-control" name="cmuTitle" value="${cmuvo.cmuTitle}" required></td>
                                 </tr>
     
     
                                 <tr>
                                     <td ><label for="ntContent" class="form-label">내용</label></td>
-                                    <td colspan="3" style=" background : white; text-align: left;"><textarea id="summernote" name="ntContent" class="form-control" style="background-color: white;" 
-                                        >${ntvo.ntContent}</textarea></td>
+                                    <td colspan="3" style=" background : white; text-align: left;"><textarea required id="summernote" name="cmuContent" class="form-control" style="background-color: white;" 
+                                        >${cmuvo.cmuContent}</textarea></td>
                                 </tr>
                                 
                                 
                                 <tr >
-                                    <td ><label for="ntFileName" class="form-label">첨부<br>파일</label></td>
-                                    <td colspan="3" style="background: white;"><input type="file" class="form-control" name="ntFileName"></td>
+                                    <td ><label for="cmuFileName" class="form-label">첨부<br>파일</label></td>
+                                    <td colspan="3" style="background: white;"><input type="file" class="form-control" name="cmuFileName"></td>
                                 </tr>
 
                                 <tr>
@@ -81,12 +80,12 @@ table {
                                     <td style="width:10%;">등록<br>파일</td>
                                     <td style="width:40%; background: white;">
                                         
-                                        <c:if test="${ntatVo eq null}">
+                                        <c:if test="${cmatVo eq null}">
                                             <div>첨부파일이 없습니다.</div>
                                         </c:if>
-                                        <c:if test="${ntatVo ne null}">
+                                        <c:if test="${cmatVo ne null}">
                                             <div>
-                                                <img src="${root}/resources/upload/notice/${ntatVo.ntatChange}" width="128px" height="128px">
+                                                <img src="${root}/resources/upload/commu/${cmatVo.cmatChange}" width="128px" height="128px">
                                             </div>
                                         </c:if>
                                     </td>
@@ -130,7 +129,7 @@ $(document).ready(function() {
     $(function(){
         $('#upDate').click(function(){
             //해당 번호로 요청 보내기
-            location.href="${root}/notice/update?num=" ;
+            location.href="${root}/community/update?num=" ;
             
             
         });
@@ -138,20 +137,20 @@ $(document).ready(function() {
 </script>
 
 <script>
-    console.log('${ntvo.ntAccess}');
-    const ac = '${ntvo.ntAccess}';
-    if(ac === 'A'){
+    console.log('${cmuvo.cmuRead}');
+    const ac = '${cmuvo.cmuRead}';
+    if(ac === '전체'){
         //document.querySelector('input[value="F"]').checked = true;
-        $('option[value="A"]').prop('selected',true);
-    }else if(ac === 'B'){
+        $('option[value="전체"]').prop('selected',true);
+    }else if(ac === 'MY'){
         //document.querySelector('input[value="M"]').checked = true;
-        $('option[value="B"]').prop('selected',true);
+        $('option[value="MY"]').prop('selected',true);
     }
-</script>
+</script>   
 
 <script>
 	//파일 태그 가져와서
-	const fileInputTag = document.querySelector('input[name=ntFileName]');
+	const fileInputTag = document.querySelector('input[name=cmuFileName]');
 	
 	//파일 변화가 일어나면 어떤행동
 	fileInputTag.onchange = function(){

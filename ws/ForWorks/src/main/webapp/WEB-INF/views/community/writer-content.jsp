@@ -45,31 +45,31 @@ table {
                                 <tr>
                                     <td class="" style="width: 15%;"><label for="empNo" class="form-label">작성자</label> </td>
                                     <td  style=" background : white;" style="width: 30%;">1</td>
-                                    <td style="width: 15%;"><label for="ntAccess" class="form-label">대상</label></td>
+                                    <td style="width: 15%;"><label for="cmuRead" class="form-label">대상</label></td>
                                     <td  style="background: white; width: 30%;">
-                                        <select name="ntAccess" id="ntAccess" class="form-select form-select-sm" aria-label=".form-select-sm example" style="width: auto;">
-                                            <option value="nu" selected >접근권한을 선택해주세요</option>
-                                            <option value="A">전체</option>
-                                            <option value="B">B부서</option>
-                                            <option value="C">C부서</option>
+                                        
+                                        <select name="cmuRead" id="cmuRead" class="form-select form-select-sm" aria-label=".form-select-sm example" style="width: auto;" >
+                                            <option value="nu"  >대상을 선택해주세요</option>
+                                            <option value="전체">전체</option>
+                                            <option value="my">_ _부서</option>
                                             
                                         </select>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td ><label for="ntTitle" class="form-label">제목</label></td>
-                                    <td colspan="3"><input type="text" class="form-control" name="ntTitle" required></td>
+                                    <td ><label for="cmuTitle" class="form-label">제목</label></td>
+                                    <td colspan="3"><input type="text" class="form-control" name="cmuTitle" required></td>
                                 </tr>
     
     
                                 <tr>
-                                    <td ><label for="ntContent" class="form-label">내용</label></td>
-                                    <td colspan="3" style=" background : white; text-align: left;"><textarea id="summernote" name="ntContent" class="form-control" style="background-color: white;" required></textarea></td>
+                                    <td ><label for="cmuContent" class="form-label">내용</label></td>
+                                    <td colspan="3" style=" background : white; text-align: left;"><textarea id="summernote" name="cmuContent" class="form-control" style="background-color: white;" required></textarea></td>
                                 </tr>
     
                                 <tr>
-                                    <td ><label for="ntFileName" class="form-label">첨부파일</label></td>
-                                    <td colspan="3"><input type="file" class="form-control" name="ntFileName"></td>
+                                    <td ><label for="cmuFileName" class="form-label">첨부파일</label></td>
+                                    <td colspan="3"><input type="file" class="form-control" name="cmuFileName"></td>
                                 </tr>
                                 
                                 <tr>
@@ -90,12 +90,12 @@ table {
 <!-- 공지사항 작성시 대상 선택여부확인 -->
 <script>
 	var x;
-	$("select[name=ntAccess]").change(function(){
+	$("select[name=cmuRead]").change(function(){
 		x= $(this).val();
-		// console.log(x);
+		console.log(x);
 	}); 
     function check(){
-        if (x== "nu") {
+        if (x== "nu" || x ==null) {
             alert('대상을 선택해주세요!');
             return false;
         }

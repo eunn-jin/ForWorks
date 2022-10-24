@@ -34,7 +34,7 @@
                 </div>
                 <section class="section">
                     <div class="card">
-                        <%@include file="/WEB-INF/views/board/update-content.jsp" %>
+                        <%@include file="/WEB-INF/views/community/update-content.jsp" %>
                     </div>
                 </section>
             </div>

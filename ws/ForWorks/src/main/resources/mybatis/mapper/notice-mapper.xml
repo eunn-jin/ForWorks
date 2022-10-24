@@ -60,8 +60,29 @@
 	
 	
 	<update id="editNt">
+		UPDATE NOTICE SET
+			NT_TITLE		=	#{ntTitle}
+			,NT_CONTENT		=	#{ntContent}	
+			,NT_MODIFIY_DATE	=	SYSDATE
+			,NT_ACCESS		=	#{ntAccess}
+		WHERE NT_STATUS = 'N'
+		AND NTNO = #{ntno}
 	</update>
 	
 	<update id="editNtat">
+		UPDATE NOTICE_ATTACHMENTS SET
+			NTAT_CHANGE	= #{ntatChange}
+			,NTAT_ORIGIN	= #{ntatOrigin}
+			,NTAT_PATH	= #{ntatPath}
+			,NTAT_UPLOAD	= SYSDATE
+		WHERE NTNO = #{ntno}
+		
+	</update>
+	
+	<update id="delete">
+		UPDATE NOTICE SET
+			NT_STATUS = 'Y'
+		WHERE NT_STATUS = 'N'
+		AND NTNO = #{no}
 	</update>
 </mapper>
