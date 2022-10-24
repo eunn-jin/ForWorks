@@ -4,9 +4,10 @@
 <style>
 	table{margin: auto;}
 tr, td{
-    border: 1px solid black;
+    border: 1px solid rgba(0, 0, 0, 0.144);
     margin: auto;
     text-align: center;
+    vertical-align: middle;
 }
 
 
@@ -31,42 +32,66 @@ table {
 
 <link rel="stylesheet" href="${root }/resources/css/summernote/summernote-lite.css">
 
-<form action="">
+<form action="" method="post" enctype="multipart/form-data" onsubmit="return check()">
     
     
         <div id="wcontent">
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-8">
-                    <form action="" method="post">
+                    
                         <div class="table table-responsive">
                             <table class="table table-striped" >
                                 <tr>
-                                    <td class="">작성자</td>
-                                    <td  style="border:1px solid black; background : white;">ㅁㅁㅁ</td>
-                                    <td class="danger">공개범위</td>
-                                    <td  style="background: white;">
-                                        <select name="" id="department" >
-                                            <option value="" selected >선택</option>
-                                            <option>전체</option>
-                                            <option>나의부서</option>
-                                        </select>
+                                    <td class="" style="width: 15%;"><label for="empNo" class="form-label">작성자</label> </td>
+                                    <td  style="background : white; width: 30%;">${cmuvo.empNo}</td>
+                                    <td style="width: 15%;"><label for="ntAccess" class="form-label" >대상</label></td>
+                                    <td  style="background: white;" style="width: 30%;">
+                                        <input type="text" value="${cmuvo.cmuRead}" disabled>
+                                        <!-- <select name="cmuRead" id=""  class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                            <option value="nu"  >대상을 선택해주세요</option>
+                                            <option value="전체">전체</option>
+                                            <option value="MY">_ _부서</option>
+                                        </select> -->
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="danger">제목</td>
-                                    <td colspan="3"><input type="text" class="form-control" name="subject" value="전체 공지사항"></td>
+                                    <td ><label for="cmuTitle" class="form-label">제목</label></td>
+                                    <td colspan="3"><input type="text" class="form-control" name="cmuTitle" value="${cmuvo.cmuTitle}" required></td>
                                 </tr>
     
     
                                 <tr>
-                                    <td class="danger">글내용</td>
-                                    <td colspan="3" style=" background : white; text-align: left;"><textarea id="summernote" name="content" class="form-control" style="background-color: white;" >입력되었던내용 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~!!</textarea></td>
+                                    <td ><label for="ntContent" class="form-label">내용</label></td>
+                                    <td colspan="3" style=" background : white; text-align: left;"><textarea required id="summernote" name="cmuContent" class="form-control" style="background-color: white;" 
+                                        >${cmuvo.cmuContent}</textarea></td>
                                 </tr>
-    
+                                
+                                
+                                <tr >
+                                    <td ><label for="cmuFileName" class="form-label">첨부<br>파일</label></td>
+                                    <td colspan="3" style="background: white;"><input type="file" class="form-control" name="cmuFileName"></td>
+                                </tr>
+
                                 <tr>
-                                    <td class="danger">첨부파일</td>
-                                    <td colspan="3"><input type="file" class="form-control" name="f"></td>
+                                    <td style="width:10%;">선택<br>파일</td>
+                                    <td style="width:40%; background: white;"><img id="notice_img" src="" alt=""></td>
+
+                                    <td style="width:10%;">등록<br>파일</td>
+                                    <td style="width:40%; background: white;">
+                                        
+                                        <c:if test="${cmatVo eq null}">
+                                            <div>첨부파일이 없습니다.</div>
+                                        </c:if>
+                                        <c:if test="${cmatVo ne null}">
+                                            <div>
+                                                <img src="${root}/resources/upload/commu/${cmatVo.cmatChange}" width="128px" height="128px">
+                                            </div>
+                                        </c:if>
+                                    </td>
+
+                                    
+
                                 </tr>
                                 
                                 <tr>
@@ -83,6 +108,7 @@ table {
     
 
 </form> 
+
 
 <script>
 $(document).ready(function() {
@@ -103,9 +129,47 @@ $(document).ready(function() {
     $(function(){
         $('#upDate').click(function(){
             //해당 번호로 요청 보내기
-            location.href="${root}/notice/noticeUpdate?num=" ;
+            location.href="${root}/community/update?num=" ;
             
             
         });
     })
+</script>
+
+<script>
+    console.log('${cmuvo.cmuRead}');
+    const ac = '${cmuvo.cmuRead}';
+    if(ac === '전체'){
+        //document.querySelector('input[value="F"]').checked = true;
+        $('option[value="전체"]').prop('selected',true);
+    }else if(ac === 'MY'){
+        //document.querySelector('input[value="M"]').checked = true;
+        $('option[value="MY"]').prop('selected',true);
+    }
+</script>   
+
+<script>
+	//파일 태그 가져와서
+	const fileInputTag = document.querySelector('input[name=cmuFileName]');
+	
+	//파일 변화가 일어나면 어떤행동
+	fileInputTag.onchange = function(){
+		const imgTag = document.querySelector('#notice_img');
+		
+		if(fileInputTag.files.length>0){
+			//파일 선택 되었을때
+			const fr = new FileReader();
+			//파라미터로 방금 로드한 데이터를 받기
+			fr.onload = function(data){
+				console.log(data);
+				
+				imgTag.src= data.target.result; //target의 result값 가져오기
+			}
+			fr.readAsDataURL(fileInputTag.files[0]);//파일 읽기
+		}else{
+			imgTag.src = "";
+		}
+	
+	}
+	
 </script>
