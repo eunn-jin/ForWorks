@@ -230,157 +230,159 @@
 
                 <div id="main-header">문서 작성</div>
 
-                <div class="approv-main">
+                <form action="" method="post">
+                    <div class="approv-main">
 
-					<div class="title-area" id="form-area">
+                        <div class="title-area" id="form-area">
+                        
+                            <input list="" class="approv-area title-input" placeholder="양식 선택" name="docForm">
+                                <datalist>
+
+                                </datalist>
+                            </input>
+
+                            <button class="approv-btn form-btn">선택</button>
+
+                        </div>
+                        <div class="title-area">
+
+                            <div class="title-label approv-area"><div>제목</div></div>
+
+                            <input type="text" class="approv-area title-input" name="adocName" placeholder="제목을 입력해주세요">
+                        </div>
+
+                        <div class="approv-create-div">
+                            <textarea id="summernote" name="adocContent"> </textarea>
+
+                        </div>
+
+                        <div class="file-area">
+
+                            <div class="file-label approv-area"><div>첨부파일</div></div>
+
+                            <input type="file" class="approv-area file-input" name="docFile">
+                        </div>
+
+
+                        <div class="btn-area">
+                            <button class="approv-btn">뒤로가기</button>
+                            <button class="approv-btn">작성하기</button>
+                        </div>
                     
-                        <input list="" class="approv-area title-input" placeholder="양식 선택">
-                            <datalist>
-
-                            </datalist>
-                        </input>
-
-                        <button class="approv-btn form-btn">선택</button>
-
-                    </div>
-                    <div class="title-area">
-
-                        <div class="title-label approv-area"><div>제목</div></div>
-
-                        <input type="text" class="approv-area title-input" placeholder="제목을 입력해주세요">
-                    </div>
-
-                    <div class="approv-create-div">
-                        <textarea id="summernote" name="editordata"> </textarea>
-
-                    </div>
-
-                    <div class="file-area">
-
-                        <div class="file-label approv-area"><div>첨부파일</div></div>
-
-                        <input type="file" class="approv-area file-input" placeholder="제목을 입력해주세요">
-                    </div>
-
-
-                    <div class="btn-area">
-                        <button class="approv-btn">뒤로가기</button>
-                        <button class="approv-btn">작성하기</button>
                     </div>
                 
-                </div>
+
+
+                    <div id="add-member">
+                        <div class="margin-top"></div>
+                        <div class="approv-member-area">
+
+                            <div class="member-label approv-area"><div>결제자 추가</div></div>
+
+                            <div class="member-input-area">
+
+                                <div class="member-area-horizon">
+
+                                    <input list="" class="approv-area member-input" name="approvMember">
+                                        <datalist>
+
+                                        </datalist>
+                                    </input>
+
+                                    <button class="member-btn">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-square" viewBox="0 0 16 16">
+                                            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                                            <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                        </svg>
+                                    </button>
+
+                                </div>
+
+                                <button class="member-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                    </svg>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                        <div class="div-bar"></div>
+
+                        <div class="approv-member-area">
+
+                            <div class="member-label approv-area"><div>협조자 추가</div></div>
+
+                            <div class="member-input-area">
+
+                                <div class="member-area-horizon">
+
+                                    <input list="" class="approv-area member-input" name="coopMember">
+                                        <datalist>
+
+                                        </datalist>
+                                    </input>
+
+                                    <button class="member-btn">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-square" viewBox="0 0 16 16">
+                                            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                                            <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                        </svg>
+                                    </button>
+
+                                </div>
+
+                                <button class="member-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                    </svg>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                        <div class="div-bar"></div>
+
+                        <div class="approv-member-area">
+
+                            <div class="member-label approv-area"><div>결재자 추가</div></div>
+
+                            <div class="member-input-area">
+
+                                <div class="member-area-horizon">
+
+                                    <input list="" class="approv-area member-input" name="referMember">
+                                        <datalist>
+
+                                        </datalist>
+                                    </input>
+
+                                    <button class="member-btn">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-square" viewBox="0 0 16 16">
+                                            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                                            <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                        </svg>
+                                    </button>
+
+                                </div>
+
+                                <button class="member-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                    </svg>
+                                </button>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
             </div>
-
-
-            <div id="add-member">
-                <div class="margin-top"></div>
-                <div class="approv-member-area">
-
-                    <div class="member-label approv-area"><div>결제자 추가</div></div>
-
-                    <div class="member-input-area">
-
-                        <div class="member-area-horizon">
-
-                            <input list="" class="approv-area member-input">
-                                <datalist>
-
-                                </datalist>
-                            </input>
-
-                            <button class="member-btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-square" viewBox="0 0 16 16">
-                                    <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                                    <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
-                                  </svg>
-                            </button>
-
-                        </div>
-
-                        <button class="member-btn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
-                                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                            </svg>
-                        </button>
-
-                    </div>
-
-                </div>
-
-                <div class="div-bar"></div>
-
-                <div class="approv-member-area">
-
-                    <div class="member-label approv-area"><div>협조자 추가</div></div>
-
-                    <div class="member-input-area">
-
-                        <div class="member-area-horizon">
-
-                            <input list="" class="approv-area member-input">
-                                <datalist>
-
-                                </datalist>
-                            </input>
-
-                            <button class="member-btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-square" viewBox="0 0 16 16">
-                                    <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                                    <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
-                                  </svg>
-                            </button>
-
-                        </div>
-
-                        <button class="member-btn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
-                                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                            </svg>
-                        </button>
-
-                    </div>
-
-                </div>
-
-                <div class="div-bar"></div>
-
-                <div class="approv-member-area">
-
-                    <div class="member-label approv-area"><div>결재자 추가</div></div>
-
-                    <div class="member-input-area">
-
-                        <div class="member-area-horizon">
-
-                            <input list="" class="approv-area member-input">
-                                <datalist>
-
-                                </datalist>
-                            </input>
-
-                            <button class="member-btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-square" viewBox="0 0 16 16">
-                                    <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                                    <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
-                                  </svg>
-                            </button>
-
-                        </div>
-
-                        <button class="member-btn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
-                                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                            </svg>
-                        </button>
-
-                    </div>
-
-                </div>
-            </div>
-
         </main>        
 
 

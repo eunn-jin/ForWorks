@@ -16,5 +16,11 @@ public interface ApprovService {
 	
 	//양식 목록 호출
 	List<DocFormVo> selectFormList();
+	
+	//전자문서 작성
+	int insertApprovDoc(ApprovDocumentVo vo);
+	
+	//전자문서 결재
+	int updateApprov(String dno);
 
 }
