@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="addressMapper">
+
+	<select id="selectCountAll" resultType="int">
+		SELECT COUNT(EMP_NO)
+		FROM EMPLOYEE
+		WHERE EMP_STATUS = 'Y'
+	</select>
+	
+	<select id="selectAllMember" resultType="com.kh.forworks.member.vo.MemberVo">
+		SELECT 
+			E.EMP_NO
+			, E.EMP_NAME
+			, E.EMP_EMAIL
+			, E.EMP_PHONE
+			, E.EMP_EXPHONE
+			, E.EMP_PROFILE
+			, E.EMP_STATUS
+			, E.STAT_NO
+			, E.POS_NO
+			, E.DEPT_NO
+			, P.POS_NAME
+			, D.DEPT_NAME
+			, B.BM_EMP_NO
+		FROM EMPLOYEE E
+		LEFT JOIN DEPARTMENT D
+			ON E.DEPT_NO = D.DEPT_NO
+		LEFT JOIN POSITION P
+			ON E.POS_NO = P.POS_NO
+		LEFT JOIN BOOKMARK B
+			ON E.EMP_NO = B.BM_EMP_NO
+		WHERE E.EMP_STATUS = 'Y'
+		ORDER BY E.EMP_NAME ASC, E.POS_NO DESC
+	</select>
+</mapper>

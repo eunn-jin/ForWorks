@@ -22,6 +22,8 @@
 	    <link rel="stylesheet" href="${root}/resources/css/member/join-style.css" />
   </head>
   <body>
+  	<%@ include file="/WEB-INF/views/common/toastify.jsp" %>
+  
     <div class="container">
       <div class="signup">
         <form action="" class="signup-form" method="post" onsubmit="return check();">
@@ -143,23 +145,23 @@
 		
 		function check() {
 		 if(isDup.value == 'o') {
-		  alert("아이디 중복확인을 진행해주세요.")
-		  return false;
+			 toastContent.innerText = "아이디 중복확인을 진행해주세요.";
+			 return false;
 		 }
 		 
 		 if(pwd.value.length == 0 || pwd.value != pwd2.value) {
-		  alert("비밀번호가 일치하지 않습니다.");
-		  return false;
+			 toastContent.innerText = "비밀번호가 일치하지 않습니다.";
+			 return false;
 		 }
 		 
 		 if(regno1.value.length != 6 && regno2.value.length != 7) {
-		  alert("주민번호를 확인해주세요.");
-		  return false;
+			 toastContent.innerText = "주민번호를 확인해주세요.";
+		 	 return false;
 		 }
 		 
 		  if(email.value.indexOf('@') == -1) {
-		  alert("이메일 주소를 확인해주세요.");
-		  return false;
+			 toastContent.innerText = "이메일 주소를 확인해주세요.";
+			 return false;
 		 }
 		};
 	</script>
@@ -178,18 +180,18 @@
 		     success: function (data) {
 		       if (data == 0) {
 		         isDup.value = "x";
-		         alert("사용 가능한 아이디입니다.");
+		         toastContent.innerText = "사용 가능한 아이디입니다.";
 		       } else {
 		         isDup.value = "o";
-		         alert("사용 불가한 아이디입니다.");
+		         toastContent.innerText = "사용 불가한 아이디입니다.";
 		       }
 		     },
 		     error: function () {
-		       alert("중복검사에 실패하였습니다. 관리자에게 문의하세요.");
+		    	 toastContent.innerText = "중복검사에 실패하였습니다. 관리자에게 문의하세요.";
 		     },
 		   });
 		  } else {
-		  	alert("아이디를 입력해주세요.");
+			toastContent.innerText = "아이디를 입력해주세요.";
 		  }
 		}
 	</script>

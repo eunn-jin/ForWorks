@@ -66,19 +66,22 @@
     </style>
   </head>
   <body>
+  
+  <%@ include file="/WEB-INF/views/common/toastify.jsp" %>
+  	
     <div class="container">
       <div class="form-container">
         <div class="signin">
-          <form action="" class="signin-form">
+          <form action="${root}/admin/login" class="signin-form" method="post">
             <h1 class="title">FOR-WORKS</h1>
             <h5 class="sub-title">관리자 로그인</h5>
             <div class="input-field">
               <i class="fas fa-user"></i>
-              <input name="" value="" type="text" placeholder="아이디" required />
+              <input name="manId" type="text" placeholder="아이디" required />
             </div>
             <div class="input-field">
               <i class="fa-solid fa-shield-halved"></i>
-              <input name="" type="password" placeholder="비밀번호" required />
+              <input name="manPwd" type="password" placeholder="비밀번호" required />
             </div>
             <input type="submit" value="로그인" class="login-btn solid" />
           </form>
