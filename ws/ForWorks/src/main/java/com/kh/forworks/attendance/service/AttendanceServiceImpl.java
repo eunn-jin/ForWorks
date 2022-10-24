@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.forworks.attendance.dao.AttendanceDao;
+import com.kh.forworks.attendance.vo.WorkTimeVo;
 import com.kh.forworks.attendance.vo.WorkVo;
 
 @Service
@@ -20,19 +21,38 @@ public class AttendanceServiceImpl implements AttendanceService {
 	}
 
 	@Override
-	public WorkVo getWorkInfo(int empNo) {
-		WorkVo vo = dao.selectWork(sst, empNo);
-//		int x = dao.selectMonthWork(sst, empNo);
-//		vo.setMonthWorkWithNum(x);
+	public WorkTimeVo getWorkInfo(int empNo) {
+		WorkTimeVo wvo = dao.selectInOutTime(sst, empNo);
+		int day = dao.selectDayWork(sst, empNo);
+		int week = dao.selectWeekWork(sst, empNo);
+		int month = dao.selectMonthWork(sst, empNo);
 		
-		return vo;
+		if(wvo.getOutTime().equals("미등록")) {
+			week += day;
+			month += day;
+		}
+		
+		wvo.DayWorkToStr(day);
+		wvo.WeekWorkToStr(week); 
+		wvo.MonthWorkToStr(month);
+				
+		return wvo;
 	}
 
+	@Override
+	public WorkVo getDayWorkInfo(int empNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	@Override
 	public int goWork(WorkVo work) {
 		return dao.insertInTime(sst, work);
 	}
 
-		
+	@Override
+	public int outWork(WorkTimeVo workTime) {
+		return dao.updateOutTime(sst, workTime);
+	}
 
 }

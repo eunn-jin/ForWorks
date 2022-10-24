@@ -17,6 +17,7 @@
 		<typeAlias type="com.kh.forworks.approv.vo.DocReferVo" alias="DocReferVo"/>
 		<typeAlias type="com.kh.forworks.approv.vo.DocSignVo" alias="DocSignVo"/>
 		<typeAlias type="com.kh.forworks.approv.vo.NoElecDocVo" alias="NoElecDocVo"/>
-    <typeAlias type="com.kh.forworks.attendance.vo.WorkVo" alias="WorkVo"/>
+    	<typeAlias type="com.kh.forworks.attendance.vo.WorkVo" alias="WorkVo"/>
+    	<typeAlias type="com.kh.forworks.attendance.vo.WorkTimeVo" alias="WorkTimeVo"/>
 	</typeAliases>
 </configuration>

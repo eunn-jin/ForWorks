@@ -60,14 +60,14 @@
 								<div class="align-center">
 									<div class="mt-3 mb-2">
 										<span>출근&ensp;</span>
-										<span> 00 : 00 </span>
+										<span> ${workTime.inTime} </span>
 									</div>
 									<button class="btn btn-primary btn-sm" id="goWorkBtn">출근하기</button>
 								</div>
 								<div class="align-center">
 									<div class="mt-3 mb-2">
 										<span>퇴근&ensp;</span>
-										<span> 00 : 00 </span>
+										<span> ${workTime.outTime} </span>
 									</div>
 									<button class="btn btn-primary btn-sm" id="outWorkBtn">퇴근하기</button>
 								</div>
@@ -79,7 +79,7 @@
 							<div class="work-progress">
 								<div class="text-part">
 									<span>이번 달 근무&ensp;</span>
-									<span> 00: 00 </span>
+									<span> ${workTime.monthWork} </span>
 								</div>
 								<div class="progress progress-primary pg-part mt-1 mb-2">
 									<div class="progress-bar" role="progressbar" style="width: 35%" aria-valuenow="0"
@@ -89,7 +89,7 @@
 							<div class="work-progress">
 								<div class="text-part">
 									<span>이번 주 근무&ensp;</span>
-									<span> 00: 00 </span>
+									<span> ${workTime.weekWork} </span>
 								</div>
 								<div class="progress progress-primary pg-part mt-1 mb-2">
 									<div class="progress-bar" role="progressbar" style="width: 35%" aria-valuenow="0"
@@ -99,7 +99,7 @@
 							<div class="work-progress">
 								<div class="text-part">
 									<span>오늘 근무&ensp;</span>
-									<span> 00: 00 </span>
+									<span> ${workTime.dayWork} </span>
 								</div>
 								<div class="progress progress-primary pg-part mt-1 mb-2">
 									<div class="progress-bar" role="progressbar" style="width: 35%" aria-valuenow="0"
@@ -194,6 +194,10 @@
 <script>
 	$("button[id='goWorkBtn']").click(function(){
 		location.href="${root}/att/goWork";
+	});
+	
+	$("button[id='outWorkBtn']").click(function(){
+		location.href="${root}/att/outWork/"+${workTime.no};
 	});
 </script>
 <link rel="stylesheet" href="${root}/resources/css/attendance.css">
