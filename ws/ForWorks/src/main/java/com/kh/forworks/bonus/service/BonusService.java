@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.forworks.bonus.vo.BenefitVo;
+import com.kh.forworks.bonus.vo.BonusMemVo;
 import com.kh.forworks.bonus.vo.BonusVo;
 
 public interface BonusService {
@@ -26,5 +27,9 @@ public interface BonusService {
 	List<BonusVo> bonusList();
 	//상여금 등록 ajax
 	int addBonus(BonusVo bv);
+	//년도별 상여금 조회
+	List<BonusVo> bonusYearList(String year);
+	//상여금 해당직원조회
+	List<BonusMemVo> memList(String no);
 	
 }

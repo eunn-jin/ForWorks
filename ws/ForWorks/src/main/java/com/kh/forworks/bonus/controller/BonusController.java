@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.kh.forworks.bonus.service.BonusService;
 import com.kh.forworks.bonus.vo.BenefitVo;
+import com.kh.forworks.bonus.vo.BonusMemVo;
 import com.kh.forworks.bonus.vo.BonusVo;
+import com.kh.forworks.member.vo.MemberVo;
 
 @Controller
 @RequestMapping("bonus")
@@ -27,6 +29,8 @@ public class BonusController {
 		this.bs = bs;
 	}
 	
+	//상여금파트
+	
 	//상여금목록조회(화면)
 	@GetMapping("list")
 	public String list(Model model) {
@@ -36,11 +40,26 @@ public class BonusController {
 	}
 	
 	//상여금 해당 직원목록조회
-	@GetMapping("memList")
-	public String memlist() {
+	@GetMapping("memList/{no}")
+	public String memlist(@PathVariable String no , Model model) {
+		List departList = bs.selectDepartList();
+		model.addAttribute("departList",departList);
+		
+		List<BonusMemVo> voList = bs.memList(no);
+		model.addAttribute("memList", voList);
 		return "bonus/bonus_mem_list";
 	}
 	
+	//년도별 상여금 조회
+	@PostMapping(value="yearList" , produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String yearList(String year) {
+		System.out.println(year);
+		List voList = bs.bonusYearList(year);
+		System.out.println(voList);
+		Gson g = new Gson();
+		return g.toJson(voList);
+	}
 	//상여금 등록ajax
 	@PostMapping("add")
 	@ResponseBody
@@ -49,6 +68,11 @@ public class BonusController {
 		int result = bs.addBonus(bv);
 		return ""+result;
 	}
+	
+	
+	
+	//수당파트
+	
 	
 	
 	//수당관리 직원리스트 페이지

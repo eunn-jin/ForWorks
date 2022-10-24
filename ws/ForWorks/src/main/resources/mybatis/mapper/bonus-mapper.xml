@@ -32,12 +32,16 @@
 	</select>
 	
 	<select id="selectOne" resultType="BenefitVo">
-	<!-- SELECT C.* , NVL(B.NO,0)AS BNO, NVL(EMP_NO,0),NVL(BENEFIT_CATE,C.NO),NVL(AMOUNT,0)  FROM BENEFIT_CATE C LEFT OUTER JOIN BENEFIT B ON C.NO = B.BENEFIT_CATE WHERE EMP_NO = 1 OR EMP_NO IS NULL; -->
-		SELECT 
+	SELECT C.CATE, NVL(B.NO,0)AS NO, NVL(EMP_NO,0)AS EMP_NO,NVL(AMOUNT,0)AS AMOUNT  FROM BENEFIT_CATE C LEFT OUTER JOIN BENEFIT B ON C.NO = B.BENEFIT_CATE WHERE EMP_NO = #{no} OR EMP_NO IS NULL
+		<!-- SELECT 
 		B.NO AS NO, B.EMP_NO AS EMP_NO, C.CATE AS CATE, B.AMOUNT AS AMOUNT 
 		FROM BENEFIT B JOIN BENEFIT_CATE C ON B.BENEFIT_CATE = C.NO 
-		WHERE B.EMP_NO = #{no}
+		WHERE B.EMP_NO = #{no} -->
 	</select>
+	
+	<insert id="insertBenefit">
+		INSERT INTO BENEFIT (NO, EMP_NO, BENEFIT_CATE, AMOUNT)VALUES(SEQ_BENEFIT_NO.nextval, #{empNo} , (SELECT NO  FROM BENEFIT_CATE WHERE CATE LIKE #{cate}) , #{amount})
+	</insert>
 	
 	<update id="updateOne">
 		UPDATE BENEFIT SET AMOUNT = #{amount}
@@ -45,20 +49,37 @@
 		AND NO = #{no}
 	</update>
 	
+	<!-- 상여금파트 -->
+	
 	<select id="bonusList" resultType="BonusVo">
 		SELECT 
 			NO 
 			, TITLE
 			, TO_CHAR(B_DATE,'YYYY-MM-DD')AS B_DATE
 			, CONTENT 
-		FROM B_INFO
+		FROM B_INFO ORDER BY NO DESC
 	</select>
 	
 	<insert id="insertBonus">
-		INSERT INTO B_INFO 
-			(NO , TITLE, B_DATE, CONTENT) 
-		VALUES 
-			( SEQ_B_INFO_NO.nextval,#{title}, TO_CHAR(#{bdate}, 'YYYY-MM-DD'), #{content})
+		INSERT INTO B_INFO(NO, TITLE , B_DATE, CONTENT)VALUES(SEQ_B_INFO_NO.NEXTVAL , #{title}, #{bdate},#{content})
 	</insert>
+	
+	<select id="selectYearList" resultType="BonusVo">
+		SELECT 
+			NO 
+			, TITLE
+			, TO_CHAR(B_DATE,'YYYY-MM-DD')AS B_DATE
+			, CONTENT 
+		FROM B_INFO WHERE TO_CHAR(B_DATE,'YYYY') = #{year} ORDER BY NO DESC
+	</select>
+	
+	<select id="selectMemList" resultType="BonusMemVo">
+		SELECT 
+			B.NO, B.B_INFO_NO, B.EMP_NO , EMP_NAME, DEPT_NAME, B.RATE, B.PAYMENT 
+		FROM B_PAYINFO B 
+		JOIN (SELECT E.EMP_NAME , EMP_NO , DEPT_NAME , D.DEPT_NO FROM EMPLOYEE E JOIN DEPARTMENT D ON E.DEPT_NO = D.DEPT_NO) E 
+		ON B.EMP_NO = E.EMP_NO
+		WHERE B.B_INFO_NO = #{no}
+	</select>
 	
 </mapper>

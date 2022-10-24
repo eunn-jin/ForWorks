@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.forworks.bonus.dao.BonusDao;
 import com.kh.forworks.bonus.vo.BenefitVo;
+import com.kh.forworks.bonus.vo.BonusMemVo;
 import com.kh.forworks.bonus.vo.BonusVo;
 
 @Service
@@ -53,7 +54,13 @@ public class BonusServiceImpl implements BonusService {
 	//수당 수정
 	@Override
 	public List<BenefitVo> edit(BenefitVo vo) {
-		int result = dao.updateOne(sst,vo);
+		int result = 0;
+		int no = Integer.parseInt(vo.getNo());
+		if(no == 0) {
+			result = dao.insertBenefitEmp(sst,vo);
+		}else {
+			result = dao.updateOne(sst,vo);			
+		}
 		List<BenefitVo> updatedBenefit = null;
 		if(result ==1 ) {
 			updatedBenefit = this.selectOne(vo.getEmpNo());
@@ -61,6 +68,9 @@ public class BonusServiceImpl implements BonusService {
 		}
 		return updatedBenefit; 
 	}
+	
+	
+	//상여금파트
 	
 	//상여금 목록조회(화면)
 	@Override
@@ -72,6 +82,16 @@ public class BonusServiceImpl implements BonusService {
 	@Override
 	public int addBonus(BonusVo bv) {
 		return dao.insertBonus(sst, bv);
+	}
+	//년도별 상여금조회
+	@Override
+	public List<BonusVo> bonusYearList(String year) {
+		return dao.SelectYearList(sst,year);
+	}
+	//상여금 해당 직원조회
+	@Override
+	public List<BonusMemVo> memList(String no) {
+		return dao.SelectMem(sst, no);
 	}
 
 }

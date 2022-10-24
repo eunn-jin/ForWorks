@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.forworks.bonus.vo.BenefitVo;
+import com.kh.forworks.bonus.vo.BonusMemVo;
 import com.kh.forworks.bonus.vo.BonusVo;
 
 public interface BonusDao {
@@ -21,10 +22,16 @@ public interface BonusDao {
 	List<BenefitVo> selectOne(SqlSessionTemplate sst, String no);
 	//수당수정
 	int updateOne(SqlSessionTemplate sst, BenefitVo vo);
+	//직원의 수당내역등록
+	int insertBenefitEmp(SqlSessionTemplate sst, BenefitVo vo);
 
 	//상여금 목록조회(화면)
 	List<BonusVo> selectList(SqlSessionTemplate sst);
 	//상여금 등록 ajax
 	int insertBonus(SqlSessionTemplate sst, BonusVo bv);
+	//년도별 상여금 조회
+	List<BonusVo> SelectYearList(SqlSessionTemplate sst, String year);
+	//상여금 해당 직원조회
+	List<BonusMemVo> SelectMem(SqlSessionTemplate sst, String no);
 
 }
