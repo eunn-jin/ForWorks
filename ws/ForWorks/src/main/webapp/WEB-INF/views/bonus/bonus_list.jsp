@@ -21,6 +21,7 @@
         background-color: white;
         overflow: scroll;
     }
+    
     .div-top{
         font-size: larger;
         color: black;
@@ -121,30 +122,34 @@
                </div>
                <section class="section">
 				<div id="wrap">
+
 				        <div id="check-date">
-				            <form action="">
+				            
 				                상여금 목록 
 				                <select name="year" id="year" title="년도" onchange="changeYear()">
-				                    <option value="">2022</option>
+				                    <option value="">년도</option>
+                                    <option value="2022">2022</option>
 				                </select> 
-				            </form>
+				            
 				        </div>
+
 				        <div id="check-btn">
 				            <button class="btn-open-popup">상여금 추가</button>
 				        </div>
 				        <div id="center">
 				            <div class="div-top">번호</div>
 				            <div class="div-top">상여제목</div>
-				        <div class="div-top">상여 내용</div>
-				        <div class="div-top">발생월</div>
-				
-				        <c:forEach items="${bonusList}" var="b">
-					        <div>${b.no}</div>
-					        <div>${b.title}</div>
-					        <div>${b.content}</div>
-					        <div>${b.bdate}</div>
-				        </c:forEach>
-				    
+                            <div class="div-top">상여 내용</div>
+                            <div class="div-top">발생월</div>
+                            
+                                <c:forEach items="${bonusList}" var="b">
+                                    <div class="bonus-no">${b.no}</div>
+                                    <div class="bonus-title"><a href="${root}/bonus/memList/${b.no}">${b.title}</a></div>
+                                    <div class="bonus-contet">${b.content}</div>
+                                    <div class="bonus-date">${b.bdate}</div>
+                                </c:forEach>
+                  
+                                
 				        
 				        </div>
 				        
@@ -251,7 +256,28 @@
 
     function changeYear(){
         var x = document.getElementById("year");
-        var year = x.options[x.selectedIndes].text;
+        var selectyear = x.options[x.selectedIndex].value;
+        consol.log(selectyear);
+        $.ajax({
+            url : "/ForWorks/bonus/yearList",
+            type : "POST",
+            date : {
+                year : selectyear
+            }
+            ,success : function(data){
+                alert("년 상여금목록입니다.");
+                $('#center').empty();
+                console.log(data[1]);
+                
+                $('#center').append(
+                    '<div class="bonus-no">'+'안녕'+'</div><div class="div-title"><a href="${root}/bonus/memList">'+'안녕'+'</a></div><div class="div-content">'+'안녕'+'</div><div class="div-date">'+"하잉"+'</div>');
+                
+            }
+            ,error : function(){
+                alert("다시 시도해주세요");
+            }
+            
+        })
     }
 
 

@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.forworks.bonus.vo.BenefitVo;
+import com.kh.forworks.bonus.vo.BonusMemVo;
 import com.kh.forworks.bonus.vo.BonusVo;
 import com.kh.forworks.member.vo.MemberVo;
 
@@ -46,6 +47,13 @@ public class BonusDaoImpl implements BonusDao {
 	public int updateOne(SqlSessionTemplate sst, BenefitVo vo) {
 		return sst.update("bonusMapper.updateOne" , vo);
 	}
+	//직원의 수당정보등록
+	@Override
+	public int insertBenefitEmp(SqlSessionTemplate sst, BenefitVo vo) {
+		return sst.insert("bonusMapper.insertBenefit" , vo);
+	}
+	
+	//상여금파트
 	
 	//상여금 목록조회(화면)
 	@Override
@@ -57,10 +65,15 @@ public class BonusDaoImpl implements BonusDao {
 	public int insertBonus(SqlSessionTemplate sst,BonusVo bv) {
 		return sst.insert("bonusMapper.insertBonus" , bv);
 	}
-	//직원의 수당정보등록
+	//년도별 상여금 조회
 	@Override
-	public int insertBenefitEmp(SqlSessionTemplate sst, BenefitVo vo) {
-		return sst.insert("bonusMapper.insertBenefit" , vo);
+	public List<BonusVo> SelectYearList(SqlSessionTemplate sst, String year) {
+		return sst.selectList("bonusMapper.selectYearList" , year);
+	}
+	//상여금 해당 직원조회
+	@Override
+	public List<BonusMemVo> SelectMem(SqlSessionTemplate sst, String no) {
+		return sst.selectList("bonusMapper.selectMemList", no);
 	}
 
 }

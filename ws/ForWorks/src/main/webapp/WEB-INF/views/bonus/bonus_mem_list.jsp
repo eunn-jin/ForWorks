@@ -120,10 +120,10 @@
                <section class="section">
 				<div id="wrap">
 			        <div id="check-date">
-			            2022 상반기-1 해당사원
+			            해당사원목록
 			        </div>
 			        <div id="check-btn">
-			            <button class="btn-open-popup">해당사원 추가</button>
+			            <button class="btn-open-popup">사원 추가</button>
 			        </div>
 			        <div id="center">
 			        <div class="div-top">부서명</div>
@@ -131,10 +131,12 @@
 			        <div class="div-top">지급률</div>
 			        <div class="div-top">지급액</div>
 			        
-			        <div>인사</div>
-			        <div>홍길동</div>
-			        <div>10%</div>
-			        <div>200,000원</div>
+                    <c:forEach items="${MemList}" var = "m">
+                        <div>${m.deptName}</div>
+                        <div>${m.empName}</div>
+                        <div>${m.rate}%</div>
+                        <div>${m.payment}원</div>
+                    </c:forEach>
 			
 			        </div>
 			        
@@ -166,10 +168,19 @@
 				<div class="modal">
                     <div class="modal_body">
                         <div><h1>사원 등록</h1></div>
-                        사원명
-                        <input type="text"> <br>
                         부서
-                        <input type="text"> <br>
+                        <select name="dept" id="dept" onchange="changeDepart()">
+                            <option value="">부서선택</option>
+                            <c:forEach items="${departList}" var="d">
+                                <option value="${d}">${d}</option>
+                            </c:forEach>
+                        </select>
+                        <br>
+                        사원명
+                        <select name="emp" id="emp">
+                            
+                        </select>
+                        <br>
                         지급율
                         <input type="number"> <br>
                         지급액
@@ -200,6 +211,16 @@
        </div>
 
 </div>
+
+<script>
+    function changeDepart(){
+        var d = document.getElementById('dept');
+        var dept = d.options[d.selectedIndex].text;
+        consol.log('dept');
+    }
+</script>
+
+
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 <script>
