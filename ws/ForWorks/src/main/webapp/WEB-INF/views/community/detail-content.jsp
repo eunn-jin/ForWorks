@@ -4,9 +4,10 @@
 <style>
 	table{margin: auto;}
 tr, td{
-    border: 1px solid black;
+    border: 1px solid rgba(0, 0, 0, 0.144);
     margin: auto;
     text-align: center;
+    vertical-align: middle;
 }
 
 
@@ -42,36 +43,45 @@ table {
                         <div class="table table-responsive">
                             <table class="table table-striped">
                                 <tr>
-                                    <td class="">작성자</td>
-                                    <td  style="border:1px solid black; background : white;">ㅁㅁㅁ</td>
-                                    <td class="danger">공개범위</td>
-                                    <td  style="background: white;">
-                                        <div>전체</div>
+                                    <td class="" style="width: 15%;">작성자</td>
+                                    <td  style=" background : white; width: 30%;">${cmuvo.empNo}</td>
+                                    <td style="width: 15%;" class="danger">대상</td>
+                                    <td  style="background: white; width: 30%;">
+                                        <div>${cmuvo.cmuRead}</div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="danger">제목</td>
-                                    <td colspan="3"><div>안녕하세요 신입 입니다</div></td>
+                                    <td colspan="3"><div>${cmuvo.cmuTitle}zzz</div></td>
                                 </tr>
     
     
                                 <tr>
                                     <td class="danger">글내용</td>
                                     <td colspan="3" style=" background : white; text-align: left;">
-                                        <textarea id="summernote" name="content" class="form-control" style="background-color: white; text-align: left; height: 30vh;" disabled>글 내용을 입력해봅니다 Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam, nam praesentium quaerat dignissimos nobis nihil explicabo optio amet est quos architecto, maiores quae deleniti ab accusamus. Assumenda veniam quos vero!</textarea>
+                                        <textarea id="summernote" name="content" class="form-control" style="background-color: white; text-align: left; height: 30vh;" disabled
+                                        >${cmuvo.cmuContent} Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam, nam praesentium quaerat dignissimos nobis nihil explicabo optio amet est quos architecto, maiores quae deleniti ab accusamus. Assumenda veniam quos vero!
+                                        </textarea>
                                     </td>
                                 </tr>
     
                                 <tr>
                                     <td class="danger">첨부파일</td>
-                                    <td colspan="3"><div style="height: 10vh;">첨부파일이 없습니다.</div></td>
+                                    <c:if test="${cmatVo eq null}">
+                                        <td colspan="3"><div style="height: 10vh;">첨부파일이 없습니다.</div></td>
+                                    </c:if>
+                                    <c:if test="${cmatVo ne null}">
+                                        <td colspan="3"><div style="height: 10vh;">
+                                            <img src="${root}/resources/upload/commu/${cmatVo.cmatChange}" width="10%" height="100%">
+                                        </div></td>
+                                    </c:if>
                                 </tr>
                                 
                                 <tr>
                                     <td colspan="4" class="text-end" style="border:none; background : white; ">
                                         <input type="hidden" name="num" value="">
-                                        <button type="button" id="upDate" class="mybtn">수정</button>
-                                        <button type="button" id="delete" class="myBtn">삭제하기</button>
+                                        <a href="${root}/community/update/${cmuvo.cmuNo}"><button type="button" id="upDate" class="mybtn">수정</button></a>
+                                        <a href="${root}/community/delete/${cmuvo.cmuNo}" ><button type="button" id="delete" class="myBtn">삭제하기</button></a>
     
                                     </td>
                                     
@@ -82,24 +92,3 @@ table {
                 </div>
             </div>
         </div>
-    
-<!-- 수정하기 버튼클릭 이벤트 -->
-<script>
-    $(function(){
-        $('#upDate').click(function(){
-            //해당 번호로 요청 보내기
-            location.href="${root}/board/update?num=";
-        });
-    })
-</script>
-
-<!-- 삭제하기 버튼클릭 이벤트 -->
-<script>
-    $(function(){
-        $('#delete').click(function(){
-            //해당 번호로 요청 보내기
-            location.href="${root}/board/delete?num=";
-        });
-    })
-</script>
-

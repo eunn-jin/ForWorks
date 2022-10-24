@@ -32,7 +32,7 @@
                 </div>
                 <section class="section">
                     <div class="card">
-                        <%@include file="/WEB-INF/views/board/detail-content.jsp" %>
+                        <%@include file="/WEB-INF/views/community/detail-content.jsp" %>
                     </div>
                 </section>
             </div>
