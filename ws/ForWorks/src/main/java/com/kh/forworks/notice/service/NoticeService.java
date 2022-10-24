@@ -24,6 +24,9 @@ public interface NoticeService{
 
 	//공지사항 정보수정
 	int edit(NoticeVo ntvo, NoticeAttachmentsVo ntatVo, String no);
+
+	//공지사항 삭제
+	int delete(String no);
 	
 
 

@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -63,7 +64,7 @@ public class NoticeController {
 	
 	//공지사항 작성
 	@PostMapping("write")
-	public String write(NoticeVo ntvo, NoticeAttachmentsVo ntatVo ,HttpServletRequest req) {
+	public String write(NoticeVo ntvo, NoticeAttachmentsVo ntatVo ,HttpServletRequest req,Model model ,HttpSession session) {
 		System.out.println("공지::"+ntvo);
 		
 		ntvo.setEmpNo("1");
@@ -91,8 +92,12 @@ public class NoticeController {
 		
 		if (result == 1 || result ==2) {
 			// 1 :: 파일 없음  || 2 :: 파일있음
+			session.setAttribute("alertMsg", "공지사항 작성 성공!");
 			return "redirect:/notice/list/1";
-		}else {return "redirect:/error";}
+		}else {
+			model.addAttribute("errorMsg","공지사항 작성 실패..");
+			return "redirect:/error";
+			}
 	}
 	
 	//공지사항 상세보기
@@ -130,11 +135,11 @@ public class NoticeController {
 	
 	//공지사항 수정
 	@PostMapping("update/{no}")
-	public String update(@PathVariable String no, NoticeVo ntvo, NoticeAttachmentsVo ntatVo, HttpServletRequest req) {
+	public String update(@PathVariable String no, NoticeVo ntvo, NoticeAttachmentsVo ntatVo, HttpServletRequest req, Model model, HttpSession session) {
 		ntvo.setNtno(no);
 		ntatVo.setNtno(no);
-		System.out.println(ntvo);
-		System.out.println(ntatVo);
+		//System.out.println(ntvo);
+		//System.out.println(ntatVo);
 		
 		//정보수정
 		
@@ -144,7 +149,7 @@ public class NoticeController {
 		
 		//첨부파일 확인
 		ntatVo = nts.checkFile(no);
-		System.out.println("파일 확인(정보수정post)::"+ntatVo);
+		//System.out.println("파일 확인(정보수정post)::"+ntatVo);
 		
 		String fileName = ntatVo.getNtatOrigin();
 		File f =  new File(savePath +  fileName);
@@ -161,18 +166,28 @@ public class NoticeController {
 			ntatVo.setNtatChange(changeName);
 			ntatVo.setNtatOrigin(originName);
 			ntatVo.setNtatPath(savePath);
-			System.out.println("공지파일::"+ntatVo);
+			//System.out.println("공지파일::"+ntatVo);
 		}else {ntatVo=null;}
 		
 		//공지사항 정보수정
 		int result = nts.edit(ntvo, ntatVo, no);
+		if (result ==1 || result ==2) {
+			session.setAttribute("alertMsg", "공지사항 수정 성공!");
+			return "redirect:/notice/list/"+no;
+			
+		}else {return"redirect:/error";}
 		
-		return "redirect:/notice/detail/"+no;
 	}
 	
 	//공지사항 삭제
 	@GetMapping("delete/{no}")
-	public String delete(@PathVariable String no) {
-		return"redirect:/";
+	public String delete(@PathVariable String no, Model model, HttpSession session) {
+		
+		int result = nts.delete(no);
+		
+		if (result ==1) {
+			session.setAttribute("alertMsg", "공지사항 삭제 성공!");
+			return "redirect:/notice/list/1";
+		}else {return"redirect:/error";}
 	}
 }

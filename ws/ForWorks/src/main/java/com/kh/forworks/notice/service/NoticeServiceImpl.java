@@ -84,7 +84,13 @@ public class NoticeServiceImpl implements NoticeService{
 		if (ntatVo != null) {
 			result2 = dao.editNtat(sst,ntatVo);
 		}
-		return 0;
+		return result+result2;
+	}
+	
+	//공지사항 삭제
+	@Override
+	public int delete(String no) {
+		return dao.delete(sst, no);
 	}
 
 

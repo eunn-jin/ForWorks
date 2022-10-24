@@ -69,6 +69,11 @@ public class NoticeDaoImpl implements NoticeDao{
 		return sst.update("noticeMapper.editNtat",ntatVo);
 	}
 
+	//공지사항 삭제
+	@Override
+	public int delete(SqlSessionTemplate sst, String no) {
+		return sst.update("noticeMapper.delete",no);
+	}
 
 
 
