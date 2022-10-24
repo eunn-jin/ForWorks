@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <style>
 tr:hover{
     cursor: pointer;
@@ -50,12 +51,12 @@ tr>th:hover{
 				<li class="nav-item"><a class="nav-link active"
 					data-toggle="tab" href="#all">전체</a></li>
 				<li class="nav-item"><a class="nav-link" data-toggle="tab"
-					href="#ing">_ _부서</a></li>
+					href="#my">_ _부서</a></li>
 
 			</ul>
 			<div class="tab-content">
 				<div class="tab-pane fade show active" id="all">
-					<!--  투표 현황(전체) -->
+					
 					<div id="notice" style="text-align: left;width: 100%;">
 						<div id="list" style="overflow: auto; width: 100%;">
 
@@ -71,46 +72,130 @@ tr>th:hover{
 									</tr>
 								</thead>
 
-								<%int i=0; %>
-								<c:forEach begin="1" step="1" end="10">
-									<tbody>
+								
+								<c:forEach items="${cmuList }" var="cmu">
+									<tbody id="tbd">
 										<tr id="center">
+											
+											<th scope="row">${cmu.cmuNo}</th>
+											<td colspan="5">${cmu.cmuTitle}</td>
 
-											<th scope="row">1</th>
-											<td colspan="5">안녕하세요 신입입니다.ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</td>
-
-											<td>ㅁㅁㅁ</td>
-											<td>10</td>
-											<td>전체</td>
-											<td>22-10-05</td>
+											<td>${cmu.empNo}</td>
+											<td>${cmu.cmuCnt}</td>
+											<td>${cmu.cmuRead}</td>
+											<td>${cmu.cmuModifiyDate}</td>
 										</tr>
 									</tbody>
 								</c:forEach>
-								<td colspan="10"style="border: none; cursor: default; background: white;">
+								<td  colspan="10" style="border:none; cursor: default; background: white;">
+            
 									<ul class="pagination justify-content-center">
-										<li class="page-item disabled"><a class="page-link"><</a>
-										</li>
-										<li class="page-item active" aria-current="page"><a
-											class="page-link b" href="#">1</a></li>
-										<li class="page-item"><a class="page-link b" href="#">2</a></li>
-										<li class="page-item"><a class="page-link b" href="#">3</a></li>
-										<li class="page-item"><a class="page-link b" href="#">></a>
-										</li>
+										
+										<c:if test="${pv.startPage ne 1 }">	
+											<li><a href="${root}/community/list/1" class="page-link b disabled">처음</a></li>
+											<li class="page-item"><a href="${root}/community/list/${pv.startPage -1 }" class="page-link">이전</a></li>
+										</c:if>
+					
+										
+					
+										<c:forEach begin="${pv.startPage }" end="${pv.endPage }" var="i">
+											<li class="page-item " aria-current="page">
+												<a class="page-link b" href="${root}/community/list/${i}">${i}</a>
+											</li>
+										</c:forEach>
+					
+										<c:if test="${pv.endPage ne pv.maxPage }">
+											<li><a class="page-link b" href="${root}/community/list/${pv.endPage +1 }">다음</a></li>
+											<li><a href="${root}/community/list/${pv.maxPage }" class="page-link b">끝</a></li>
+										</c:if>
 									</ul>
+								
 								</td>
 
 							</table>
 						</div>
 						<!-- 생성권한이 있는 사람만 -->
 						<div style="text-align: right;">
-							<a href="/forworks/board/write"><button class="myBtn"
+							<a href="${root}/community/write"><button class="myBtn"
 									style="margin-right: 5%;">게시글 작성</button></a>
 						</div>
 
 					</div>
 				</div>
-				<div class="tab-pane fade" id="ing">
-					<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aut culpa recusandae, magnam dicta laboriosam architecto fugit excepturi illo quo laudantium deserunt exercitationem cumque blanditiis sint, obcaecati libero. Delectus, vero sed?</p>
+
+
+				<!-- my탭 클릭시 보여지는 화면 -->
+				<div class="tab-pane fade" id="my">
+					
+					
+					<div id="notice" style="text-align: left;width: 100%;">
+						<div id="list" style="overflow: auto; width: 100%;">
+							
+							
+							<table class="table" id="table-main">
+								<thead class="table-light">
+									<tr id="center">
+										<th scope="col">#</th>
+										<th scope="col" colspan="5">제목</th>
+										<th scope="col">작성자</th>
+										<th scope="col">조회수</th>
+										<th scope="col">공개범위</th>
+										<th scope="col">작성일</th>
+									</tr>
+								</thead>
+
+								<!-- 조건 :: 로그인한 회원의 부서정보값이랑 같은 정보만 가져오기 -->
+								<c:forEach items="${cmudpList }" var="cmdp">
+									<c:set var="ltn" value="${fn:length(cmudpList)}"/>
+									<!-- <div>${ltn}</div> -->
+									<c:set var="k" value="${k+1}"/>
+									<tbody id="tbd2">
+										<tr id="center2">
+											<input type="hidden"  value="${cmdp.cmuNo}">
+											<th scope="row">${ltn-k+1}</th>
+											<td colspan="5">${cmdp.cmuTitle}</td>
+
+											<td>${cmdp.empNo}</td>
+											<td>${cmdp.cmuCnt}</td>
+											<td>${cmdp.cmuRead}</td>
+											<td>${cmdp.cmuModifiyDate}</td>
+										</tr>
+									</tbody>
+									
+								</c:forEach>
+								<td  colspan="10" style="border:none; cursor: default; background: white;">
+            
+									<ul class="pagination justify-content-center">
+										
+										<c:if test="${pvdp.startPage ne 1 }">	
+											<li><a href="${root}/community/list/1" class="page-link b disabled">처음</a></li>
+											<li class="page-item"><a href="${root}/community/list/${pvdp.startPage -1 }" class="page-link">이전</a></li>
+										</c:if>
+					
+										
+					
+										<c:forEach begin="${pvdp.startPage }" end="${pvdp.endPage }" var="j">
+											<li class="page-item " aria-current="page">
+												<a class="page-link b" href="${root}/community/list/${j}">${j}</a>
+											</li>
+										</c:forEach>
+					
+										<c:if test="${pvdp.endPage ne pvdp.maxPage }">
+											<li><a class="page-link b" href="${root}/community/list/${pvdp.endPage +1 }">다음</a></li>
+											<li><a href="${root}/community/list/${pvdp.maxPage }" class="page-link b">끝</a></li>
+										</c:if>
+									</ul>
+								
+								</td>
+
+							</table>
+						</div>
+						<!-- 생성권한이 있는 사람만 -->
+						<div style="text-align: right;">
+							<a href="${root}/community/write"><button class="myBtn"
+									style="margin-right: 5%;">게시글 작성</button></a>
+						</div>							
+
 				</div>
 
 			</div>
@@ -123,7 +208,7 @@ tr>th:hover{
 
 <script>
 	$(function() {
-		$('#table-main>tbody>tr').click(function() {
+		$('#table-main>tbody>#center').click(function(){
 			//행 클릭 되었을때, 동작할 내용
 
 			//글번호 가져오기
@@ -134,10 +219,21 @@ tr>th:hover{
 			//해당 번호로 요청 보내기
 			
 			//작성자인경우
-			location.href = '${root}/board/detail?num=' + num;
+			location.href = '${root}/community/detail/' + num;
 
 			//아닌경우
 			//location.href = '${root}/vote/detailUser?num=' + num;
+		});
+	})
+</script>
+
+<script>
+	
+	$(function() {
+		$('#table-main>tbody>#center2').click(function(){
+			const num = $(this).children().eq(0).val();
+			// console.log(":::"+num);
+			location.href = '${root}/community/detail/' + num;
 		});
 	})
 </script>
