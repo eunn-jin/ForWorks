@@ -127,8 +127,7 @@
 				            
 				                상여금 목록 
 				                <select name="year" id="year" title="년도" >
-				                    <option value="">년도</option>
-                                    <option value="2022">2022</option>
+				                    
 				                </select> 
 				            
 				        </div>
@@ -252,6 +251,21 @@
         })
     }
 </script>
+<!--SELECTBOX 연도 설정-->
+<script>
+    $(document).ready(function(){
+        var now = new Date();
+        var year = "";
+        var com_year = now.getFullYear();
+        console.log("com_year" + com_year);
+        $("#year").append("<option value=''>연도</option>");
+        for(var i = (com_year); i >= 2000 ; i--){
+            $("#year").append("<option value='"+i+"'>"+i+"년"+"</option>");
+        }
+    })
+
+</script>
+
 
 <!--연도 별 상여금 조회 ajax-->
 <script>
