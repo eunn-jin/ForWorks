@@ -40,7 +40,7 @@ table {
                 <div class="col-md-2"></div>
                 <div class="col-md-8">
                     <form action="" method="post">
-                        <div class="table table-responsive">
+                        <div class="table "><!--table-responsive-->
                             <table class="table table-striped">
                                 <tr>
                                     <td class="" style="width: 15%;"><label for="empNo" class="form-label">작성자</label> </td>
