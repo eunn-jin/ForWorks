@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.kh.forworks.approv.vo.ApprovDocumentVo;
 import com.kh.forworks.approv.vo.DocFormVo;
+import com.kh.forworks.member.vo.MemberVo;
 
 public interface ApprovService {
 
@@ -22,5 +23,8 @@ public interface ApprovService {
 	
 	//전자문서 결재
 	int updateApprov(String dno);
+	
+	//회원 목록 조회
+	List<MemberVo> selectMemberList();
 
 }

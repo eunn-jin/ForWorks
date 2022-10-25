@@ -186,7 +186,7 @@
 
     .member-area-horizon{
         display: flex;
-        justify-content: center;
+        flex-direction: column;
     }
 
     .div-bar{
@@ -208,12 +208,6 @@
 </style>
     
 
-    
-</head>
-<body>
-
-    <div id="wrap">
-
         <%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
         
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -222,22 +216,28 @@
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
         <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+    
+</head>
+<body>
+<button%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <div id="wrap">
 
 
+
+        <form action="" method="post">
         <main>
             
             <div id="main-wrap">
 
                 <div id="main-header">문서 작성</div>
 
-                <form action="" method="post">
                     <div class="approv-main">
 
                         <div class="title-area" id="form-area">
                         
                             <input list="" class="approv-area title-input" placeholder="양식 선택" name="docForm">
                                 <datalist>
-
+                                	
                                 </datalist>
                             </input>
 
@@ -270,10 +270,10 @@
                         </div>
                     
                     </div>
-                
-
-
-                    <div id="add-member">
+                    
+            </div>
+            
+            <div id="add-member">
                         <div class="margin-top"></div>
                         <div class="approv-member-area">
 
@@ -281,24 +281,26 @@
 
                             <div class="member-input-area">
 
-                                <div class="member-area-horizon">
-
-                                    <input list="" class="approv-area member-input" name="approvMember">
-                                        <datalist>
-
+                                <div class="member-area-horizon" id="approv-member">
+                                	<div class="approv-member">
+                                    <input list="memberList" class="approv-area member-input" name="approvMember">
+                                        <datalist id="memberList">
+											<c:forEach var="x" items="${MemberList}">
+                                				<option value="${x.empNo}" label="${x.deptName} ${x.posName} ${x.empName}"></option>
+                                			</c:forEach>
                                         </datalist>
                                     </input>
 
-                                    <button class="member-btn">
+                                    <button class="member-btn"  id="btn-min-approv">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-square" viewBox="0 0 16 16">
                                             <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
                                             <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
                                         </svg>
                                     </button>
-
+                                    </div>
                                 </div>
 
-                                <button class="member-btn">
+                                <button class="member-btn"  id="btn-add-approv">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
                                         <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
                                         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
@@ -317,24 +319,26 @@
 
                             <div class="member-input-area">
 
-                                <div class="member-area-horizon">
-
-                                    <input list="" class="approv-area member-input" name="coopMember">
-                                        <datalist>
-
+                                <div class="member-area-horizon" id="coop-member">
+                                	<div class="coop-member">
+                                    <input list="memberList" class="approv-area member-input" name="coopMember">
+                                        <datalist id="memberList">
+											<c:forEach var="x" items="${MemberList}">
+                                				<option value="${x.empNo}" label="${x.deptName} ${x.posName} ${x.empName}"></option>
+                                			</c:forEach>
                                         </datalist>
                                     </input>
 
-                                    <button class="member-btn">
+                                    <button class="member-btn" id="btn-min-coop">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-square" viewBox="0 0 16 16">
                                             <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
                                             <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
                                         </svg>
                                     </button>
-
+                                    </div>
                                 </div>
 
-                                <button class="member-btn">
+                                <button class="member-btn"  id="btn-add-coop">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
                                         <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
                                         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
@@ -349,28 +353,29 @@
 
                         <div class="approv-member-area">
 
-                            <div class="member-label approv-area"><div>결재자 추가</div></div>
+                            <div class="member-label approv-area"><div>참조자 추가</div></div>
 
                             <div class="member-input-area">
 
-                                <div class="member-area-horizon">
-
-                                    <input list="" class="approv-area member-input" name="referMember">
-                                        <datalist>
-
+                                <div class="member-area-horizon" id="refer-member">
+									<div class="refer-member">
+                                    <input list="memberList" class="approv-area member-input" name="referMember">
+                                        <datalist id="memberList">
+											<c:forEach var="x" items="${MemberList}">
+                                				<option value="${x.empNo}" label="${x.deptName} ${x.posName} ${x.empName}" ></option>
+                                			</c:forEach>
                                         </datalist>
-                                    </input>
 
-                                    <button class="member-btn">
+                                    <button type="button" class="member-btn" id="btn-min-refer">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-square" viewBox="0 0 16 16">
                                             <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
                                             <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
                                         </svg>
                                     </button>
-
+									</div>
                                 </div>
 
-                                <button class="member-btn">
+                                <button type="button" class="member-btn" id="btn-add-refer" onclick="referAdd()">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
                                         <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
                                         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
@@ -381,9 +386,8 @@
 
                         </div>
                     </div>
-                </form>
-            </div>
         </main>        
+        </form>
 
 
     </div>
@@ -412,6 +416,21 @@
 		});
 	});
 
+</script>
+
+<script>
+	
+	function referAdd() {
+		const count = document.getElementsByClassName('refer-member').length
+		
+		const obj = document.getElementById("refer-member");
+		const newDiv = document.createElement("div");
+        newDiv.setAttribute("id", "refer-member"+count);
+        newDiv.setAttribute("class", "refer-member");
+		newDiv.innerHTML = "asds";
+		obj.appendChild(newDiv);
+	}
+	
 </script>
 
 </html>

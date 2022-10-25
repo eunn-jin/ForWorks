@@ -127,13 +127,11 @@
 </head>
 <body>
 
-    <div id="wrap">
-
-		
         <%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
         
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		<link rel="stylesheet" href="${root}/resources/css/approv/common.css">
+    <div id="wrap">
 
         <main>
             
@@ -144,7 +142,6 @@
                 <div class="approv-check-div">
                     <div class="approv-check-title">
                         미결재문서
-                        <a href="">목록 보기</a>
                     </div>
                     <div class="approv-check-content-wrap">
                         <div class="approv-btn-wrap">
@@ -196,7 +193,6 @@
                 <div class="approv-check-div">
                     <div class="approv-check-title">
                         미확인 협조 문서
-                        <a href="">목록 보기</a>
                     </div>
                     <div class="approv-check-content-wrap">
                         <div class="approv-btn-wrap">
@@ -248,7 +244,6 @@
                 <div class="approv-check-div">
                     <div class="approv-check-title">
                         미확인 참조 문서
-                        <a href="">목록 보기</a>
                     </div>
                     <div class="approv-check-content-wrap">
                         <div class="approv-btn-wrap">

@@ -160,15 +160,15 @@
 
 </head>
 <body>
-
-    <div id="wrap">
-
         <%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
         
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		<link rel="stylesheet" href="${root}/resources/css/approv/common.css">
 
+    <div id="wrap">
+
         <main>
+
             
             <div id="main-wrap">
 
