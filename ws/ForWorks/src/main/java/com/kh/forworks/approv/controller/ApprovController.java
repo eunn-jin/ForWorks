@@ -7,7 +7,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +17,7 @@ import com.kh.forworks.approv.service.ApprovService;
 import com.kh.forworks.approv.vo.ApprovDocumentVo;
 import com.kh.forworks.approv.vo.DocFormVo;
 import com.kh.forworks.approv.vo.DocSignVo;
+import com.kh.forworks.member.vo.MemberVo;
 
 @Controller
 @RequestMapping("approv")
@@ -43,7 +43,15 @@ public class ApprovController {
 	}
 	
 	@GetMapping("create")
-	public String create() {
+	public String create(HttpServletRequest req, HttpSession session) {
+		
+		if(session.getAttribute("loginMember")==null) {
+			return "redirect:/login";
+		}
+		
+		List<MemberVo> approvMemberList = service.selectMemberList();
+		req.setAttribute("MemberList", approvMemberList);
+		
 		return "approv/approv-create";
 	}
 	

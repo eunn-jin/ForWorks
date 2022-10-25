@@ -169,16 +169,16 @@
     
 
 </style>
+        <%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
+        
+		<%@ include file="/WEB-INF/views/common/header.jsp" %>
+		<link rel="stylesheet" href="${root}/resources/css/approv/common.css">
 
 </head>
 <body>
 
     <div id="wrap">
 
-        <%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
-        
-		<%@ include file="/WEB-INF/views/common/header.jsp" %>
-		<link rel="stylesheet" href="${root}/resources/css/approv/common.css">
 
         <main>
             

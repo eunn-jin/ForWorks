@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.kh.forworks.approv.dao.ApprovDao;
 import com.kh.forworks.approv.vo.ApprovDocumentVo;
 import com.kh.forworks.approv.vo.DocFormVo;
+import com.kh.forworks.member.vo.MemberVo;
 
 @Service
 public class ApprovServiceImpl implements ApprovService {
@@ -62,6 +63,13 @@ public class ApprovServiceImpl implements ApprovService {
 	public int updateApprov(String dno) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	//회원 목록 조회
+	@Override
+	public List<MemberVo> selectMemberList() {
+		// TODO Auto-generated method stub
+		return dao.selectMemberList(sst);
 	}
 	
 	
