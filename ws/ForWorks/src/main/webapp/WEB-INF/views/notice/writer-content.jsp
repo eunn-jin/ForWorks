@@ -40,11 +40,11 @@ table {
                 <div class="col-md-2"></div>
                 <div class="col-md-8">
                     <form action="" method="post">
-                        <div class="table table-responsive">
+                        <div class="table "><!--table-responsive-->
                             <table class="table table-striped">
                                 <tr>
                                     <td class="" style="width: 15%;"><label for="empNo" class="form-label">작성자</label> </td>
-                                    <td  style=" background : white;" style="width: 30%;">1</td>
+                                    <td  style=" background : white;" style="width: 30%;">${loginMember.empName}</td>
                                     <td style="width: 15%;"><label for="ntAccess" class="form-label">대상</label></td>
                                     <td  style="background: white; width: 30%;">
                                         <select name="ntAccess" id="ntAccess" class="form-select form-select-sm" aria-label=".form-select-sm example" style="width: auto;">
