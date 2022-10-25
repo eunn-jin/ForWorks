@@ -6,46 +6,97 @@
 		SELECT COUNT(CMU_NO)
 		FROM COMMUNITY
 		WHERE CMU_STATUS='N'
+		
+		<choose>
+			<when test="condition == 'title'">
+				AND CMU_TITLE LIKE 
+			</when>
+			<otherwise><!-- == else -->
+				AND CMU_CONTENT LIKE 
+			</otherwise>
+		</choose>
+		'%${keyword}%'			
 	</select>
 	
 	<select id="selectDp" resultType="int">
 		SELECT COUNT(CMU_NO)
 		FROM COMMUNITY
 		WHERE CMU_STATUS='N'
+		
+		<choose>
+			<when test="condition == 'title'">
+				AND CMU_TITLE LIKE 
+			</when>
+			<otherwise><!-- == else -->
+				AND CMU_CONTENT LIKE 
+			</otherwise>
+		</choose>
+		'%${keyword}%'	
+		
 		AND CMU_READ = 'MY'
 	</select>
 	
 	<select id="selectList" resultType="com.kh.forworks.community.vo.CommunityVo">
 		SELECT
-			CMU_NO
-			,EMP_NO
-			,CMU_TITLE
-			,CMU_CONTENT
-			,CMU_ENROLL_DATE
-			,CMU_MODIFIY_DATE
-			,CMU_CNT
-			,CMU_READ
-			,CMU_STATUS
-		FROM COMMUNITY
-		WHERE CMU_STATUS = 'N'
-		ORDER BY CMU_NO DESC
+			C.CMU_NO
+			,C.CMU_TITLE
+			,C.CMU_CONTENT
+			,C.CMU_ENROLL_DATE
+			,C.CMU_MODIFIY_DATE
+			,C.CMU_CNT
+			,C.CMU_READ
+			,C.CMU_STATUS
+			,E.EMP_NAME AS EMP_NO
+			,C.CMU.EMP_NO AS NUM
+			
+		FROM COMMUNITY C
+			JOIN EMPLOYEE E 
+			ON C.EMP_NO = E.EMP_NO
+					
+		WHERE C.CMU_STATUS = 'N'
+		<choose>
+			<when test="condition == 'title'">
+				AND C.CMU_TITLE LIKE 
+			</when>
+			<otherwise><!-- == else -->
+				AND C.CMU_CONTENT LIKE 
+			</otherwise>
+		</choose>
+		'%${keyword}%'		
+		
+		ORDER BY C.CMU_NO DESC
 	</select>
 	
 	<select id="selectListdp" resultType="com.kh.forworks.community.vo.CommunityVo">
 		SELECT
-			CMU_NO
-			,EMP_NO
-			,CMU_TITLE
-			,CMU_CONTENT
-			,CMU_ENROLL_DATE
-			,CMU_MODIFIY_DATE
-			,CMU_CNT
-			,CMU_READ
-			,CMU_STATUS
-		FROM COMMUNITY
-		WHERE CMU_STATUS = 'N'
-		AND CMU_READ = 'MY'
-		ORDER BY CMU_NO DESC
+			C.CMU_NO
+			,C.CMU_TITLE
+			,C.CMU_CONTENT
+			,C.CMU_ENROLL_DATE
+			,C.CMU_MODIFIY_DATE
+			,C.CMU_CNT
+			,C.CMU_READ
+			,C.CMU_STATUS
+			,E.EMP_NAME AS EMP_NO
+			
+			
+		FROM COMMUNITY C
+			JOIN EMPLOYEE E 
+			ON C.EMP_NO = E.EMP_NO
+		WHERE C.CMU_STATUS = 'N'
+		
+		<choose>
+			<when test="condition == 'title'">
+				AND C.CMU_TITLE LIKE 
+			</when>
+			<otherwise><!-- == else -->
+				AND C.CMU_CONTENT LIKE 
+			</otherwise>
+		</choose>
+		'%${keyword}%'			
+		
+		AND C.CMU_READ = 'MY'
+		ORDER BY C.CMU_NO DESC
 	</select>	
 	
 	<insert id="insertCm">
@@ -70,8 +121,21 @@
 	
 	
 	<select id="selectOne" resultType="com.kh.forworks.community.vo.CommunityVo">
-		SELECT *
-		FROM COMMUNITY
+		SELECT
+			C.CMU_NO
+			,C.CMU_TITLE
+			,C.CMU_CONTENT
+			,C.CMU_ENROLL_DATE
+			,C.CMU_MODIFIY_DATE
+			,C.CMU_CNT
+			,C.CMU_READ
+			,C.CMU_STATUS
+			,E.EMP_NAME AS EMP_NO
+						
+		FROM COMMUNITY C
+			JOIN EMPLOYEE E 
+			ON C.EMP_NO = E.EMP_NO
+			
 		WHERE CMU_STATUS ='N'
 		AND CMU_NO = #{no}
 	</select>
