@@ -25,15 +25,15 @@ public class NoticeServiceImpl implements NoticeService{
 	
 	//공지사항 갯수 조회
 	@Override
-	public int selectTotalCount() {
-		return dao.selectTotalCount(sst);
+	public int selectTotalCount(String keyword) {
+		return dao.selectTotalCount(sst, keyword);
 	}
 
 
 	//공지사항 목록 조회
 	@Override
-	public List<NoticeVo> selectList(PageVo pv) {
-		return dao.selectList(sst, pv);
+	public List<NoticeVo> selectList(PageVo pv, String keyword) {
+		return dao.selectList(sst, pv, keyword);
 	}
 	
 	//공지사항 상세 조회

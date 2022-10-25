@@ -7,21 +7,28 @@
 		SELECT COUNT(NTNO)
 		FROM NOTICE
 		WHERE NT_STATUS='N'
+		AND NT_TITLE LIKE'%${keyword}%'	
 	</select>
 
 	<select id="selectList" resultType="com.kh.forworks.notice.vo.NoticeVo">
 		SELECT  
-			NTNO
-			,EMP_NO
-			,NT_TITLE
-			,NT_CONTENT
-			,NT_ENROLL_DATE
-			,NT_MODIFIY_DATE
-			,NT_CNT
-			,NT_ACCESS
-			,NT_STATUS
-			FROM NOTICE
+			N.NTNO
+			<!-- ,N.EMP_NO -->
+			,N.NT_TITLE
+			,N.NT_CONTENT
+			,N.NT_ENROLL_DATE
+			,N.NT_MODIFIY_DATE
+			,N.NT_CNT
+			,N.NT_ACCESS
+			,N.NT_STATUS
+			,E.EMP_NAME AS EMP_NO
+			
+			FROM NOTICE N
+			JOIN EMPLOYEE E 
+			ON N.EMP_NO = E.EMP_NO
+			 			
 			WHERE NT_STATUS = 'N'
+			AND NT_TITLE LIKE'%${keyword}%'			
 			ORDER BY NTNO DESC
 	</select>
 	
@@ -34,8 +41,23 @@
 	</update>
 	
 	<select id="selectOne" resultType="com.kh.forworks.notice.vo.NoticeVo">
-		SELECT *
-		FROM NOTICE
+		SELECT 
+			N.NTNO
+			<!-- ,N.EMP_NO -->
+			,N.NT_TITLE
+			,N.NT_CONTENT
+			,N.NT_ENROLL_DATE
+			,N.NT_MODIFIY_DATE
+			,N.NT_CNT
+			,N.NT_ACCESS
+			,N.NT_STATUS
+			,E.EMP_NAME AS EMP_NO	
+				
+			FROM NOTICE N
+			JOIN EMPLOYEE E 
+			ON N.EMP_NO = E.EMP_NO
+		
+		
 		WHERE NT_STATUS ='N'
 		AND NTNO = #{ntno}
 	</select>

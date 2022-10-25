@@ -77,6 +77,7 @@ table {
                                     </c:if>
                                 </tr>
                                 
+                                <c:if test="${loginMember.empNo eq ntvo.empNo}">
                                 <tr>
                                     <td colspan="4" class="text-end" style="border:none; background : white; ">
                                         <input type="hidden" name="num" value="">
@@ -86,6 +87,7 @@ table {
                                     </td>
                                     
                                 </tr>
+                            </c:if>
                         </div>
                     </form> 
 

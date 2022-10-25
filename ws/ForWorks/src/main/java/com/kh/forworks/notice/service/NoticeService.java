@@ -9,10 +9,10 @@ import com.kh.forworks.noticeattachments.vo.NoticeAttachmentsVo;
 public interface NoticeService{
 
 	//공지사항 갯수 조회
-	int selectTotalCount();
+	int selectTotalCount(String keyword);
 	
 	//공지사항 목록 조회
-	List<NoticeVo> selectList(PageVo pv);
+	List<NoticeVo> selectList(PageVo pv, String keyword);
 
 	//공지사항 상세조회
 	NoticeVo selectOne(String no);

@@ -1,7 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<c:set var="alertMsg" value="${sessionScope.alertMsg }"/>
+<c:remove var="alertMsg" scope="session"/>
+<c:if test="${not empty alertMsg }">
+	<script>
+		alert('${alertMsg}');
+	</script>
+</c:if> 
 <style>
 tr:hover{
     cursor: pointer;
@@ -27,15 +34,15 @@ tr>th:hover{
 		<div class="col">
 			<div class="csearch" >
 			
-		
+				<form action="${root}/community/list/1" method="get" onsubmit="return check()">
                     <!-- <input type="search" class="form-control ds-input" id="" placeholder="Search docs..." style="width: auto; display: inline; " > -->
 					<div class="input-group w-70" >
-						<select class="form-select" aria-label="Default select example" >
-							<option selected>선택</option>
-							<option value="">제목</option>
-							<option value="">작성자</option>
+						<select class="form-select" aria-label="Default select example" name="condition">
+							<option value="nu" selected>선택</option>
+							<option value="title">제목</option>
+							<option value="writer">작성자</option>
 						</select>
-						<input type="text" class="form-control" placeholder="Input group example" aria-label="Input group example" aria-describedby="basic-addon1" >
+						<input type="text" class="form-control" placeholder="검색어를 입력해주세요" aria-label="Input group example" aria-describedby="basic-addon1" name="keyword">
 						<span class="input-group-text" id="basic-addon1">
 							<button class="mybtn">
 							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
@@ -43,15 +50,27 @@ tr>th:hover{
 							</svg>
 							</button>
 						</span>
+
+						<span class="input-group-text" id="basic-addon1">
+							<a href="${root}/community/list/1">
+							<button type="button" class="mybtn">
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
+									<path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"></path>
+									<path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"></path>
+								</svg>
+							</button>
+							</a>
+						</span>
+
 					</div>
-            
+				</form>
 			</div>
 			
 			<ul class="nav nav-tabs" >
 				<li class="nav-item"><a class="nav-link active"
 					data-toggle="tab" href="#all">전체</a></li>
 				<li class="nav-item"><a class="nav-link" data-toggle="tab"
-					href="#my">_ _부서</a></li>
+					href="#my">${loginMember.deptName}서</a></li>
 
 			</ul>
 			<div class="tab-content">
@@ -115,11 +134,12 @@ tr>th:hover{
 							</table>
 						</div>
 						<!-- 생성권한이 있는 사람만 -->
-						<div style="text-align: right;">
-							<a href="${root}/community/write"><button class="myBtn"
-									style="margin-right: 5%;">게시글 작성</button></a>
-						</div>
-
+						<c:if test = "${not empty loginMember}">
+							<div style="text-align: right;">
+								<a href="${root}/community/write"><button class="myBtn"
+										style="margin-right: 5%;">게시글 작성</button></a>
+							</div>
+						</c:if>
 					</div>
 				</div>
 
@@ -202,8 +222,23 @@ tr>th:hover{
 		</div>
 	</div>
 </div>
+</div>
 
 
+<!-- 커뮤니티 검색엔진 select체크여부확인 -->
+<script>
+	var x;
+	$("select[name=condition]").change(function(){
+		x= $(this).val();
+		console.log(x);
+	}); 
+    function check(){
+        if (x== "nu" || x ==null) {
+            alert('대상을 선택해주세요!');
+            return false;
+        }
+    }
+</script>
 
 
 <script>

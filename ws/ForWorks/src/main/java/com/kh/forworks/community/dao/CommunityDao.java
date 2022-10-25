@@ -1,6 +1,7 @@
 package com.kh.forworks.community.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
@@ -11,11 +12,11 @@ import com.kh.forworks.communityattachments.vo.CommunityAttachmentsVo;
 public interface CommunityDao {
 
 	//커뮤니티 전체 갯수
-	int selectTotalCount(SqlSessionTemplate sst);
-	int selectDp(SqlSessionTemplate sst);
+	int selectTotalCount(SqlSessionTemplate sst, Map<String, String> map);
+	int selectDp(SqlSessionTemplate sst, Map<String, String> map);
 	//커뮤니티 리스트 가져오기
-	List<CommunityVo> selectList(SqlSessionTemplate sst, PageVo pv);
-	List<CommunityVo> selectListdp(SqlSessionTemplate sst, PageVo pvdp);
+	List<CommunityVo> selectList(SqlSessionTemplate sst, PageVo pv, Map<String, String> map);
+	List<CommunityVo> selectListdp(SqlSessionTemplate sst, PageVo pvdp, Map<String, String> map);
 	
 	//커뮤니티 글작성
 	int insertCm(SqlSessionTemplate sst, CommunityVo cmuvo);

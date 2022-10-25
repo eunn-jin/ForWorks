@@ -34,21 +34,25 @@ public class NoticeController {
 
 	//공지사항 (화면)
 	@GetMapping("list/{pno}")
-	public String list(Model model,@PathVariable int pno){
+	public String list(Model model,@PathVariable int pno, String keyword){
+		
+		//System.out.println("key :: " +keyword);
+		
 		
 		//공지사항 전체 갯수
-		int totalCount = nts.selectTotalCount();
+		int totalCount = nts.selectTotalCount(keyword);
 		
 		//페이징 처리
 		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
 		
 		//공지사항 리스트 가져오기
-		List<NoticeVo> ntList = nts.selectList(pv);
+		List<NoticeVo> ntList = nts.selectList(pv , keyword);
 		
 		
 		if (ntList != null) {
 			model.addAttribute("ntList",ntList);
 			model.addAttribute("pv", pv);
+			model.addAttribute("keyword", keyword);
 			return "notice/list";
 		}else {
 			return "error";
@@ -59,6 +63,10 @@ public class NoticeController {
 	//공지사항 작성(화면)
 	@GetMapping("write")
 	public String write() {
+		
+		//부서목록 가져오기
+		
+		
 		return"notice/write";
 	}
 	

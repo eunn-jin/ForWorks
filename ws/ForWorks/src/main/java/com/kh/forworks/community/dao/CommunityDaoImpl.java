@@ -1,6 +1,7 @@
 package com.kh.forworks.community.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -15,25 +16,25 @@ public class CommunityDaoImpl implements CommunityDao{
 
 	//커뮤니티 전체 갯수
 	@Override
-	public int selectTotalCount(SqlSessionTemplate sst) {
-		return sst.selectOne("communityMapper.selectTotalCount");
+	public int selectTotalCount(SqlSessionTemplate sst, Map<String, String> map) {
+		return sst.selectOne("communityMapper.selectTotalCount",map);
 	}
-	public int selectDp(SqlSessionTemplate sst) {
-		return sst.selectOne("communityMapper.selectDp");
+	public int selectDp(SqlSessionTemplate sst, Map<String, String> map) {
+		return sst.selectOne("communityMapper.selectDp", map);
 	}
 	//커뮤니티 리스트 가져오기
 	@Override
-	public List<CommunityVo> selectList(SqlSessionTemplate sst, PageVo pv) {
+	public List<CommunityVo> selectList(SqlSessionTemplate sst, PageVo pv, Map<String, String> map) {
 		int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
         RowBounds rb = new RowBounds(offset , pv.getBoardLimit()); 
 		
-		return sst.selectList("communityMapper.selectList", null, rb);
+		return sst.selectList("communityMapper.selectList", map, rb);
 	}
 	@Override
-	public List<CommunityVo> selectListdp(SqlSessionTemplate sst, PageVo pvdp) {
+	public List<CommunityVo> selectListdp(SqlSessionTemplate sst, PageVo pvdp, Map<String, String> map) {
 		int offset = (pvdp.getCurrentPage()-1) * pvdp.getBoardLimit();
         RowBounds rb = new RowBounds(offset , pvdp.getBoardLimit()); 
-        return sst.selectList("communityMapper.selectListdp", null, rb);
+        return sst.selectList("communityMapper.selectListdp", map, rb);
 	}
 	
 	//커뮤니티 글작성

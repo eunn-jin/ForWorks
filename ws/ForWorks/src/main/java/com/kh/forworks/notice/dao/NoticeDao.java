@@ -11,10 +11,10 @@ import com.kh.forworks.noticeattachments.vo.NoticeAttachmentsVo;
 public interface NoticeDao {
 
 	//공지사항 갯수 조회
-	int selectTotalCount(SqlSessionTemplate sst);
+	int selectTotalCount(SqlSessionTemplate sst, String keyword);
 	
 	//공지사항 리스트조회
-	List<NoticeVo> selectList(SqlSessionTemplate sst, PageVo pv);
+	List<NoticeVo> selectList(SqlSessionTemplate sst, PageVo pv, String keyword);
 	
 	//공지사항 상세조회
 	NoticeVo selectOne(SqlSessionTemplate sst, String no);

@@ -1,7 +1,9 @@
 package com.kh.forworks.community.controller;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -20,8 +22,7 @@ import com.kh.forworks.Pagination;
 import com.kh.forworks.community.service.CommunityService;
 import com.kh.forworks.community.vo.CommunityVo;
 import com.kh.forworks.communityattachments.vo.CommunityAttachmentsVo;
-import com.kh.forworks.notice.vo.NoticeVo;
-import com.kh.forworks.noticeattachments.vo.NoticeAttachmentsVo;
+import com.kh.forworks.member.vo.MemberVo;
 
 @Controller
 @RequestMapping("community")
@@ -36,22 +37,28 @@ public class CommunityController {
 
 		//커뮤니티 (화면)
 		@GetMapping("list/{pno}")
-		public String list(Model model, @PathVariable int pno){
+		public String list(Model model, @PathVariable int pno, String condition, String keyword){
+			
+			System.out.println("condition/key :: "+condition+"/" +keyword);
+			//데이터 뭉치기
+			Map<String, String> map =  new HashMap<String, String>();
+			map.put("keyword", keyword);
+			map.put("condition", condition);
 			
 			//전체
 			//커뮤니티 전체 갯수
-			int totalCount = cmusv.selectTotalCount();
+			int totalCount = cmusv.selectTotalCount(map);
 			//페이징 처리
 			PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
 			//커뮤니티 리스트 가져오기
-			List<CommunityVo> cmuList = cmusv.selectList(pv);
+			List<CommunityVo> cmuList = cmusv.selectList(pv, map);
 			//System.out.println(cmuList);
 			
 			//로그인한 사원의 부서에 대해서만
 			//커뮤니티 개수(해당부서)
-			int ttCntDp = cmusv.selectDp();
+			int ttCntDp = cmusv.selectDp(map);
 			PageVo pvdp = Pagination.getPageVo(ttCntDp, pno, 5, 10);
-			List<CommunityVo> cmudpList = cmusv.selectListdp(pvdp);
+			List<CommunityVo> cmudpList = cmusv.selectListdp(pvdp,map);
 			
 			if (cmuList != null && cmudpList != null) {
 				model.addAttribute("cmuList",cmuList);
@@ -76,9 +83,14 @@ public class CommunityController {
 		//커뮤니티 게시글 작성
 		@PostMapping("write")
 		public String write(CommunityVo cmuvo, CommunityAttachmentsVo cmatVo ,HttpServletRequest req,Model model ,HttpSession session) {
-			System.out.println("커뮤::"+cmuvo);
+			//System.out.println("커뮤::"+cmuvo);
+	        MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+	        if (loginMember.getEmpNo() == null) {
+	        	model.addAttribute("errorMsg","로그인 부탁드립니다..");
+				return "redirect:/error";
+			}
+			cmuvo.setEmpNo(loginMember.getBmEmpNo());
 			
-			cmuvo.setEmpNo("1");
 			
 			//파일 유무 확인
 			if (cmuvo.getCmuFileName() != null && !cmuvo.getCmuFileName().isEmpty()) {
@@ -92,10 +104,6 @@ public class CommunityController {
 				cmatVo.setCmatPath(savePath);
 				System.out.println("공지파일::"+cmatVo);
 			}else {cmatVo=null;}
-			
-			if (cmatVo != null) {
-				System.out.println("파일있음");
-			}
 			
 			//db 공지사항 저장
 			int result = cmusv.insertCommu(cmuvo, cmatVo);
@@ -117,10 +125,10 @@ public class CommunityController {
 			
 			//db 공지사항 조회
 			CommunityVo cmuvo  = cmusv.selectOne(no);
-			System.out.println("커뮤 확인::"+cmuvo);
+			//System.out.println("커뮤 확인::"+cmuvo);
 			//첨부파일 확인
 			CommunityAttachmentsVo cmatVo = cmusv.checkFile(no);
-			System.out.println("파일 확인::"+cmatVo);
+			//System.out.println("파일 확인::"+cmatVo);
 			
 			model.addAttribute("cmuvo", cmuvo);
 			model.addAttribute("cmatVo", cmatVo);
@@ -182,8 +190,8 @@ public class CommunityController {
 			
 			int result = cmusv.edit(cmuvo, cmatVo, no);
 			if (result==1 || result ==2) {
-				session.setAttribute("alertMsg", "커뮤글 수정 성공!");
-				return "redirect:/community/list/"+no;
+				session.setAttribute("alertMsg", "커뮤니티글 수정 성공!");
+				return "redirect:/community/list/1";
 				
 			}else {return"redirect:/error";}
 		}
@@ -194,7 +202,7 @@ public class CommunityController {
 			int result = cmusv.delete(no);
 			
 			if (result ==1) {
-				session.setAttribute("alertMsg", "공지사항 삭제 성공!");
+				session.setAttribute("alertMsg", "커뮤니티글 삭제 성공!");
 				return "redirect:/community/list/1";
 			}else {return"redirect:/error";}
 		}

@@ -15,18 +15,18 @@ public class NoticeDaoImpl implements NoticeDao{
 	
 	//공지사항 갯수 조회
 	@Override
-	public int selectTotalCount(SqlSessionTemplate sst) {
-		return sst.selectOne("noticeMapper.selectTotalCount");
+	public int selectTotalCount(SqlSessionTemplate sst, String keyword) {
+		return sst.selectOne("noticeMapper.selectTotalCount", keyword);
 	}
 	
 	//공지사항 리스트조회
 	@Override
-	public List<NoticeVo> selectList(SqlSessionTemplate sst, PageVo pv) {
+	public List<NoticeVo> selectList(SqlSessionTemplate sst, PageVo pv, String keyword) {
 		
 		int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
         RowBounds rb = new RowBounds(offset , pv.getBoardLimit()); 
 		
-		return sst.selectList("noticeMapper.selectList", null, rb);
+		return sst.selectList("noticeMapper.selectList", keyword, rb);
 	}
 	
 	//공지사항 상세 조회

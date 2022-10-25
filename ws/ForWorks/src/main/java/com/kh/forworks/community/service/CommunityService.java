@@ -1,20 +1,20 @@
 package com.kh.forworks.community.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.kh.forworks.PageVo;
 import com.kh.forworks.community.vo.CommunityVo;
 import com.kh.forworks.communityattachments.vo.CommunityAttachmentsVo;
-import com.kh.forworks.noticeattachments.vo.NoticeAttachmentsVo;
 
 public interface CommunityService {
 	
 	//커뮤니티 전체 갯수
-	int selectTotalCount();
-	int selectDp();
+	int selectTotalCount(Map<String, String> map);
+	int selectDp(Map<String, String> map);
 	//커뮤니티 리스트 가져오기
-	List<CommunityVo> selectList(PageVo pv);
-	List<CommunityVo> selectListdp(PageVo pvdp);
+	List<CommunityVo> selectList(PageVo pv, Map<String, String> map);
+	List<CommunityVo> selectListdp(PageVo pvdp, Map<String, String> map);
 	
 	//커뮤니티글 작성
 	int insertCommu(CommunityVo cmuvo, CommunityAttachmentsVo cmatVo);
