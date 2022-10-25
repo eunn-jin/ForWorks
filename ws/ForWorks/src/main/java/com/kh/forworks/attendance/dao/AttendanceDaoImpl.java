@@ -1,5 +1,7 @@
 package com.kh.forworks.attendance.dao;
 
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -11,32 +13,60 @@ public class AttendanceDaoImpl implements AttendanceDao {
 
 	@Override
 	public WorkTimeVo selectInOutTime(SqlSessionTemplate sst, int empNo) {
-		return sst.selectOne("attendanceMapper.selectInOutTime", empNo);
+		if(sst.selectOne("attendanceMapper.selectInOutTime", empNo) == null) {
+			WorkTimeVo vo = new WorkTimeVo();
+			vo.setInTime("미등록");
+			vo.setOutTime("미등록");
+			return vo;
+		} else {			
+			return sst.selectOne("attendanceMapper.selectInOutTime", empNo);
+		}
 	}
 
 	@Override
-	public int selectDayWork(SqlSessionTemplate sst, int empNo) {
-		return sst.selectOne("attendanceMapper.selectDayWork", empNo);
+	public int selectDayWork(SqlSessionTemplate sst, int empNo) {	
+		if(sst.selectOne("attendanceMapper.selectDayWork", empNo) == null) {
+			return 0;
+		} else {
+			return sst.selectOne("attendanceMapper.selectDayWork", empNo);			
+		}
 	}
 	
 	@Override
 	public int selectWeekWork(SqlSessionTemplate sst, int empNo) {	
-		return sst.selectOne("attendanceMapper.selectWeekWork", empNo); 
+		if(sst.selectOne("attendanceMapper.selectWeekWork", empNo) == null) {
+			return 0;
+		} else {			
+			return sst.selectOne("attendanceMapper.selectWeekWork", empNo); 
+		}
 	}
 	
 	@Override
 	public int selectMonthWork(SqlSessionTemplate sst, int empNo) {
-		return sst.selectOne("attendanceMapper.selectMonthWork", empNo);
+		if(sst.selectOne("attendanceMapper.selectMonthWork", empNo) == null) {
+			return 0;
+		} else {			
+			return sst.selectOne("attendanceMapper.selectMonthWork", empNo);
+		}
 	}
 
 	@Override
-	public int insertInTime(SqlSessionTemplate sst, WorkVo work) {
-		return sst.insert("attendanceMapper.insertInTime", work);
+	public int insertInTime(SqlSessionTemplate sst, Map map) {
+		return sst.insert("attendanceMapper.insertInTime", map);
 	}
 
 	@Override
 	public int updateOutTime(SqlSessionTemplate sst, WorkTimeVo workTime) {
 		return sst.update("attendanceMapper.updateOutTime", workTime);
+	}
+
+	@Override
+	public WorkVo selectDayWorkInfo(SqlSessionTemplate sst, Map<String, Object> map) {
+		if(sst.selectOne("attendanceMapper.selectDayWorkInfo", map) == null) {
+			return new WorkVo();
+		} else {			
+			return sst.selectOne("attendanceMapper.selectDayWorkInfo", map);
+		}
 	}
 
 }
