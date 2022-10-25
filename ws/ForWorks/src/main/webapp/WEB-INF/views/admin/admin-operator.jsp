@@ -26,7 +26,7 @@
               <div class="col-12 col-md-6 order-md-2 order-first p-4 pb-2">
                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                   <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="${root}/admin/operator">관리자 설정</a></li>
+                    <li class="breadcrumb-item"><a href="${root}/foradmin/operator">관리자 설정</a></li>
                     <li class="breadcrumb-item active" aria-current="page">권한 설정</li>
                   </ol>
                 </nav>
@@ -113,9 +113,5 @@
     <%@ include file="/WEB-INF/views/common/footer.jsp" %>
   </body>
   <script>
-    $().ready(function () {
-      console.log("test:");
-      $("#ex1").addClass("active");
-    });
   </script>
 </html>

@@ -7,9 +7,12 @@ import com.kh.forworks.member.vo.MemberVo;
 
 public interface AddressService {
 
+	int updateStatus(MemberVo vo);
+	
 	int selectListCnt();
 	
 	List<MemberVo> addressAllList(PageVo pv);
+
 
 
 }

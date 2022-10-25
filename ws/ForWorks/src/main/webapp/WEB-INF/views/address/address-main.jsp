@@ -63,7 +63,7 @@
                         </div>
                         <div class="status-content">
                             <span>상태</span>
-                            <select name="empStatus" id="" class="form-select form-select-sm">
+                            <select name="statNo" id="emp_stat" class="form-select form-select-sm">
                                 <option value="1">알수없음</option>
                                 <option value="2">자리</option>
                                 <option value="3">자리비움</option>
@@ -71,7 +71,7 @@
                                 <option value="5">응답불가</option>
                             </select>
                         </div>
-                        <button class="nav-btn" type="button" onclick="statusEdit();">등록</button>
+                        <button class="nav-btn" type="button" onclick="statEdit();">등록</button>
                     </div>
                 </div>
 
@@ -207,10 +207,25 @@
 </body>
 <script>
 	
-	$().ready(function() {
-		console.log("test:");
-		$('#ex1').addClass("active");
-	});
+	function statEdit() {
+	   const statNo = document.querySelector("select[name=statNo]").value;
+		  
+	   $.ajax({
+	     url: "${root}/address/status",
+	     type: "POST",
+	     data: {statNo : statNo},
+	     success: function (data) {
+	       if (data == 1) {
+	         toastContent.innerText = "상태를 변경하였습니다.";
+	       } else {
+	         toastContent.innerText = "상태 변경에 실패했습니다.";
+	       }
+	     },
+	     error: function () {
+	    	 toastContent.innerText = "실패하였습니다. 관리자에게 문의하세요.";
+	     },
+	   });
+	}
 	
 </script>
 </body>

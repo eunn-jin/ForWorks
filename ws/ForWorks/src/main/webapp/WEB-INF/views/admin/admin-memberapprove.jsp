@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="${root}/resources/css/address/email.css" />
     <link rel="stylesheet" href="${root}/resources/css/address/style.css" />
     <script src="https://kit.fontawesome.com/3a92c85ff9.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <style>
       .star {
         visibility: hidden;
@@ -52,7 +53,7 @@
               <div class="col-12 col-md-6 order-md-2 order-first p-4 pb-2">
                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                   <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="${root}/admin/member">구성원 설정</a></li>
+                    <li class="breadcrumb-item"><a href="${root}/foradmin/member">구성원 설정</a></li>
                     <li class="breadcrumb-item active" aria-current="page">구성원 승인</li>
                   </ol>
                 </nav>
@@ -64,7 +65,7 @@
               <div class="card-header">
                 <h4 class="card-title mb-0">구성원 승인 요청</h4>
               </div>
-              <div class="card-body">
+              <div class="card-body" style="overflow:auto; min-height: 700px">
 				<div class="content-right" style="width: 100%">
               <div class="email-app-area">
                 <!-- Email list Area -->
@@ -82,6 +83,25 @@
                             </tr>
                           </thead>
                           <tbody>
+                          <c:forEach items="${applyList}" var="l">
+                          	<!-- <tr data-bs-toggle="modal" data-bs-target="#modalMemberEdit"> -->
+                          	<tr id="apply${l.empNo}">
+                              <td>${l.empNo}</td>
+                              <td>${l.empName}</td>
+                              <td>${l.empRegno}</td>
+                              <td>${l.empPhone}</td>
+                              <td style="display:none">${l.empExphone}</td>
+                              <td>
+                                <button type="button" class="btn btn-sm btn-success"
+                                data-bs-toggle="modal" data-bs-target="#modalApprove"
+                                role = "button" data-backdrop="static"
+                                data-no="${l.empNo}" data-name="${l.empName}" data-exphone="${l.empExphone}"
+                                >추가 정보 입력</button>
+                                <button class="btn btn-sm btn-secondary" onclick="deleteMember(${l.empNo});">거절</button>
+                              </td>
+                            </tr>
+                          </c:forEach>
+                          	
                             <tr data-bs-toggle="modal" data-bs-target="#modalMemberEdit">
                               <td>1</td>
                               <td>Graiden</td>
@@ -119,7 +139,7 @@
     <%@ include file="/WEB-INF/views/common/footer.jsp" %>
     
     <!-- 구성원 정보입력 모달 -->
-    <div class="modal fade" tabindex="1" id="modalMemberEdit">
+    <div class="modal fade" tabindex="-1" id="modalApprove" role="dialog">
 	 <div class="modal-dialog modal-dialog-centered" role="document">
 	   <div class="modal-content rounded-4 shadow">
 	     <div class="modal-header p-5 pb-4 border-bottom-0">
@@ -129,40 +149,43 @@
 	      </div>
 	
 	      <div class="modal-body p-5 pt-0">
-	        <form class="">
+	        <form action="${root}/foradmin/memberApprove" method="post">
+	          <input name="empNo" type="hidden" id="emp_no"/>
 	          <div class="form-floating mb-3">
-	            <input value="홍길동" type="text" class="form-control rounded-4" id="floatingInput" placeholder="성명">
-	            <label for="floatingInput">성명</label>
+	            <input type="text" class="form-control rounded-4" id="emp_name" disabled>
+	            <label for="emp_name">성명</label>
 	          </div>
 	          <div class="form-floating mb-3">
-	          	<select class="form-control rounded-4" id="floatingInput" placeholder="직무">
-	            	<option selected="selected">과장</option>
+	          	<select name="posNo" class="form-control rounded-4" id="emp_pos" required>
+	          		<option value="">선택안함</option>
+	          		<c:forEach items="${posList}" var="pl">
+		            	<option value="${pl.posNo}">${pl.posName}</option>
+	          		</c:forEach>
 	            </select>
-	            <label for="floatingPassword">직급</label>
+	            <label for="emp_pos">직급</label>
 	          </div>
 	          <div class="form-floating mb-3">
-	            <select class="form-control rounded-4" id="floatingInput" placeholder="직무">
-	            	<option selected="selected">개발부</option>
+	            <select name="deptNo" class="form-control rounded-4" id="emp_dept" required>
+	            	<option value="">선택안함</option>
+	            	<c:forEach items="${deptList}" var="dl">
+		            	<option value="${dl.deptNo}">${dl.deptName}</option>
+	          		</c:forEach>
 	            </select>
-	            <label for="floatingPassword">직무</label>
+	            <label for="emp_dept">직무</label>
 	          </div>
 	          <div class="form-floating mb-3">
-	            <input value="100000000" type="number" class="form-control rounded-4" id="floatingInput" placeholder="연봉">
-	            <label for="floatingPassword">연봉</label>
+	            <input name="empMoney" value="" type="number" class="form-control rounded-4" id="emp_money" required>
+	            <label for="emp_money">연봉</label>
 	          </div>
 	          <div class="form-floating mb-3">
-	            <input value="9999" type="text" class="form-control rounded-4" id="floatingInput" placeholder="내선번호">
-	            <label for="floatingPassword">내선번호</label>
+	            <input name="empExphone" type="text" class="form-control rounded-4" id="emp_exphone">
+	            <label for="emp_exphone">내선번호</label>
 	          </div>
 	          <div class="form-floating mb-3">
-	            <input value="2022-11-14" type="text" class="form-control rounded-4" id="floatingInput" placeholder="입사일">
-	            <label for="floatingPassword">입사일</label>
+	            <input name="empJdate" type="date" class="form-control rounded-4" id="emp_date" required>
+	            <label for="emp_date">입사일</label>
 	          </div>
-	          <div class="form-floating mb-3">
-	            <input value="" type="date" class="form-control rounded-4" id="floatingInput" placeholder="퇴사일">
-	            <label for="floatingPassword">퇴사일</label>
-	          </div>
-	          <button class="w-100 mb-2 btn btn-lg rounded-4 btn-secondary" type="submit">변경하기</button>
+	          <button class="w-100 mb-2 btn btn-lg rounded-4 btn-secondary" type="submit">사원 등록하기</button>
 	        </form>
 	      </div>
 	    </div>
@@ -170,9 +193,52 @@
 	</div>
   </body>
   <script>
-    $().ready(function () {
-      console.log("test:");
-      $("#ex1").addClass("active");
-    });
+  	$("#modalApprove").on('show.bs.modal', function(e) {
+  		var no = $(e.relatedTarget).data('no');
+  		var name = $(e.relatedTarget).data('name');
+  		var exphone = $(e.relatedTarget).data('exphone');
+  		
+  		document.getElementById("emp_no").value = no;
+  		document.getElementById("emp_name").value = name;
+  		document.getElementById("emp_exphone").value = exphone;
+  	})
+  	
+  	function deleteMember(empNo) {
+  		swal({
+  		  title: "거절하시겠습니까?",
+  		  text: "해당 구성원 정보가 삭제되며 되돌릴 수 없습니다.",
+  		  icon: "warning",
+  		  buttons: true,
+  		  dangerMode: true,
+  		})
+  		.then((willDelete) => {
+  		  if (willDelete) {
+  			  
+  			$.ajax({
+  	          url: "${root}/foradmin/deleteApply",
+  	          type: "post",
+  	          data: {
+  	            empNo: empNo,
+  	          },
+  	          success: function (data) {
+  	        	console.log(data);
+  	            if (data == 1) {
+ 	            	swal("승인을 거절하였습니다.", {
+ 	      		      icon: "success",
+ 	      		    });
+ 	            	$('#apply'+ empNo).remove();
+  	            }
+  	          },
+  	          error: function (e) {
+  	        	swal("접속 실패", {
+  	  		      icon: "warning",
+  	  		    });
+  	          },
+  	        });
+  		  } else {
+  		    swal("다시 승인을 진행해주세요.");
+  		  }
+  		});
+  	}
   </script>
 </html>

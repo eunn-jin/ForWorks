@@ -11,5 +11,44 @@
 		FROM MANAGER
 		WHERE MAN_ID = #{manId}
 	</select>
+	
+	<select id="selectPosList" resultType="com.kh.forworks.admin.vo.CorpInfoVo">
+		SELECT
+			POS_NO, POS_NAME
+		FROM POSITION
+	</select>
+	
+	<select id="selectDeptList" resultType="com.kh.forworks.admin.vo.CorpInfoVo">
+		SELECT
+			DEPT_NO, DEPT_NAME
+		FROM DEPARTMENT
+	</select>
 
+	<select id="selectApplyList" resultType="com.kh.forworks.member.vo.MemberVo">
+		SELECT
+			EMP_NO
+			, EMP_NAME
+			, EMP_REGNO
+			, EMP_PHONE
+			, EMP_EXPHONE
+		FROM EMPLOYEE
+		WHERE EMP_STATUS = 'N'
+		ORDER BY EMP_NO ASC
+	</select>
+	
+	<update id="updateApplyMember">
+		UPDATE EMPLOYEE SET
+			POS_NO = #{posNo},
+			DEPT_NO = #{deptNo},
+			EMP_MONEY = #{empMoney},
+			EMP_EXPHONE = #{empExphone},
+			EMP_JDATE = #{empJdate},
+			EMP_STATUS = 'Y',
+			EMP_EDATE = SYSDATE
+		WHERE EMP_NO = #{empNo}
+	</update>
+	
+	<delete id="deleteMemberByNo">
+		DELETE FROM EMPLOYEE WHERE EMP_NO = #{empNo}
+	</delete>
 </mapper>
