@@ -31,10 +31,7 @@ public class BonusDaoImpl implements BonusDao {
 	//부서별 사원조회
 	@Override
 	public List selectEmp(SqlSessionTemplate sst , String depart) {
-		
-		System.out.println("dao에서 depart" + depart);
 		List result = sst.selectList("bonusMapper.selectEmp" , depart);
-		System.out.println(result);
 		return result;
 	}
 	//받아온 회원번호 직원의 수당조회
@@ -67,13 +64,30 @@ public class BonusDaoImpl implements BonusDao {
 	}
 	//년도별 상여금 조회
 	@Override
-	public List<BonusVo> SelectYearList(SqlSessionTemplate sst, String year) {
+	public List<BonusVo> selectYearList(SqlSessionTemplate sst, String year) {
 		return sst.selectList("bonusMapper.selectYearList" , year);
 	}
 	//상여금 해당 직원조회
 	@Override
-	public List<BonusMemVo> SelectMem(SqlSessionTemplate sst, String no) {
+	public List<BonusMemVo> selectMem(SqlSessionTemplate sst, String no) {
 		return sst.selectList("bonusMapper.selectMemList", no);
+	}
+	//상여금 해당 직원추가
+	@Override
+	public int insertAddEmp(SqlSessionTemplate sst, BonusMemVo bmv) {
+		System.out.println("dao에서 bmv" + bmv);
+		int result = sst.insert("bonusMapper.insertAddEmp" , bmv);
+		System.out.println(result);
+		return result;
+	}
+	//지급율 입력시 지급액계산
+	@Override
+	public int selectCalc(SqlSessionTemplate sst,BonusMemVo bmv) {
+		System.out.println("들어온 지급율 DAO : "+ bmv.getRate());
+		System.out.println("들어온 직원번호 DAO : "+bmv.getEmpNo());
+		int result = sst.selectOne("bonusMapper.selectCalc", bmv);
+		System.out.println("계산된 값" + result);
+		return result;
 	}
 
 }

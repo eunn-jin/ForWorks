@@ -31,5 +31,9 @@ public interface BonusService {
 	List<BonusVo> bonusYearList(String year);
 	//상여금 해당직원조회
 	List<BonusMemVo> memList(String no);
+	//상여금 해당직원 추가
+	int addEmp(BonusMemVo bmv);
+	//지급율 입력시 지급액계산
+	int calc(BonusMemVo bmv);
 	
 }

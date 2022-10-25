@@ -30,8 +30,12 @@ public interface BonusDao {
 	//상여금 등록 ajax
 	int insertBonus(SqlSessionTemplate sst, BonusVo bv);
 	//년도별 상여금 조회
-	List<BonusVo> SelectYearList(SqlSessionTemplate sst, String year);
+	List<BonusVo> selectYearList(SqlSessionTemplate sst, String year);
 	//상여금 해당 직원조회
-	List<BonusMemVo> SelectMem(SqlSessionTemplate sst, String no);
+	List<BonusMemVo> selectMem(SqlSessionTemplate sst, String no);
+	//상여금 해당 직원추가
+	int insertAddEmp(SqlSessionTemplate sst, BonusMemVo bmv);
+	//지급율 입력시 지급액 계산
+	int selectCalc(SqlSessionTemplate sst,BonusMemVo bmv);
 
 }

@@ -16,7 +16,7 @@
         border: 1px solid black;/*확인용*/
         display: grid;
         grid-template-columns: 2fr 4fr 4fr 4fr ;
-        grid-template-rows: repeat(11,30px);
+        grid-template-rows: repeat(0,4fr);
         text-align: center;
         background-color: white;
         overflow: scroll;
@@ -126,7 +126,7 @@
 				        <div id="check-date">
 				            
 				                상여금 목록 
-				                <select name="year" id="year" title="년도" onchange="changeYear()">
+				                <select name="year" id="year" title="년도" >
 				                    <option value="">년도</option>
                                     <option value="2022">2022</option>
 				                </select> 
@@ -239,6 +239,8 @@
             success : function(data){
                 if(data == 1){
                     alert("등록되었습니다");
+                    modal.style.display="none";
+                    location.reload();
                 }else{
                     alert("다시 시도해주세요");
                 }
@@ -254,23 +256,25 @@
 <!--연도 별 상여금 조회 ajax-->
 <script>
 
-    function changeYear(){
-        var x = document.getElementById("year");
-        var selectyear = x.options[x.selectedIndex].value;
-        consol.log(selectyear);
+    $("select[name=year]").change(function(){
+        var year = $(this).val();
+        console.log(year);
         $.ajax({
             url : "/ForWorks/bonus/yearList",
             type : "POST",
-            date : {
-                year : selectyear
-            }
-            ,success : function(data){
-                alert("년 상여금목록입니다.");
+            data : {year : year},
+            success : function(data){
+                alert(year + "년 상여금목록입니다.");
                 $('#center').empty();
-                console.log(data[1]);
-                
+                console.log(data);
                 $('#center').append(
-                    '<div class="bonus-no">'+'안녕'+'</div><div class="div-title"><a href="${root}/bonus/memList">'+'안녕'+'</a></div><div class="div-content">'+'안녕'+'</div><div class="div-date">'+"하잉"+'</div>');
+                    '<div class="div-top">번호</div><div class="div-top">제목</div><div class="div-top">내용</div><div class="div-top">발생월</div>'
+                )
+                for(var i = 0 ; i < data.length ; i++){
+                    $('#center').append(
+                        '<div class="bonus-no">'+data[i].no+'</div><div class="div-title"><a href="${root}/bonus/memList">'+data[i].title+'</a></div><div class="div-content">'+data[i].content+'</div><div class="div-date">'+data[i].bdate+'</div>'
+                        );
+                }
                 
             }
             ,error : function(){
@@ -278,8 +282,7 @@
             }
             
         })
-    }
-
+    })
 
 </script>
 
