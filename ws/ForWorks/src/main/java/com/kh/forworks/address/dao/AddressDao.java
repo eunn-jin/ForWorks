@@ -8,11 +8,11 @@ import com.kh.forworks.PageVo;
 import com.kh.forworks.member.vo.MemberVo;
 
 public interface AddressDao {
+	
+	int updateEmpStatByNo(SqlSessionTemplate sst, MemberVo vo);
 
 	int selectCountAll(SqlSessionTemplate sst);
 	
 	List<MemberVo> selectAllMember(SqlSessionTemplate sst, PageVo pv);
-
-
 
 }

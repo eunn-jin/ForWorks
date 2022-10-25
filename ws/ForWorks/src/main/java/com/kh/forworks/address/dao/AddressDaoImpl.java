@@ -13,6 +13,11 @@ import com.kh.forworks.member.vo.MemberVo;
 public class AddressDaoImpl implements AddressDao {
 
 	@Override
+	public int updateEmpStatByNo(SqlSessionTemplate sst, MemberVo vo) {
+		return sst.update("addressMapper.updateEmpStatByNo", vo);
+	}
+	
+	@Override
 	public int selectCountAll(SqlSessionTemplate sst) {
 		return sst.selectOne("addressMapper.selectCountAll");
 	}
@@ -25,6 +30,7 @@ public class AddressDaoImpl implements AddressDao {
 		
 		return sst.selectList("addressMapper.selectAllMember", null, rowBounds);
 	}
+
 
 
 

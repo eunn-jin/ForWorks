@@ -2,6 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="addressMapper">
 
+	<update id="updateEmpStatByNo">
+		UPDATE EMPLOYEE
+			SET STAT_NO = #{statNo}
+		WHERE EMP_NO = #{empNo}
+	</update>
+
 	<select id="selectCountAll" resultType="int">
 		SELECT COUNT(EMP_NO)
 		FROM EMPLOYEE

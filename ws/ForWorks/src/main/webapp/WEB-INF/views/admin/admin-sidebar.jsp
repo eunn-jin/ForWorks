@@ -49,7 +49,7 @@
     <div class="sidebar-header pb-0" style="padding-left: 25px">
       <div class="d-flex justify-content-between">
         <div class="logo">
-          <a href="${root}/admin/main" class="d-flex">
+          <a href="${root}/foradmin/main" class="d-flex">
             <h3>FOR-WORKS</h3>
             <h6>Admin</h6>
           </a>
@@ -69,10 +69,10 @@
 	          </a>
 	          <ul class="submenu active pl-15">
 	            <li class="submenu-item">
-	              <a href="${root}/admin/main">회사 정보 설정 ? </a>
+	              <a href="${root}/foradmin/main">회사 정보 설정 ? </a>
 	            </li>
 	            <li class="submenu-item">
-	              <a href="${root}/admin/pos">직무/직급 설정</a>
+	              <a href="${root}/foradmin/pos">직무/직급 설정</a>
 	            </li>
 	          </ul>
 	        </li>
@@ -84,10 +84,10 @@
           </a>
           <ul class="submenu active pl-15">
             <li class="submenu-item">
-              <a href="${root}/admin/member">구성원 조회</a>
+              <a href="${root}/foradmin/member">구성원 조회</a>
             </li>
             <li class="submenu-item">
-              <a href="${root}/admin/approval">구성원 승인</a>
+              <a href="${root}/foradmin/approval">구성원 승인</a>
             </li>
           </ul>
         </li>
@@ -98,7 +98,7 @@
           </a>
           <ul class="submenu active pl-15">
             <li class="submenu-item">
-              <a href="${root}/admin/oper">관리자 지정</a>
+              <a href="${root}/foradmin/oper">관리자 지정</a>
             </li>
           </ul>
         </li>

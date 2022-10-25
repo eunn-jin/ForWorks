@@ -41,9 +41,5 @@
     <%@ include file="/WEB-INF/views/common/footer.jsp" %>
   </body>
   <script>
-    $().ready(function () {
-      console.log("test:");
-      $("#ex1").addClass("active");
-    });
   </script>
 </html>

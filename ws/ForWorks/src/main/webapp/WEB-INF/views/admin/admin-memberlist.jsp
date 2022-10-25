@@ -52,7 +52,7 @@
               <div class="col-12 col-md-6 order-md-2 order-first p-4 pb-2">
                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                   <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="${root}/admin/member">구성원 설정</a></li>
+                    <li class="breadcrumb-item"><a href="${root}/foradmin/member">구성원 설정</a></li>
                     <li class="breadcrumb-item active" aria-current="page">구성원 조회</li>
                   </ol>
                 </nav>
@@ -325,9 +325,5 @@
 	</div>
   </body>
   <script>
-    $().ready(function () {
-      console.log("test:");
-      $("#ex1").addClass("active");
-    });
   </script>
 </html>

@@ -72,7 +72,7 @@
     <div class="container">
       <div class="form-container">
         <div class="signin">
-          <form action="${root}/admin/login" class="signin-form" method="post">
+          <form action="${root}/foradmin/login" class="signin-form" method="post">
             <h1 class="title">FOR-WORKS</h1>
             <h5 class="sub-title">관리자 로그인</h5>
             <div class="input-field">

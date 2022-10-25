@@ -22,6 +22,11 @@ public class AddressServiceImpl implements AddressService {
 	}
 
 	@Override
+	public int updateStatus(MemberVo vo) {
+		return addressDao.updateEmpStatByNo(sst, vo);
+	}
+	
+	@Override
 	public int selectListCnt() {
 		return addressDao.selectCountAll(sst);
 	}
@@ -30,5 +35,6 @@ public class AddressServiceImpl implements AddressService {
 	public List<MemberVo> addressAllList(PageVo pv) {
 		return addressDao.selectAllMember(sst, pv);
 	}
+
 
 }
