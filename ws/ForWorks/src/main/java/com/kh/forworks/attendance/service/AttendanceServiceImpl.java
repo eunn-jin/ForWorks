@@ -1,5 +1,7 @@
 package com.kh.forworks.attendance.service;
 
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,11 +25,12 @@ public class AttendanceServiceImpl implements AttendanceService {
 	@Override
 	public WorkTimeVo getWorkInfo(int empNo) {
 		WorkTimeVo wvo = dao.selectInOutTime(sst, empNo);
+		
 		int day = dao.selectDayWork(sst, empNo);
 		int week = dao.selectWeekWork(sst, empNo);
 		int month = dao.selectMonthWork(sst, empNo);
 		
-		if(wvo.getOutTime().equals("미등록")) {
+		if(wvo.getInTime() != null && wvo.getOutTime().equals("미등록")) {
 			week += day;
 			month += day;
 		}
@@ -35,19 +38,20 @@ public class AttendanceServiceImpl implements AttendanceService {
 		wvo.DayWorkToStr(day);
 		wvo.WeekWorkToStr(week); 
 		wvo.MonthWorkToStr(month);
+		
+		System.out.println("getWorkInfo :: " + wvo + ", " + day);
 				
 		return wvo;
 	}
 
 	@Override
-	public WorkVo getDayWorkInfo(int empNo) {
-		// TODO Auto-generated method stub
-		return null;
+	public WorkVo getDayWorkInfo(Map<String, Object> map) {
+		return dao.selectDayWorkInfo(sst, map);
 	}
 	
 	@Override
-	public int goWork(WorkVo work) {
-		return dao.insertInTime(sst, work);
+	public int goWork(Map map) {
+		return dao.insertInTime(sst, map);
 	}
 
 	@Override

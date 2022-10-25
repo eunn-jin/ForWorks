@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page session="false" %>
 <html>
 <head>
 	<title>일일근태</title>
@@ -138,13 +137,13 @@
 								</thead>
 								<tbody>
 									<tr>
-										<td>조은진</td>
-										<td>10:00</td>
-										<td>18:00</td>
-										<td>08:00</td>
-										<td>0</td>
-										<td>0</td>
-										<td>정상 출근</td>		
+										<td>${work.empName}</td>
+										<td>${work.inTime}</td>
+										<td>${work.outTime}</td>
+										<td>${work.workTime}</td>
+										<td>${work.lateTime}</td>
+										<td>${work.earlyoutTime}</td>
+										<td>${work.statusName}</td>		
 									</tr>
 								</tbody>
 							</table>
@@ -164,6 +163,15 @@
 		$('#att-day').addClass("active");
 		$('#att-part').css("display", "block");
 		document.getElementById('workDate').value = new Date().toISOString().substring(0, 10);;
+		
+		if("${workTime.inTime}" != "미등록") {
+			$("#goWorkBtn").attr("disabled", true);
+		}
+		
+		if("${workTime.outTime}" != "미등록") {
+			$("#outWorkBtn").attr("disabled", true);
+		}
+		
 	});
 	
 </script>

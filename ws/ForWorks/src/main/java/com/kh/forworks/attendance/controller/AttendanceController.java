@@ -2,6 +2,8 @@ package com.kh.forworks.attendance.controller;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.websocket.server.PathParam;
 
@@ -32,13 +34,23 @@ public class AttendanceController {
 	@GetMapping("day")
 	public String dayAtt(Model model) {
 
-		//TODO: 화면에 보여줄 것들 가져오기, empNo 바꾸기
+		//TODO: 화면에 보여줄 것들 가져오기, empNo, day 바꾸기
 		int empNo = 1;
+		String day = "2022/10/19";
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("empNo", 1);
+		map.put("day", day);
+		
+		System.out.println(map.get("day"));
+		
 		WorkTimeVo workTime = service.getWorkInfo(empNo);
-//		WorkVo work = service.getDayWorkInfo(empNo);
+		WorkVo work = service.getDayWorkInfo(map);
 		
 		model.addAttribute("workTime", workTime);
-//		model.addAttribute("work", work);
+		model.addAttribute("work", work);
+		
+		System.out.println("test :: " + work);
 		
 		return "attendance/dayAttendance";
 	}
@@ -63,11 +75,13 @@ public class AttendanceController {
 				        
 		//TODO:no 값을 로그인멤버 no 로 받아오기
 		int empNo = 1;
+		String day = "2022/10/26";
 		
-		WorkVo work = new WorkVo();
-		work.setEmpNo(empNo);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("empNo", 1);
+		map.put("day", day);
 		
-		int result = service.goWork(work);
+		int result = service.goWork(map);
 		
 		if(result == 1) {
 			return "redirect:/att/day";			

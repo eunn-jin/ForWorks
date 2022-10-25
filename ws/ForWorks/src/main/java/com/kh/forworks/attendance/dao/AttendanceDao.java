@@ -1,5 +1,7 @@
 package com.kh.forworks.attendance.dao;
 
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.forworks.attendance.vo.WorkTimeVo;
@@ -12,7 +14,9 @@ public interface AttendanceDao {
 	int selectWeekWork(SqlSessionTemplate sst, int empNo);
 	int selectMonthWork(SqlSessionTemplate sst, int empNo);
 	
-	int insertInTime(SqlSessionTemplate sst, WorkVo work);
+	int insertInTime(SqlSessionTemplate sst, Map map);
 	int updateOutTime(SqlSessionTemplate sst, WorkTimeVo workTime);
+	
+	WorkVo selectDayWorkInfo(SqlSessionTemplate sst, Map<String, Object> map);
 
 }
