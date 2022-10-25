@@ -1,6 +1,7 @@
 package com.kh.forworks.community.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,30 +26,30 @@ public class CommunityServiceImpl implements CommunityService{
 
 	//커뮤니티 전체 갯수
 	@Override
-	public int selectTotalCount() {
-		return dao.selectTotalCount(sst);
+	public int selectTotalCount(Map<String, String> map) {
+		return dao.selectTotalCount(sst, map);
 	}
 	@Override
-	public int selectDp() {
-		return dao.selectDp(sst);
+	public int selectDp(Map<String, String> map) {
+		return dao.selectDp(sst,map);
 	}
 	
 	//커뮤니티 리스트 가져오기
 	@Override
-	public List<CommunityVo> selectList(PageVo pv) {
-		return dao.selectList(sst, pv);
+	public List<CommunityVo> selectList(PageVo pv,Map<String, String> map) {
+		return dao.selectList(sst, pv, map);
 		
 	}
 	@Override
-	public List<CommunityVo> selectListdp(PageVo pvdp) {
-		return dao.selectListdp(sst, pvdp);
+	public List<CommunityVo> selectListdp(PageVo pvdp,Map<String, String> map) {
+		return dao.selectListdp(sst, pvdp,map);
 	}
 
 
 	//커뮤니티 글 작성
 	@Override
 	public int insertCommu(CommunityVo cmuvo, CommunityAttachmentsVo cmatVo) {
-
+		
 		int result1 = dao.insertCm(sst, cmuvo);
 		
 		int result2 = 0;
