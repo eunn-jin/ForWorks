@@ -47,6 +47,7 @@ public class BonusController {
 		
 		List<BonusMemVo> voList = bs.memList(no);
 		model.addAttribute("memList", voList);
+		model.addAttribute("infoNo",no);
 		return "bonus/bonus_mem_list";
 	}
 	
@@ -55,8 +56,7 @@ public class BonusController {
 	@ResponseBody
 	public String yearList(String year) {
 		System.out.println(year);
-		List voList = bs.bonusYearList(year);
-		System.out.println(voList);
+		List<BonusVo> voList = bs.bonusYearList(year);
 		Gson g = new Gson();
 		return g.toJson(voList);
 	}
@@ -68,10 +68,22 @@ public class BonusController {
 		int result = bs.addBonus(bv);
 		return ""+result;
 	}
+	//상여금 해당 사원 등록ajax
+	@PostMapping("addEmp")
+	@ResponseBody
+	public String addEmp(BonusMemVo bmv) {
+		System.out.println("처음 보낸 데이터 :" + bmv);
+		if(bmv.getRate() != 0) {;
+			int pay = bs.calc(bmv);
+			bmv.setPayment(pay);
+		}
+		System.out.println("계산된 후 데이터 :" +bmv);
+		int result = bs.addEmp(bmv);
+		return ""+result;
+	}
 	
 	
-	
-	//수당파트
+	///////////////////////////수당파트
 	
 	
 	
@@ -95,8 +107,7 @@ public class BonusController {
 	@PostMapping(value="selectEmp",produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public String selectEmp(String depart, Model model) {
-		System.out.println("ajax로 넘어온 depart ::" + depart);
-		List result = bs.selectEmp(depart);
+		List<MemberVo> result = bs.selectEmp(depart);
 		Gson g = new Gson();
 		return g.toJson(result);
 		//1. GSON 라이브러리

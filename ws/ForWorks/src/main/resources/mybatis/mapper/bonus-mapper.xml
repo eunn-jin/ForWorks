@@ -24,8 +24,8 @@
 		FROM DEPARTMENT
 	</select>
 	
-	<select id="selectEmp" resultType="String">
-		SELECT E.EMP_NAME
+	<select id="selectEmp" resultType="MemberVo">
+		SELECT E.EMP_NAME AS EMP_NAME, E.EMP_NO AS EMP_NO
 		FROM 
 		EMPLOYEE E JOIN DEPARTMENT D ON E.DEPT_NO = D.DEPT_NO
 		WHERE D.DEPT_NAME = #{depart}
@@ -80,6 +80,17 @@
 		JOIN (SELECT E.EMP_NAME , EMP_NO , DEPT_NAME , D.DEPT_NO FROM EMPLOYEE E JOIN DEPARTMENT D ON E.DEPT_NO = D.DEPT_NO) E 
 		ON B.EMP_NO = E.EMP_NO
 		WHERE B.B_INFO_NO = #{no}
+	</select>
+	
+	<insert id="insertAddEmp">
+		INSERT INTO B_PAYINFO
+			(NO , B_INFO_NO , EMP_NO, RATE, PAYMENT) 
+		VALUES
+			(SEQ_B_PAYINFO_NO.NEXTVAL , #{binfoNo} , #{empNo} , #{rate} , #{payment})
+	</insert>
+	
+	<select id="selectCalc" resultType="_integer">
+		SELECT EMP_MONEY * (#{rate}/100) AS PAYMENT FROM EMPLOYEE WHERE EMP_NO = #{empNo}
 	</select>
 	
 </mapper>

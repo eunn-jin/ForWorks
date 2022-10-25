@@ -93,7 +93,7 @@
 </style>
 <body>
 
-<div id="app">
+    <div id="app">
 
 	<%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
 
@@ -131,7 +131,7 @@
 			        <div class="div-top">지급률</div>
 			        <div class="div-top">지급액</div>
 			        
-                    <c:forEach items="${MemList}" var = "m">
+                    <c:forEach items="${memList}" var = "m">
                         <div>${m.deptName}</div>
                         <div>${m.empName}</div>
                         <div>${m.rate}%</div>
@@ -169,7 +169,7 @@
                     <div class="modal_body">
                         <div><h1>사원 등록</h1></div>
                         부서
-                        <select name="dept" id="dept" onchange="changeDepart()">
+                        <select name="dept" id="dept">
                             <option value="">부서선택</option>
                             <c:forEach items="${departList}" var="d">
                                 <option value="${d}">${d}</option>
@@ -178,13 +178,14 @@
                         <br>
                         사원명
                         <select name="emp" id="emp">
-                            
+                            <option value="">사원선택</option>
                         </select>
                         <br>
                         지급율
-                        <input type="number"> <br>
+                        <input type="number" name="rate" id="rate" value="0"> <br>
                         지급액
-                        <input type="number">
+                        <input type="number" name="payment" id="payment" value="0">
+                        <div><button id="addEmp" onclick="addEmp()">등록</button></div>
                         <div><button class="modal_close">close</button></div>
                     </div>
                 </div>
@@ -210,25 +211,77 @@
            
        </div>
 
-</div>
+    </div>
 
 <script>
-    function changeDepart(){
-        var d = document.getElementById('dept');
-        var dept = d.options[d.selectedIndex].text;
-        consol.log('dept');
-    }
+    $("select[name=dept]").change(function(){
+        var depart = $(this).val();
+        console.log(depart);
+        
+        $.ajax({
+                url : "/ForWorks/bonus/selectEmp",
+                type : "POST",
+                data : {depart : depart},
+                success : function(result){
+                    $('#emp').empty;
+                    for(var i = 0 ; i <result.length ; i++){
+                        $('#emp').append(
+                            '<option value='+result[i].empNo+'>'+result[i].empName+'</option>'
+                        )
+                    }
+
+                },
+                error:function(){
+                    alert("통신실패");
+                }
+
+            })
+        })
+    
 </script>
 
+    <script>
+        function addEmp(){
+        alert('되나');
+        var binfoNo = ${infoNo};
+        console.log(binfoNo);
+        var x = document.getElementById("emp");
+	    var empNo = x.options[x.selectedIndex].value; 
+        console.log(empNo);
+        var rate = document.getElementById("rate").value;
+        var payment = document.getElementById("payment").value;
 
-<%@ include file="/WEB-INF/views/common/footer.jsp" %>
+        console.log(empNo , rate , payment);
+
+        $.ajax({
+            url : "/ForWorks/bonus/addEmp",
+            type : "POST",
+            data : {
+                empNo : empNo,
+                rate : rate,
+                payment : payment,
+                binfoNo : binfoNo
+            },
+            success : function(data){
+                if(data == 1){
+                    alert("등록성공");
+                    modal.style.display = 'none';
+                }
+                },
+            error : function(){
+                alert("통신실패");
+            }
+            })
+        }
+    </script>
+    <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
-<script>
-	
-	$().ready(function() {
-		console.log("test:");
-		$('#ex1').addClass("active");
-	});
-	
-</script>
+    <script>
+        
+        $().ready(function() {
+            console.log("test:");
+            $('#ex1').addClass("active");
+        });
+        
+    </script>
 </html>

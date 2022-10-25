@@ -42,7 +42,6 @@ public class BonusServiceImpl implements BonusService {
 	//부서별 사원조회
 	@Override
 	public List selectEmp(String depart) {
-		System.out.println("서비스에서 depart" + depart);
 		return dao.selectEmp(sst , depart);
 	}
 	
@@ -86,12 +85,25 @@ public class BonusServiceImpl implements BonusService {
 	//년도별 상여금조회
 	@Override
 	public List<BonusVo> bonusYearList(String year) {
-		return dao.SelectYearList(sst,year);
+		return dao.selectYearList(sst,year);
 	}
 	//상여금 해당 직원조회
 	@Override
 	public List<BonusMemVo> memList(String no) {
-		return dao.SelectMem(sst, no);
+		return dao.selectMem(sst, no);
 	}
+	//상여금 해당 직원 추가
+	@Override
+	public int addEmp(BonusMemVo bmv) {
+		System.out.println(bmv);
+		return dao.insertAddEmp(sst,bmv);
+	}
+	//지급율 입력시 지급액 계산
+	@Override
+	public int calc(BonusMemVo bmv) {
+		System.out.println("처음 들어온 데이터 중 지급율" + bmv.getRate());
+		return dao.selectCalc(sst, bmv);
+	}
+	
 
 }
