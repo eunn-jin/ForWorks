@@ -1,11 +1,9 @@
 package com.kh.forworks.attendance.controller;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.forworks.attendance.service.AttendanceService;
 import com.kh.forworks.attendance.vo.WorkTimeVo;
@@ -30,13 +29,21 @@ public class AttendanceController {
 		this.service = service;
 	}
 	
+	private String getToday() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date now = new Date();        
+		String day = sdf.format(now);
+		
+		return day;
+	}
+	
 
 	@GetMapping("day")
 	public String dayAtt(Model model) {
 
-		//TODO: 화면에 보여줄 것들 가져오기, empNo, day 바꾸기
-		int empNo = 1;
-		String day = "2022/10/19";
+		//TODO: 화면에 보여줄 것들 가져오기, empNo
+		int empNo = 1;       
+		String day = getToday();
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("empNo", 1);
@@ -75,7 +82,7 @@ public class AttendanceController {
 				        
 		//TODO:no 값을 로그인멤버 no 로 받아오기
 		int empNo = 1;
-		String day = "2022/10/26";
+		String day = getToday();
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("empNo", 1);
@@ -108,6 +115,24 @@ public class AttendanceController {
 			//실패
 			return "errorPage";
 		}
+	}
+	
+//	@PostMapping(value = "dayWorkInfo", produces = "application/json; charset=UTF-8")
+	@PostMapping("dayWorkInfo")
+	@ResponseBody
+	public WorkVo dayWorkInfo(String date) {
+		
+		//TODO: 화면에 보여줄 것들 가져오기, empNo 바꾸기
+		int empNo = 1;
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("empNo", 1);
+		map.put("day", date);
+		
+		WorkVo work = service.getDayWorkInfo(map);		
+		System.out.println("test :: " + work);
+		
+		return work;
 	}
 	
 }
