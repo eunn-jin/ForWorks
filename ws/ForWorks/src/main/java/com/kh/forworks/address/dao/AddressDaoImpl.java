@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.forworks.PageVo;
+import com.kh.forworks.address.vo.AddressVo;
 import com.kh.forworks.member.vo.MemberVo;
 
 @Repository
@@ -18,18 +19,30 @@ public class AddressDaoImpl implements AddressDao {
 	}
 	
 	@Override
-	public int selectCountAll(SqlSessionTemplate sst) {
-		return sst.selectOne("addressMapper.selectCountAll");
+	public int insertFavoriteMember(SqlSessionTemplate sst, MemberVo vo) {
+		return sst.insert("addressMapper.insertBookmark", vo);
 	}
 	
 	@Override
-	public List<MemberVo> selectAllMember(SqlSessionTemplate sst, PageVo pv) {
+	public int deleteFavoriteMember(SqlSessionTemplate sst, MemberVo vo) {
+		return sst.delete("addressMapper.deleteBookmark", vo);
+	}
+	
+	@Override
+	public int selectCountAll(SqlSessionTemplate sst, AddressVo addVo) {
+		return sst.selectOne("addressMapper.selectCountAll", addVo);
+	}
+	
+	@Override
+	public List<MemberVo> selectAllMember(SqlSessionTemplate sst, PageVo pv, AddressVo addVo) {
 		int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
 		
 		RowBounds rowBounds = new RowBounds(offset, pv.getBoardLimit());
 		
-		return sst.selectList("addressMapper.selectAllMember", null, rowBounds);
+		return sst.selectList("addressMapper.selectAllMember", addVo, rowBounds);
 	}
+
+
 
 
 
