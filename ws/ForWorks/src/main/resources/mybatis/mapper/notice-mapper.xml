@@ -11,24 +11,28 @@
 	</select>
 
 	<select id="selectList" resultType="com.kh.forworks.notice.vo.NoticeVo">
-		SELECT  
+		SELECT 
 			N.NTNO
-			<!-- ,N.EMP_NO -->
 			,N.NT_TITLE
 			,N.NT_CONTENT
 			,N.NT_ENROLL_DATE
 			,N.NT_MODIFIY_DATE
 			,N.NT_CNT
-			,N.NT_ACCESS
+			,NVL(D.DEPT_NAME ,'전체' )AS NT_ACCESS
 			,N.NT_STATUS
-			,E.EMP_NAME AS EMP_NO
-			
+			,E.EMP_NAME AS EMP_NO	
+			,N.EMP_NO AS NUM
+            
+				
 			FROM NOTICE N
 			JOIN EMPLOYEE E 
 			ON N.EMP_NO = E.EMP_NO
-			 			
-			WHERE NT_STATUS = 'N'
-			AND NT_TITLE LIKE'%${keyword}%'			
+			
+			LEFT JOIN DEPARTMENT D 
+			ON N.NT_ACCESS = D.DEPT_NO	
+		
+			WHERE NT_STATUS ='N'
+			AND NT_TITLE LIKE'%${keyword}%'
 			ORDER BY NTNO DESC
 	</select>
 	
@@ -43,20 +47,23 @@
 	<select id="selectOne" resultType="com.kh.forworks.notice.vo.NoticeVo">
 		SELECT 
 			N.NTNO
-			<!-- ,N.EMP_NO -->
 			,N.NT_TITLE
 			,N.NT_CONTENT
 			,N.NT_ENROLL_DATE
 			,N.NT_MODIFIY_DATE
 			,N.NT_CNT
-			,N.NT_ACCESS
+			,NVL(D.DEPT_NAME ,'전체' )AS NT_ACCESS
 			,N.NT_STATUS
 			,E.EMP_NAME AS EMP_NO	
+			,N.EMP_NO AS NUM
+            ,N.NT_ACCESS AS DEPT_NUM
 				
 			FROM NOTICE N
 			JOIN EMPLOYEE E 
 			ON N.EMP_NO = E.EMP_NO
-		
+
+			LEFT JOIN DEPARTMENT D 
+			ON N.NT_ACCESS = D.DEPT_NO	
 		
 		WHERE NT_STATUS ='N'
 		AND NTNO = #{ntno}
@@ -107,4 +114,9 @@
 		WHERE NT_STATUS = 'N'
 		AND NTNO = #{no}
 	</update>
+	
+	<select id="selectAlldp" resultType="com.kh.forworks.department.vo.DepartmentVo">
+		SELECT * 
+		FROM DEPARTMENT
+	</select>
 </mapper>
