@@ -17,5 +17,37 @@ public class WorkVo {
 	
 	private String workDate;
 	private String overTime;
+	
+	public void setWorkTime(int t) {
+		this.workTime = changeFormat(t);
+	}
+	
+	public void setLateTime(int t) {
+		this.lateTime = changeFormat(t);
+	}
+	
+	public void setEarlyoutTime(int t) {
+		this.earlyoutTime = changeFormat(t);
+	}
+	
+	/*
+	 * public void setOverTime(int t) { this.overTime = changeFormat(t); }
+	 */
+	
+	private String changeFormat(int t) {
+		
+		int hour = 0;
+		int min = 0;
+		
+		if(t < 0) {
+			
+		} else {
+			hour = t / 60;
+			min = t % 60;
+		}
+		
+		return String.format("%02d", hour) + ":" + String.format("%02d", min);
+	}
+	
 		
 }
