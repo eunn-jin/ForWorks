@@ -39,7 +39,7 @@
 
 	<div id="main">
            <%@ include file="/WEB-INF/views/common/header.jsp" %>
-
+           
                <div class="page-title">
                    <div class="row">
                        <div class="col-12 col-md-6 order-md-1 order-last">
@@ -105,37 +105,10 @@
                         </div>
                     </div>
                     <div class="card right-field" style="overflow:auto;">
-                    	<div class="card-header m-0 p-4 pt-3 pb-3">
+                    	<div class="card-header m-0 p-4 pt-3">
                         	<div class="d-flex align-items-center justify-content-between">
                         		<div class="mt-3">
-                        			<c:choose>
-                        				<c:when test="${addressParam.nav eq 'important'}">
-                        					<h5>중요 주소록</h5>
-                        				</c:when>
-                        				<c:when test="${addressParam.nav eq 'dept'}">
-                        					<div class="d-flex">
-                        					<h5>부서별 주소록</h5>
-                        					<div class="btn-group" style="padding-left: 15px;">
-					                            <div class="dropdown">
-					                              <a type="button" class="dropdown-toggle text-muted" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-					                                ${deptName}
-					                                <svg id="dropDownIcon" class="mb-1" width="0.8em" height="0.8em">
-							                            <use xlink:href="${root}/resources/vendors/bootstrap-icons/bootstrap-icons.svg#caret-down-fill"></use>
-							                        </svg>
-					                              </a>
-					                              <div class="dropdown-menu" data-popper-placement="top-start" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(0px, -32.7273px, 0px);">
-					                                <c:forEach items="${deptList}" var="dl">
-					                                	<a class="dropdown-item" href="${root}/address/dept/${dl.deptNo}/1">${dl.deptName}</a>
-					                                </c:forEach>
-					                              </div>
-					                            </div>
-					                          </div>
-					                         </div>
-                        				</c:when>
-                        				<c:otherwise>
-                        					<h5>전체 주소록</h5>
-                        				</c:otherwise>
-                        			</c:choose>
+                        			<h5>외부 주소록</h5>
                         		</div>
                         		<!-- pagination and page count -->
                         		<div class="d-flex align-items-center">
@@ -148,10 +121,10 @@
 	                        			</c:otherwise>
                         			</c:choose>
 		                        	<c:if test="${pv.currentPage ne 1}">
-				                        <a href="${root}/address/${addressParam.nav}/${(pv.currentPage) - 1}" class="btn btn-sm btn-outline-primary btn-icon email-pagination-prev d-none d-sm-block" style="margin-right: 5px">&lt;</a>
+				                        <a href="${root}/address/external/${(pv.currentPage) - 1}" class="btn btn-sm btn-outline-primary btn-icon email-pagination-prev d-none d-sm-block" style="margin-right: 5px">&lt;</a>
 		                        	</c:if>
 		                        	<c:if test="${pv.currentPage ne pv.maxPage}">
-			                        	<a href="${root}/address/${addressParam.nav}/${(pv.currentPage) + 1}" class="btn btn-sm btn-outline-primary btn-icon email-pagination-next d-none d-sm-block"style="margin-right: 5px">&gt;</a>
+			                        	<a href="${root}/address/external/${(pv.currentPage) + 1}" class="btn btn-sm btn-outline-primary btn-icon email-pagination-next d-none d-sm-block"style="margin-right: 5px">&gt;</a>
 		                        	</c:if>
 			                    </div>
 		                    </div>
@@ -161,73 +134,35 @@
                               <table class="table" id="table1" style="text-align: center">
                                 <thead>
                                   <tr>
-                                    <th></th>
-                                    <th></th>
                                     <th>
                                     	<c:choose>
                                     		<c:when test="${addressParam.order eq 'desc'}">
-						                        <a href="${root}/address/${addressParam.nav}/1?sort=name&order=asc">이름</a>
+						                        <a href="${root}/address/external/1?sort=name&order=asc">이름</a>
 		                                    	<svg id="orderUpIcon" class="mb-1" width="0.8em" height="0.8em">
 						                            <use xlink:href="${root}/resources/vendors/bootstrap-icons/bootstrap-icons.svg#arrow-up"></use>
 						                        </svg>
                                     		</c:when>
                                     		<c:otherwise>
-		                                    	<a href="${root}/address/${addressParam.nav}/1?sort=name&order=desc">이름</a>
+		                                    	<a href="${root}/address/external/1?sort=name&order=desc">이름</a>
 		                                    	<svg id="orderDownIcon" class="mb-1" width="0.8em" height="0.8em">
 						                            <use xlink:href="${root}/resources/vendors/bootstrap-icons/bootstrap-icons.svg#arrow-down"></use>
 						                        </svg>
                                     		</c:otherwise>
                                     	</c:choose>
                                     </th>
+                                    <th>회사명</th>
                                     <th>부서</th>
                                     <th>직급</th>
                                     <th>전화번호</th>
                                     <th>이메일</th>
-                                    <th>내선번호</th>
                                   </tr>
                                 </thead>
                                 <tbody>
                                   	<c:forEach items="${addressList}" var="l">
 	                                  <tr>
-	                                    <td>
-	                                    	<c:choose>
-		                                    	<c:when test="${not empty l.bmEmpNo}">
-		                                      	  <input name="favorite" type="checkbox" class="star" value="${l.empNo}" checked />
-		                                    	</c:when>
-		                                    	<c:otherwise>
-			                                      <input name="favorite" type="checkbox" class="star" value="${l.empNo}"/>
-		                                    	</c:otherwise>
-	                                    	</c:choose>
-	                                    </td>
-	                                    <td>
-	                                      <div class="avatar">
-	                                      	<c:choose>
-	                                      		<c:when test="${not empty l.empProfile}">
-	                                       	 		<img src="${root}/resources/img/member-imgs/user.png" alt="img" />
-	                                      		</c:when>
-	                                      		<c:otherwise>
-	                                       	 		<img src="${root}/resources/img/member-imgs/user.png" alt="img" />
-	                                      		</c:otherwise>
-	                                      	</c:choose>
-	                                      	<c:choose>
-	                                      		<c:when test="${l.statNo eq 2}">
-			                                        <span class="avatar-status bg-success"></span>
-	                                      		</c:when>
-	                                      		<c:when test="${l.statNo eq 5}">
-			                                        <span class="avatar-status bg-danger"></span>
-	                                      		</c:when>
-	                                      		<c:when test="${l.statNo eq 3 or l.statNo eq 4}">
-			                                        <span class="avatar-status bg-warning"></span>
-	                                      		</c:when>
-	                                      		<c:otherwise>
-			                                        <span class="avatar-status bg-secondary"></span>
-	                                      		</c:otherwise>
-	                                      	</c:choose>
-	                                      </div>
-	                                    </td>
 	                                    <td>${l.empName}</td>
-	                                    <td>${l.deptName}</td>
 	                                    <td>${l.posName}</td>
+	                                    <td>${l.deptName}</td>
 	                                    <td>${l.empPhone}</td>
 	                                    <td>${l.empEmail}</td>
 	                                    <td>${l.empExphone}</td>
@@ -239,31 +174,10 @@
                           </div>
                         </div>
                </section>
-            </div>
-		<%@ include file="/WEB-INF/views/common/footer.jsp" %>
-     </div>
+<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 <script>
 
-	$(document).ready(function(){
-		$("input[name=favorite]:checkbox").on("click", function() {
-			const bmEmpNo = $(this).val();
-			if($(this).prop('checked')) {
-				$.ajax({
-			     url: "${root}/address/favorite/insert",
-			     type: "POST",
-			     data: {bmEmpNo : bmEmpNo}
-			   });
-			} else {
-				$.ajax({
-			     url: "${root}/address/favorite/delete",
-			     type: "POST",
-			     data: {bmEmpNo : bmEmpNo}
-			   });
-			}
-		})
-	});
-	
 	function statEdit() {
 	   const statNo = document.querySelector("select[name=statNo]").value;
 	   $.ajax({
@@ -285,7 +199,7 @@
 	
 	function searchKeyword() {
 		const keyword = document.querySelector("input[name=keyword]").value;
-		location.href = "${root}/address/${addressParam.nav}/1?keyword=" + keyword;
+		location.href = "${root}/address/external/1?keyword=" + keyword;
 	}
 	
 </script>

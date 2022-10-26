@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="adminMapper">
 
-	<select id="selectOneById" resultType="com.kh.forworks.admin.vo.AdminVo">
+	<select id="selectOneById" resultType="AdminVo">
 		SELECT 
 			MAN_NO
 			, MAN_ID
@@ -12,19 +12,19 @@
 		WHERE MAN_ID = #{manId}
 	</select>
 	
-	<select id="selectPosList" resultType="com.kh.forworks.admin.vo.CorpInfoVo">
+	<select id="selectPosList" resultType="CorpInfoVo">
 		SELECT
 			POS_NO, POS_NAME
 		FROM POSITION
 	</select>
 	
-	<select id="selectDeptList" resultType="com.kh.forworks.admin.vo.CorpInfoVo">
+	<select id="selectDeptList" resultType="CorpInfoVo">
 		SELECT
 			DEPT_NO, DEPT_NAME
 		FROM DEPARTMENT
 	</select>
 
-	<select id="selectApplyList" resultType="com.kh.forworks.member.vo.MemberVo">
+	<select id="selectApplyList" resultType="MemberVo">
 		SELECT
 			EMP_NO
 			, EMP_NAME
