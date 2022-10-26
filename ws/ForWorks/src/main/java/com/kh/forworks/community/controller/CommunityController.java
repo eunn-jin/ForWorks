@@ -22,6 +22,7 @@ import com.kh.forworks.Pagination;
 import com.kh.forworks.community.service.CommunityService;
 import com.kh.forworks.community.vo.CommunityVo;
 import com.kh.forworks.communityattachments.vo.CommunityAttachmentsVo;
+import com.kh.forworks.department.vo.DepartmentVo;
 import com.kh.forworks.member.vo.MemberVo;
 
 @Controller
@@ -37,45 +38,61 @@ public class CommunityController {
 
 		//커뮤니티 (화면)
 		@GetMapping("list/{pno}")
-		public String list(Model model, @PathVariable int pno, String condition, String keyword){
+		public String list(Model model, @PathVariable int pno, String condition, String keyword, HttpSession session){
 			
-			System.out.println("condition/key :: "+condition+"/" +keyword);
-			//데이터 뭉치기
-			Map<String, String> map =  new HashMap<String, String>();
-			map.put("keyword", keyword);
-			map.put("condition", condition);
-			
-			//전체
-			//커뮤니티 전체 갯수
-			int totalCount = cmusv.selectTotalCount(map);
-			//페이징 처리
-			PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
-			//커뮤니티 리스트 가져오기
-			List<CommunityVo> cmuList = cmusv.selectList(pv, map);
-			//System.out.println(cmuList);
-			
-			//로그인한 사원의 부서에 대해서만
-			//커뮤니티 개수(해당부서)
-			int ttCntDp = cmusv.selectDp(map);
-			PageVo pvdp = Pagination.getPageVo(ttCntDp, pno, 5, 10);
-			List<CommunityVo> cmudpList = cmusv.selectListdp(pvdp,map);
-			
-			if (cmuList != null && cmudpList != null) {
-				model.addAttribute("cmuList",cmuList);
-				model.addAttribute("pv", pv);
+			//로그인 연결x -> 로그인페이지로
+			MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+			if (loginMember == null) {
+				session.setAttribute("toastMsg", "로그인이 필요합니다.");
+				return "member/login";
+			}else{
+				System.out.println("condition/key :: "+condition+"/" +keyword);
+				//데이터 뭉치기
+				Map<String, String> map =  new HashMap<String, String>();
+				map.put("keyword", keyword);
+				map.put("condition", condition);
+				map.put("cmuRead", loginMember.getDeptNo());
 				
-				model.addAttribute("cmudpList",cmudpList);
-				model.addAttribute("pvdp",pvdp);
+				//전체
+				//커뮤니티 전체 갯수
+				int totalCount = cmusv.selectTotalCount(map);
+				//페이징 처리
+				PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
+				//커뮤니티 리스트 가져오기
+				List<CommunityVo> cmuList = cmusv.selectList(pv, map);
+				//System.out.println(cmuList);
 				
-				return "community/list";
-			}else {
-				return "error";
+				//로그인한 사원의 부서에 대해서만
+				//커뮤니티 개수(해당부서)
+				int ttCntDp = cmusv.selectDp(map);
+				PageVo pvdp = Pagination.getPageVo(ttCntDp, pno, 5, 10);
+				List<CommunityVo> cmudpList = cmusv.selectListdp(pvdp,map);
+				
+				if (cmuList != null && cmudpList != null) {
+					model.addAttribute("cmuList",cmuList);
+					model.addAttribute("pv", pv);
+					
+					model.addAttribute("cmudpList",cmudpList);
+					model.addAttribute("pvdp",pvdp);
+					
+					return "community/list";
+				}else {
+					return "error";
+				}
 			}
+			
 			
 		}
 		
 		@GetMapping("write")
-		public String write() {
+		public String write(HttpSession session, Model model) {
+			MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+			
+			//로그인한 유저의 부서정보 가져오기
+			DepartmentVo dpvo = cmusv.logDp(loginMember.getDeptNo());
+			
+			model.addAttribute("dpvo", dpvo);
+			
 			return"community/write";
 		}
 		
@@ -85,12 +102,9 @@ public class CommunityController {
 		public String write(CommunityVo cmuvo, CommunityAttachmentsVo cmatVo ,HttpServletRequest req,Model model ,HttpSession session) {
 			//System.out.println("커뮤::"+cmuvo);
 	        MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
-	        if (loginMember.getEmpNo() == null) {
-	        	model.addAttribute("errorMsg","로그인 부탁드립니다..");
-				return "redirect:/error";
-			}
+	        
 			cmuvo.setEmpNo(loginMember.getBmEmpNo());
-			
+			cmuvo.setCmuRead(loginMember.getDeptNo());
 			
 			//파일 유무 확인
 			if (cmuvo.getCmuFileName() != null && !cmuvo.getCmuFileName().isEmpty()) {
@@ -121,11 +135,19 @@ public class CommunityController {
 		
 		//커뮤니티 게시글 상세보기
 		@GetMapping("detail/{no}")
-		public String detail(@PathVariable String no, Model model){
+		public String detail(@PathVariable String no, Model model, HttpSession session){
+			
+			MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 			
 			//db 공지사항 조회
 			CommunityVo cmuvo  = cmusv.selectOne(no);
 			//System.out.println("커뮤 확인::"+cmuvo);
+//			if (loginMember.getEmpNo() != cmuvo.getEmpNo()) {
+//				model.addAttribute("AlertMsg","접근권한이 없습니다");
+//				return "redirect:/community/list/1";
+//			}
+			
+			
 			//첨부파일 확인
 			CommunityAttachmentsVo cmatVo = cmusv.checkFile(no);
 			//System.out.println("파일 확인::"+cmatVo);

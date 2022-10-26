@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.forworks.PageVo;
 import com.kh.forworks.community.vo.CommunityVo;
 import com.kh.forworks.communityattachments.vo.CommunityAttachmentsVo;
+import com.kh.forworks.department.vo.DepartmentVo;
 
 @Repository
 public class CommunityDaoImpl implements CommunityDao{
@@ -81,6 +82,12 @@ public class CommunityDaoImpl implements CommunityDao{
 	@Override
 	public int delete(SqlSessionTemplate sst, String no) {
 		return sst.update("communityMapper.delete",no);
+	}
+	
+	//로그인 유저 부서정보 가져오기
+	@Override
+	public DepartmentVo logDp(SqlSessionTemplate sst, String dpNo) {
+		return sst.selectOne("communityMapper.logDp",dpNo);
 	}
 
 

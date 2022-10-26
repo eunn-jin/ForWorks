@@ -11,6 +11,7 @@ import com.kh.forworks.PageVo;
 import com.kh.forworks.community.dao.CommunityDao;
 import com.kh.forworks.community.vo.CommunityVo;
 import com.kh.forworks.communityattachments.vo.CommunityAttachmentsVo;
+import com.kh.forworks.department.vo.DepartmentVo;
 
 @Service
 public class CommunityServiceImpl implements CommunityService{
@@ -94,6 +95,12 @@ public class CommunityServiceImpl implements CommunityService{
 	@Override
 	public int delete(String no) {
 		return dao.delete(sst,no);
+	}
+
+	//로그인 유저 부서정보 가져오기
+	@Override
+	public DepartmentVo logDp(String dpNo) {
+		return dao.logDp(sst,dpNo);
 	}
 	
 	
