@@ -52,7 +52,7 @@ table {
                                 </tr>
                                 <tr>
                                     <td class="danger">제목</td>
-                                    <td colspan="3"><div>${ntvo.ntTitle}zzz</div></td>
+                                    <td colspan="3"><div>${ntvo.ntTitle}</div></td>
                                 </tr>
     
     
@@ -60,7 +60,7 @@ table {
                                     <td class="danger">글내용</td>
                                     <td colspan="3" style=" background : white; text-align: left;">
                                         <textarea id="summernote" name="content" class="form-control" style="background-color: white; text-align: left; height: 30vh;" disabled
-                                        >${ntvo.ntContent} Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam, nam praesentium quaerat dignissimos nobis nihil explicabo optio amet est quos architecto, maiores quae deleniti ab accusamus. Assumenda veniam quos vero!
+                                        >${ntvo.ntContent} 
                                         </textarea>
                                     </td>
                                 </tr>
@@ -77,7 +77,7 @@ table {
                                     </c:if>
                                 </tr>
                                 
-                                <c:if test="${loginMember.empNo eq ntvo.empNo}">
+                                <c:if test="${loginMember.empNo eq ntvo.num}">
                                 <tr>
                                     <td colspan="4" class="text-end" style="border:none; background : white; ">
                                         <input type="hidden" name="num" value="">

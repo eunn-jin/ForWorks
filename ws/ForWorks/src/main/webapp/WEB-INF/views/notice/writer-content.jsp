@@ -49,9 +49,11 @@ table {
                                     <td  style="background: white; width: 30%;">
                                         <select name="ntAccess" id="ntAccess" class="form-select form-select-sm" aria-label=".form-select-sm example" style="width: auto;">
                                             <option value="nu" selected >접근권한을 선택해주세요</option>
-                                            <option value="A">전체</option>
-                                            <option value="B">B부서</option>
-                                            <option value="C">C부서</option>
+                                            
+                                            <option value="0">전체</option>
+                                            <c:forEach items="${dpvo }" var="dp">
+                                                <option value="${dp.deptNo}">${dp.deptName}</option>
+                                            </c:forEach>
                                             
                                         </select>
                                     </td>
@@ -92,7 +94,7 @@ table {
 	var x;
 	$("select[name=ntAccess]").change(function(){
 		x= $(this).val();
-		// console.log(x);
+		console.log(x);
 	}); 
     function check(){
         if (x== "nu") {
