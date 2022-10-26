@@ -127,9 +127,9 @@
                                 <div style="display: none;"><input type="hidden" name="no" id="no-${st.index}" value="${bv.no}"></div>
                                 <div id="cate-${st.index}">${bv.cate}</div>
                                 <div><input type="text" id="money-${st.index}" name="money" value="${bv.amount}" class="input_css" placeholder="0">원</div>
-                                <div>2022-10-10</div>
+                                <div>${bv.upDate}</div>
                                 <div><input type="button" value="저장" onclick="editBenefit(${st.index})"></div>
-                        </c:forEach>
+                            </c:forEach>
                            
 
 					      

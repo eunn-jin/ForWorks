@@ -127,8 +127,7 @@
 				            
 				                상여금 목록 
 				                <select name="year" id="year" title="년도" >
-				                    <option value="">년도</option>
-                                    <option value="2022">2022</option>
+				                    
 				                </select> 
 				            
 				        </div>
@@ -153,27 +152,7 @@
 				        
 				        </div>
 				        
-				        <div id="page-area">
-				            <a href=""><</a>
-				            <a href="">1</a>
-				            <a href="">2</a>
-				            <a href="">3</a>
-				            <a href="">4</a>
-				            <a href="">5</a>
-				            <a href="">></a>
-				        </div>
-				
-				        <div id="search-area">
-				            
-				            <form action="">
-				                <select name="" id="">
-				                    <option value="">발생월</option>
-				                </select>
-				                <input type="text">
-				                <input type="submit" value="검색">
-				            </form>
-				
-				        </div>
+				        <div style="height: 100px;"></div>
 				        
 				    </div>
 				
@@ -252,6 +231,21 @@
         })
     }
 </script>
+<!--SELECTBOX 연도 설정-->
+<script>
+    $(document).ready(function(){
+        var now = new Date();
+        var year = "";
+        var com_year = now.getFullYear();
+        console.log("com_year" + com_year);
+        $("#year").append("<option value=''>연도</option>");
+        for(var i = (com_year); i >= 2000 ; i--){
+            $("#year").append("<option value='"+i+"'>"+i+"년"+"</option>");
+        }
+    })
+
+</script>
+
 
 <!--연도 별 상여금 조회 ajax-->
 <script>
@@ -264,7 +258,6 @@
             type : "POST",
             data : {year : year},
             success : function(data){
-                alert(year + "년 상여금목록입니다.");
                 $('#center').empty();
                 console.log(data);
                 $('#center').append(

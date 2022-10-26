@@ -31,8 +31,7 @@ public class BonusDaoImpl implements BonusDao {
 	//부서별 사원조회
 	@Override
 	public List selectEmp(SqlSessionTemplate sst , String depart) {
-		List result = sst.selectList("bonusMapper.selectEmp" , depart);
-		return result;
+		return sst.selectList("bonusMapper.selectEmp" , depart);
 	}
 	//받아온 회원번호 직원의 수당조회
 	@Override

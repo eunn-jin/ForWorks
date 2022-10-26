@@ -213,13 +213,14 @@ function changeDepart(){
 		data : {depart : depart},
 		success : function(result){
             $('#center').empty();
+            $('#center').append(
+                '<div class="div-top">부서</div><div class="div-top">직원명</div><div class="div-top">직급</div><div class="div-top">입사일</div>'
+            );
             console.log(result[0]);
-            //document.getElementById('center').appendChild('<div></div>');
-            //*************************************확인하기********************
             for(var i = 0 ; i < result.length ; i++){
 
                 $('#center').append(
-                    '<div class="div-top">'+depart+'</div><div class="div-top"><a href="${root}/bonus/detail">'+result[i]+'</a></div><div class="div-top">'+3+'</div><div class="div-top">'+4+'</div>');
+                    '<div class="div-top">'+depart+'</div><div class="div-top"><a href="${root}/bonus/detail/'+result[i].empNo+'">'+result[i].empName+'</a></div><div class="div-top">'+result[i].posName+'</div><div class="div-top">'+result[i].empJdate+'</div>');
             }
 		},
         error:function(){

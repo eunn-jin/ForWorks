@@ -55,50 +55,74 @@
                <section class="section">
                    <div id="wrap">
 				        <div id="title">급여대장 등록</div>
-				        <div>2022 10월</div>
-		            <div id="center">
-		                <table>
-		                    <tr>
-		                        <td>사원명</td>
-		                        <td><input type="search"></td>
-		                    </tr>
-		                    <tr>
-		                        <td>정산기간</td>
-		                        <td><input type="date"> ~ <input type="date"></td>
-		                    </tr>
-		                    <tr>
-		                        <td>급여구분</td>
-		                        <td>
-		                            <select name="" id="">
-		                            <option value="">월급</option>
-		                            <option value="">상여</option>
-		                            <option value="">월급+상여</option>
-		                            </select>
-		                        </td>
-		                    </tr>
-		                </table>
-		                <div class="back-color">
-		                    <div class="back-color">월급</div>
-		                        <ul>
-		                            <span>기본급</span><span>2,000,000원</span>
-		                            <br>
-		                            <span>수당</span>
-		                            <br>
-		                                초과수당 <span>10,000원</span>
-		                        </ul>
-		                </div>
-		                <div class="back-color">
-		                    <div class="back-color">상여</div>
-		                    <ul>
-		                        <span>22년 하반기 상여-1</span>
-		                        <br>
-		                        <span>1,000,000원</span>
-		                    </ul>
-		                </div>
-		                <div style="float:right;">
-		                    총급여 : 3,010,000원
-		                </div>
-		           		</div>
+				        <div>
+							<select name="year" id="year"></select>
+							<select name="month" id="month">
+							
+							</select>
+						</div>
+		           	 	<div id="center">
+		                	<table>
+								<tr>
+									<td>부서명</td>
+									<td>
+										<select name="dept" id="dept">
+											<option value="">부서선택</option>
+											<c:forEach items="${departList}" var="d">
+												<option value="${d}">${d}</option>
+											</c:forEach>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>사원명</td>
+									<td>
+										<select name="emp" id="emp">
+											<option value="">직원선택</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>정산기간</td>
+									<td><input name="start-month" id="start-month"> ~ <input name="end-month" id="end-month"></td>
+								</tr>
+								<tr>
+									<td>지급날짜</td>
+									<td><input type="date" name="pay-date"></td>
+								</tr>
+								<tr>
+									<td>급여구분</td>
+									<td>
+										<select name="" id="">
+											<option value="salary">월급</option>
+											<option value="bonus">상여</option>
+											<option value="sb">월급+상여</option>
+										</select>
+									</td>
+								</tr>
+							</table>
+							<div class="back-color">
+								<div class="back-color">월급</div>
+									<ul>
+										<span>기본급</span><span>2,000,000원</span>
+										<br>
+										<span>수당</span>
+										<br>
+											초과수당 <span>10,000원</span>
+									</ul>
+							</div>
+							<div class="back-color">
+								<div class="back-color">상여</div>
+								<ul>
+									<span>22년 하반기 상여-1</span>
+									<br>
+									<span>1,000,000원</span>
+								</ul>
+							</div>
+							<div style="float:right;">
+								총급여 : 3,010,000원
+							</div>
+							</div>
 		    		</div>
                </section>
            </div>
@@ -106,6 +130,73 @@
        </div>
 
 </div>
+<!--연도 selectbox-->
+<script>
+    $(document).ready(function(){
+        var now = new Date();
+        var com_year = now.getFullYear();
+        console.log("com_year" + com_year);
+        $("#year").append("<option value=''>연도</option>");
+        for(var i = (com_year); i >= 2000 ; i--){
+            $("#year").append("<option value='"+i+"'>"+i+"년"+"</option>");
+        }
+		for(var j = 1; j <=12; j++){
+			$("#month").append("<option value='"+j+"'>"+j+"월"+"</option>");
+		}
+    })
+</script>
+<!--부서별 직원조회-->
+<script>
+	$("select[name=dept]").change(function(){
+        var depart = $(this).val();
+        console.log(depart);
+        
+        $.ajax({
+			url : "/ForWorks/salary/selectEmp",
+			type : "POST",
+			data : {depart : depart},
+			success : function(result){
+				console.log(result[0]);
+				$('#emp').empty;
+				for(var i = 0 ; i <result.length ; i++){
+                        $('#emp').append(
+                            '<option value='+result[i].empNo+'>'+result[i].empName+'</option>'
+                        )
+                }
+            },
+            error:function(){
+                    alert("통신실패");
+            }
+
+        })
+    })
+</script>
+
+<!--시작일, 종료일-->
+<script>
+	$(function(){
+		$('#start-month , #end-month').datepicker({
+			dateFormat : "yy-mm-dd",
+			maxDate : 0,
+			monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+			monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+			dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+			dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+			dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+			showMonthAfterYear: true,
+			yearSuffix: '년'
+		}
+		);
+	})
+</script>
+<!--제이쿼리 ui css-->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<!--제이쿼리 style css-->
+<link rel="stylesheet" href="/resources/demos/style.css">
+<!--제이쿼리 js-->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<!--제이쿼리 ui js-->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 <script>
