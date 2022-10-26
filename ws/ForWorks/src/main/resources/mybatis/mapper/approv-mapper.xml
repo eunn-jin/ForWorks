@@ -15,6 +15,104 @@
 			ON E.POS_NO = P.POS_NO
 	</select>
 	
+	<insert id="insertApprovDoc">
+		INSERT INTO APPROVEDOCUMENT
+		(
+			ADOC_NO,
+			ADOC_NAME,
+			ADOC_CONTENT,
+			EMP_NO,
+			DRAFT_DATE
+		)
+		VALUES
+		(
+			SEQ_APPROVEDOCUMENT_NO.nextval,
+			#{adocName},
+			#{adocContent},
+			#{empNo},
+			SYSDATE
+		)
+	</insert>
+	
+	<select id="selectDocNoOneByContent" resultType="int">
+		SELECT
+			ADOC_NO
+		FROM
+		APPROVEDOCUMENT
+		WHERE
+		ADOC_CONTENT = #{adocContent}
+	</select>
+	
+	<insert id="insertDocApprove">
+		<foreach collection="approvMember" item="x" open="declare begin" close="; end;" separator=";">
+		INSERT INTO DOCAPPROVE
+		(
+			APPROVE_NO,
+			ADOC_NO,
+			EMP_NO
+		)
+		VALUES
+		(
+			SEQ_DOCAPPROVE_NO.nextval,
+			#{adocNo},
+			#{x}
+		)
+		</foreach>
+	</insert>
+	
+	<insert id="insertDocCoop">
+		<foreach collection="coopMember" item="x" open="declare begin" close="; end;" separator=";">
+		INSERT INTO DOCCOOP
+		(
+			COOP_NO,
+			ADOC_NO,
+			EMP_NO
+		)
+		VALUES
+		(
+			SEQ_DOCCOOP_NO.nextval,
+			#{adocNo},
+			#{x}
+		)
+		</foreach>
+	</insert>
+	
+	<insert id="insertDocRefer">
+		<foreach collection="referMember" item="x" open="declare begin" close="; end;" separator=";">
+		INSERT INTO DOCREFER
+		(
+			REFER_NO,
+			ADOC_NO,
+			EMP_NO
+		)
+		VALUES
+		(
+			SEQ_DOCREFER_NO.nextval,
+			#{adocNo},
+			#{x}
+		)
+		</foreach>
+	</insert>
+	
+	<insert id="insertDocFile">
+		INSERT INTO DOCFILE
+		(
+			DOCFILE_NO,
+			ADOC_NO,
+			DOCFILE_ORIGIN,
+			DOCFILE_EDIT,
+			DOCFILE_PATH
+		)
+		VALUES
+		(
+			SEQ_DOCFILE_NO.nextval,
+			#{adocNo},
+			#{fileName},
+			#{changeFileName},
+			#{savePath}
+		)	
+	</insert>
+	
 	
 	
 </mapper>

@@ -36,6 +36,48 @@ public class ApprovDaoImpl implements ApprovDao {
 		// TODO Auto-generated method stub
 		return sst.selectList("approvMapper.selectMemberList");
 	}
+	
+	//결재문서 생성
+	@Override
+	public int insertApprovDoc(SqlSessionTemplate sst, ApprovDocumentVo vo) {
+		// TODO Auto-generated method stub
+		return sst.insert("approvMapper.insertApprovDoc", vo);
+	}
+	
+	//작성한 문서 번호 조회
+	@Override
+	public int selectDocNoOneByContent(SqlSessionTemplate sst, ApprovDocumentVo vo) {
+		// TODO Auto-generated method stub
+		return sst.selectOne("approvMapper.selectDocNoOneByContent", vo);
+	}
+	
+	//전자결재자 삽입
+	@Override
+	public int insertDocApprove(SqlSessionTemplate sst, ApprovDocumentVo vo) {
+		// TODO Auto-generated method stub
+		return sst.insert("approvMapper.insertDocApprove",vo);
+	}
+	
+	//문서협조자 삽입
+	@Override
+	public int insertDocCoop(SqlSessionTemplate sst, ApprovDocumentVo vo) {
+		// TODO Auto-generated method stub
+		return sst.insert("approvMapper.insertDocCoop",vo);
+	}
+	
+	//문서 참조자 삽입
+	@Override
+	public int insertDocRefer(SqlSessionTemplate sst, ApprovDocumentVo vo) {
+		// TODO Auto-generated method stub
+		return sst.insert("approvMapper.insertDocRefer",vo);
+	}
+	
+	//문서 첨부파일 삽입
+	@Override
+	public int insertDocFile(SqlSessionTemplate sst, ApprovDocumentVo vo) {
+		// TODO Auto-generated method stub
+		return sst.insert("approvMapper.insertDocRefer",vo);
+	}
 
 	
 }

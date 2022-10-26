@@ -57,15 +57,25 @@ public class ApprovController {
 	
 	@PostMapping("create")
 	public String create(ApprovDocumentVo vo, HttpSession session, HttpServletRequest req) {
+
+//		System.out.println(vo.toString());
+//		
+//		return null;
 		
 		if(vo.getDocFile()!=null && !vo.getDocFile().isEmpty()) {
-			String savePath = req.getServletContext().getRealPath("/resources/upload/profile/");
+			String savePath = req.getServletContext().getRealPath("/resources/upload/doc/");
 			vo.setFileName(vo.getDocFile().getOriginalFilename());
+			
+			vo.setSavePath(savePath);
 			
 			String changeName = FileUploader.fileUpload(vo.getDocFile(), savePath); 
 			
 			vo.setChangeFileName(changeName);
 		}
+		
+		MemberVo memberVo = (MemberVo) session.getAttribute("loginMember");
+		
+		vo.setEmpNo(memberVo.getEmpNo());
 		
 		int result = service.insertApprovDoc(vo);
 		

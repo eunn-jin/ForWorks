@@ -24,7 +24,7 @@
 		FROM DEPARTMENT
 	</select>
 	
-	<select id="selectEmp" resultType="MemberVo">
+	<select id="selectEmp" resultType="com.kh.forworks.member.vo.MemberVo">
 		SELECT E.EMP_NAME AS EMP_NAME, E.EMP_NO AS EMP_NO
 		FROM 
 		EMPLOYEE E JOIN DEPARTMENT D ON E.DEPT_NO = D.DEPT_NO
