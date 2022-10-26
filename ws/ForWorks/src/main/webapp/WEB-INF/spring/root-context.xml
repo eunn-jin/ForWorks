@@ -14,6 +14,7 @@
 	<bean id="sst" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="ssfb"/>
 	</bean>
+	<context:property-placeholder location="classpath:config/database.properties" />
 	
 	<!-- 팩토리 -->
 	<bean id="ssfb" class="org.mybatis.spring.SqlSessionFactoryBean">

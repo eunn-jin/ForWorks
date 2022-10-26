@@ -56,7 +56,7 @@ pageEncoding="UTF-8"%>
 function fn_delete() {
 	if( confirm("정말 삭제하시겠습니까?")) {
 		//[확인][취소]
-		location = "planDelete.jsp?date=<%date%>";
+		
 	}
 }
 </script>
