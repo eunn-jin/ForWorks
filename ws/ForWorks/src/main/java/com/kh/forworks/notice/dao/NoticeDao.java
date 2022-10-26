@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.forworks.PageVo;
+import com.kh.forworks.department.vo.DepartmentVo;
 import com.kh.forworks.notice.vo.NoticeVo;
 import com.kh.forworks.noticeattachments.vo.NoticeAttachmentsVo;
 
@@ -36,6 +37,9 @@ public interface NoticeDao {
 
 	//공지사항 삭제
 	int delete(SqlSessionTemplate sst, String no);
+	
+	//부서 정보 가져오기
+	List<DepartmentVo> selectAlldp(SqlSessionTemplate sst);
 
 
 }

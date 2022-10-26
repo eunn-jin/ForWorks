@@ -17,4 +17,5 @@ public class CommunityVo {
 	private String cmuRead;
 	private String cmuStatus;
 	private MultipartFile cmuFileName;
+	private String num;//회원번호 가져오기 위한 변수
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.forworks.PageVo;
+import com.kh.forworks.department.vo.DepartmentVo;
 import com.kh.forworks.notice.dao.NoticeDao;
 import com.kh.forworks.notice.vo.NoticeVo;
 import com.kh.forworks.noticeattachments.vo.NoticeAttachmentsVo;
@@ -91,6 +92,12 @@ public class NoticeServiceImpl implements NoticeService{
 	@Override
 	public int delete(String no) {
 		return dao.delete(sst, no);
+	}
+	
+	//부서정보 가져오기
+	@Override
+	public List<DepartmentVo> selectAlldp() {
+		return dao.selectAlldp(sst);
 	}
 
 

@@ -69,9 +69,10 @@ tr>th:hover{
 			<ul class="nav nav-tabs" >
 				<li class="nav-item"><a class="nav-link active"
 					data-toggle="tab" href="#all">전체</a></li>
+				<c:if test="${loginMember ne null}">
 				<li class="nav-item"><a class="nav-link" data-toggle="tab"
 					href="#my">${loginMember.deptName}서</a></li>
-
+				</c:if>	
 			</ul>
 			<div class="tab-content">
 				<div class="tab-pane fade show active" id="all">
@@ -244,20 +245,9 @@ tr>th:hover{
 <script>
 	$(function() {
 		$('#table-main>tbody>#center').click(function(){
-			//행 클릭 되었을때, 동작할 내용
-
 			//글번호 가져오기
 			const num = $(this).children().eq(0).text();
-
-			//로그인한 회원의 정보중 이름을 가져와서 현재 선택한글의 작성자와 같은지 판별
-
-			//해당 번호로 요청 보내기
-			
-			//작성자인경우
 			location.href = '${root}/community/detail/' + num;
-
-			//아닌경우
-			//location.href = '${root}/vote/detailUser?num=' + num;
 		});
 	})
 </script>

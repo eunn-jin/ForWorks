@@ -16,4 +16,6 @@ public class NoticeVo {
 	private String ntAccess;
 	private MultipartFile ntFileName;
 	private String ntStatus;
+	public String num;
+	public String deptNum;
 }

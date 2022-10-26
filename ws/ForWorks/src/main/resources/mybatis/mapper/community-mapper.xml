@@ -33,7 +33,7 @@
 		</choose>
 		'%${keyword}%'	
 		
-		AND CMU_READ = 'MY'
+		AND CMU_READ = #{cmuRead}
 	</select>
 	
 	<select id="selectList" resultType="com.kh.forworks.community.vo.CommunityVo">
@@ -44,14 +44,18 @@
 			,C.CMU_ENROLL_DATE
 			,C.CMU_MODIFIY_DATE
 			,C.CMU_CNT
-			,C.CMU_READ
+			,NVL(D.DEPT_NAME ,'전체' )AS CMU_READ
 			,C.CMU_STATUS
 			,E.EMP_NAME AS EMP_NO
-			,C.CMU.EMP_NO AS NUM
+			,C.EMP_NO AS NUM
+			
 			
 		FROM COMMUNITY C
 			JOIN EMPLOYEE E 
 			ON C.EMP_NO = E.EMP_NO
+			
+			LEFT JOIN DEPARTMENT D 
+			ON C.CMU_READ= D.DEPT_NO				
 					
 		WHERE C.CMU_STATUS = 'N'
 		<choose>
@@ -75,14 +79,19 @@
 			,C.CMU_ENROLL_DATE
 			,C.CMU_MODIFIY_DATE
 			,C.CMU_CNT
-			,C.CMU_READ
+			,NVL(D.DEPT_NAME ,'전체' )AS CMU_READ
 			,C.CMU_STATUS
 			,E.EMP_NAME AS EMP_NO
-			
+			,C.EMP_NO AS NUM
+			,C.CMU_READ AS DPNUM
 			
 		FROM COMMUNITY C
 			JOIN EMPLOYEE E 
 			ON C.EMP_NO = E.EMP_NO
+			
+			LEFT JOIN DEPARTMENT D 
+			ON C.CMU_READ= D.DEPT_NO	
+						
 		WHERE C.CMU_STATUS = 'N'
 		
 		<choose>
@@ -95,7 +104,7 @@
 		</choose>
 		'%${keyword}%'			
 		
-		AND C.CMU_READ = 'MY'
+		AND C.CMU_READ = #{cmuRead}
 		ORDER BY C.CMU_NO DESC
 	</select>	
 	
@@ -128,13 +137,17 @@
 			,C.CMU_ENROLL_DATE
 			,C.CMU_MODIFIY_DATE
 			,C.CMU_CNT
-			,C.CMU_READ
+			,NVL(D.DEPT_NAME ,'전체' )AS CMU_READ
 			,C.CMU_STATUS
 			,E.EMP_NAME AS EMP_NO
-						
+			,C.EMP_NO AS NUM
+										
 		FROM COMMUNITY C
 			JOIN EMPLOYEE E 
 			ON C.EMP_NO = E.EMP_NO
+			
+			LEFT JOIN DEPARTMENT D 
+			ON C.CMU_READ= D.DEPT_NO				
 			
 		WHERE CMU_STATUS ='N'
 		AND CMU_NO = #{no}
@@ -171,5 +184,11 @@
 		WHERE CMU_STATUS = 'N'
 		AND CMU_NO = #{no}		
 	</update>
-		
+	
+	<select id="logDp" resultType="com.kh.forworks.department.vo.DepartmentVo">
+		SELECT * 
+		FROM DEPARTMENT
+		WHERE DEPT_NO = #{dpNo}
+	</select>
+	
 </mapper>

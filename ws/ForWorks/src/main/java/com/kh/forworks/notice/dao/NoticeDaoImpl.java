@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.forworks.PageVo;
+import com.kh.forworks.department.vo.DepartmentVo;
 import com.kh.forworks.notice.vo.NoticeVo;
 import com.kh.forworks.noticeattachments.vo.NoticeAttachmentsVo;
 
@@ -73,6 +74,12 @@ public class NoticeDaoImpl implements NoticeDao{
 	@Override
 	public int delete(SqlSessionTemplate sst, String no) {
 		return sst.update("noticeMapper.delete",no);
+	}
+	
+	//부서정보 가져오기
+	@Override
+	public List<DepartmentVo> selectAlldp(SqlSessionTemplate sst) {
+		return sst.selectList("noticeMapper.selectAlldp");
 	}
 
 

@@ -49,10 +49,10 @@ table {
                                     <td  style="background: white;" style="width: 30%;">
                                         <select name="ntAccess" id=""  class="form-select form-select-sm" aria-label=".form-select-sm example">
                                             <option value="" selected >부서를 선택해주세요</option>
-                                            <option value="A">전체</option>
-                                            <option value="B">부서B</option>
-                                            <option value="C">부서C</option>
-                                            <option value="D">부서D</option>
+                                            <option value="0">전체</option>
+                                            <c:forEach items="${dpvo }" var="dp">
+                                                <option value="${dp.deptNo}">${dp.deptName}</option>
+                                            </c:forEach>
                                         </select>
                                     </td>
                                 </tr>
@@ -138,15 +138,21 @@ $(document).ready(function() {
 </script>
 
 <script>
-    console.log('${ntvo.ntAccess}');
-    const ac = '${ntvo.ntAccess}';
-    if(ac === 'A'){
-        //document.querySelector('input[value="F"]').checked = true;
-        $('option[value="A"]').prop('selected',true);
-    }else if(ac === 'B'){
-        //document.querySelector('input[value="M"]').checked = true;
-        $('option[value="B"]').prop('selected',true);
-    }
+    console.log('1::'+'${ntvo.ntAccess}');
+    console.log('2::'+'${ntvo.deptNum}');
+    
+    const ac = '${ntvo.deptNum}';
+    
+    // var x = '${ntvo.dpetNum}';
+    // if(x === 0){
+    //     $('option[value=0]').prop('selected',true);
+    // }
+    //     else if(x === 1){
+    //     $('option[value=1]').prop('selected',true);
+        
+    // }
+
+
 </script>
 
 <script>

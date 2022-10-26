@@ -3,6 +3,7 @@ package com.kh.forworks.notice.service;
 import java.util.List;
 
 import com.kh.forworks.PageVo;
+import com.kh.forworks.department.vo.DepartmentVo;
 import com.kh.forworks.notice.vo.NoticeVo;
 import com.kh.forworks.noticeattachments.vo.NoticeAttachmentsVo;
 
@@ -27,6 +28,9 @@ public interface NoticeService{
 
 	//공지사항 삭제
 	int delete(String no);
+
+	//모든 부서 
+	List<DepartmentVo> selectAlldp();
 	
 
 
