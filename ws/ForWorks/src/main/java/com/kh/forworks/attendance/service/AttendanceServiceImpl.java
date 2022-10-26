@@ -35,9 +35,9 @@ public class AttendanceServiceImpl implements AttendanceService {
 			month += day;
 		}
 		
-		wvo.DayWorkToStr(day);
-		wvo.WeekWorkToStr(week); 
-		wvo.MonthWorkToStr(month);
+		wvo.setDayWork(day);
+		wvo.setWeekWork(week); 
+		wvo.setMonthWork(month);
 		
 		System.out.println("getWorkInfo :: " + wvo + ", " + day);
 				
@@ -45,7 +45,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 	}
 
 	@Override
-	public WorkVo getDayWorkInfo(Map<String, Object> map) {
+	public WorkVo getDayWorkInfo(Map<String, Object> map) {		
 		return dao.selectDayWorkInfo(sst, map);
 	}
 	

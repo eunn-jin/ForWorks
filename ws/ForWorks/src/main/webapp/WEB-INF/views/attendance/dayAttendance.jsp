@@ -115,34 +115,36 @@
 							<div class>
 								<span class="text-part">근무일자</span>
 								<input type="date" id="workDate">
-								<button class="btn btn-primary btn-sm">검색</button>
+								<button class="btn btn-primary btn-sm" id="workDateBtn">검색</button>
 							</div>
-							<div>
+							<!-- <div>
 								<button class="btn btn-outline-primary btn-sm">개인</button>
 								<button class="btn btn-outline-primary btn-sm">전체</button>
-							</div>
+							</div> -->
 						</div>
 						<div class="table-responsive mt-5">
 							<table class="table table-bordered mb-0">
 								<thead>
 									<tr>
-										<th>사원이름</th>
+										<!-- <th>사원이름</th> -->
 										<th>출근시간</th>
 										<th>퇴근시간</th>
 										<th>근무시간</th>
 										<th>지각시간</th>
 										<th>조퇴시간</th>
+										<th>초과시간</th>
 										<th>비고</th>
 									</tr>
 								</thead>
-								<tbody>
+								<tbody id="dayWorkInfoValue">
 									<tr>
-										<td>${work.empName}</td>
+										<%-- <td>${work.empName}</td> --%>
 										<td>${work.inTime}</td>
 										<td>${work.outTime}</td>
 										<td>${work.workTime}</td>
 										<td>${work.lateTime}</td>
 										<td>${work.earlyoutTime}</td>
+										<td>${work.overTime}</td>
 										<td>${work.statusName}</td>		
 									</tr>
 								</tbody>
@@ -206,6 +208,35 @@
 	
 	$("button[id='outWorkBtn']").click(function(){
 		location.href="${root}/att/outWork/"+${workTime.no};
+	});
+	
+	$("button[id='workDateBtn']").click(function(){
+		
+		const date = document.querySelector("#workDate").value;
+		
+		$.ajax({
+			url: "${root}/att/dayWorkInfo",
+			type : "POST",
+			data : {"date" : date},
+			success : function(vo){
+				if(vo.no != 0) {
+					document.getElementById("dayWorkInfoValue").getElementsByTagName("td")[0].innerHTML = vo.inTime;
+					document.getElementById("dayWorkInfoValue").getElementsByTagName("td")[1].innerHTML = vo.outTime;
+					document.getElementById("dayWorkInfoValue").getElementsByTagName("td")[2].innerHTML = vo.workTime;
+					document.getElementById("dayWorkInfoValue").getElementsByTagName("td")[3].innerHTML = vo.lateTime;
+					document.getElementById("dayWorkInfoValue").getElementsByTagName("td")[4].innerHTML = vo.earlyoutTime;
+					document.getElementById("dayWorkInfoValue").getElementsByTagName("td")[5].innerHTML = vo.overTime;
+					document.getElementById("dayWorkInfoValue").getElementsByTagName("td")[6].innerHTML = vo.statusName;
+				} else {
+					for(i=0; i<7; i++) {
+						document.getElementById("dayWorkInfoValue").getElementsByTagName("td")[i].innerHTML = " ";
+					}
+				}
+			},
+			error : function(e) {
+				console.log(e);	
+			}
+		});
 	});
 </script>
 <link rel="stylesheet" href="${root}/resources/css/attendance.css">
