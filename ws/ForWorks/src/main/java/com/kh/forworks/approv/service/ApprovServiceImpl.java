@@ -55,7 +55,41 @@ public class ApprovServiceImpl implements ApprovService {
 	@Override
 	public int insertApprovDoc(ApprovDocumentVo vo) {
 		// TODO Auto-generated method stub
-		return 0;
+		
+		int result = 1;
+		
+		int result1 = dao.insertApprovDoc(sst, vo);
+		
+		int adocNo = dao.selectDocNoOneByContent(sst, vo);
+		
+		
+		
+		vo.setAdocNo(String.valueOf(adocNo));
+		
+		result = result*result1;
+		
+		if(vo.getDocFile()!=null) {
+			result = result*dao.insertDocFile(sst, vo);
+		}
+		
+		if(vo.getApprovMember()!=null) {
+		int result2 = dao.insertDocApprove(sst, vo);
+		result = result*result2;
+		}
+		
+		if(vo.getCoopMember()!=null) {
+		int result3 = dao.insertDocCoop(sst, vo);
+		result = result*result3;
+		}
+		
+		if(vo.getReferMember()!=null) {
+		int result4 = dao.insertDocRefer(sst, vo);
+		result = result*result4;
+		}
+		
+		
+		
+		return result;
 	}
 
 	//전자문서 결재

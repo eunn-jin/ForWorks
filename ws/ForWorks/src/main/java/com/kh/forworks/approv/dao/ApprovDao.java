@@ -21,4 +21,22 @@ public interface ApprovDao {
 	//회원 목록 조회
 	List<MemberVo> selectMemberList(SqlSessionTemplate sst);
 
+	//결재문서 작성
+	int insertApprovDoc(SqlSessionTemplate sst, ApprovDocumentVo vo);
+
+	//작성된 문서 번호 가져오기
+	int selectDocNoOneByContent(SqlSessionTemplate sst, ApprovDocumentVo vo);
+
+	//전자결재자 삽입
+	int insertDocApprove(SqlSessionTemplate sst, ApprovDocumentVo vo);
+
+	//문서협조자 삽입	
+	int insertDocCoop(SqlSessionTemplate sst, ApprovDocumentVo vo);
+
+	//문서참조자 삽입	
+	int insertDocRefer(SqlSessionTemplate sst, ApprovDocumentVo vo);
+
+	//문서 첨부파일 삽입
+	int insertDocFile(SqlSessionTemplate sst, ApprovDocumentVo vo);
+
 }

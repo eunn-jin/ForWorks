@@ -17,6 +17,7 @@ public class ApprovDocumentVo {
 	private String noelecStatus;
 	private String fileName;
 	private String changeFileName;
+	private String savePath;
 	private MultipartFile docFile;
 	private List<String> approvMember;
 	private List<String> coopMember;
