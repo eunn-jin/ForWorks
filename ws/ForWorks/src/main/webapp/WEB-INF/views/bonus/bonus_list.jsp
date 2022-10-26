@@ -152,27 +152,7 @@
 				        
 				        </div>
 				        
-				        <div id="page-area">
-				            <a href=""><</a>
-				            <a href="">1</a>
-				            <a href="">2</a>
-				            <a href="">3</a>
-				            <a href="">4</a>
-				            <a href="">5</a>
-				            <a href="">></a>
-				        </div>
-				
-				        <div id="search-area">
-				            
-				            <form action="">
-				                <select name="" id="">
-				                    <option value="">발생월</option>
-				                </select>
-				                <input type="text">
-				                <input type="submit" value="검색">
-				            </form>
-				
-				        </div>
+				        <div style="height: 100px;"></div>
 				        
 				    </div>
 				
@@ -278,7 +258,6 @@
             type : "POST",
             data : {year : year},
             success : function(data){
-                alert(year + "년 상여금목록입니다.");
                 $('#center').empty();
                 console.log(data);
                 $('#center').append(

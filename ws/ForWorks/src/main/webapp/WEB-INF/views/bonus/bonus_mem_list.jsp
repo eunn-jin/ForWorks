@@ -224,6 +224,7 @@
                 data : {depart : depart},
                 success : function(result){
                     $('#emp').empty;
+                    console.log(result[0]);
                     for(var i = 0 ; i <result.length ; i++){
                         $('#emp').append(
                             '<option value='+result[i].empNo+'>'+result[i].empName+'</option>'

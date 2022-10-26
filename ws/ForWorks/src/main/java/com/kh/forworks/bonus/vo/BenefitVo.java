@@ -51,5 +51,6 @@ public class BenefitVo {
 	private String empNo;
 	private String cate;
 	private int amount;
+	private String upDate;
 	
 }
