@@ -44,14 +44,14 @@ table {
                             <table class="table table-striped">
                                 <tr>
                                     <td class="" style="width: 15%;"><label for="empNo" class="form-label">작성자</label> </td>
-                                    <td  style=" background : white;" style="width: 30%;">1</td>
+                                    <td  style=" background : white;" style="width: 30%;">${loginMember.empName}</td>
                                     <td style="width: 15%;"><label for="cmuRead" class="form-label">대상</label></td>
                                     <td  style="background: white; width: 30%;">
                                         
                                         <select name="cmuRead" id="cmuRead" class="form-select form-select-sm" aria-label=".form-select-sm example" style="width: auto;" >
                                             <option value="nu"  >대상을 선택해주세요</option>
                                             <option value="전체">전체</option>
-                                            <option value="my">_ _부서</option>
+                                            <option value="${loginMember.deptNo}">${dpvo.deptName}</option>
                                             
                                         </select>
                                     </td>

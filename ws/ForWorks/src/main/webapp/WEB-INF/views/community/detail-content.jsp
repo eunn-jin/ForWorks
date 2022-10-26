@@ -52,7 +52,7 @@ table {
                                 </tr>
                                 <tr>
                                     <td class="danger">제목</td>
-                                    <td colspan="3"><div>${cmuvo.cmuTitle}zzz</div></td>
+                                    <td colspan="3"><div>${cmuvo.cmuTitle}</div></td>
                                 </tr>
     
     
@@ -76,9 +76,9 @@ table {
                                         </div></td>
                                     </c:if>
                                 </tr>
-                            <div>${cmuvo}</div>
-                            <span>log::${loginMember.empName} </span><span>write::${cmuvo.empNo}</span> <span>num::${cmuvo.num}</span>
-                            <c:if test="${loginMember.empName eq cmuvo.empNo}">
+                            <!-- <div>${cmuvo}</div> -->
+                            
+                            <c:if test="${loginMember.empNo eq cmuvo.num}">
                                 <tr>
                                     <td colspan="4" class="text-end" style="border:none; background : white; ">
                                         <input type="hidden" name="num" value="">
