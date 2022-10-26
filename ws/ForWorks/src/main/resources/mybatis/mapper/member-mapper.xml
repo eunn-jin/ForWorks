@@ -38,7 +38,7 @@
 		WHERE EMP_ID = #{empId}
 	</select>
 	
-	<select id="selectOneById" resultType="com.kh.forworks.member.vo.MemberVo">
+	<select id="selectOneById" resultType="MemberVo">
 		SELECT 
 			E.EMP_NO
 			, E.OP_LEVEL

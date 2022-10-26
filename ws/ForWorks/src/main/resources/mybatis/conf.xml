@@ -20,5 +20,11 @@
 		<typeAlias type="com.kh.forworks.approv.vo.NoElecDocVo" alias="NoElecDocVo"/>
     	<typeAlias type="com.kh.forworks.attendance.vo.WorkVo" alias="WorkVo"/>
     	<typeAlias type="com.kh.forworks.attendance.vo.WorkTimeVo" alias="WorkTimeVo"/>
+    	
+    	<typeAlias type="com.kh.forworks.member.vo.MemberVo" alias="MemberVo"/>
+    	<typeAlias type="com.kh.forworks.address.vo.AddressVo" alias="AddressVo"/>
+    	<typeAlias type="com.kh.forworks.admin.vo.AdminVo" alias="AdminVo"/>
+    	<typeAlias type="com.kh.forworks.admin.vo.CorpInfoVo" alias="CorpInfoVo"/>
+    	
 	</typeAliases>
 </configuration>

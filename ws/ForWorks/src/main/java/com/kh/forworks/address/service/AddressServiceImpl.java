@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.forworks.PageVo;
 import com.kh.forworks.address.dao.AddressDao;
+import com.kh.forworks.address.vo.AddressVo;
 import com.kh.forworks.member.vo.MemberVo;
 
 @Service
@@ -27,14 +28,24 @@ public class AddressServiceImpl implements AddressService {
 	}
 	
 	@Override
-	public int selectListCnt() {
-		return addressDao.selectCountAll(sst);
+	public int editFavoriteMember(MemberVo vo, String stat) {
+		if ("insert".equals(stat)) {
+			return addressDao.insertFavoriteMember(sst, vo);
+		} else {
+			return addressDao.deleteFavoriteMember(sst, vo);
+		}
+	}
+	
+	@Override
+	public int selectListCnt(AddressVo addVo) {
+		return addressDao.selectCountAll(sst, addVo);
 	}
 
 	@Override
-	public List<MemberVo> addressAllList(PageVo pv) {
-		return addressDao.selectAllMember(sst, pv);
+	public List<MemberVo> addressAllList(PageVo pv, AddressVo addVo) {
+		return addressDao.selectAllMember(sst, pv, addVo);
 	}
+
 
 
 }

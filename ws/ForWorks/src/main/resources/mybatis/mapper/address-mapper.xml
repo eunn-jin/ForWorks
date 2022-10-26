@@ -7,14 +7,50 @@
 			SET STAT_NO = #{statNo}
 		WHERE EMP_NO = #{empNo}
 	</update>
+	
+	<insert id="insertBookmark">
+		INSERT INTO BOOKMARK (BM_NO, EMP_NO, BM_EMP_NO)
+		VALUES (SEQ_BOOKMARK_BM_NO.NEXTVAL, #{empNo}, #{bmEmpNo})
+	</insert>
+	
+	<delete id="deleteBookmark">
+		DELETE FROM BOOKMARK
+		WHERE EMP_NO = #{empNo} AND BM_EMP_NO = #{bmEmpNo}
+	</delete>
 
 	<select id="selectCountAll" resultType="int">
-		SELECT COUNT(EMP_NO)
-		FROM EMPLOYEE
-		WHERE EMP_STATUS = 'Y'
+		SELECT COUNT(E.EMP_NO)
+		FROM EMPLOYEE E
+		<choose>
+			<when test='#{nav} != null and "important".equals(nav)'>
+				LEFT JOIN BOOKMARK B
+					ON E.EMP_NO = B.BM_EMP_NO
+				WHERE B.EMP_NO = #{empNo}
+				AND E.EMP_STATUS = 'Y'
+			</when>
+			<when test='#{nav} != null and "dept".equals(nav)'>
+				LEFT JOIN DEPARTMENT D
+					ON E.DEPT_NO = D.DEPT_NO
+				WHERE E.DEPT_NO = #{deptNo}
+				AND E.EMP_STATUS = 'Y'
+			</when>
+			<otherwise>
+				WHERE E.EMP_STATUS = 'Y'
+			</otherwise>
+		</choose>
+		
+		<if test='#{keyword} != null'>
+			AND 
+			(
+			EMP_NAME LIKE '%' || #{keyword} || '%'
+			OR EMP_EMAIL LIKE '%' || #{keyword} || '%'
+			OR EMP_PHONE LIKE '%' || #{keyword} || '%'
+			)
+		</if>
+		
 	</select>
 	
-	<select id="selectAllMember" resultType="com.kh.forworks.member.vo.MemberVo">
+	<select id="selectAllMember" resultType="MemberVo">
 		SELECT 
 			E.EMP_NO
 			, E.EMP_NAME
@@ -37,6 +73,33 @@
 		LEFT JOIN BOOKMARK B
 			ON E.EMP_NO = B.BM_EMP_NO
 		WHERE E.EMP_STATUS = 'Y'
-		ORDER BY E.EMP_NAME ASC, E.POS_NO DESC
+		
+		<if test='#{nav} != null and "important".equals(nav)'>
+			AND B.EMP_NO = #{empNo}
+		</if>
+		<if test='#{nav} != null and "dept".equals(nav)'>
+			AND E.DEPT_NO = #{deptNo}
+		</if>
+		
+		<if test='#{keyword} != null'>
+			AND 
+			(
+			E.EMP_NAME LIKE '%' || #{keyword} || '%'
+			OR E.EMP_EMAIL LIKE '%' || #{keyword} || '%'
+			OR E.EMP_PHONE LIKE '%' || #{keyword} || '%'
+			)
+		</if>
+		
+		<choose>
+			<when test="#{sort} != null">
+				ORDER BY E.EMP_NAME ${order}, E.POS_NO ASC
+			</when>
+			<otherwise>
+				ORDER BY E.EMP_NAME ASC, E.POS_NO ASC
+			</otherwise>
+		</choose>
 	</select>
+	
+	
+	
 </mapper>
