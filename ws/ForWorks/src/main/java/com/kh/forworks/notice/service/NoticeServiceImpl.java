@@ -75,15 +75,18 @@ public class NoticeServiceImpl implements NoticeService{
 	
 	//공지사항 정보수정
 	@Override
-	public int edit(NoticeVo ntvo, NoticeAttachmentsVo ntatVo, String no) {
-		
+	public int edit(NoticeVo ntvo, NoticeAttachmentsVo ntatVo, NoticeAttachmentsVo ntatVocheck, String no) {
+		System.out.println(ntatVo);
+		System.out.println(ntatVocheck);
 		//공지사항 수정
 		int result = dao.editNt(sst, ntvo);
 		
 		int result2 =0;
 		//공지사항 파일 수정
-		if (ntatVo != null) {
+		if (ntatVo != null && ntatVocheck !=null) {
 			result2 = dao.editNtat(sst,ntatVo);
+		}else if(ntatVo != null && ntatVocheck ==null) {
+			result2 = dao.editNtatInsert(sst, ntatVo);
 		}
 		return result+result2;
 	}

@@ -44,9 +44,9 @@ public class CommunityController {
 			MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 			if (loginMember == null) {
 				session.setAttribute("toastMsg", "로그인이 필요합니다.");
-				return "member/login";
+				return "redirect:/login";
 			}else{
-				System.out.println("condition/key :: "+condition+"/" +keyword);
+				//System.out.println("condition/key :: "+condition+"/" +keyword);
 				//데이터 뭉치기
 				Map<String, String> map =  new HashMap<String, String>();
 				map.put("keyword", keyword);
@@ -58,6 +58,8 @@ public class CommunityController {
 				int totalCount = cmusv.selectTotalCount(map);
 				//페이징 처리
 				PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
+				//System.out.println(pv);
+				
 				//커뮤니티 리스트 가져오기
 				List<CommunityVo> cmuList = cmusv.selectList(pv, map);
 				//System.out.println(cmuList);
@@ -65,8 +67,11 @@ public class CommunityController {
 				//로그인한 사원의 부서에 대해서만
 				//커뮤니티 개수(해당부서)
 				int ttCntDp = cmusv.selectDp(map);
+				//System.out.println("부서커뮤글갯수"+ttCntDp); ok
 				PageVo pvdp = Pagination.getPageVo(ttCntDp, pno, 5, 10);
+				//System.out.println("dp"+pvdp);
 				List<CommunityVo> cmudpList = cmusv.selectListdp(pvdp,map);
+				//System.out.println(cmudpList); 
 				
 				if (cmuList != null && cmudpList != null) {
 					model.addAttribute("cmuList",cmuList);
@@ -103,7 +108,7 @@ public class CommunityController {
 			//System.out.println("커뮤::"+cmuvo);
 	        MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 	        
-			cmuvo.setEmpNo(loginMember.getBmEmpNo());
+			cmuvo.setEmpNo(loginMember.getEmpNo());
 			cmuvo.setCmuRead(loginMember.getDeptNo());
 			
 			//파일 유무 확인
@@ -116,7 +121,7 @@ public class CommunityController {
 				cmatVo.setCmatChange(changeName);
 				cmatVo.setCmatOrigin(originName);
 				cmatVo.setCmatPath(savePath);
-				System.out.println("공지파일::"+cmatVo);
+				//System.out.println("공지파일::"+cmatVo);
 			}else {cmatVo=null;}
 			
 			//db 공지사항 저장
@@ -163,11 +168,11 @@ public class CommunityController {
 		public String update(@PathVariable String no, Model model) {
 			//db 공지사항 조회
 			CommunityVo cmuvo  = cmusv.selectOne(no);
-			System.out.println(cmusv);
+			//System.out.println(cmusv);
 			
 			//첨부파일 확인
 			CommunityAttachmentsVo cmatVo = cmusv.checkFile(no);
-			System.out.println("파일 확인::"+cmatVo);
+			//System.out.println("파일 확인::"+cmatVo);
 			
 			model.addAttribute("cmuvo", cmuvo);
 			model.addAttribute("cmatVo", cmatVo);
@@ -178,24 +183,26 @@ public class CommunityController {
 		@PostMapping("update/{no}")
 		public String update(@PathVariable String no, CommunityVo cmuvo, CommunityAttachmentsVo cmatVo, HttpServletRequest req, Model model, HttpSession session) {
 			cmuvo.setCmuNo(no);
-			cmatVo.setCmatNo(no);
+			cmatVo.setCmuNo(no);
 			//System.out.println(ntvo);
 			//System.out.println(ntatVo);
 			
 			//정보수정
 			
 			//기존 파일 삭제
-			String savePath = req.getServletContext().getRealPath("/resources/upload/notice/");
+			String savePath = req.getServletContext().getRealPath("/resources/upload/commu/");
 			//MemberVo loginMember = (MemberVo)(session.getAttribute("loginMember"));
 			
 			//첨부파일 확인
-			cmatVo = cmusv.checkFile(no);
+			CommunityAttachmentsVo cmatVoCheck = cmusv.checkFile(no);
 			//System.out.println("파일 확인(정보수정post)::"+ntatVo);
 			
-			String fileName = cmatVo.getCmatOrigin();
-			File f =  new File(savePath +  fileName);
-			if(f.exists()) { //파일 존재하는지 확인
-				f.delete();
+			if (cmatVo != null) {
+				String fileName = cmatVo.getCmatOrigin();
+				File f =  new File(savePath +  fileName);
+				if(f.exists()) { //파일 존재하는지 확인
+					f.delete();
+				}
 			}
 			
 			//파일 유무 확인
@@ -210,10 +217,10 @@ public class CommunityController {
 				//System.out.println("공지파일::"+ntatVo);
 			}else {cmatVo=null;}
 			
-			int result = cmusv.edit(cmuvo, cmatVo, no);
+			int result = cmusv.edit(cmuvo, cmatVo,cmatVoCheck, no);
 			if (result==1 || result ==2) {
-				session.setAttribute("alertMsg", "커뮤니티글 수정 성공!");
-				return "redirect:/community/list/1";
+				session.setAttribute("toastMsg", "커뮤니티글 수정 성공!");
+				return "redirect:/community/detail/"+no;
 				
 			}else {return"redirect:/error";}
 		}

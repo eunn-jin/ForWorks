@@ -102,7 +102,7 @@ tr>th:hover{
 
 
 
-<script>
+<script> ee
 	$(function() {
 		$('#table-main>tbody>tr').click(function() {
 			//행 클릭 되었을때, 동작할 내용

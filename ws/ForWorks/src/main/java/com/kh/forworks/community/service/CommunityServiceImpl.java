@@ -78,15 +78,17 @@ public class CommunityServiceImpl implements CommunityService{
 	
 	//커뮤글 수정
 	@Override
-	public int edit(CommunityVo cmuvo, CommunityAttachmentsVo cmatVo, String no) {
+	public int edit(CommunityVo cmuvo, CommunityAttachmentsVo cmatVo,CommunityAttachmentsVo cmatVoCheck, String no) {
 		
 		//글 수정
 		int result1 = dao.editCm(sst, cmuvo);
 		
 		//파일수정
 		int result2 = 0;
-		if (cmatVo != null) {
+		if (cmatVo != null && cmatVoCheck != null) {
 			result2 = dao.editCmat(sst, cmatVo);
+		}else if(cmatVo != null && cmatVoCheck == null){
+			result2 = dao.editCmatInsert(sst, cmatVo);
 		}
 		return result1 + result2;
 	}

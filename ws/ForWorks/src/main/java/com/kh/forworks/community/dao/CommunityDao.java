@@ -35,12 +35,15 @@ public interface CommunityDao {
 	int editCm(SqlSessionTemplate sst, CommunityVo cmuvo);
 	//파일 수정
 	int editCmat(SqlSessionTemplate sst, CommunityAttachmentsVo cmatVo);
+	//파일 등록(기존 파일이 없을때)
+	int editCmatInsert(SqlSessionTemplate sst, CommunityAttachmentsVo cmatVo);
 	
 	//커뮤 글삭제
 	int delete(SqlSessionTemplate sst, String no);
 	
 	//로그인 유저 부서정보 가져오기
 	DepartmentVo logDp(SqlSessionTemplate sst, String dpNo);
+	
 	
 	
 

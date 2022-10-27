@@ -75,7 +75,7 @@ table {
 
                                 <tr>
                                     <td style="width:10%;">선택<br>파일</td>
-                                    <td style="width:40%; background: white;"><img id="notice_img" src="" alt=""></td>
+                                    <td style="width:40%; background: white;"><img id="notice_img" src="" alt="" width="128px" height="128px"></td>
 
                                     <td style="width:10%;">등록<br>파일</td>
                                     <td style="width:40%; background: white;">

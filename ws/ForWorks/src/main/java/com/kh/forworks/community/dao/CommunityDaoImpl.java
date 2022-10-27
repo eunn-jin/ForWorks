@@ -77,6 +77,11 @@ public class CommunityDaoImpl implements CommunityDao{
 	public int editCmat(SqlSessionTemplate sst, CommunityAttachmentsVo cmatVo) {
 		return sst.update("communityMapper.editCmat", cmatVo);
 	}
+	//파일 등록(기존 파일이 없을때)
+	@Override
+	public int editCmatInsert(SqlSessionTemplate sst, CommunityAttachmentsVo cmatVo) {
+		return sst.insert("communityMapper.editCmatInsert",cmatVo);
+	}
 	
 	//커뮤 글삭제
 	@Override
@@ -89,6 +94,7 @@ public class CommunityDaoImpl implements CommunityDao{
 	public DepartmentVo logDp(SqlSessionTemplate sst, String dpNo) {
 		return sst.selectOne("communityMapper.logDp",dpNo);
 	}
+
 
 
 }

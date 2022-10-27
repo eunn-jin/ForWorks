@@ -34,12 +34,16 @@ public interface NoticeDao {
 	int editNt(SqlSessionTemplate sst, NoticeVo ntvo);
 	//공지사항 파일수정
 	int editNtat(SqlSessionTemplate sst, NoticeAttachmentsVo ntatVo);
+	//공지사항 수정(파일 등록)
+	int editNtatInsert(SqlSessionTemplate sst, NoticeAttachmentsVo ntatVo);
 
 	//공지사항 삭제
 	int delete(SqlSessionTemplate sst, String no);
 	
 	//부서 정보 가져오기
 	List<DepartmentVo> selectAlldp(SqlSessionTemplate sst);
+
+	
 
 
 }

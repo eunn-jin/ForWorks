@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class CommunityVo {
-	
+	private String rownum;
 	private String cmuNo;
 	private String empNo;
 	private String cmuTitle;

@@ -42,7 +42,7 @@ public class NoticeController {
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 		if (loginMember == null) {
 			session.setAttribute("toastMsg", "로그인이 필요합니다.");
-			return "member/login";
+			return "redirect:/login";
 		}else{
 		
 		//공지사항 전체 갯수
@@ -81,7 +81,7 @@ public class NoticeController {
 	//공지사항 작성
 	@PostMapping("write")
 	public String write(NoticeVo ntvo, NoticeAttachmentsVo ntatVo ,HttpServletRequest req,Model model ,HttpSession session) {
-		System.out.println("공지::"+ntvo);
+		//System.out.println("공지::"+ntvo);
 		
 		
         MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
@@ -97,12 +97,8 @@ public class NoticeController {
 			ntatVo.setNtatChange(changeName);
 			ntatVo.setNtatOrigin(originName);
 			ntatVo.setNtatPath(savePath);
-			System.out.println("공지파일::"+ntatVo);
+			//System.out.println("공지파일::"+ntatVo);
 		}else {ntatVo=null;}
-		
-		if (ntatVo != null) {
-			System.out.println("파일있음");
-		}
 		
 		//db 공지사항 저장
 		int result = nts.insertNotice(ntvo, ntatVo);
@@ -151,8 +147,9 @@ public class NoticeController {
 		
 		//첨부파일 확인
 		NoticeAttachmentsVo ntatVo = nts.checkFile(no);
-		System.out.println("파일 확인::"+ntatVo);
-		System.out.println(ntvo);
+		//System.out.println("파일 확인::"+ntatVo);
+		//System.out.println(ntvo);
+		//System.out.println(ntvo.deptNum);
 		
 		model.addAttribute("ntvo", ntvo);
 		model.addAttribute("ntatVo", ntatVo);
@@ -175,14 +172,16 @@ public class NoticeController {
 		//MemberVo loginMember = (MemberVo)(session.getAttribute("loginMember"));
 		
 		//첨부파일 확인
-		ntatVo = nts.checkFile(no);
-		System.out.println("파일 확인(정보수정post)::"+ntatVo);
+		NoticeAttachmentsVo ntatVocheck = nts.checkFile(no);
+		//System.out.println("파일 확인(정보수정post)::"+ntatVocheck);
 		
+		//해당 게시글의 첨부파일이있으면 삭제
 		if (ntatVo != null) {
 			String fileName = ntatVo.getNtatOrigin();
 			File f =  new File(savePath +  fileName);
 			if(f.exists()) { //파일 존재하는지 확인
 				f.delete();
+				//System.out.println("첨부파일(공지) 삭제완료");
 			}
 		}
 		
@@ -193,7 +192,9 @@ public class NoticeController {
 			//파일 있음
 			//파일 업로드 후 저장된 파일명 얻기 
 			String changeName = FileUploader.fileUpload(ntvo.getNtFileName(), savePath);
+			//System.out.println(changeName);
 			String originName = ntvo.getNtFileName().getOriginalFilename();
+			//System.out.println(originName);
 			ntatVo.setNtatChange(changeName);
 			ntatVo.setNtatOrigin(originName);
 			ntatVo.setNtatPath(savePath);
@@ -201,10 +202,11 @@ public class NoticeController {
 		}else {ntatVo=null;}
 		
 		//공지사항 정보수정
-		int result = nts.edit(ntvo, ntatVo, no);
+		//수정시 기존 파일이있으면 update, 없으면 insert 
+		int result = nts.edit(ntvo, ntatVo,ntatVocheck, no);
 		if (result ==1 || result ==2) {
-			session.setAttribute("alertMsg", "공지사항 수정 성공!");
-			return "redirect:/notice/list/"+no;
+			session.setAttribute("toastMsg", "공지사항 수정 성공!");
+			return "redirect:/notice/detail/"+no;
 			
 		}else {return"redirect:/error";}
 		

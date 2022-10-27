@@ -73,7 +73,8 @@
 	
 	<select id="selectListdp" resultType="com.kh.forworks.community.vo.CommunityVo">
 		SELECT
-			C.CMU_NO
+			ROWNUM
+			,C.CMU_NO
 			,C.CMU_TITLE
 			,C.CMU_CONTENT
 			,C.CMU_ENROLL_DATE
@@ -177,6 +178,13 @@
 			,CMAT_UPLOAD	= SYSDATE
 		WHERE CMU_NO = #{cmuNo}		
 	</update>
+	
+	<insert id="editCmatInsert">
+		INSERT INTO COMMUNITY_ATTACHMENTS
+		(CMAT_NO, CMAT_CHANGE, CMAT_ORIGIN, CMAT_PATH, CMU_NO)
+		VALUES
+		(SEQ_CMUATTACHMENTS_CMUATNO.NEXTVAL, #{cmatChange}, #{cmatOrigin}, #{cmatPath}, #{cmuNo})	
+	</insert>
 	
 	<update id="delete">
 		UPDATE COMMUNITY SET

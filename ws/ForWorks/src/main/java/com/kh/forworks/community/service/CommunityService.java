@@ -26,7 +26,7 @@ public interface CommunityService {
 	CommunityAttachmentsVo checkFile(String no);
 	
 	//커뮤글 수정
-	int edit(CommunityVo cmuvo, CommunityAttachmentsVo cmatVo, String no);
+	int edit(CommunityVo cmuvo, CommunityAttachmentsVo cmatVo, CommunityAttachmentsVo cmatVoCheck, String no);
 
 	//커뮤글 삭제
 	int delete(String no);

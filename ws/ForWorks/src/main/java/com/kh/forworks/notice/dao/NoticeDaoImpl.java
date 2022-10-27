@@ -64,10 +64,15 @@ public class NoticeDaoImpl implements NoticeDao{
 		return sst.update("noticeMapper.editNt",ntvo);
 	}
 	
-	//공지사항파일 수정
+	//공지사항파일 수정(파일)
 	@Override
 	public int editNtat(SqlSessionTemplate sst, NoticeAttachmentsVo ntatVo) {
 		return sst.update("noticeMapper.editNtat",ntatVo);
+	}
+	//공지사항 수정(파일등록)
+	@Override
+	public int editNtatInsert(SqlSessionTemplate sst, NoticeAttachmentsVo ntatVo) {
+		return sst.insert("noticeMapper.editNtatInsert",ntatVo);
 	}
 
 	//공지사항 삭제
@@ -81,6 +86,8 @@ public class NoticeDaoImpl implements NoticeDao{
 	public List<DepartmentVo> selectAlldp(SqlSessionTemplate sst) {
 		return sst.selectList("noticeMapper.selectAlldp");
 	}
+	
+
 
 
 

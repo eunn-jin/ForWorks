@@ -108,6 +108,14 @@
 		
 	</update>
 	
+	<insert id="editNtatInsert">
+		INSERT INTO NOTICE_ATTACHMENTS
+		(NTAT_NO, NTAT_CHANGE, NTAT_ORIGIN, NTAT_PATH, NTNO)
+		VALUES
+		(SEQ_NTATTACHMENTS_NTATNO.NEXTVAL, #{ntatChange}, #{ntatOrigin}, #{ntatPath}, #{ntno})		
+	</insert>
+	
+	
 	<update id="delete">
 		UPDATE NOTICE SET
 			NT_STATUS = 'Y'
