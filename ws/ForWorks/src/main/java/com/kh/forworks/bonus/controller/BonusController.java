@@ -29,9 +29,9 @@ public class BonusController {
 		this.bs = bs;
 	}
 	
-	//»ó¿©±İÆÄÆ®
+	//ìƒì—¬ê¸ˆíŒŒíŠ¸
 	
-	//»ó¿©±İ¸ñ·ÏÁ¶È¸(È­¸é)
+	//ìƒì—¬ê¸ˆëª©ë¡ì¡°íšŒ(í™”ë©´)
 	@GetMapping("list")
 	public String list(Model model) {
 		List<BonusVo> voList = bs.bonusList();
@@ -39,7 +39,7 @@ public class BonusController {
 		return "bonus/bonus_list";
 	}
 	
-	//»ó¿©±İ ÇØ´ç Á÷¿ø¸ñ·ÏÁ¶È¸
+	//ìƒì—¬ê¸ˆ í•´ë‹¹ ì§ì›ëª©ë¡ì¡°íšŒ
 	@GetMapping("memList/{no}")
 	public String memlist(@PathVariable String no , Model model) {
 		List departList = bs.selectDepartList();
@@ -51,7 +51,7 @@ public class BonusController {
 		return "bonus/bonus_mem_list";
 	}
 	
-	//³âµµº° »ó¿©±İ Á¶È¸
+	//ë…„ë„ë³„ ìƒì—¬ê¸ˆ ì¡°íšŒ
 	@PostMapping(value="yearList" , produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public String yearList(String year) {
@@ -60,7 +60,7 @@ public class BonusController {
 		Gson g = new Gson();
 		return g.toJson(voList);
 	}
-	//»ó¿©±İ µî·Ïajax
+	//ìƒì—¬ê¸ˆ ë“±ë¡ajax
 	@PostMapping("add")
 	@ResponseBody
 	public String add(BonusVo bv) {
@@ -68,26 +68,26 @@ public class BonusController {
 		int result = bs.addBonus(bv);
 		return ""+result;
 	}
-	//»ó¿©±İ ÇØ´ç »ç¿ø µî·Ïajax
+	//ìƒì—¬ê¸ˆ í•´ë‹¹ ì‚¬ì› ë“±ë¡ajax
 	@PostMapping("addEmp")
 	@ResponseBody
 	public String addEmp(BonusMemVo bmv) {
-		System.out.println("Ã³À½ º¸³½ µ¥ÀÌÅÍ :" + bmv);
+		System.out.println("ì²˜ìŒ ë³´ë‚¸ ë°ì´í„° :" + bmv);
 		if(bmv.getRate() != 0) {;
 			int pay = bs.calc(bmv);
 			bmv.setPayment(pay);
 		}
-		System.out.println("°è»êµÈ ÈÄ µ¥ÀÌÅÍ :" +bmv);
+		System.out.println("ê³„ì‚°ëœ í›„ ë°ì´í„° :" +bmv);
 		int result = bs.addEmp(bmv);
 		return ""+result;
 	}
 	
 	
-	///////////////////////////¼ö´çÆÄÆ®
+	///////////////////////////ìˆ˜ë‹¹íŒŒíŠ¸
 	
 	
 	
-	//¼ö´ç°ü¸® Á÷¿ø¸®½ºÆ® ÆäÀÌÁö
+	//ìˆ˜ë‹¹ê´€ë¦¬ ì§ì›ë¦¬ìŠ¤íŠ¸ í˜ì´ì§€
 	@GetMapping("benefit")
 	public String benefit(Model model) {
 		List departList = bs.selectDepartList();
@@ -95,44 +95,44 @@ public class BonusController {
 		model.addAttribute("departList",departList);
 		return "bonus/benefit_list";
 	}
-	//¼ö´çÃß°¡
+	//ìˆ˜ë‹¹ì¶”ê°€
 	@PostMapping("addBenefit")
 	@ResponseBody
 	public String addBenefit(String title) {
-		System.out.println("ajax·Î ³Ñ¾î¿Â title ::" + title);
+		System.out.println("ajaxë¡œ ë„˜ì–´ì˜¨ title ::" + title);
 		int result = bs.insertBenefit(title);
 		return ""+result;
 	}
-	//ºÎ¼­º°  Á÷¿øÁ¶È¸
+	//ë¶€ì„œë³„  ì§ì›ì¡°íšŒ
 	@PostMapping(value="selectEmp",produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public String selectEmp(String depart, Model model) {
 		List<MemberVo> result = bs.selectEmp(depart);
 		Gson g = new Gson();
 		return g.toJson(result);
-		//1. GSON ¶óÀÌºê·¯¸®
-		//2. g = new Gson() °´Ã¼ »ı¼º
-		//3. g.toJson(µ¥ÀÌÅÍ);
+		//1. GSON ë¼ì´ë¸ŒëŸ¬ë¦¬
+		//2. g = new Gson() ê°ì²´ ìƒì„±
+		//3. g.toJson(ë°ì´í„°);
 	}
 	
-	//Á÷¿øº° ¼ö´çÁ¤º¸Á¶È¸
+	//ì§ì›ë³„ ìˆ˜ë‹¹ì •ë³´ì¡°íšŒ
 	@GetMapping("detail/{no}")
 	public String detail(@PathVariable String no,Model model ) {
-		//¼ö´çÄ«Å×°í¸® Á¶È¸
+		//ìˆ˜ë‹¹ì¹´í…Œê³ ë¦¬ ì¡°íšŒ
 		List benefitList = bs.selectList();
 		model.addAttribute("benefitList",benefitList);
 		
 		List<BenefitVo> bv = bs.selectOne(no);
 		model.addAttribute("benefitVo",bv);
 		model.addAttribute("empNo",no);
-		System.out.println("Ãâ·Â"+bv);
+		System.out.println("ì¶œë ¥"+bv);
 		return "bonus/benefit_list_detail";
 	}
 	
-	//Á÷¿øº° ¼ö´çÁ¤º¸¼öÁ¤
+	//ì§ì›ë³„ ìˆ˜ë‹¹ì •ë³´ìˆ˜ì •
 	@PostMapping("detail/edit")
 	public String detail(Model model, BenefitVo vo) {
-		System.out.println("¼öÁ¤µÈ Á¤º¸ Àßµé¾î¿È?" + vo);
+		System.out.println("ìˆ˜ì •ëœ ì •ë³´ ì˜ë“¤ì–´ì˜´?" + vo);
 		List<BenefitVo> updateBenefit = bs.edit(vo);
 		model.addAttribute("BenefitVo", updateBenefit);
 		return "redirect:/bonus/detail/" + vo.getEmpNo();

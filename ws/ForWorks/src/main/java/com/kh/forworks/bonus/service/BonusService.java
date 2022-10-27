@@ -10,30 +10,30 @@ import com.kh.forworks.bonus.vo.BonusVo;
 
 public interface BonusService {
 	
-	//¼ö´çÃß°¡
+	//ìˆ˜ë‹¹ì¶”ê°€
 	int insertBenefit(String title);
-	//¼ö´ç¸ñ·ÏÁ¶È¸
+	//ìˆ˜ë‹¹ëª©ë¡ì¡°íšŒ
 	List selectList();
-	//ºÎ¼­Á¶È¸
+	//ë¶€ì„œì¡°íšŒ
 	List selectDepartList();
-	//ºÎ¼­º° »ç¿ø¸ñ·Ï
+	//ë¶€ì„œë³„ ì‚¬ì›ëª©ë¡
 	List selectEmp(String depart);
-	//¹Ş¾Æ¿Â È¸¿ø¹øÈ£ Á÷¿øÀÇ ¼ö´çÁ¶È¸
+	//ë°›ì•„ì˜¨ íšŒì›ë²ˆí˜¸ ì§ì›ì˜ ìˆ˜ë‹¹ì¡°íšŒ
 	List<BenefitVo> selectOne(String no);
-	//¼ö´ç ¼öÁ¤
+	//ìˆ˜ë‹¹ ìˆ˜ì •
 	List<BenefitVo> edit(BenefitVo vo);
 	
-	//»ó¿©±İ ¸ñ·ÏÁ¶È¸(È­¸é)
+	//ìƒì—¬ê¸ˆ ëª©ë¡ì¡°íšŒ(í™”ë©´)
 	List<BonusVo> bonusList();
-	//»ó¿©±İ µî·Ï ajax
+	//ìƒì—¬ê¸ˆ ë“±ë¡ ajax
 	int addBonus(BonusVo bv);
-	//³âµµº° »ó¿©±İ Á¶È¸
+	//ë…„ë„ë³„ ìƒì—¬ê¸ˆ ì¡°íšŒ
 	List<BonusVo> bonusYearList(String year);
-	//»ó¿©±İ ÇØ´çÁ÷¿øÁ¶È¸
+	//ìƒì—¬ê¸ˆ í•´ë‹¹ì§ì›ì¡°íšŒ
 	List<BonusMemVo> memList(String no);
-	//»ó¿©±İ ÇØ´çÁ÷¿ø Ãß°¡
+	//ìƒì—¬ê¸ˆ í•´ë‹¹ì§ì› ì¶”ê°€
 	int addEmp(BonusMemVo bmv);
-	//Áö±ŞÀ² ÀÔ·Â½Ã Áö±Ş¾×°è»ê
+	//ì§€ê¸‰ìœ¨ ì…ë ¥ì‹œ ì§€ê¸‰ì•¡ê³„ì‚°
 	int calc(BonusMemVo bmv);
 	
 }

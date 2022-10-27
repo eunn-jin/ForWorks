@@ -23,34 +23,34 @@ public class BonusServiceImpl implements BonusService {
 		this.sst = sst;
 	}
 
-	//¼ö´çÄ«Å×Ãß°¡
+	//ìˆ˜ë‹¹ì¹´í…Œì¶”ê°€
 	@Override
 	public int insertBenefit(String title) {
 		System.out.println(title);
 		return dao.insertBenefit(sst,title);
 	}
-	//¼ö´ç¸ñ·ÏÁ¶È¸
+	//ìˆ˜ë‹¹ëª©ë¡ì¡°íšŒ
 	@Override
 	public List selectList() {
 		return dao.selectBenefit(sst);
 	}
-	//ºÎ¼­Á¶È¸
+	//ë¶€ì„œì¡°íšŒ
 	@Override
 	public List selectDepartList() {
 		return dao.selectDepart(sst);
 	}
-	//ºÎ¼­º° »ç¿øÁ¶È¸
+	//ë¶€ì„œë³„ ì‚¬ì›ì¡°íšŒ
 	@Override
 	public List selectEmp(String depart) {
 		return dao.selectEmp(sst , depart);
 	}
 	
-	//¹Ş¾Æ¿Â È¸¿ø¹øÈ£ Á÷¿øÀÇ ¼ö´çÁ¶È¸
+	//ë°›ì•„ì˜¨ íšŒì›ë²ˆí˜¸ ì§ì›ì˜ ìˆ˜ë‹¹ì¡°íšŒ
 	@Override
 	public List<BenefitVo> selectOne(String no) {
 		return dao.selectOne(sst, no);
 	}
-	//¼ö´ç ¼öÁ¤
+	//ìˆ˜ë‹¹ ìˆ˜ì •
 	@Override
 	public List<BenefitVo> edit(BenefitVo vo) {
 		int result = 0;
@@ -63,45 +63,45 @@ public class BonusServiceImpl implements BonusService {
 		List<BenefitVo> updatedBenefit = null;
 		if(result ==1 ) {
 			updatedBenefit = this.selectOne(vo.getEmpNo());
-			System.out.println("¼öÁ¤ ÈÄ vo ::: " + updatedBenefit);
+			System.out.println("ìˆ˜ì • í›„ vo ::: " + updatedBenefit);
 		}
 		return updatedBenefit; 
 	}
 	
 	
-	//»ó¿©±İÆÄÆ®
+	//ìƒì—¬ê¸ˆíŒŒíŠ¸
 	
-	//»ó¿©±İ ¸ñ·ÏÁ¶È¸(È­¸é)
+	//ìƒì—¬ê¸ˆ ëª©ë¡ì¡°íšŒ(í™”ë©´)
 	@Override
 	public List<BonusVo> bonusList() {
 		return dao.selectList(sst);
 	}
 	
-	//»ó¿©±İ µî·Ïajax
+	//ìƒì—¬ê¸ˆ ë“±ë¡ajax
 	@Override
 	public int addBonus(BonusVo bv) {
 		return dao.insertBonus(sst, bv);
 	}
-	//³âµµº° »ó¿©±İÁ¶È¸
+	//ë…„ë„ë³„ ìƒì—¬ê¸ˆì¡°íšŒ
 	@Override
 	public List<BonusVo> bonusYearList(String year) {
 		return dao.selectYearList(sst,year);
 	}
-	//»ó¿©±İ ÇØ´ç Á÷¿øÁ¶È¸
+	//ìƒì—¬ê¸ˆ í•´ë‹¹ ì§ì›ì¡°íšŒ
 	@Override
 	public List<BonusMemVo> memList(String no) {
 		return dao.selectMem(sst, no);
 	}
-	//»ó¿©±İ ÇØ´ç Á÷¿ø Ãß°¡
+	//ìƒì—¬ê¸ˆ í•´ë‹¹ ì§ì› ì¶”ê°€
 	@Override
 	public int addEmp(BonusMemVo bmv) {
 		System.out.println(bmv);
 		return dao.insertAddEmp(sst,bmv);
 	}
-	//Áö±ŞÀ² ÀÔ·Â½Ã Áö±Ş¾× °è»ê
+	//ì§€ê¸‰ìœ¨ ì…ë ¥ì‹œ ì§€ê¸‰ì•¡ ê³„ì‚°
 	@Override
 	public int calc(BonusMemVo bmv) {
-		System.out.println("Ã³À½ µé¾î¿Â µ¥ÀÌÅÍ Áß Áö±ŞÀ²" + bmv.getRate());
+		System.out.println("ì²˜ìŒ ë“¤ì–´ì˜¨ ë°ì´í„° ì¤‘ ì§€ê¸‰ìœ¨" + bmv.getRate());
 		return dao.selectCalc(sst, bmv);
 	}
 	

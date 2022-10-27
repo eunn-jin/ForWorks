@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.kh.forworks.bonus.vo.BonusVo;
 import com.kh.forworks.member.vo.MemberVo;
 import com.kh.forworks.salary.service.SalaryService;
+import com.kh.forworks.salary.vo.SalaryVo;
 
 @Controller
 @RequestMapping("salary")
@@ -24,22 +26,22 @@ public class SalaryController {
 	public SalaryController(SalaryService ss) {
 		this.ss = ss;
 	}
-	//±Ş¿©°ü¸®ÀÚ ¸ŞÀÎÈ­¸é
+	//ê¸‰ì—¬ê´€ë¦¬ì ë©”ì¸(í™”ë©´)
 	@GetMapping("main")
 	public String main() {
 		return "salary/sal_main";
 	}
-	//±Ş¿©´ëÀå ¸ñ·Ï È­¸é
+	//ê¸‰ì—¬ëŒ€ì¥ëª©ë¡ (í™”ë©´)
 	@GetMapping("list")
 	public String list() {
 		return "salary/sal_list";
 	}
-	//±Ş¿©¸í¼¼¼­ È­¸é
+	//ê¸‰ì—¬ëª…ì„¸ì„œ(í™”ë©´)
 	@GetMapping("payslip")
 	public String payslip() {
 		return "salary/payslip";
 	}
-	//±Ş¿©´ëÀå ÀÛ¼º È­¸é
+	//ê¸‰ì—¬ëŒ€ì¥ì‘ì„±(í™”ë©´)
 	@GetMapping("write")
 	public String write(Model model) {
 		List departList = ss.selectDepartList();
@@ -47,7 +49,7 @@ public class SalaryController {
 		System.out.println(departList);
 		return "salary/sal_write";
 	}
-	//ºÎ¼­º° Á÷¿øÁ¶È¸
+	//ë¶€ì„œë³„ ì§ì›ì¡°íšŒ
 	@PostMapping(value="selectEmp",produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public String selectEmp(String depart, Model model) {
@@ -55,4 +57,40 @@ public class SalaryController {
 		Gson g = new Gson();
 		return g.toJson(result);
 	}
+	
+	//ê¸‰ì—¬ëŒ€ì¥ì‘ì„± - ìƒì—¬ê¸ˆ ë¶ˆëŸ¬ì˜¤ê¸°
+	@PostMapping(value="empBonus",produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String empBonus(SalaryVo sv) {
+		//í•´ë‹¹ì§ì› ë‚ ì§œ ì‚¬ì´ ìƒì—¬ê¸ˆ ì¡°íšŒ
+		List<BonusVo> result = ss.selectBonus(sv);
+		Gson g = new Gson();
+		return g.toJson(result);
+	}
+	
+	//ê¸‰ì—¬ëŒ€ì¥ì‘ì„± - ì´ˆê³¼ìˆ˜ë‹¹ ì¡°íšŒ
+	@PostMapping(value="addBenefit",produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String addBenefit(SalaryVo sv) {
+		List<SalaryVo> result = ss.selectAddBenefit(sv);
+		return "";
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
