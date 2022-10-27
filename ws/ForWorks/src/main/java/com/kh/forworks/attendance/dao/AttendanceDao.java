@@ -15,7 +15,9 @@ public interface AttendanceDao {
 	int selectMonthWork(SqlSessionTemplate sst, int empNo);
 	
 	int insertInTime(SqlSessionTemplate sst, Map map);
-	int updateOutTime(SqlSessionTemplate sst, WorkTimeVo workTime);
+	int updateOutTime(SqlSessionTemplate sst, Map<String, Object> map);
+	int updateOverTime(SqlSessionTemplate sst, Map<String, Object> map);
+	int updateStatus(SqlSessionTemplate sst, Map<String, Object> map);
 	
 	WorkVo selectDayWorkInfo(SqlSessionTemplate sst, Map<String, Object> map);
 

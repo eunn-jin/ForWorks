@@ -56,17 +56,27 @@ public class AttendanceDaoImpl implements AttendanceDao {
 	}
 
 	@Override
-	public int updateOutTime(SqlSessionTemplate sst, WorkTimeVo workTime) {
-		return sst.update("attendanceMapper.updateOutTime", workTime);
-	}
-
-	@Override
 	public WorkVo selectDayWorkInfo(SqlSessionTemplate sst, Map<String, Object> map) {
 		if(sst.selectOne("attendanceMapper.selectDayWorkInfo", map) == null) {
 			return new WorkVo();
 		} else {			
 			return sst.selectOne("attendanceMapper.selectDayWorkInfo", map);
 		}
+	}
+
+	@Override
+	public int updateOutTime(SqlSessionTemplate sst, Map<String, Object> map) {
+		return sst.update("attendanceMapper.updateOutTime", map);
+	}
+
+	@Override
+	public int updateOverTime(SqlSessionTemplate sst, Map<String, Object> map) {
+		return sst.update("attendanceMapper.updateOverTime", map);
+	}
+
+	@Override
+	public int updateStatus(SqlSessionTemplate sst, Map<String, Object> map) {
+		return sst.update("attendanceMapper.updateStatus", map);
 	}
 
 }
