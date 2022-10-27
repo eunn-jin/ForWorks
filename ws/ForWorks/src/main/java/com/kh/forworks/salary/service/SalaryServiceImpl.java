@@ -6,7 +6,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.forworks.bonus.vo.BonusVo;
 import com.kh.forworks.salary.dao.SalaryDao;
+import com.kh.forworks.salary.vo.SalaryVo;
 
 @Service
 public class SalaryServiceImpl implements SalaryService{
@@ -20,15 +22,25 @@ public class SalaryServiceImpl implements SalaryService{
 		this.sst = sst;
 	}
 
-	//�μ���ȸ
+	//부서조회
 	@Override
 	public List selectDepartList() {
 		return dao.selectDepart(sst);
 	}
-	//�μ��� �����ȸ
+	//부서별 사원조회
 	@Override
 	public List selectEmp(String depart) {
 		return dao.selectEmp(sst , depart);
+	}
+	//직원,날짜기준 보너스 조회
+	@Override
+	public List<BonusVo> selectBonus(SalaryVo sv) {
+		return dao.selectBonus(sst, sv);
+	}
+	//초과수당조회
+	@Override
+	public List<SalaryVo> selectAddBenefit(SalaryVo sv) {
+		return dao.selectAddBenefit(sst, sv);
 	}
 		
 	

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="salaryMapper">
+  
+  <select id="selectBonus" resultType="BonusVo">
+  	SELECT 
+  		P.EMP_NO AS EMP_NO, P.RATE, P.PAYMENT,B.TITLE, B.B_DATE, B.CONTENT 
+  	FROM 
+  		B_PAYINFO P 
+  	JOIN B_INFO B ON B.NO = P.B_INFO_NO 
+  	WHERE 
+  		TO_DATE(B_DATE,'YY/MM/DD') BETWEEN TO_DATE(#{startMonth},'YY/MM/DD') AND TO_DATE(#{endMonth},'YY/MM/DD')
+  </select>
+  
+  <select id="selectBenefit">
+
+  </select>
+  
+</mapper>

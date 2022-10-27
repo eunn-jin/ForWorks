@@ -13,79 +13,79 @@ import com.kh.forworks.member.vo.MemberVo;
 @Repository
 public class BonusDaoImpl implements BonusDao {
 
-	//¼ö´çÃß°¡
+	//ìˆ˜ë‹¹ì¶”ê°€
 	@Override
 	public int insertBenefit(SqlSessionTemplate sst, String title) {
 		return sst.insert("bonusMapper.addBenefit" , title);
 	}
-	//¼ö´ç¸ñ·ÏÁ¶È¸
+	//ìˆ˜ë‹¹ëª©ë¡ì¡°íšŒ
 	@Override
 	public List selectBenefit(SqlSessionTemplate sst) {
 		return sst.selectList("bonusMapper.selectBenefit");
 	}
-	//ºÎ¼­Á¶È¸
+	//ë¶€ì„œì¡°íšŒ
 	@Override
 	public List selectDepart(SqlSessionTemplate sst) {
 		return sst.selectList("bonusMapper.selectDepart");
 	}
-	//ºÎ¼­º° »ç¿øÁ¶È¸
+	//ë¶€ì„œë³„ ì‚¬ì›ì¡°íšŒ
 	@Override
 	public List selectEmp(SqlSessionTemplate sst , String depart) {
 		return sst.selectList("bonusMapper.selectEmp" , depart);
 	}
-	//¹Ş¾Æ¿Â È¸¿ø¹øÈ£ Á÷¿øÀÇ ¼ö´çÁ¶È¸
+	//ë°›ì•„ì˜¨ íšŒì›ë²ˆí˜¸ ì§ì›ì˜ ìˆ˜ë‹¹ì¡°íšŒ
 	@Override
 	public List<BenefitVo> selectOne(SqlSessionTemplate sst, String no) {
 		return sst.selectList("bonusMapper.selectOne" , no);
 	}
-	//¼ö´ç¼öÁ¤
+	//ìˆ˜ë‹¹ìˆ˜ì •
 	@Override
 	public int updateOne(SqlSessionTemplate sst, BenefitVo vo) {
 		return sst.update("bonusMapper.updateOne" , vo);
 	}
-	//Á÷¿øÀÇ ¼ö´çÁ¤º¸µî·Ï
+	//ì§ì›ì˜ ìˆ˜ë‹¹ì •ë³´ë“±ë¡
 	@Override
 	public int insertBenefitEmp(SqlSessionTemplate sst, BenefitVo vo) {
 		return sst.insert("bonusMapper.insertBenefit" , vo);
 	}
 	
-	//»ó¿©±İÆÄÆ®
+	//ìƒì—¬ê¸ˆíŒŒíŠ¸
 	
-	//»ó¿©±İ ¸ñ·ÏÁ¶È¸(È­¸é)
+	//ìƒì—¬ê¸ˆ ëª©ë¡ì¡°íšŒ(í™”ë©´)
 	@Override
 	public List<BonusVo> selectList(SqlSessionTemplate sst) {
 		return sst.selectList("bonusMapper.bonusList");
 	}
-	//»ó¿©±İ µî·Ï ajax
+	//ìƒì—¬ê¸ˆ ë“±ë¡ ajax
 	@Override
 	public int insertBonus(SqlSessionTemplate sst,BonusVo bv) {
 		return sst.insert("bonusMapper.insertBonus" , bv);
 	}
-	//³âµµº° »ó¿©±İ Á¶È¸
+	//ë…„ë„ë³„ ìƒì—¬ê¸ˆ ì¡°íšŒ
 	@Override
 	public List<BonusVo> selectYearList(SqlSessionTemplate sst, String year) {
 		return sst.selectList("bonusMapper.selectYearList" , year);
 	}
-	//»ó¿©±İ ÇØ´ç Á÷¿øÁ¶È¸
+	//ìƒì—¬ê¸ˆ í•´ë‹¹ ì§ì›ì¡°íšŒ
 	@Override
 	public List<BonusMemVo> selectMem(SqlSessionTemplate sst, String no) {
 		return sst.selectList("bonusMapper.selectMemList", no);
 	}
-	//»ó¿©±İ ÇØ´ç Á÷¿øÃß°¡
+	//ìƒì—¬ê¸ˆ í•´ë‹¹ ì§ì›ì¶”ê°€
 	@Override
 	public int insertAddEmp(SqlSessionTemplate sst, BonusMemVo bmv) {
-		System.out.println("dao¿¡¼­ bmv" + bmv);
+		System.out.println("daoì—ì„œ bmv" + bmv);
 		int result = sst.insert("bonusMapper.insertAddEmp" , bmv);
 		System.out.println(result);
 		return result;
 	}
-	//Áö±ŞÀ² ÀÔ·Â½Ã Áö±Ş¾×°è»ê
+	//ì§€ê¸‰ìœ¨ ì…ë ¥ì‹œ ì§€ê¸‰ì•¡ê³„ì‚°
 	@Override
 	public int selectCalc(SqlSessionTemplate sst,BonusMemVo bmv) {
-		System.out.println("µé¾î¿Â Áö±ŞÀ² DAO : "+ bmv.getRate());
-		System.out.println("µé¾î¿Â Á÷¿ø¹øÈ£ DAO : "+bmv.getEmpNo());
+		System.out.println("ë“¤ì–´ì˜¨ ì§€ê¸‰ìœ¨ DAO : "+ bmv.getRate());
+		System.out.println("ë“¤ì–´ì˜¨ ì§ì›ë²ˆí˜¸ DAO : "+bmv.getEmpNo());
 		int result = sst.selectOne("bonusMapper.selectCalc", bmv);
-		System.out.println("°è»êµÈ °ª" + result);
+		System.out.println("ê³„ì‚°ëœ ê°’" + result);
 		return result;
 	}
 

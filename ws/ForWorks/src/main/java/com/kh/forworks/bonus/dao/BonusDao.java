@@ -10,32 +10,32 @@ import com.kh.forworks.bonus.vo.BonusVo;
 
 public interface BonusDao {
 	
-	//¼ö´çÃß°¡
+	//ìˆ˜ë‹¹ì¶”ê°€
 	int insertBenefit(SqlSessionTemplate sst, String title);
-	//¼ö´ç¸ñ·ÏÁ¶È¸
+	//ìˆ˜ë‹¹ëª©ë¡ì¡°íšŒ
 	List selectBenefit(SqlSessionTemplate sst);
-	//ºÎ¼­Á¶È¸
+	//ë¶€ì„œì¡°íšŒ
 	List selectDepart(SqlSessionTemplate sst);
-	//ºÎ¼­º° »ç¿øÁ¶È¸
+	//ë¶€ì„œë³„ ì‚¬ì›ì¡°íšŒ
 	List selectEmp(SqlSessionTemplate sst, String depart);
-	//¹Ş¾Æ¿Â È¸¿ø¹øÈ£ Á÷¿øÀÇ ¼ö´çÁ¶È¸
+	//ë°›ì•„ì˜¨ íšŒì›ë²ˆí˜¸ ì§ì›ì˜ ìˆ˜ë‹¹ì¡°íšŒ
 	List<BenefitVo> selectOne(SqlSessionTemplate sst, String no);
-	//¼ö´ç¼öÁ¤
+	//ìˆ˜ë‹¹ìˆ˜ì •
 	int updateOne(SqlSessionTemplate sst, BenefitVo vo);
-	//Á÷¿øÀÇ ¼ö´ç³»¿ªµî·Ï
+	//ì§ì›ì˜ ìˆ˜ë‹¹ë‚´ì—­ë“±ë¡
 	int insertBenefitEmp(SqlSessionTemplate sst, BenefitVo vo);
 
-	//»ó¿©±İ ¸ñ·ÏÁ¶È¸(È­¸é)
+	//ìƒì—¬ê¸ˆ ëª©ë¡ì¡°íšŒ(í™”ë©´)
 	List<BonusVo> selectList(SqlSessionTemplate sst);
-	//»ó¿©±İ µî·Ï ajax
+	//ìƒì—¬ê¸ˆ ë“±ë¡ ajax
 	int insertBonus(SqlSessionTemplate sst, BonusVo bv);
-	//³âµµº° »ó¿©±İ Á¶È¸
+	//ë…„ë„ë³„ ìƒì—¬ê¸ˆ ì¡°íšŒ
 	List<BonusVo> selectYearList(SqlSessionTemplate sst, String year);
-	//»ó¿©±İ ÇØ´ç Á÷¿øÁ¶È¸
+	//ìƒì—¬ê¸ˆ í•´ë‹¹ ì§ì›ì¡°íšŒ
 	List<BonusMemVo> selectMem(SqlSessionTemplate sst, String no);
-	//»ó¿©±İ ÇØ´ç Á÷¿øÃß°¡
+	//ìƒì—¬ê¸ˆ í•´ë‹¹ ì§ì›ì¶”ê°€
 	int insertAddEmp(SqlSessionTemplate sst, BonusMemVo bmv);
-	//Áö±ŞÀ² ÀÔ·Â½Ã Áö±Ş¾× °è»ê
+	//ì§€ê¸‰ìœ¨ ì…ë ¥ì‹œ ì§€ê¸‰ì•¡ ê³„ì‚°
 	int selectCalc(SqlSessionTemplate sst,BonusMemVo bmv);
 
 }
