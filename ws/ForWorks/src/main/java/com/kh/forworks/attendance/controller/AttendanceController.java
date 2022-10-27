@@ -46,18 +46,14 @@ public class AttendanceController {
 		String day = getToday();
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("empNo", 1);
+		map.put("empNo", empNo);
 		map.put("day", day);
-		
-		System.out.println(map.get("day"));
-		
+				
 		WorkTimeVo workTime = service.getWorkInfo(empNo);
 		WorkVo work = service.getDayWorkInfo(map);
 		
 		model.addAttribute("workTime", workTime);
 		model.addAttribute("work", work);
-		
-		System.out.println("test :: " + work);
 		
 		return "attendance/dayAttendance";
 	}
@@ -85,7 +81,7 @@ public class AttendanceController {
 		String day = getToday();
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("empNo", 1);
+		map.put("empNo", empNo);
 		map.put("day", day);
 		
 		int result = service.goWork(map);
@@ -100,14 +96,14 @@ public class AttendanceController {
 	
 	@GetMapping("outWork/{no}")
 	public String outWork(@PathVariable int no) {
-		//TODO:no 값을 로그인멤버 no 로 받아오기
+		//TODO:empNo 값을 로그인멤버로 받아오기
 		int empNo = 1;
 		
-		WorkTimeVo workTime = new WorkTimeVo();
-		workTime.setNo(no);
-		workTime.setEmpNo(empNo);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("no", no);
+		map.put("empNo", empNo);
 		
-		int result = service.outWork(workTime);
+		int result = service.outWork(map);
 		
 		if(result == 1) {
 			return "redirect:/att/day";			
@@ -117,7 +113,6 @@ public class AttendanceController {
 		}
 	}
 	
-//	@PostMapping(value = "dayWorkInfo", produces = "application/json; charset=UTF-8")
 	@PostMapping("dayWorkInfo")
 	@ResponseBody
 	public WorkVo dayWorkInfo(String date) {
@@ -126,11 +121,10 @@ public class AttendanceController {
 		int empNo = 1;
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("empNo", 1);
+		map.put("empNo", empNo);
 		map.put("day", date);
 		
-		WorkVo work = service.getDayWorkInfo(map);		
-		System.out.println("test :: " + work);
+		WorkVo work = service.getDayWorkInfo(map);
 		
 		return work;
 	}

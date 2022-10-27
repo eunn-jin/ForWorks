@@ -14,6 +14,26 @@
 			AND OUT_TIME IS NULL
 	</update>
 	
+	<update id="updateOverTime">
+		UPDATE WORK SET OVER_TIME =
+			(SELECT NVL(TRUNC((TO_DATE(TO_CHAR(OUT_TIME, 'HH24:MI'), 'HH24:MI') - TO_DATE(DO_TIME, 'HH24:MI')) * 24 * 60), 0)
+			        FROM (SELECT OUT_TIME FROM WORK WHERE EMP_NO = #{empNo} AND NO = #{no})
+			        ,(SELECT OUT_TIME AS DO_TIME FROM WORK_TYPE WHERE END_DAY IS NULL AND DEPT_NO = (SELECT DEPT_NO FROM EMPLOYEE WHERE EMP_NO = #{empNo}))
+			)
+		WHERE NO = #{no}
+	</update>
+
+	<update id="updateStatus">
+		UPDATE WORK SET STATUS_CODE =
+			( SELECT CASE WHEN OVER_TIME <![CDATA[<=]]> -60 THEN 3
+		            WHEN OVER_TIME <![CDATA[>=]]> 60 THEN 6
+		            ELSE 2 END
+		     FROM WORK
+		     WHERE EMP_NO = #{empNo} AND NO = #{no}
+			)
+		WHERE NO = #{no}
+	</update>
+	
 	<select id="selectInOutTime" resultType="WorkTimeVo">
 		SELECT NO, EMP_NO, NVL(TO_CHAR(IN_TIME, 'HH24:MI'), '미등록') AS IN_TIME, NVL(TO_CHAR(OUT_TIME, 'HH24:MI'), '미등록') AS OUT_TIME 
 		FROM WORK 
@@ -45,7 +65,7 @@
 	
 	<select id="selectDayWorkInfo" resultType="WorkVo" parameterType="Map">
 		SELECT 
-		    NO, NAME AS STATUS_NAME, 
+		    NO, NAME AS STATUS_NAME, NVL(OVER_TIME, 0) AS OVER_TIME,
 		    NVL(TO_CHAR(IN_TIME, 'HH24:MI'), 0) AS IN_TIME, 
 		    NVL(TO_CHAR(OUT_TIME, 'HH24:MI'), 0) AS OUT_TIME,
 		    NVL(TRUNC((OUT_TIME - IN_TIME) * 24 * 60), 0) AS WORK_TIME, 
@@ -53,10 +73,9 @@
 		    NVL(TRUNC((TO_DATE(DO_TIME, 'HH24:MI') - TO_DATE(TO_CHAR(OUT_TIME, 'HH24:MI'),'HH24:MI')) * 24 * 60), 0) AS EARLYOUT_TIME
 		FROM 
 		    (SELECT * 
-		        FROM (SELECT W.NO, W.STATUS_CODE, W.EMP_NO, E.EMP_NAME, W.IN_TIME, W.OUT_TIME 
-		        		FROM WORK W JOIN EMPLOYEE E ON W.EMP_NO = E.EMP_NO 
-		        		WHERE W.EMP_NO = #{empNo} AND TO_CHAR(W.IN_TIME, 'YYYY-MM-DD') = #{day})
+		        FROM (SELECT NO, STATUS_CODE, IN_TIME, OUT_TIME, OVER_TIME FROM WORK WHERE EMP_NO = #{empNo} AND TO_CHAR(IN_TIME, 'YYYY-MM-DD') = #{day})
 		        JOIN WORK_STATUS S ON STATUS_CODE = S.CODE),
+		    (SELECT EMP_NAME FROM EMPLOYEE WHERE EMP_NO = #{empNo}),
 		    (SELECT IN_TIME AS DI_TIME, OUT_TIME AS DO_TIME FROM WORK_TYPE WHERE END_DAY IS NULL AND DEPT_NO = (SELECT DEPT_NO FROM EMPLOYEE WHERE EMP_NO = #{empNo}))
 	</select>
 	

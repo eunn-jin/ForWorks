@@ -5,6 +5,7 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.forworks.attendance.dao.AttendanceDao;
 import com.kh.forworks.attendance.vo.WorkTimeVo;
@@ -38,9 +39,9 @@ public class AttendanceServiceImpl implements AttendanceService {
 		wvo.setDayWork(day);
 		wvo.setWeekWork(week); 
 		wvo.setMonthWork(month);
-		
-		System.out.println("getWorkInfo :: " + wvo + ", " + day);
 				
+		System.out.println(wvo +"/" + week + "/" + month);
+		
 		return wvo;
 	}
 
@@ -55,8 +56,16 @@ public class AttendanceServiceImpl implements AttendanceService {
 	}
 
 	@Override
-	public int outWork(WorkTimeVo workTime) {
-		return dao.updateOutTime(sst, workTime);
+	@Transactional
+	public int outWork(Map<String, Object> map) {
+		
+		int result1, result2, result3;
+		
+		result1 = dao.updateOutTime(sst, map);
+		result2 = dao.updateOverTime(sst, map);
+		result3 = dao.updateStatus(sst, map);
+		
+		return result1 * result2 * result3;
 	}
 
 }

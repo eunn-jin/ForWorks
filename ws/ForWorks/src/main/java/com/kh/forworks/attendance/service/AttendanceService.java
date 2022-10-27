@@ -11,7 +11,7 @@ public interface AttendanceService {
 	WorkVo getDayWorkInfo(Map<String, Object> map);
 
 	int goWork(Map map);
-	int outWork(WorkTimeVo workTime);
+	int outWork(Map<String, Object> map);
 
 
 }
