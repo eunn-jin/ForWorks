@@ -3,6 +3,7 @@ package com.kh.forworks.approv.service;
 import java.util.List;
 
 import com.kh.forworks.approv.vo.ApprovDocumentVo;
+import com.kh.forworks.approv.vo.DocApprovVo;
 import com.kh.forworks.approv.vo.DocFormVo;
 import com.kh.forworks.member.vo.MemberVo;
 
@@ -20,11 +21,14 @@ public interface ApprovService {
 	
 	//전자문서 작성
 	int insertApprovDoc(ApprovDocumentVo vo);
-	
-	//전자문서 결재
-	int updateApprov(String dno);
-	
+		
 	//회원 목록 조회
 	List<MemberVo> selectMemberList();
+	
+	//비전자문서 작성
+	int insertApprovNoElecDoc(ApprovDocumentVo vo);
+	
+	//결재 or 반려
+	int updateApprov(DocApprovVo vo);
 
 }

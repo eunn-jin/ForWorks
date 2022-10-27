@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>문서 작성</title>
+<title>문서 수정</title>
 
 <style>
 
@@ -229,7 +229,7 @@
             
             <div id="main-wrap">
 
-                <div id="main-header">문서 작성</div>
+                <div id="main-header">문서 수정</div>
 
                     <div class="approv-main">
 

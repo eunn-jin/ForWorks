@@ -219,7 +219,7 @@
     
 </head>
 <body>
-<button%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <div id="wrap">
 
 
@@ -265,7 +265,8 @@
 
 
                         <div class="btn-area">
-                            <button class="approv-btn">뒤로가기</button>
+                        	<button type="button" class="approv-btn" onclick="location.href='${root}/approv/create/noelec'" style="font-size: 20px;">비전자문서 작성</button>
+                            <button type="button" class="approv-btn" onclick="location.href='${root}/approv/main'">뒤로가기</button>
                             <button class="approv-btn">작성하기</button>
                         </div>
                     

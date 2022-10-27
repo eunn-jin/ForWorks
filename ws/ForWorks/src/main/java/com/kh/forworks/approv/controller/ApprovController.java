@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.forworks.FileUploader;
 import com.kh.forworks.approv.service.ApprovService;
 import com.kh.forworks.approv.vo.ApprovDocumentVo;
+import com.kh.forworks.approv.vo.DocApprovVo;
 import com.kh.forworks.approv.vo.DocFormVo;
 import com.kh.forworks.approv.vo.DocSignVo;
 import com.kh.forworks.member.vo.MemberVo;
@@ -63,7 +65,7 @@ public class ApprovController {
 //		return null;
 		
 		if(vo.getDocFile()!=null && !vo.getDocFile().isEmpty()) {
-			String savePath = req.getServletContext().getRealPath("/resources/upload/doc/");
+			String savePath = req.getServletContext().getRealPath("/resources/upload/approv/doc/");
 			vo.setFileName(vo.getDocFile().getOriginalFilename());
 			
 			vo.setSavePath(savePath);
@@ -87,15 +89,60 @@ public class ApprovController {
 		
 	}
 	
+	@GetMapping("create/noelec")
+	public String createNoElec(HttpServletRequest req, HttpSession session) {
+		
+		if(session.getAttribute("loginMember")==null) {
+			return "redirect:/login";
+		}
+		
+		return "approv/no-elec-doc-create";
+	}
+	
+	@PostMapping("create/noelec")
+	public String createNoElec(ApprovDocumentVo vo, HttpSession session, HttpServletRequest req) {
+	
+		if(vo.getDocFile()!=null && !vo.getDocFile().isEmpty()) {
+			String savePath = req.getServletContext().getRealPath("/resources/upload/approv/noelecdoc/");
+			vo.setFileName(vo.getDocFile().getOriginalFilename());
+			
+			vo.setSavePath(savePath);
+			
+			String changeName = FileUploader.fileUpload(vo.getDocFile(), savePath); 
+			
+			vo.setChangeFileName(changeName);
+		}
+		
+		MemberVo memberVo = (MemberVo) session.getAttribute("loginMember");
+		
+		vo.setEmpNo(memberVo.getEmpNo());
+		
+		int result = service.insertApprovNoElecDoc(vo);
+		
+		if(result==1) {
+			return "redirect:/approv/main";
+		}else {
+			return "redirect:/";
+		}
+		
+	}
+	
 	@GetMapping("detail")
 	public String detail() {
 		return "approv/approv-detail";
 	}
 	
 	@PostMapping("detail/{dno}")
-	public String detail(@PathVariable String dno) {
+	public String detail(@PathVariable String dno, DocApprovVo vo, HttpSession session, @RequestParam String approv ) {
 		
-		int result = service.updateApprov(dno);
+		vo.setAdocNo(dno);
+		MemberVo memberVo = (MemberVo) session.getAttribute("loginMember");
+		vo.setEmpNo(memberVo.getEmpNo());
+		vo.setApproveStatus(approv);
+		
+		int result = service.updateApprov(vo);
+		
+		//TODO 결제구현 db에서 직위를 포함한 호출, 나보다 낮은 직위가 결재했거나 내가 제일 낮은 직위일경우 보이게
 		
 		if(result==1) {
 			return "redirect:/approv/main";

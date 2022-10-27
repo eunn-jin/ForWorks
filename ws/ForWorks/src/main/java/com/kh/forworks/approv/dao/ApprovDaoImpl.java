@@ -76,7 +76,21 @@ public class ApprovDaoImpl implements ApprovDao {
 	@Override
 	public int insertDocFile(SqlSessionTemplate sst, ApprovDocumentVo vo) {
 		// TODO Auto-generated method stub
-		return sst.insert("approvMapper.insertDocRefer",vo);
+		return sst.insert("approvMapper.insertDocFile",vo);
+	}
+	
+	//비전자문서 파일 삽입
+	@Override
+	public int insertNoElecDoc(SqlSessionTemplate sst, ApprovDocumentVo vo) {
+		// TODO Auto-generated method stub
+		return sst.insert("approvMapper.insertNoElecDoc", vo);
+	}
+	
+	//비전자문서 삽입
+	@Override
+	public int insertNoElecApprovDoc(SqlSessionTemplate sst, ApprovDocumentVo vo) {
+		// TODO Auto-generated method stub
+		return sst.insert("approvMapper.insertNoElecApprovDoc", vo);
 	}
 
 	

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="approvMapper">
 	
-	<select id="selectMemberList" resultType="com.kh.forworks.member.vo.MemberVo">
+	<select id="selectMemberList" resultType="MemberVo">
 		SELECT 
 			E.EMP_NO
 			, E.EMP_NAME
@@ -112,6 +112,43 @@
 			#{savePath}
 		)	
 	</insert>
+	
+	<insert id="insertNoElecApprovDoc">
+		INSERT INTO APPROVEDOCUMENT
+		(
+			ADOC_NO,
+			ADOC_NAME,
+			ADOC_CONTENT,
+			EMP_NO,
+			DRAFT_DATE
+		)
+		VALUES
+		(
+			SEQ_APPROVEDOCUMENT_NO.nextval,
+			#{adocName},
+			'비전자문서',
+			#{empNo},
+			SYSDATE
+		)
+	</insert>
+	
+	<insert id="insertNoElecDoc">
+		INSERT INTO NOELECDOC
+		(
+			NOELEC_NO,
+			ADOC_NO,
+			NOELEC_ORIGIN_NAME,
+			NOELEC_CHANGE_NAME
+		)
+		VALUES
+		(
+			SEQ_NOELECDOC_NO.nextval,
+			SEQ_APPROVEDOCUMENT_NO.currval,
+			#{fileName},
+			#{changeFileName}
+		)
+	</insert>
+	
 	
 	
 	
