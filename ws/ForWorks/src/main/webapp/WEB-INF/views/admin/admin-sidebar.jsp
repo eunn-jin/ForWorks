@@ -84,7 +84,7 @@
           </a>
           <ul class="submenu active pl-15">
             <li class="submenu-item">
-              <a href="${root}/foradmin/member">구성원 조회</a>
+              <a href="${root}/foradmin/member/1">구성원 조회</a>
             </li>
             <li class="submenu-item">
               <a href="${root}/foradmin/approval">구성원 승인</a>

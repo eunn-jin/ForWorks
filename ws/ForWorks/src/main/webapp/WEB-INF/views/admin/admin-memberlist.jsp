@@ -52,7 +52,7 @@
               <div class="col-12 col-md-6 order-md-2 order-first p-4 pb-2">
                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                   <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="${root}/foradmin/member">구성원 설정</a></li>
+                    <li class="breadcrumb-item"><a href="${root}/foradmin/member/1">구성원 설정</a></li>
                     <li class="breadcrumb-item active" aria-current="page">구성원 조회</li>
                   </ol>
                 </nav>
@@ -60,23 +60,16 @@
             </div>
           </div>
           <section class="section">
-            <div class="card">
-              <div class="card-header">
-                <h4 class="card-title mb-0">전체 구성원</h4>
-              </div>
-              <div class="card-body">
-				<div class="content-right" style="width: 100%">
-              <div class="email-app-area">
-                <!-- Email list Area -->
-                <div class="email-app-list-wrapper">
-                  <div class="email-app-list">
-                    <div class="email-action">
-                      <!-- action right start here -->
-                      <div class="action-right d-flex flex-grow-1 align-items-center justify-content-around">
-                        <!-- search bar  -->
-                        <div class="email-fixed-search flex-grow-1">
+            <div class="card" style="min-height: 700px;">
+              <div class="card-header m-0 p-4 pt-3">
+                	<div class="mt-4">
+                		<h5>구성원 조회</h5>
+                	</div>
+                   	<div class="d-flex align-items-center justify-content-between">
+                   		<!-- search bar  -->
+                        <div class="email-fixed-search flex-grow-1 mt-2">
                           <div class="form-group position-relative mb-0 has-icon-left">
-                            <input type="text" class="form-control" placeholder="검색 .." style="max-width: 600px" />
+                            <input name="keyword" type="text" class="form-control" placeholder="이름 또는 연락처 검색" style="max-width: 600px; width: 60%" />
                             <div class="form-control-icon">
                               <svg class="bi" width="1.5em" height="1.5em" fill="currentColor">
                                 <use xlink:href="${root}/resources/vendors/bootstrap-icons/bootstrap-icons.svg#search" />
@@ -84,188 +77,71 @@
                             </div>
                           </div>
                         </div>
-                        <!-- pagination and page count -->
-                        <div class="d-flex pagination">
-                        	<span class="d-none d-sm-block">1-15 of 653</span>
-                        	<button class="btn btn-sm btn-outline-primary btn-icon email-pagination-prev d-none d-sm-block">&lt;</button>
-                        	<button class="btn btn-sm btn-outline-primary btn-icon email-pagination-next d-none d-sm-block">&gt;</button>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- / action right -->
-                    <div class="card  mt-2">
-                      <div class="card-body">
-                        <table class="table" id="member-table">
-                          <thead>
-                            <tr>
-                              <th>이름</th>
-                              <th>직급</th>
-                              <th>부서</th>
-                              <th>전화번호</th>
-                              <th>이메일</th>
-                              <th>내선번호</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr data-bs-toggle="modal" data-bs-target="#modalMemberEdit">
-                              <td>Graiden</td>
-                              <td>Offenburg</td>
-                              <td>Offenburg</td>
-                              <td>076 4820 8838</td>
-                              <td>vehicula.aliquet@semco.co.uk</td>
-                              <td>
-                                <span class="badge bg-success">Active</span>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Graiden</td>
-                              <td>New Quay</td>
-                              <td>New Quay</td>
-                              <td>0500 527693</td>
-                              <td>fringilla.euismod.enim@quam.ca</td>
-                              <td>
-                                <span class="badge bg-success">Active</span>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Graiden</td>
-                              <td>GrumoAppula</td>
-                              <td>GrumoAppula</td>
-                              <td>(012165) 76278</td>
-                              <td>mi.Duis@diam.edu</td>
-                              <td>
-                                <span class="badge bg-danger">Inactive</span>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Graiden</td>
-                              <td>Ways</td>
-                              <td>Ways</td>
-                              <td>0309 690 7871</td>
-                              <td>velit@nec.com</td>
-                              <td>
-                                <span class="badge bg-success">Active</span>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Graiden</td>
-                              <td>Rossignol</td>
-                              <td>Rossignol</td>
-                              <td>0500 441046</td>
-                              <td>rhoncus.id@Aliquamau.net</td>
-                              <td>
-                                <span class="badge bg-success">Active</span>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Kermit</td>
-                              <td>Patna</td>
-                              <td>Patna</td>
-                              <td>(01653) 27844</td>
-                              <td>diam.Sed.diam@anteViv.org</td>
-                              <td>
-                                <span class="badge bg-success">Active</span>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Jermaine</td>
-                              <td>Mold</td>
-                              <td>Mold</td>
-                              <td>0800 528324</td>
-                              <td>sodales@nuncsit.org</td>
-                              <td>
-                                <span class="badge bg-success">Active</span>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Ferdinand</td>
-                              <td>Marlborough</td>
-                              <td>Marlborough</td>
-                              <td>(016977) 4107</td>
-                              <td>gravida.molestie@tincidunt.org</td>
-                              <td>
-                                <span class="badge bg-danger">Inactive</span>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Kuame</td>
-                              <td>Tresigallo</td>
-                              <td>Tresigallo</td>
-                              <td>(0151) 561 8896</td>
-                              <td>Quisque.purus@mauris.org</td>
-                              <td>
-                                <span class="badge bg-success">Active</span>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Deacon</td>
-                              <td>Karapınar</td>
-                              <td>Karapınar</td>
-                              <td>07740 599321</td>
-                              <td>Duis.a.mi@sociisnatoque.com</td>
-                              <td>
-                                <span class="badge bg-success">Active</span>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Channing</td>
-                              <td>Warrnambool</td>
-                              <td>Warrnambool</td>
-                              <td>0845 46 49</td>
-                              <td>tempor.bibendum.Donec@ornarel.ca</td>
-                              <td>
-                                <span class="badge bg-success">Active</span>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Aladdin</td>
-                              <td>Bothey</td>
-                              <td>Bothey</td>
-                              <td>0800 1111</td>
-                              <td>sem.ut@pellentesquea.ca</td>
-                              <td>
-                                <span class="badge bg-success">Active</span>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Cruz</td>
-                              <td>Shikarpur</td>
-                              <td>Shikarpur</td>
-                              <td>07624 944915</td>
-                              <td>non@quisturpisvitae.ca</td>
-                              <td>
-                                <span class="badge bg-success">Active</span>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Keegan</td>
-                              <td>Assen</td>
-                              <td>Assen</td>
-                              <td>0800 200103</td>
-                              <td>molestie.dapibus@condimentum.edu</td>
-                              <td>
-                                <span class="badge bg-success">Active</span>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Keegan</td>
-                              <td>Assen</td>
-                              <td>Assen</td>
-                              <td>0800 200103</td>
-                              <td>molestie.dapibus@condimentum.edu</td>
-                              <td>
-                                <span class="badge bg-success">Active</span>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
+                   		<!-- pagination and page count -->
+                   		<div class="d-flex align-items-center">
+                   			<c:choose>
+                    			<c:when test="${(pv.currentPage eq pv.maxPage) or (pv.listCount lt 10)}">
+                        <span class="d-none d-sm-block" style="margin: 0 10px">${pv.currentPage*pv.boardLimit - (pv.boardLimit-1)}-${pv.listCount} of ${pv.listCount}</span>
+                    			</c:when>
+                    			<c:otherwise>
+                        <span class="d-none d-sm-block" style="margin: 0 10px">${pv.currentPage*pv.boardLimit - (pv.boardLimit-1)}-${pv.currentPage * pv.boardLimit} of ${pv.listCount}</span>
+                    			</c:otherwise>
+                   			</c:choose>
+                     	<c:if test="${pv.currentPage ne 1}">
+                       <a href="${root}/foradmin/member/${(pv.currentPage) - 1}" class="btn btn-sm btn-outline-primary btn-icon email-pagination-prev d-none d-sm-block" style="margin-right: 5px">&lt;</a>
+                     	</c:if>
+                     	<c:if test="${pv.currentPage ne pv.maxPage}">
+                      	<a href="${root}/foradmin/member/${(pv.currentPage) + 1}" class="btn btn-sm btn-outline-primary btn-icon email-pagination-next d-none d-sm-block"style="margin-right: 5px">&gt;</a>
+                     	</c:if>
+                  	</div>
                   </div>
-                </div>
-              </div>
-            </div>
-			</div>
+               	</div>
+                   <div class="card-body" style="padding-left: 20px">
+                 <div>
+                         <table class="table" id="member-table" style="text-align: center">
+                           <thead>
+                             <tr>
+                               <th></th>
+                               <th>
+                               	<c:choose>
+                               		<c:when test="${addressParam.order eq 'desc'}">
+	                        			<a href="${root}/foradmin/member/1?sort=name&order=asc">이름</a>
+                                 		<svg id="orderUpIcon" class="mb-1" width="0.8em" height="0.8em">
+	                            			<use xlink:href="${root}/resources/vendors/bootstrap-icons/bootstrap-icons.svg#arrow-up"></use>
+	                        			</svg>
+                               		</c:when>
+                               		<c:otherwise>
+                                 		<a href="${root}/foradmin/member/1?sort=name&order=desc">이름</a>
+	                                 	<svg id="orderDownIcon" class="mb-1" width="0.8em" height="0.8em">
+				                            <use xlink:href="${root}/resources/vendors/bootstrap-icons/bootstrap-icons.svg#arrow-down"></use>
+				                        </svg>
+                               		</c:otherwise>
+                               	</c:choose>
+                               </th>
+                               <th>부서</th>
+                               <th>직급</th>
+                               <th>전화번호</th>
+                               <th>이메일</th>
+                               <th>내선번호</th>
+                             </tr>
+                           </thead>
+                           <tbody>
+                             	<c:forEach items="${memberList}" var="l">
+	                              <tr id="emp${l.empNo}" onclick="EditMemberPopup(this)" style="height: 50px">
+	                              	<td></td>
+	                              	<td style="display:none">${l.empNo}</td>
+	                                <td>${l.empName}</td>
+	                                <td>${l.deptName}</td>
+	                                <td>${l.posName}</td>
+	                                <td>${l.empPhone}</td>
+	                                <td>${l.empEmail}</td>
+	                                <td>${l.empExphone}</td>
+	                              </tr>
+                             	</c:forEach>
+                           </tbody>
+                         </table>
+                         </div>
+                     </div>
             </div>
           </section>
         </div>
@@ -284,38 +160,39 @@
 	      </div>
 	
 	      <div class="modal-body p-5 pt-0">
-	        <form class="">
+	        <form action="${root}/admin/member/edit" method="post">
+	          <input type="hidden" class="form-control rounded-4" id="emp_no">
 	          <div class="form-floating mb-3">
-	            <input value="홍길동" type="text" class="form-control rounded-4" id="floatingInput" placeholder="성명">
-	            <label for="floatingInput">성명</label>
+	            <input type="text" class="form-control rounded-4" id="emp_name">
+	            <label for="emp_name">성명</label>
 	          </div>
 	          <div class="form-floating mb-3">
-	          	<select class="form-control rounded-4" id="floatingInput" placeholder="직무">
-	            	<option selected="selected">과장</option>
-	            </select>
-	            <label for="floatingPassword">직급</label>
-	          </div>
-	          <div class="form-floating mb-3">
-	            <select class="form-control rounded-4" id="floatingInput" placeholder="직무">
+	          	<select class="form-control rounded-4" id="emp_pos">
 	            	<option selected="selected">개발부</option>
 	            </select>
-	            <label for="floatingPassword">직무</label>
+	            <label for="emp_pos">직무</label>
 	          </div>
 	          <div class="form-floating mb-3">
-	            <input value="100000000" type="number" class="form-control rounded-4" id="floatingInput" placeholder="연봉">
-	            <label for="floatingPassword">연봉</label>
+	            <select class="form-control rounded-4" id="emp_dept">
+	            	<option selected="selected">과장</option>
+	            </select>
+	            <label for="emp_dept">직급</label>
 	          </div>
 	          <div class="form-floating mb-3">
-	            <input value="9999" type="text" class="form-control rounded-4" id="floatingInput" placeholder="내선번호">
-	            <label for="floatingPassword">내선번호</label>
+	            <input value="100000000" type="number" class="form-control rounded-4" id="emp_money">
+	            <label for="emp_money">연봉</label>
 	          </div>
 	          <div class="form-floating mb-3">
-	            <input value="2022-11-14" type="text" class="form-control rounded-4" id="floatingInput" placeholder="입사일">
-	            <label for="floatingPassword">입사일</label>
+	            <input value="9999" type="text" class="form-control rounded-4" id="emp_exphone">
+	            <label for="emp_exphone">내선번호</label>
 	          </div>
 	          <div class="form-floating mb-3">
-	            <input value="" type="date" class="form-control rounded-4" id="floatingInput" placeholder="퇴사일">
-	            <label for="floatingPassword">퇴사일</label>
+	            <input value="2022-11-14" type="text" class="form-control rounded-4" id="emp_jdate">
+	            <label for="emp_jdate">입사일</label>
+	          </div>
+	          <div class="form-floating mb-3">
+	            <input value="" type="date" class="form-control rounded-4" id="emp_rdate">
+	            <label for="emp_rdate">퇴사일</label>
 	          </div>
 	          <button class="w-100 mb-2 btn btn-lg rounded-4 btn-secondary" type="submit">변경하기</button>
 	        </form>
@@ -325,5 +202,23 @@
 	</div>
   </body>
   <script>
+	  	function searchKeyword() {
+			const keyword = document.querySelector("input[name=keyword]").value;
+			location.href = "${root}/foradmin/member/1?keyword=" + keyword;
+		}
+	  	
+	  	function EditMemberPopup(clicked_tr) {
+			var row_td = clicked_tr.getElementsByTagName("td");
+			
+			document.getElementById("emp_no").value = row_td[0].innerHTML;   
+			document.getElementById("emp_name").value = row_td[1].innerHTML;   
+			document.getElementById("emp_dept").value = row_td[2].innerHTML;
+			document.getElementById("emp_pos").value = row_td[3].innerHTML;   
+			document.getElementById("emp_phone").value = row_td[4].innerHTML;   
+			document.getElementById("emp_email").value = row_td[5].innerHTML;
+			document.getElementById("emp_").value = row_td[6].innerHTML;
+			
+			$('#modalMemberEdit').modal('show');
+		}
   </script>
 </html>

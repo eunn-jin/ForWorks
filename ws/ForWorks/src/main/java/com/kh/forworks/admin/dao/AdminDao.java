@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.kh.forworks.PageVo;
+import com.kh.forworks.address.vo.AddressVo;
 import com.kh.forworks.admin.vo.AdminVo;
 import com.kh.forworks.admin.vo.CorpInfoVo;
 import com.kh.forworks.member.vo.MemberVo;
@@ -21,6 +23,10 @@ public interface AdminDao {
 	int updateApplyMember(SqlSessionTemplate sst, MemberVo vo);
 
 	int deleteMemberByNo(SqlSessionTemplate sst, String empNo);
+
+	int selectListCnt(SqlSessionTemplate sst, AddressVo addVo);
+
+	List<MemberVo> selectMemberList(SqlSessionTemplate sst, PageVo pv, AddressVo addVo);
 
 
 }

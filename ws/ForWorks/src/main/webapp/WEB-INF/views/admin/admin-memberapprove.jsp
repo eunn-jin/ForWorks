@@ -53,7 +53,7 @@
               <div class="col-12 col-md-6 order-md-2 order-first p-4 pb-2">
                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                   <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="${root}/foradmin/member">구성원 설정</a></li>
+                    <li class="breadcrumb-item"><a href="${root}/foradmin/member/1">구성원 설정</a></li>
                     <li class="breadcrumb-item active" aria-current="page">구성원 승인</li>
                   </ol>
                 </nav>
@@ -75,7 +75,7 @@
                         <table class="table" id="member-table">
                           <thead>
                             <tr>	
-                              <th>번호</th>
+                              <th>신청번호</th>
                               <th>이름</th>
                               <th>주민번호</th>
                               <th>휴대전화</th>

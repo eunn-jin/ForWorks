@@ -14,7 +14,17 @@ public interface AddressService {
 	
 	int selectListCnt(AddressVo addVo);
 	
-	List<MemberVo> addressAllList(PageVo pv, AddressVo addVo);
+	List<MemberVo> addressList(PageVo pv, AddressVo addVo);
+
+	int selectExListCnt(AddressVo addVo);
+
+	List<MemberVo> ExternalAddList(PageVo pv, AddressVo addVo);
+
+	int ExMemberInsert(AddressVo vo);
+
+	int ExMemberEdit(AddressVo vo);
+
+	int ExMemberDelete(AddressVo vo);
 
 
 

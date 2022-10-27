@@ -51,4 +51,59 @@
 	<delete id="deleteMemberByNo">
 		DELETE FROM EMPLOYEE WHERE EMP_NO = #{empNo}
 	</delete>
+	
+	<select id="selectListCnt" resultType="int">
+		SELECT COUNT(EMP_NO)
+		FROM EMPLOYEE
+		WHERE EMP_STATUS = 'Y'
+		
+		<if test='#{keyword} != null'>
+			AND 
+			(
+			EMP_NAME LIKE '%' || #{keyword} || '%'
+			OR EMP_EMAIL LIKE '%' || #{keyword} || '%'
+			OR EMP_PHONE LIKE '%' || #{keyword} || '%'
+			)
+		</if>
+	</select>
+	
+	<select id="selectMemberList" resultType="MemberVo">
+		SELECT 
+			E.EMP_NO
+			, E.EMP_NAME
+			, E.EMP_EMAIL
+			, E.EMP_PHONE
+			, E.EMP_EXPHONE
+			, E.EMP_PROFILE
+			, E.EMP_STATUS
+			, E.STAT_NO
+			, E.POS_NO
+			, E.DEPT_NO
+			, P.POS_NAME
+			, D.DEPT_NAME
+		FROM EMPLOYEE E
+		LEFT JOIN DEPARTMENT D
+			ON E.DEPT_NO = D.DEPT_NO
+		LEFT JOIN POSITION P
+			ON E.POS_NO = P.POS_NO
+		WHERE E.EMP_STATUS = 'Y'
+		
+		<if test='#{keyword} != null'>
+			AND 
+			(
+			E.EMP_NAME LIKE '%' || #{keyword} || '%'
+			OR E.EMP_EMAIL LIKE '%' || #{keyword} || '%'
+			OR E.EMP_PHONE LIKE '%' || #{keyword} || '%'
+			)
+		</if>
+		
+		<choose>
+			<when test="#{sort} != null">
+				ORDER BY E.EMP_NAME ${order}, E.POS_NO ASC
+			</when>
+			<otherwise>
+				ORDER BY E.EMP_NAME ASC, E.POS_NO ASC
+			</otherwise>
+		</choose>
+	</select>
 </mapper>

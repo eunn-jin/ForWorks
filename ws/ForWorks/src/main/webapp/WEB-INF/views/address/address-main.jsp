@@ -55,14 +55,11 @@
                             <img alt="" src="${root}/resources/img/member-imgs/free-icon-search-7233469.png">
                             <input name="keyword" type="text" class="pt-2" placeholder="이름 또는 연락처 검색">
                         </div>
-                        <button class="nav-btn" type="button" onclick="searchKeyword();">검색</button>
+                        <button class="nav-btn btn btn-sm btn-outline-secondary" type="button" onclick="searchKeyword();">검색</button>
                     </div>
                     <div class="status-outer">
-                        <div class="status-img-outer">
-                            <img alt="" src="${root}/resources/img/member-imgs/free-icon-loading-8590157.png">
-                        </div>
                         <div class="status-content">
-                            <span>상태</span>
+                            <span style="color:inherit;">상태</span>
                             <select name="statNo" id="emp_stat" class="form-select form-select-sm">
                                 <option value="1">알수없음</option>
                                 <option value="2">자리</option>
@@ -71,7 +68,7 @@
                                 <option value="5">응답불가</option>
                             </select>
                         </div>
-                        <button class="nav-btn" type="button" onclick="statEdit();">등록</button>
+                        <button class="nav-btn btn btn-sm btn-outline-secondary" type="button" onclick="statEdit();">등록</button>
                     </div>
                 </div>
 
@@ -80,34 +77,34 @@
                         <div class="card-body">
                             <div class="page-field">
                             	<a href="${root}/address/1">
-	                                <img alt="" src="${root}/resources/img/member-imgs/free-icon-company-4091968.png">
-	                                <span>조직</span>
+	                                <i class="fa-solid fa-city fa-lg mb-2"></i>
+	                                <span class="mb-3">조직</span>
                             	</a>
                             </div>
                             <div class="page-field">
                             	<a href="${root}/address/important/1">
-                                	<img alt="" src="${root}/resources/img/member-imgs/favourite.png">
-                                	<span>중요</span>
+                                	<i class="fa-solid fa-star fa-lg mb-2"></i>
+                                	<span class="mb-3">중요</span>
                                 </a>
                             </div>
                             <div class="page-field">
                             	<a href="${root}/address/dept/1">
-	                                <img alt="" src="${root}/resources/img/member-imgs/free-icon-intermediary-4968522.png">
-	                                <span>부서</span>
+	                                <i class="fa-solid fa-briefcase fa-lg mb-2"></i>
+	                                <span class="mb-3">부서</span>
                                 </a>
                             </div>
                             <div class="page-field">
                             	<a href="${root}/address/external/1">
-	                               	<img alt="" src="${root}/resources/img/member-imgs/free-icon-park-6800868.png">
-	                                <span>외부</span>
+	                               	<i class="fa-solid fa-right-to-bracket fa-lg mb-2"></i>
+	                                <span class="mb-3">외부</span>
                                </a>
                             </div>
                         </div>
                     </div>
                     <div class="card right-field" style="overflow:auto;">
-                    	<div class="card-header m-0 p-4 pt-3 pb-3">
+                    	<div class="card-header m-0 p-4 pt-3">
                         	<div class="d-flex align-items-center justify-content-between">
-                        		<div class="mt-3">
+                        		<div class="mt-4">
                         			<c:choose>
                         				<c:when test="${addressParam.nav eq 'important'}">
                         					<h5>중요 주소록</h5>

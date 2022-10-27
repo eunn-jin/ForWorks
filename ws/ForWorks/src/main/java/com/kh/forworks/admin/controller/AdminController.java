@@ -7,10 +7,15 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.forworks.PageVo;
+import com.kh.forworks.Pagination;
+import com.kh.forworks.address.vo.AddressVo;
 import com.kh.forworks.admin.service.AdminService;
 import com.kh.forworks.admin.vo.AdminVo;
 import com.kh.forworks.admin.vo.CorpInfoVo;
@@ -105,11 +110,29 @@ public class AdminController {
 		
 		return "" + result;
 	}
-	
 		
-	//구성원 조회
-	@GetMapping("member")
-	public String memberList() {
+	//구성원 조회, 정렬, 검색
+	@GetMapping("member/{pno}")
+	public String memberList(Model model, @PathVariable int pno,
+			@RequestParam(value = "keyword", required = false) String keyword,
+			@RequestParam(value = "sort", required = false) String sort,
+			@RequestParam(value = "order", required = false) String order
+			) {
+		
+		AddressVo addVo = new AddressVo();
+		addVo.setSort(sort);
+		addVo.setOrder(order);
+		addVo.setKeyword(keyword);
+		
+		int totalCount = adminService.selectListCnt(addVo);
+		PageVo pv = Pagination.getPageVo(totalCount, pno, 1, 10);
+		
+		List<MemberVo> memberList = adminService.memberList(pv, addVo);
+		
+		model.addAttribute("pv", pv);
+		model.addAttribute("addressParam", addVo);
+		model.addAttribute("memberList", memberList);
+		
 		return "admin/admin-memberlist";
 	}
 	

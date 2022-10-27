@@ -6,6 +6,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.kh.forworks.PageVo;
+import com.kh.forworks.address.vo.AddressVo;
 import com.kh.forworks.admin.dao.AdminDao;
 import com.kh.forworks.admin.vo.AdminVo;
 import com.kh.forworks.admin.vo.CorpInfoVo;
@@ -66,6 +68,18 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public int deleteApply(String empNo) {
 		return adminDao.deleteMemberByNo(sst, empNo);
+	}
+
+	//구성원 목록 갯수
+	@Override
+	public int selectListCnt(AddressVo addVo) {
+		return adminDao.selectListCnt(sst, addVo);
+	}
+
+	//구성원 목록 조회
+	@Override
+	public List<MemberVo> memberList(PageVo pv, AddressVo addVo) {
+		return adminDao.selectMemberList(sst, pv, addVo);
 	}
 
 

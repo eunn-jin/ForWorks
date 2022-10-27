@@ -101,7 +101,7 @@ public class AddressController {
 		int totalCount = addressService.selectListCnt(addVo);
 		PageVo pv = Pagination.getPageVo(totalCount, pno, 1, 10);
 		
-		List<MemberVo> addressList = addressService.addressAllList(pv, addVo);
+		List<MemberVo> addressList = addressService.addressList(pv, addVo);
 		
 		model.addAttribute("pv", pv);
 		model.addAttribute("addressParam", addVo);
@@ -112,9 +112,63 @@ public class AddressController {
 	
 	//외부주소록 조회
 	@GetMapping("external/{pno}")
-	public String ExList(Model model, @PathVariable int pno, HttpSession session) {
+	public String ExList(Model model, @PathVariable int pno, HttpSession session,
+			@RequestParam(value = "keyword", required = false) String keyword,
+			@RequestParam(value = "sort", required = false) String sort,
+			@RequestParam(value = "order", required = false) String order
+			) {
+		
+		String empNo = ((MemberVo)session.getAttribute("loginMember")).getEmpNo();
+		
+		AddressVo addVo = new AddressVo();
+		addVo.setEmpNo(empNo);
+		addVo.setSort(sort);
+		addVo.setOrder(order);
+		addVo.setKeyword(keyword);
+		
+		int totalCount = addressService.selectExListCnt(addVo);
+		PageVo pv = Pagination.getPageVo(totalCount, pno, 1, 10);
+		
+		List<MemberVo> addressList = addressService.ExternalAddList(pv, addVo);
+		
+		model.addAttribute("pv", pv);
+		model.addAttribute("addressParam", addVo);
+		model.addAttribute("addressList", addressList);
 		
 		return "address/address-external";
 	}
 	
+	//외부주소록 추가/수정/삭제
+	@PostMapping("external/insert")
+	public String ExInsert(AddressVo vo, HttpSession session) {
+		String empNo = ((MemberVo)session.getAttribute("loginMember")).getEmpNo();
+		vo.setEmpNo(empNo);
+		
+		int result = addressService.ExMemberInsert(vo);
+		
+		return "redirect:/address/external/1";
+	}
+	
+	@PostMapping("external/edit")
+	public String ExEdit(AddressVo vo, HttpSession session) {
+		String empNo = ((MemberVo)session.getAttribute("loginMember")).getEmpNo();
+		vo.setEmpNo(empNo);
+		
+		int result = addressService.ExMemberEdit(vo);
+		
+		return "redirect:/address/external/1";
+	}
+	
+	@PostMapping("external/delete")
+	@ResponseBody
+	public String ExDelete(String addNo, HttpSession session) {
+		AddressVo vo = new AddressVo();
+		String empNo = ((MemberVo)session.getAttribute("loginMember")).getEmpNo();
+		vo.setEmpNo(empNo);
+		vo.setAddNo(addNo);
+		
+		int result = addressService.ExMemberDelete(vo);
+		
+		return "" + result;
+	}
 }

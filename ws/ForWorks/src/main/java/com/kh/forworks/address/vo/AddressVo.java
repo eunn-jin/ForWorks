@@ -14,5 +14,14 @@ public class AddressVo {
 	private String order;
 	private String keyword;
 	
+	//외부주소록
+	private String addNo;
+	private String addName;
+	private String addCompany;
+	private String addJob;
+	private String addPhone;
+	private String addEmail;
+	private String addEdate;
+	private String addNote;
 	
 }
