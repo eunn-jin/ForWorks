@@ -211,10 +211,10 @@
                         <button class="approv-btn">목록보기</button>
                         <div class="approv-btn-area">
                             <button class="approv-btn approv-btn-margin">
-                                <span class="approv-btn-text">결재</span>
+                                <span class="approv-btn-text" name="approv" value="Y">결재</span>
                             </button>
                             <button class="approv-btn">
-                                <span class="approv-btn-text">반려</span>
+                                <span class="approv-btn-text" name="approv" value="R">반려</span>
                             </button>
                         </div>
                     </div>

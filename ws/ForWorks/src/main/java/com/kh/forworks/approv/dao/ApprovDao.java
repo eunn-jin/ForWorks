@@ -39,4 +39,10 @@ public interface ApprovDao {
 	//문서 첨부파일 삽입
 	int insertDocFile(SqlSessionTemplate sst, ApprovDocumentVo vo);
 
+	//비전자문서 파일 업로드
+	int insertNoElecDoc(SqlSessionTemplate sst, ApprovDocumentVo vo);
+
+	//비전자문서 삽입
+	int insertNoElecApprovDoc(SqlSessionTemplate sst, ApprovDocumentVo vo);
+
 }

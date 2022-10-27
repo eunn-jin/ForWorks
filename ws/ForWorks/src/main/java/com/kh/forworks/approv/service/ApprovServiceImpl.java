@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.forworks.approv.dao.ApprovDao;
 import com.kh.forworks.approv.vo.ApprovDocumentVo;
+import com.kh.forworks.approv.vo.DocApprovVo;
 import com.kh.forworks.approv.vo.DocFormVo;
 import com.kh.forworks.member.vo.MemberVo;
 
@@ -94,10 +95,12 @@ public class ApprovServiceImpl implements ApprovService {
 
 	//전자문서 결재
 	@Override
-	public int updateApprov(String dno) {
+	public int updateApprov(DocApprovVo vo) {
 		// TODO Auto-generated method stub
+		// TODO 여기부터
 		return 0;
 	}
+
 
 	//회원 목록 조회
 	@Override
@@ -105,6 +108,23 @@ public class ApprovServiceImpl implements ApprovService {
 		// TODO Auto-generated method stub
 		return dao.selectMemberList(sst);
 	}
+
+	
+	//비전자문서 작성
+	@Override
+	public int insertApprovNoElecDoc(ApprovDocumentVo vo) {
+		// TODO Auto-generated method stub
+		
+		int result1 = dao.insertNoElecApprovDoc(sst,vo);
+		
+		int result2 = dao.insertNoElecDoc(sst, vo);
+		
+		return result1*result2;
+	}
+
+
+
+	
 	
 	
 
