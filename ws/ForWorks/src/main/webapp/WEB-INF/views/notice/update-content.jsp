@@ -42,16 +42,17 @@ table {
                     <form action="" method="post">
                         <div class="table table-responsive">
                             <table class="table table-striped" >
+                                
                                 <tr>
                                     <td class="" style="width: 15%;"><label for="empNo" class="form-label">작성자</label> </td>
                                     <td  style="background : white; width: 30%;">${ntvo.empNo}</td>
                                     <td style="width: 15%;"><label for="ntAccess" class="form-label" >대상</label></td>
                                     <td  style="background: white;" style="width: 30%;">
-                                        <select name="ntAccess" id=""  class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                            <option value="" selected >부서를 선택해주세요</option>
+                                        <select name="ntAccess" id="ntAccess"  class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                            <option  selected >부서를 선택해주세요</option>
                                             <option value="0">전체</option>
                                             <c:forEach items="${dpvo }" var="dp">
-                                                <option value="${dp.deptNo}">${dp.deptName}</option>
+                                                <option value="${dp.deptNo}" id="dep">${dp.deptName}</option>
                                             </c:forEach>
                                         </select>
                                     </td>
@@ -76,7 +77,7 @@ table {
 
                                 <tr>
                                     <td style="width:10%;">선택<br>파일</td>
-                                    <td style="width:40%; background: white;"><img id="notice_img" src="" alt=""></td>
+                                    <td style="width:40%; background: white;"><img id="notice_img" src="" alt="" width="128px" height="128px"></td>
 
                                     <td style="width:10%;">등록<br>파일</td>
                                     <td style="width:40%; background: white;">
@@ -138,22 +139,21 @@ $(document).ready(function() {
 </script>
 
 <script>
-    console.log('1::'+'${ntvo.ntAccess}');
-    console.log('2::'+'${ntvo.deptNum}');
+    var nt = "${ntvo.deptNum}";
+    var lg = "${loginMember.deptNo}";
     
-    const ac = '${ntvo.deptNum}';
-    
-    // var x = '${ntvo.dpetNum}';
-    // if(x === 0){
-    //     $('option[value=0]').prop('selected',true);
-    // }
-    //     else if(x === 1){
-    //     $('option[value=1]').prop('selected',true);
-        
-    // }
 
+    
+    console.log('nt::'+nt);
+    console.log('lg::'+lg);
+    
+    $("#ntAccess").val(nt);
+
+    $("#ntAccess").val(nt).prop("selected", true);
 
 </script>
+
+
 
 <script>
 	//파일 태그 가져와서

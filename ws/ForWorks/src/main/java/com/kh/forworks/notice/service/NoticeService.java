@@ -24,7 +24,7 @@ public interface NoticeService{
 	int insertNotice(NoticeVo ntvo, NoticeAttachmentsVo ntatVo);
 
 	//공지사항 정보수정
-	int edit(NoticeVo ntvo, NoticeAttachmentsVo ntatVo, String no);
+	int edit(NoticeVo ntvo, NoticeAttachmentsVo ntatVo, NoticeAttachmentsVo ntatVocheck, String no);
 
 	//공지사항 삭제
 	int delete(String no);

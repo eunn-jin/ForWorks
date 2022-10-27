@@ -71,8 +71,8 @@ table {
                                         <td colspan="3"><div style="height: 10vh;">첨부파일이 없습니다.</div></td>
                                     </c:if>
                                     <c:if test="${ntatVo ne null}">
-                                        <td colspan="3"><div style="height: 10vh;">
-                                            <img src="${root}/resources/upload/notice/${ntatVo.ntatChange}" width="10%" height="100%">
+                                        <td colspan="3"><div >
+                                            <img src="${root}/resources/upload/notice/${ntatVo.ntatChange}" width="128px" height="128px">
                                         </div></td>
                                     </c:if>
                                 </tr>
