@@ -29,17 +29,44 @@ public class AddressDaoImpl implements AddressDao {
 	}
 	
 	@Override
-	public int selectCountAll(SqlSessionTemplate sst, AddressVo addVo) {
-		return sst.selectOne("addressMapper.selectCountAll", addVo);
+	public int selectAddCount(SqlSessionTemplate sst, AddressVo addVo) {
+		return sst.selectOne("addressMapper.selectAddCount", addVo);
 	}
 	
 	@Override
-	public List<MemberVo> selectAllMember(SqlSessionTemplate sst, PageVo pv, AddressVo addVo) {
+	public List<MemberVo> selectAddMember(SqlSessionTemplate sst, PageVo pv, AddressVo addVo) {
 		int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
-		
 		RowBounds rowBounds = new RowBounds(offset, pv.getBoardLimit());
 		
-		return sst.selectList("addressMapper.selectAllMember", addVo, rowBounds);
+		return sst.selectList("addressMapper.selectAddMember", addVo, rowBounds);
+	}
+
+	@Override
+	public int selectExAddCount(SqlSessionTemplate sst, AddressVo addVo) {
+		return sst.selectOne("addressMapper.selectExCount", addVo);
+	}
+
+	@Override
+	public List<MemberVo> selectExAddMember(SqlSessionTemplate sst, PageVo pv, AddressVo addVo) {
+		int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pv.getBoardLimit());
+		
+		return sst.selectList("addressMapper.selectExMember", addVo, rowBounds);
+	}
+
+	@Override
+	public int insertExMemberByNo(SqlSessionTemplate sst, AddressVo vo) {
+		return sst.insert("insertAddressByNo", vo);
+	}
+
+	@Override
+	public int updateExMemberByNo(SqlSessionTemplate sst, AddressVo vo) {
+		return sst.update("updateAddressByNo", vo);
+	}
+
+	@Override
+	public int deleteExMemberByNo(SqlSessionTemplate sst, AddressVo vo) {
+		return sst.delete("deleteAddressByNo", vo);
 	}
 
 

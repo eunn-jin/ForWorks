@@ -18,7 +18,7 @@
 		WHERE EMP_NO = #{empNo} AND BM_EMP_NO = #{bmEmpNo}
 	</delete>
 
-	<select id="selectCountAll" resultType="int">
+	<select id="selectAddCount" resultType="int">
 		SELECT COUNT(E.EMP_NO)
 		FROM EMPLOYEE E
 		<choose>
@@ -42,15 +42,15 @@
 		<if test='#{keyword} != null'>
 			AND 
 			(
-			EMP_NAME LIKE '%' || #{keyword} || '%'
-			OR EMP_EMAIL LIKE '%' || #{keyword} || '%'
-			OR EMP_PHONE LIKE '%' || #{keyword} || '%'
+			E.EMP_NAME LIKE '%' || #{keyword} || '%'
+			OR E.EMP_EMAIL LIKE '%' || #{keyword} || '%'
+			OR E.EMP_PHONE LIKE '%' || #{keyword} || '%'
 			)
 		</if>
 		
 	</select>
 	
-	<select id="selectAllMember" resultType="MemberVo">
+	<select id="selectAddMember" resultType="MemberVo">
 		SELECT 
 			E.EMP_NO
 			, E.EMP_NAME
@@ -100,6 +100,89 @@
 		</choose>
 	</select>
 	
+	<select id="selectExCount" resultType="int">
+		SELECT COUNT(ADD_NO)
+		FROM ADDRESS
+		WHERE EMP_NO = #{empNo}
+		
+		<if test='#{keyword} != null'>
+			AND 
+			(
+			ADD_NAME LIKE '%' || #{keyword} || '%'
+			OR ADD_COMPANY LIKE '%' || #{keyword} || '%'
+			)
+		</if>
+		
+	</select>
 	
+	<select id="selectExMember" resultType="addressVo">
+		SELECT
+			ADD_NO
+			, EMP_NO
+			, ADD_NAME
+			, ADD_COMPANY
+			, ADD_JOB
+			, ADD_PHONE
+			, ADD_EMAIL
+			, ADD_NOTE
+			, ADD_EDATE
+		FROM ADDRESS
+		WHERE EMP_NO = #{empNo}
+		
+		<if test='#{keyword} != null'>
+			AND 
+			(
+			ADD_NAME LIKE '%' || #{keyword} || '%'
+			OR ADD_COMPANY LIKE '%' || #{keyword} || '%'
+			)
+		</if>
+	
+		<choose>
+			<when test="#{sort} != null">
+				ORDER BY ADD_NAME ${order}
+			</when>
+			<otherwise>
+				ORDER BY ADD_NAME ASC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insertAddressByNo">
+		INSERT INTO ADDRESS (
+			ADD_NO
+			, EMP_NO
+			, ADD_NAME
+			, ADD_COMPANY
+			, ADD_JOB
+			, ADD_PHONE
+			, ADD_EMAIL
+			, ADD_NOTE
+		) VALUES (
+			SEQ_ADDRESS_ADD_NO.NEXTVAL
+			, #{empNo}
+			, #{addName}
+			, #{addCompany}
+			, #{addJob}
+			, #{addPhone}
+			, #{addEmail}
+			, #{addNote}
+		)
+	</insert>
+	
+	<update id="updateAddressByNo">
+		UPDATE ADDRESS SET
+			ADD_NAME = #{addName}
+			, ADD_COMPANY = #{addCompany}
+			, ADD_JOB = #{addJob}
+			, ADD_PHONE = #{addPhone}
+			, ADD_EMAIL = #{addEmail}
+			, ADD_NOTE = #{addNote}
+		WHERE ADD_NO = #{addNo} AND EMP_NO = #{empNo}
+	</update>
+	
+	<delete id="deleteAddressByNo">
+		DELETE FROM ADDRESS
+		WHERE ADD_NO = #{addNo} AND EMP_NO = #{empNo}
+	</delete>
 	
 </mapper>

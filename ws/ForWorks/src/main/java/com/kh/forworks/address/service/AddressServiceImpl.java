@@ -22,11 +22,13 @@ public class AddressServiceImpl implements AddressService {
 		this.sst = sst;
 	}
 
+	//상태등록
 	@Override
 	public int updateStatus(MemberVo vo) {
 		return addressDao.updateEmpStatByNo(sst, vo);
 	}
 	
+	//즐겨찾기
 	@Override
 	public int editFavoriteMember(MemberVo vo, String stat) {
 		if ("insert".equals(stat)) {
@@ -36,15 +38,48 @@ public class AddressServiceImpl implements AddressService {
 		}
 	}
 	
+	//주소록갯수조회
 	@Override
 	public int selectListCnt(AddressVo addVo) {
-		return addressDao.selectCountAll(sst, addVo);
+		return addressDao.selectAddCount(sst, addVo);
 	}
 
+	//주소록조회
 	@Override
-	public List<MemberVo> addressAllList(PageVo pv, AddressVo addVo) {
-		return addressDao.selectAllMember(sst, pv, addVo);
+	public List<MemberVo> addressList(PageVo pv, AddressVo addVo) {
+		return addressDao.selectAddMember(sst, pv, addVo);
 	}
+
+	//외부주소록갯수조회
+	@Override
+	public int selectExListCnt(AddressVo addVo) {
+		return addressDao.selectExAddCount(sst, addVo);
+	}
+
+	//외부주소록조회
+	@Override
+	public List<MemberVo> ExternalAddList(PageVo pv, AddressVo addVo) {
+		return addressDao.selectExAddMember(sst, pv, addVo);
+	}
+
+	//외부주소록추가
+	@Override
+	public int ExMemberInsert(AddressVo vo) {
+		return addressDao.insertExMemberByNo(sst, vo);
+	}
+
+	//외부주소록수정
+	@Override
+	public int ExMemberEdit(AddressVo vo) {
+		return addressDao.updateExMemberByNo(sst, vo);
+	}
+
+	//외부주소록삭제
+	@Override
+	public int ExMemberDelete(AddressVo vo) {
+		return addressDao.deleteExMemberByNo(sst, vo);
+	}
+	
 
 
 

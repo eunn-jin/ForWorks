@@ -16,9 +16,19 @@ public interface AddressDao {
 	
 	int deleteFavoriteMember(SqlSessionTemplate sst, MemberVo vo);
 	
-	int selectCountAll(SqlSessionTemplate sst, AddressVo addVo);
+	int selectAddCount(SqlSessionTemplate sst, AddressVo addVo);
 	
-	List<MemberVo> selectAllMember(SqlSessionTemplate sst, PageVo pv, AddressVo addVo);
+	List<MemberVo> selectAddMember(SqlSessionTemplate sst, PageVo pv, AddressVo addVo);
+
+	int selectExAddCount(SqlSessionTemplate sst, AddressVo addVo);
+
+	List<MemberVo> selectExAddMember(SqlSessionTemplate sst, PageVo pv, AddressVo addVo);
+
+	int insertExMemberByNo(SqlSessionTemplate sst, AddressVo vo);
+
+	int updateExMemberByNo(SqlSessionTemplate sst, AddressVo vo);
+
+	int deleteExMemberByNo(SqlSessionTemplate sst, AddressVo vo);
 
 
 
