@@ -1,14 +1,15 @@
 package com.kh.forworks.plan.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("plan")
 public class PlanController {
+	@GetMapping("calendar")
 	
-	@RequestMapping(value={"/", "plan"})
-		public String Plan() {
-			return "plan";
+	public String calendar() {
+		return "plan/calendar";
 	}
-
 }
