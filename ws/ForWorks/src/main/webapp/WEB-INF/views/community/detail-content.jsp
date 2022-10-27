@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<c:set var="alertMsg" value="${sessionScope.alertMsg }"/>
+<c:remove var="alertMsg" scope="session"/>
+<c:if test="${not empty alertMsg }">
+	<script>
+		alert('${alertMsg}');
+	</script>
+</c:if> 
 <link rel="stylesheet" href="${root}/resources/css/sjy.css">
 <style>
 	table{margin: auto;}
@@ -71,8 +78,8 @@ table {
                                         <td colspan="3"><div style="height: 10vh;">첨부파일이 없습니다.</div></td>
                                     </c:if>
                                     <c:if test="${cmatVo ne null}">
-                                        <td colspan="3"><div style="height: 10vh;">
-                                            <img src="${root}/resources/upload/commu/${cmatVo.cmatChange}" width="10%" height="100%">
+                                        <td colspan="3"><div >
+                                            <img src="${root}/resources/upload/commu/${cmatVo.cmatChange}" width="128px" height="128px"/>
                                         </div></td>
                                     </c:if>
                                 </tr>
