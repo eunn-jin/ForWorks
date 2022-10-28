@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page session="false" %>
+
+
+
 <html>
 <head>
 	<title>Home</title>
@@ -25,7 +28,14 @@
     .back-color{
         background-color: #EEF1FF;
 		display: none;
+	
     }
+	.back-color2{
+        background-color: #EEF1FF;
+		display: none;
+	
+    }
+	
 </style>
 <body>
 
@@ -40,7 +50,7 @@
                <div class="page-title">
                    <div class="row">
                        <div class="col-12 col-md-6 order-md-1 order-last">
-                           <h3>Layout Default</h3>
+                           <h3>급여대장 등록</h3>
                            <p class="text-subtitle text-muted">The default layout </p>
                        </div>
                        <div class="col-12 col-md-6 order-md-2 order-first">
@@ -56,14 +66,11 @@
                <section class="section">
                    <div id="wrap">
 				        <div id="title">급여대장 등록</div>
+						<form action="" method="post">
 				        <div>
-							<select name="year" id="year"></select>
-							<select name="month" id="month">
-							
-							</select>
+							<input type="month" name="salMonth">
 						</div>
 		           	 	<div id="center">
-							<form action="">
 
 								<table>
 									<tr>
@@ -80,23 +87,24 @@
 									<tr>
 										<td>사원명</td>
 										<td>
-											<select name="emp" id="emp">
+											<select name="empNo" id="emp">
 												<option value="">직원선택</option>
 											</select>
 										</td>
 									</tr>
 									<tr>
 										<td>정산기간</td>
-										<td><input name="start-month" id="start-month"> ~ <input name="end-month" id="end-month"></td>
+										<td><input name="startMonth" id="start-month"> ~ <input name="endMonth" id="end-month"></td>
 									</tr>
 									<tr>
 										<td>지급날짜</td>
-										<td><input type="date" name="pay-date"></td>
+										<td><input type="date" name="payDate"></td>
 									</tr>
 									<tr>
 										<td>급여구분</td>
 										<td>
-											<select name="cate" id="cate">
+											<select name="salCate" id="cate">
+												<option value="">선택</option>
 												<option value="1">월급</option>
 												<option value="2">상여</option>
 												<option value="3">월급+상여</option>
@@ -104,29 +112,26 @@
 										</td>
 									</tr>
 								</table>
+								<div><input type="submit" value="등록"></div>
 							</form>
-							<div class="back-color">
-									<div class="back-color" id="salary-zone">월급</div>
-									<ul>
-										<span>기본급</span><span>2,000,000원(emp불러오기)</span>
-										<br>
-										<span>수당(수당리스트불러오기 empno로조회)</span>
-										<br>
-											초과수당 <span>10,000원(수당액 * 근무시간)</span>
-									</ul>
-							</div>
-							<div class="back-color">
-								<div class="back-color" id="bonus-zone">상여</div>
-								<ul>
-									<span>22년 하반기 상여-1</span>
-									<br>
-									<span>1,000,000원</span>
-								</ul>
-							</div>
+							<div id="zone">
+								<div class="back-color">
+									<div id="s-zone">월급</div>
+									<table id="s-table">
+										
+									</table>
+								</div>
+								<div class="back-color2">
+									<div id="bonus-zone">상여</div>
+									<table id="b-table">
+										
+									</table>
+								</div>
+							</div>	
 							<div style="float:right;">
 								총급여 : 3,010,000원
 							</div>
-							<div><input type="submit" value="등록"></div>
+							
 						</div>
 		    		</div>
                </section>
@@ -148,7 +153,7 @@
 			data : {depart : depart},
 			success : function(result){
 				console.log(result[0]);
-				$('#emp').empty;
+				
 				for(var i = 0 ; i <result.length ; i++){
                         $('#emp').append(
                             '<option value='+result[i].empNo+'>'+result[i].empName+'</option>'
@@ -166,10 +171,67 @@
 <script>
 	$("#cate").change(function(){
 		var cate = $(this).val();
-		var salaryzone = document.querySelector(".back-color");
-		console.log(cate);
+		var szone = document.querySelector(".back-color");
+		var bzone = document.querySelector(".back-color2");
+
+		var x = document.getElementById("emp");
+		var empNo = x.options[x.selectedIndex].value; 
+
+		var startMonth = document.getElementById("start-month").value;
+		var endMonth = document.getElementById("end-month").value;
+
 		if(cate == 1){
-			salaryzone.style.display = 'block';
+			bzone.style.display = 'none';
+			szone.style.display = 'block';
+
+			$.ajax({
+				url : "/ForWorks/salary/empSal",
+				type : "POST",
+				data :{ 
+					empNo : empNo,
+				},
+				success : function(data){
+					alert("되나");
+					$('#s-table').empty;
+					console.log(data);
+					$('#s-table').append('<tr><td>기본급</td><td>'+data[0].empMoney+'</td></tr>')
+					$('#s-table').append('<tr><td>수당명</td><td>수당금</td></tr>')
+					for(var i = 0; i < data.length;i++){
+						$('#s-table').append('<tr><td>'+data[i].cate+'</td><td>'+data[i].amount+'</td></tr>');
+					}
+				},
+				error : function(){
+					alert("실패");
+				}
+			})
+		}
+
+
+
+		if(cate == 2){
+			szone.style.display = 'none';
+			bzone.style.display = 'block';
+
+			$.ajax({
+				url : "/ForWorks/salary/empBonus",
+				type : "POST",
+				data :{ 
+					empNo : empNo,
+					startMonth : startMonth,
+					endMonth : endMonth 
+				},
+				success : function(data){
+					alert("되나");
+					console.log(data[0]);
+					/*$('#b-table').append('<tr><td>상여제목</td><td>상여금</td></tr>')*/
+					for(var i = 0; i < data.length;i++){
+						$('#b-table').append('<tr><td>'+data[i].title+'</td><td>'+data[i].payment+'</td></tr>');
+					}
+				},
+				error : function(){
+					alert("실패");
+				}
+			})
 		}
 	})
 </script>

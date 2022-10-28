@@ -11,7 +11,11 @@ public class SalaryVo {
 	private String endMonth;
 	private String payDate;
 	private String status;
-	
+	private String salMonth;
+	private String empMoney;
+	private String amount;
+	private String cate;
+	private String salCate;
 	private String salary;
 	private String benefit;
 	private String bonus;
