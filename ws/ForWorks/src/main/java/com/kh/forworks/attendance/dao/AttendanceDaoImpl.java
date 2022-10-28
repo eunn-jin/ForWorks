@@ -79,4 +79,29 @@ public class AttendanceDaoImpl implements AttendanceDao {
 		return sst.update("attendanceMapper.updateStatus", map);
 	}
 
+	@Override
+	public int selectWorkCnt(SqlSessionTemplate sst, Map<String, Object> map) {
+		return sst.selectOne("attendanceMapper.selectWorkCount", map);
+	}
+
+	@Override
+	public int selectOffCount(SqlSessionTemplate sst, Map<String, Object> map) {
+		return sst.selectOne("attendanceMapper.selectOffCount", map);
+	}
+
+	@Override
+	public int selectHalfOffCount(SqlSessionTemplate sst, Map<String, Object> map) {
+		return sst.selectOne("attendanceMapper.selectHalfOffCount", map);
+	}
+
+	@Override
+	public int selectEarlyoutCount(SqlSessionTemplate sst, Map<String, Object> map) {
+		return sst.selectOne("attendanceMapper.selectEarlyoutCount", map);
+	}
+
+	@Override
+	public int selectLateCount(SqlSessionTemplate sst, Map<String, Object> map) {
+		return sst.selectOne("attendanceMapper.selectLateCount", map);
+	}
+
 }

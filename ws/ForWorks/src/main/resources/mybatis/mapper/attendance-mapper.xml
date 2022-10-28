@@ -75,8 +75,35 @@
 		    (SELECT * 
 		        FROM (SELECT NO, STATUS_CODE, IN_TIME, OUT_TIME, OVER_TIME FROM WORK WHERE EMP_NO = #{empNo} AND TO_CHAR(IN_TIME, 'YYYY-MM-DD') = #{day})
 		        JOIN WORK_STATUS S ON STATUS_CODE = S.CODE),
-		    (SELECT EMP_NAME FROM EMPLOYEE WHERE EMP_NO = #{empNo}),
 		    (SELECT IN_TIME AS DI_TIME, OUT_TIME AS DO_TIME FROM WORK_TYPE WHERE END_DAY IS NULL AND DEPT_NO = (SELECT DEPT_NO FROM EMPLOYEE WHERE EMP_NO = #{empNo}))
+	</select>
+	
+	<select id="selectWorkCount" resultType="int">
+		SELECT COUNT(*) FROM WORK WHERE EMP_NO = #{empNo} AND TO_CHAR(IN_TIME, 'YYYY-MM') = #{month} AND STATUS_CODE NOT IN (4, 1)
+	</select>
+	
+	<select id="selectOffCount" resultType="int">
+		SELECT COUNT(*) FROM WORK WHERE EMP_NO = #{empNo} AND TO_CHAR(IN_TIME, 'YYYY-MM') = #{month} AND STATUS_CODE IN (4)
+	</select>
+
+	<select id="selectHalfOffCount" resultType="int">
+		SELECT COUNT(*) FROM WORK WHERE EMP_NO = #{empNo} AND TO_CHAR(IN_TIME, 'YYYY-MM') = #{month} AND STATUS_CODE IN (5)
+	</select>
+
+	<select id="selectEarlyoutCount" resultType="int">
+		SELECT COUNT(*) FROM WORK WHERE EMP_NO = #{empNo} AND TO_CHAR(IN_TIME, 'YYYY-MM') = #{month} AND STATUS_CODE IN (3)
+	</select>
+	
+	<select id="selectLateCount" resultType="int">
+		SELECT COUNT(*)
+		FROM 
+		    (SELECT NO, EMP_NO, IN_TIME, OUT_TIME FROM WORK WHERE EMP_NO = #{empNo} AND TO_CHAR(IN_TIME, 'YYYY-MM') = #{month}),
+		    (SELECT IN_TIME AS DI_TIME, OUT_TIME AS DO_TIME FROM WORK_TYPE WHERE END_DAY IS NULL AND DEPT_NO = (SELECT DEPT_NO FROM EMPLOYEE WHERE EMP_NO = #{empNo}))
+		WHERE NVL(TRUNC((TO_DATE(TO_CHAR(IN_TIME, 'HH24:MI'),'HH24:MI') - TO_DATE(DI_TIME, 'HH24:MI')) * 24 * 60), 0) <![CDATA[>]]> 0
+	</select>
+	
+	<select id="selectMonthWorkList">
+		
 	</select>
 	
 </mapper>

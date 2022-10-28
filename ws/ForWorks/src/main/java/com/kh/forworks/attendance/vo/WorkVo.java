@@ -14,9 +14,9 @@ public class WorkVo {
 	private String workTime;
 	private String lateTime;
 	private String earlyoutTime;
+	private String overTime;
 	
 	private String workDate;
-	private String overTime;
 	
 	public void setWorkTime(int t) { this.workTime = changeFormat(t); }
 	

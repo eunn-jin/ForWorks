@@ -62,22 +62,22 @@
 					</div>
 					<div class="card second-card">
 						<div class="card-body flex-col">
-							<div>10월</div>
+							<div>${monthCnt.month}</div>
                   <div class="text-part">
                       <span>출근 횟수 : &ensp;</span>
-                      <span> 3 </span>
+                      <span> ${monthCnt.workCount} </span>
                   </div>
                   <div class="text-part">
                       <span>지각 횟수 : &ensp;</span>
-                      <span> 1 </span>
+                      <span> ${monthCnt.lateCount} </span>
                   </div>
                   <div class="text-part">
                       <span>조퇴 횟수 : &ensp;</span>
-                      <span> 0 </span>
+                      <span> ${monthCnt.earlyoutCount} </span>
                   </div>
                   <div class="text-part">
                       <span>휴가 사용 : &ensp;</span>
-                      <span> 1 </span>
+                      <span> ${monthCnt.offCount} </span>
                   </div>
 						</div>
 					</div>
@@ -134,11 +134,6 @@
             {
               groupId: 999,
               title: 'Repeating Event',
-              start: '2021-07-09T16:00:00'
-            },
-            {
-              groupId: 999,
-              title: 'Repeating Event',
               start: '2021-07-16T16:00:00'
             },
             {
@@ -153,7 +148,12 @@
             {
               title: 'Meeting',
               start: '2021-07-12T14:30:00'
-            }
+            },
+           /*  {
+              title: '정상 근무',
+              start: '2022-10-26'
+              end: '2022-10-26'
+            } */
           ]
         });
         // 캘린더 랜더링

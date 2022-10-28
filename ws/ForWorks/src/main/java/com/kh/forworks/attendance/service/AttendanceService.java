@@ -2,6 +2,7 @@ package com.kh.forworks.attendance.service;
 
 import java.util.Map;
 
+import com.kh.forworks.attendance.vo.MonthWorkVo;
 import com.kh.forworks.attendance.vo.WorkTimeVo;
 import com.kh.forworks.attendance.vo.WorkVo;
 
@@ -12,6 +13,8 @@ public interface AttendanceService {
 
 	int goWork(Map map);
 	int outWork(Map<String, Object> map);
+	
+	MonthWorkVo getMonthWorkCount(Map<String, Object> map);
 
 
 }
