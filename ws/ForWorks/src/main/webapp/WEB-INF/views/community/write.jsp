@@ -3,7 +3,7 @@
 
 <html>
 <head>
-	<title>Home</title>
+	<title>커뮤니티-작성</title>
 </head>
 
 <script src="${root }/resources/js/summernote/summernote-lite.js"></script>

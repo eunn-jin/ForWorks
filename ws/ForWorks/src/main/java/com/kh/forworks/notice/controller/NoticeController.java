@@ -116,12 +116,18 @@ public class NoticeController {
 	
 	//공지사항 상세보기
 	@GetMapping("detail/{no}")
-	public String detail(@PathVariable String no, Model model) {
+	public String detail(@PathVariable String no, Model model, HttpSession session) {
 		
 		//로그인한 회원이 접근권한이 있는지 판단[작성자의 부서 비교 게시글의 접근권한]
-		
+
 		//db 공지사항 조회
 		NoticeVo ntvo = nts.selectOne(no);
+		
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		if (!(loginMember.getDeptName().equals(ntvo.getNtAccess()) || ntvo.getNtAccess().equals("전체"))) {
+			session.setAttribute("alertMsg", "열람 권한이 없습니다.");
+			return"redirect:/notice/list/1";
+		}
 		
 		//첨부파일 확인
 		NoticeAttachmentsVo ntatVo = nts.checkFile(no);

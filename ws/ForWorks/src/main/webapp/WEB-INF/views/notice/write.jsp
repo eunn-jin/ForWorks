@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <html>
 <head>
-	<title>Home</title>
+	<title>공지사항-작성</title>
 </head>
 
 <script src="${root }/resources/js/summernote/summernote-lite.js"></script>

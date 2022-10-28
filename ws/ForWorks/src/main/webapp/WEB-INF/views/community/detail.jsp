@@ -3,7 +3,7 @@
 
 <html>
 <head>
-	<title>Home</title>
+	<title>커뮤니티-상세정보</title>
 </head>
 
 <body>

@@ -72,9 +72,10 @@
 	</select>
 	
 	<select id="selectListdp" resultType="com.kh.forworks.community.vo.CommunityVo">
-		SELECT
-			ROWNUM
-			,C.CMU_NO
+		SELECT ROWNUM ,x.*
+		FROM(
+			SELECT
+			C.CMU_NO
 			,C.CMU_TITLE
 			,C.CMU_CONTENT
 			,C.CMU_ENROLL_DATE
@@ -106,7 +107,9 @@
 		'%${keyword}%'			
 		
 		AND C.CMU_READ = #{cmuRead}
-		ORDER BY C.CMU_NO DESC
+		ORDER BY ROWNUM
+		)x
+		ORDER BY ROWNUM DESC
 	</select>	
 	
 	<insert id="insertCm">

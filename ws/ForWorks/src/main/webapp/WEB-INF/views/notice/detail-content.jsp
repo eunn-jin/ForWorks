@@ -52,16 +52,16 @@ table {
                                 </tr>
                                 <tr>
                                     <td class="danger">제목</td>
-                                    <td colspan="3"><div>${ntvo.ntTitle}</div></td>
+                                    <td colspan="3"><div style="text-align: left;">${ntvo.ntTitle}</div></td>
                                 </tr>
     
     
                                 <tr>
                                     <td class="danger">글내용</td>
                                     <td colspan="3" style=" background : white; text-align: left;">
-                                        <textarea id="summernote" name="content" class="form-control" style="background-color: white; text-align: left; height: 30vh;" disabled
-                                        >${ntvo.ntContent} 
-                                        </textarea>
+                                        <!-- <textarea id="summernote" name="content" class="form-control" style="background-color: white; text-align: left; height: 30vh;" disabled >${ntvo.ntContent}
+                                        </textarea> -->
+                                        <div style="background-color: white; text-align: left; height: 30vh;" th:utext="${ntvo.ntContent}">${ntvo.ntContent}</div>
                                     </td>
                                 </tr>
     

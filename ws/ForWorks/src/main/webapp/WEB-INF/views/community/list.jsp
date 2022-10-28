@@ -4,7 +4,7 @@
 
 <html>
 <head>
-	<title>Home</title>
+	<title>커뮤니티</title>
 </head>
 <body>
 
