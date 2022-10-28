@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.kh.forworks.FileUploader;
 import com.kh.forworks.PageVo;
 import com.kh.forworks.Pagination;
+import com.kh.forworks.comments.service.CommentsService;
+import com.kh.forworks.comments.vo.CommentsVo;
 import com.kh.forworks.community.service.CommunityService;
 import com.kh.forworks.community.vo.CommunityVo;
 import com.kh.forworks.communityattachments.vo.CommunityAttachmentsVo;
@@ -30,10 +32,12 @@ import com.kh.forworks.member.vo.MemberVo;
 public class CommunityController {
 	
 	private final CommunityService cmusv;
-
+	private final CommentsService cmsv;
+	
 	@Autowired
-	public CommunityController(CommunityService cmusv) {
+	public CommunityController(CommunityService cmusv, CommentsService cmsv) {
 		this.cmusv = cmusv;
+		this.cmsv = cmsv;
 	}
 
 		//커뮤니티 (화면)
@@ -142,23 +146,35 @@ public class CommunityController {
 		@GetMapping("detail/{no}")
 		public String detail(@PathVariable String no, Model model, HttpSession session){
 			
-			MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
-			
 			//db 공지사항 조회
 			CommunityVo cmuvo  = cmusv.selectOne(no);
+			
+			MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+			
+			if (!(loginMember.getDeptName().equals(cmuvo.getCmuRead()) || cmuvo.getCmuRead().equals("전체"))) {
+				session.setAttribute("alertMsg", "열람 권한이 없습니다.");
+				return"redirect:/community/list/1";
+			}
+			
+
 			//System.out.println("커뮤 확인::"+cmuvo);
 //			if (loginMember.getEmpNo() != cmuvo.getEmpNo()) {
 //				model.addAttribute("AlertMsg","접근권한이 없습니다");
 //				return "redirect:/community/list/1";
 //			}
 			
-			
 			//첨부파일 확인
 			CommunityAttachmentsVo cmatVo = cmusv.checkFile(no);
 			//System.out.println("파일 확인::"+cmatVo);
 			
+			//댓글정보가져오기
+			//System.out.println("댓글시작");
+			List<CommentsVo> cmtList = cmsv.selectList(no);
+			System.out.println(cmtList);
+			
 			model.addAttribute("cmuvo", cmuvo);
 			model.addAttribute("cmatVo", cmatVo);
+			model.addAttribute("cmtList", cmtList);
 			//System.out.println(ntvo);
 			return"community/detail";
 		}
