@@ -35,6 +35,11 @@ public class ApprovController {
 	@GetMapping("main")
 	public String main(HttpSession session) {
 		
+		if(session.getAttribute("loginMember")==null) {
+			session.setAttribute("toastMsg", "로그인이 필요합니다.");
+			return "redirect:/login";
+		}
+		
 		String empNo = (String) session.getAttribute("empNo");
 		
 		List<ApprovDocumentVo> approvList = service.selectApprovList(empNo);
@@ -48,6 +53,7 @@ public class ApprovController {
 	public String create(HttpServletRequest req, HttpSession session) {
 		
 		if(session.getAttribute("loginMember")==null) {
+			session.setAttribute("toastMsg", "로그인이 필요합니다.");
 			return "redirect:/login";
 		}
 		
@@ -60,15 +66,10 @@ public class ApprovController {
 	@PostMapping("create")
 	public String create(ApprovDocumentVo vo, HttpSession session, HttpServletRequest req) {
 
-//		System.out.println(vo.toString());
-//		
-//		return null;
 		
 		if(vo.getDocFile()!=null && !vo.getDocFile().isEmpty()) {
-			String savePath = req.getServletContext().getRealPath("/resources/upload/approv/doc/");
+			String savePath = req.getServletContext().getRealPath("/resources/upload/doc/");
 			vo.setFileName(vo.getDocFile().getOriginalFilename());
-			
-			vo.setSavePath(savePath);
 			
 			String changeName = FileUploader.fileUpload(vo.getDocFile(), savePath); 
 			
@@ -82,6 +83,7 @@ public class ApprovController {
 		int result = service.insertApprovDoc(vo);
 		
 		if(result==1) {
+			
 			return "redirect:/approv/main";
 		}else {
 			return "redirect:/";
@@ -93,6 +95,7 @@ public class ApprovController {
 	public String createNoElec(HttpServletRequest req, HttpSession session) {
 		
 		if(session.getAttribute("loginMember")==null) {
+			session.setAttribute("toastMsg", "로그인이 필요합니다.");
 			return "redirect:/login";
 		}
 		
@@ -103,10 +106,8 @@ public class ApprovController {
 	public String createNoElec(ApprovDocumentVo vo, HttpSession session, HttpServletRequest req) {
 	
 		if(vo.getDocFile()!=null && !vo.getDocFile().isEmpty()) {
-			String savePath = req.getServletContext().getRealPath("/resources/upload/approv/noelecdoc/");
+			String savePath = req.getServletContext().getRealPath("/resources/upload/noelecdoc/");
 			vo.setFileName(vo.getDocFile().getOriginalFilename());
-			
-			vo.setSavePath(savePath);
 			
 			String changeName = FileUploader.fileUpload(vo.getDocFile(), savePath); 
 			
@@ -128,7 +129,11 @@ public class ApprovController {
 	}
 	
 	@GetMapping("detail")
-	public String detail() {
+	public String detail(HttpSession session) {
+		if(session.getAttribute("loginMember")==null) {
+			session.setAttribute("toastMsg", "로그인이 필요합니다.");
+			return "redirect:/login";
+		}
 		return "approv/approv-detail";
 	}
 	
@@ -188,10 +193,12 @@ public class ApprovController {
 	}
 	
 	@PostMapping("sign/create")
-	public String createSign(DocSignVo vo, HttpServletRequest req) {
+	public String createSign(DocSignVo vo, HttpServletRequest req, HttpSession session) {
+		
 		if(vo.getSignFile()!=null && !vo.getSignFile().isEmpty()) {
 			
-			String savePath = req.getServletContext().getRealPath("/resources/upload/profile/");
+			String savePath = req.getServletContext().getRealPath("/resources/upload/sign/");
+			System.out.println(savePath);
 			vo.setSignOrigin(vo.getSignFile().getOriginalFilename());
 			
 			String changeName = FileUploader.fileUpload(vo.getSignFile(), savePath); 
@@ -199,11 +206,25 @@ public class ApprovController {
 			vo.setSignEdit(changeName);
 		}
 		
-		return "approv/sign-create";
+		MemberVo memberVo = (MemberVo) session.getAttribute("loginMember");
+		
+		vo.setEmpNo(memberVo.getEmpNo());
+		
+		int result = service.insertSignFile(vo);
+		if(result==1) {
+			session.setAttribute("toastMsg", "서명을 저장하였습니다.");
+		}else {
+			session.setAttribute("toastMsg", "서명 저장을 실패했습니다.");
+		}
+		
+		return "approv/approv-main";
 	}
 	
 	@GetMapping("sign/edit")
-	public String editSign() {
+	public String editSign(HttpSession session, HttpServletRequest req) {
+		MemberVo memberVo = (MemberVo) session.getAttribute("loginMember");
+		DocSignVo vo = service.selectSignOne(memberVo);
+		req.setAttribute("docSignVo", vo);
 		return "approv/sign-edit";
 	}
 	

@@ -12,6 +12,5 @@ public class DocSignVo {
 	private MultipartFile signFile;
 	private String signOrigin;
 	private String signEdit;
-	private String signPath;
 
 }

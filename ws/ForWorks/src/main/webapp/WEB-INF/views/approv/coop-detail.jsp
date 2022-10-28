@@ -183,7 +183,7 @@
                             <div class="approv-table">
 
                                     <div>기안자</div>
-                                    <div id="approv-member">결제자</div>
+                                    <div id="approv-member">결재자</div>
 
                                     <div id="creater-sign"></div>
                                     <div>직위</div>

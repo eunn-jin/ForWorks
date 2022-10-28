@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>결제 상세</title>
+<title>결재 상세</title>
 
 <style>
 
@@ -179,7 +179,7 @@
                             <div class="approv-table">
 
                                     <div>기안자</div>
-                                    <div id="approv-member">결제자</div>
+                                    <div id="approv-member">결재자</div>
 
                                     <div id="creater-sign"></div>
                                     <div>직위</div>
@@ -201,7 +201,7 @@
                         <div class="detail-etc default-text">
                             <div class="etc-item">문서번호</div>
                             <div class="etc-item">문서생성일자</div>
-                            <div class="etc-item">문서결제일자</div>
+                            <div class="etc-item">문서결재일자</div>
                         </div>
                         <div class="detail-part default-text">처부</div>
                         <div class="detail-position default-text">직위</div>

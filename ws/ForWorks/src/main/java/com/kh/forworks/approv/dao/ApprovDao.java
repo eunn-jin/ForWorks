@@ -5,6 +5,8 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.forworks.approv.vo.ApprovDocumentVo;
+import com.kh.forworks.approv.vo.DocApprovVo;
+import com.kh.forworks.approv.vo.DocSignVo;
 import com.kh.forworks.member.vo.MemberVo;
 
 public interface ApprovDao {
@@ -44,5 +46,14 @@ public interface ApprovDao {
 
 	//비전자문서 삽입
 	int insertNoElecApprovDoc(SqlSessionTemplate sst, ApprovDocumentVo vo);
+
+	//문서 결제
+	int updateDocApprov(SqlSessionTemplate sst, DocApprovVo vo);
+
+	//서명 생성
+	int insertSignFile(SqlSessionTemplate sst, DocSignVo vo);
+
+	//서명 호출
+	DocSignVo selectSignOne(SqlSessionTemplate sst, MemberVo memberVo);
 
 }

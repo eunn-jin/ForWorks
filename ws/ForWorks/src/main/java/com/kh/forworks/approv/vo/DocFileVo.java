@@ -9,6 +9,5 @@ public class DocFileVo {
 	private String adocNo;
 	private String docfileOrigin;
 	private String docfileEdit;
-	private String docfilePath;
 
 }
