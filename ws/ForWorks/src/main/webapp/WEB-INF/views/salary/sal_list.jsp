@@ -73,7 +73,7 @@
                <div class="page-title">
                    <div class="row">
                        <div class="col-12 col-md-6 order-md-1 order-last">
-                           <h3>Layout Default</h3>
+                           <h3>급여대장목록</h3>
                            <p class="text-subtitle text-muted">The default layout </p>
                        </div>
                        <div class="col-12 col-md-6 order-md-2 order-first">
@@ -88,19 +88,18 @@
                </div>
                <section class="section">
                    <div id="wrap">
-				        <div id="check-date">
-				            <form action="">
-				                급여대장 목록 
-				                <select name="year" id="year" title="년도">
-				                    <option value="">2022</option>
-				                </select> 
-				                <select name="month" id="month" title="월">
-				                    <option value="1">01</option><option value="2">02</option><option value="3">03</option><option value="4">04</option><option value="5">05</option><option value="6">06</option><option value="7">07</option><option value="8">08</option><option value="9">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option>
-				                </select>
-				            </form>
-				        </div>
-				        <div id="check-btn">
-				            <button>+ 체크 명세서공개</button>
+				        <div id="serarch-zone">
+				                  <input type="month" name="salMonth" id="salMonth">
+                                  <select name="dept" id="dept" >
+                                        <option value="">부서선택</option>
+                                        <c:forEach items="${departList}" var="d">
+                                            <option value="${d}">${d}</option>
+                                        </c:forEach>
+                                  </select>
+                                  <button onclick="search()">조회</button>
+                                  <div id="check-btn">
+                                      <button>+명세서공개</button>
+                                  </div>
 				        </div>
 				        <div id="center">
 				            <div class="div-top">체크</div>
@@ -162,6 +161,16 @@
 </div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
+<script>
+    function search(){
+        alert("되나요");
+        var salMonth = document.getElementById("salMonth").value;
+        console.log(salMonth);
+        var dept = document.getElementById("dept").value;
+        console.log(dept);
+    }
+</script>
+
 <script>
 	
 	$().ready(function() {
