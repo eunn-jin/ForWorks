@@ -1,174 +1,71 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
-<%@ page import="java.util.Calendar"%>    
-
-    <%@
-    String yy=request.getParameter("year");
-    String mm=request.getParameter("month");
-    Calendar cal = Calendar.getInstance();
-    
-    int y = cal.get(Calendar.YEAR);
-    int m = cal.get(Calendar.MONTH);
-    
-    if(yy != null && mm != null && !yy.equals("") && !mm.equals("")) {
-        y = Integer.parseInt(yy);
-        m = Integer.parseInt(mm)-1;
-    }
-
-    cal.set(y,m,1); //출력 년,월의 1일날의 요일
-    int dayOfweek = cal.get(Calendar.DAY_OF_WEEK); // 2, 일:1 ~ 토: 7
-    int lastday = cal.getActualMaximum(Calendar.DATE);
-    %>
-        
-
-<!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>캘린더</title>
-
-<style>
-
-   
-
-    html, body{
-        padding: 0px;
-        margin: 0px;
-        font: size 9px;
-        color:#555555;
-    }
-
-    table{
-        border-collapse:collapse;
-    }
-
-    th, td{
-        border:1px solid #cccccc;
-        width: 50px;
-        height: 25px;
-        text-align: center;
-    }
-
-    div, aside, main, header, input {
-        box-sizing: border-box;
-    }
-
-    aside{ 
-        width: 300px;
-        height: 100vh;
-    }
-    
-    main{
-    	width: 100%;
-    	margin-left:300px;
-    }
-    
-    #wrap{
-        display: flex;
-    }
-    
-    a{
-    	text-decoration: none;
-    }
-
-    main{
-        background-color: #EEF1FF;
-        padding-left: 40px;
-        padding-right: 100px;
-        padding-top: 45px;
-    }
-
-    #main-header{
-        font-weight: 800;
-        font-size: 30px;
-        color: #6F5CFA;
-        margin-bottom: 35px;
-    }
-
-    #main-wrap{
-       width: 100%;
-       font-family: 'Inter', sans-serif;
-       display: flex;
-       flex-direction: column;
-    }
-
-  
-
-    
-    
-    
-
-</style>
-
+	<title>일정 캘린더</title>
+	<style>
+	<input type='button' class='add-button' name='add-button' value='버튼' style="float: right;">
+	</style>
 </head>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.css">
+
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/locales-all.js"></script>
+
 <body>
 
-        <%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
+<div id="app">
+	<%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
+
+	<div id="main">
+        <%@ include file="/WEB-INF/views/common/header.jsp" %>
         
-		<%@ include file="/WEB-INF/views/common/header.jsp" %>
-		
-    <div id="wrap">
-
-        <main>
-            
-            <div id="main-wrap">
-
-                <div id="main-header">일정</div>
-                
-                	<setion>
-                		<article>
-                		 	<table>
-                    <caption>
-                        <%=y%>년 <%=m+1%>월
-                    </caption>
-                    <tr>
-                        <th>일</th>
-                        <th>월</th>
-                        <th>화</th>
-                        <th>수</th>
-                        <th>목</th>
-                        <th>금</th>
-                        <th>토</th>
-                    </tr>
-                    <tr>
-                    <%
-                    int count = 0;
-                    for(int s=1; s<dayOfweek; s++) {
-                        out.print("<td></td>");
-                        count++;
-                    }
-                    for(int d=1; d<=lastday; d++) {
-                        count++;
-                    
-                        String color="#555555";
-                        if(count == 7) {
-                            color = "blue";
-                        } else if(count == 1) {
-                            color = "red";
-                        }
-                    %>
-                    
-                    <td style="color:<%=color%>"><%=d%></td>
-
-                    <%
-                    if(count == 7){
-                        out.print("<tr></tr>");
-                        count = 0;
-                        }
-
-                    }
-
-                    while(count < 7) {
-                        out.print("<td></td>");
-                        count++; 
-                    }
-                    %>
-                    </tr>
-                </table>
-                	</article>  
-				</setion>
-	        </main>        
-    </div>
+           
+                            <h3>일정</h3>
+                            <button class = "add-button" type = "button" onclick="click_add();">일정 추가</button>
+                             <div id='calendar'></div>
+                             <script>
+                             document.addEventListener('DOMContentLoaded', function() {
+                                var calendarEl = document.getElementById('calendar');
+                                var calendar = new FullCalendar.Calendar(calendarEl, {
+                                    initialView : 'dayGridMonth', // 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)
+                                    headerToolbar : { // 헤더에 표시할 툴 바
+                                        start : 'prev next today',
+                                        center : 'title',
+                                        end : 'dayGridMonth,dayGridWeek,dayGridDay'
+                                    },
+                                    titleFormat : function(date) {
+                                        return date.date.year + '년 ' + (parseInt(date.date.month) + 1) + '월';
+                                    },
+                                    //initialDate: '2021-07-15', // 초기 날짜 설정 (설정하지 않으면 오늘 날짜가 보인다.)
+                                    selectable : true, // 달력 일자 드래그 설정가능
+                                    droppable : true,
+                                    editable : true,
+                                    nowIndicator: true, // 현재 시간 마크
+                                    locale: 'ko' // 한국어 설정
+                                });
+                                calendar.render();
+                            });
+                             function click_add() {
+                            		var url = "schedulePopup";
+                            		var name = "schedulePopup";
+                            		var option = "width = 600, height = 600 left = 100, top=50,location=no";
+                            		window.open(url,name,option)
+                            	};
+                           </script>  
+                    </div>
+                </div>
+          
+<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
+<script>
+	
+	$().ready(function() {
+		console.log("test:");
+		$('#ex1').addClass("active");
+	});
+	
+</script>
 </html>
