@@ -3,7 +3,7 @@
 
 <html>
 <head>
-	<title>Home</title>
+	<title>공지사항</title>
 </head>
 
 <body>

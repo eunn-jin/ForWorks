@@ -3,7 +3,7 @@
 
 <html>
 <head>
-	<title>Home</title>
+	<title>커뮤니티-수정</title>
 </head>
 <link rel="stylesheet" href="${root}/resources/css/sjy.css">
 <body>
