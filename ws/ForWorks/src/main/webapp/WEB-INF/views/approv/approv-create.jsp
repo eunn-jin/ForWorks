@@ -278,7 +278,7 @@
                         <div class="margin-top"></div>
                         <div class="approv-member-area">
 
-                            <div class="member-label approv-area"><div>결제자 추가</div></div>
+                            <div class="member-label approv-area"><div>결재자 추가</div></div>
 
                             <div class="member-input-area">
 

@@ -10,6 +10,7 @@ import com.kh.forworks.approv.dao.ApprovDao;
 import com.kh.forworks.approv.vo.ApprovDocumentVo;
 import com.kh.forworks.approv.vo.DocApprovVo;
 import com.kh.forworks.approv.vo.DocFormVo;
+import com.kh.forworks.approv.vo.DocSignVo;
 import com.kh.forworks.member.vo.MemberVo;
 
 @Service
@@ -55,7 +56,6 @@ public class ApprovServiceImpl implements ApprovService {
 	//전자문서 생성
 	@Override
 	public int insertApprovDoc(ApprovDocumentVo vo) {
-		// TODO Auto-generated method stub
 		
 		int result = 1;
 		
@@ -96,16 +96,13 @@ public class ApprovServiceImpl implements ApprovService {
 	//전자문서 결재
 	@Override
 	public int updateApprov(DocApprovVo vo) {
-		// TODO Auto-generated method stub
-		// TODO 여기부터
-		return 0;
+		return dao.updateDocApprov(sst, vo);
 	}
 
 
 	//회원 목록 조회
 	@Override
 	public List<MemberVo> selectMemberList() {
-		// TODO Auto-generated method stub
 		return dao.selectMemberList(sst);
 	}
 
@@ -113,13 +110,23 @@ public class ApprovServiceImpl implements ApprovService {
 	//비전자문서 작성
 	@Override
 	public int insertApprovNoElecDoc(ApprovDocumentVo vo) {
-		// TODO Auto-generated method stub
 		
 		int result1 = dao.insertNoElecApprovDoc(sst,vo);
 		
 		int result2 = dao.insertNoElecDoc(sst, vo);
 		
 		return result1*result2;
+	}
+
+	//서명 생성
+	@Override
+	public int insertSignFile(DocSignVo vo) {
+		return dao.insertSignFile(sst, vo);
+	}
+
+	@Override
+	public DocSignVo selectSignOne(MemberVo memberVo) {
+		return dao.selectSignOne(sst,memberVo);
 	}
 
 

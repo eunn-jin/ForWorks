@@ -5,6 +5,7 @@ import java.util.List;
 import com.kh.forworks.approv.vo.ApprovDocumentVo;
 import com.kh.forworks.approv.vo.DocApprovVo;
 import com.kh.forworks.approv.vo.DocFormVo;
+import com.kh.forworks.approv.vo.DocSignVo;
 import com.kh.forworks.member.vo.MemberVo;
 
 public interface ApprovService {
@@ -30,5 +31,11 @@ public interface ApprovService {
 	
 	//결재 or 반려
 	int updateApprov(DocApprovVo vo);
+	
+	//서명 생성
+	int insertSignFile(DocSignVo vo);
+	
+	//서명 호출
+	DocSignVo selectSignOne(MemberVo memberVo);
 
 }

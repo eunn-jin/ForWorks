@@ -100,16 +100,14 @@
 			DOCFILE_NO,
 			ADOC_NO,
 			DOCFILE_ORIGIN,
-			DOCFILE_EDIT,
-			DOCFILE_PATH
+			DOCFILE_EDIT
 		)
 		VALUES
 		(
 			SEQ_DOCFILE_NO.nextval,
 			#{adocNo},
 			#{fileName},
-			#{changeFileName},
-			#{savePath}
+			#{changeFileName}
 		)	
 	</insert>
 	
@@ -149,7 +147,44 @@
 		)
 	</insert>
 	
+	<update id="updateDocApprov">
+		UPDATE DOCAPPROVE
+		SET
+		APPROVE_STATUS = #{approveStatus}
+		WHERE
+		ADOC_NO = #{adocNo}
+		AND
+		EMP_NO = #{empNo}
+	</update>
 	
 	
+	<insert id="insertSignFile">
+		INSERT INTO SIGNFILE
+		(
+			SIGN_NO,
+			EMP_NO,
+			SIGN_ORIGIN,
+			SIGN_EDIT
+		)
+		VALUES
+		(
+			SEQ_SIGNFILE_NO.NEXTVAL,
+			#{empNo},
+			#{signOrigin},
+			#{signEdit}
+		)
+	</insert>
+	
+	<select id="selectSignOne" resultType="DocSignVo">
+		SELECT
+			SIGN_NO,
+			EMP_NO,
+			SIGN_ORIGIN,
+			SIGN_EDIT
+		FROM
+		SIGNFILE
+		WHERE
+		EMP_NO = #{empNo} 
+	</select>
 	
 </mapper>

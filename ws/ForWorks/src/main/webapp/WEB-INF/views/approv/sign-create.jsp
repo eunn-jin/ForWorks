@@ -115,7 +115,7 @@
     
 </head>
 <body>
-
+<form action="" method="post"  enctype="multipart/form-data">
     <div id="wrap">
 
 
@@ -132,14 +132,14 @@
 
                         <div class="file-label approv-area"><div>저장할 서명</div></div>
 
-                        <input type="file" class="approv-area file-input" placeholder="제목을 입력해주세요">
+                        <input type="file" class="approv-area file-input" name="signFile">
                     </div>
 
-                    <div class="sample-img"></div>
+                    <img class="sample-img"></img>
 
 
                     <div class="btn-area">
-                        <button class="approv-btn">뒤로가기</button>
+                        <button type="button" class="approv-btn" onclick="location.href='${root}/approv/main'">뒤로가기</button>
                         <button class="approv-btn">저장하기</button>
                     </div>
                 
@@ -153,8 +153,28 @@
 
 
     </div>
-
+</form>
 </body>
+
+	<script>
+    	
+	    const signFile = document.querySelector('input[name="signFile"]');
+	    signFile.onchange = function () {
+	        const imgTag = document.querySelector('.sample-img');
+	        if(signFile.files.length>0){
+	            const fr = new FileReader();
+	
+	            fr.readAsDataURL(signFile.files[0]);
+	
+	            fr.onload = function(data){
+	                imgTag.src = data.target.result;
+	            }
+	        }else{
+	            imgTag.src = "";
+	        }
+	    }
+	
+    </script>
 
 </html>
 
