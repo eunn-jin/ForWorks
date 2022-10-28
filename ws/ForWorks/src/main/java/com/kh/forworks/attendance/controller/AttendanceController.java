@@ -3,6 +3,7 @@ package com.kh.forworks.attendance.controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.forworks.attendance.service.AttendanceService;
+import com.kh.forworks.attendance.vo.MonthWorkVo;
 import com.kh.forworks.attendance.vo.WorkTimeVo;
 import com.kh.forworks.attendance.vo.WorkVo;
 
@@ -31,6 +33,14 @@ public class AttendanceController {
 	
 	private String getToday() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date now = new Date();        
+		String day = sdf.format(now);
+		
+		return day;
+	}
+	
+	private String getThisMonth() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
 		Date now = new Date();        
 		String day = sdf.format(now);
 		
@@ -59,9 +69,44 @@ public class AttendanceController {
 	}
 	
 	@GetMapping("month")
-	public String monthAtt() {
+	public String monthAtt(Model model) {
+		
+		int empNo = 1;
+		String month = getThisMonth();
+		
+		System.out.println(month);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("empNo", empNo);
+		map.put("month", month);
+		
+		MonthWorkVo monthCnt = service.getMonthWorkCount(map); 
+		monthCnt.setMonth(month);
+		
+		model.addAttribute("monthCnt", monthCnt);
+		
+		System.out.println(monthCnt);
+		
 		return "attendance/monthAttendance";
 	}
+	
+//	@PostMapping("month")
+//	@ResponseBody
+//	public WorkVo MonthWork(String date) {
+//		
+//		//TODO: 화면에 보여줄 것들 가져오기, empNo 바꾸기
+//		int empNo = 1;
+//		
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("empNo", empNo);
+//		map.put("day", date);
+//		
+//		List<WorkVo> work = service.getDayWorkInfo(map);
+//		
+//		System.out.println("work :: " + work + ", "  + date);
+//		
+//		return work;
+//	}
 	
 	@GetMapping("off")
 	public String offManage() {

@@ -20,5 +20,11 @@ public interface AttendanceDao {
 	int updateStatus(SqlSessionTemplate sst, Map<String, Object> map);
 	
 	WorkVo selectDayWorkInfo(SqlSessionTemplate sst, Map<String, Object> map);
+	int selectWorkCnt(SqlSessionTemplate sst, Map<String, Object> map);
+	int selectOffCount(SqlSessionTemplate sst, Map<String, Object> map);
+	int selectHalfOffCount(SqlSessionTemplate sst, Map<String, Object> map);
+	int selectEarlyoutCount(SqlSessionTemplate sst, Map<String, Object> map);
+	int selectLateCount(SqlSessionTemplate sst, Map<String, Object> map);
+	
 
 }

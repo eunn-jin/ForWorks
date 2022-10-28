@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.forworks.attendance.dao.AttendanceDao;
+import com.kh.forworks.attendance.vo.MonthWorkVo;
 import com.kh.forworks.attendance.vo.WorkTimeVo;
 import com.kh.forworks.attendance.vo.WorkVo;
 
@@ -39,9 +40,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 		wvo.setDayWork(day);
 		wvo.setWeekWork(week); 
 		wvo.setMonthWork(month);
-				
-		System.out.println(wvo +"/" + week + "/" + month);
-		
+
 		return wvo;
 	}
 
@@ -66,6 +65,18 @@ public class AttendanceServiceImpl implements AttendanceService {
 		result3 = dao.updateStatus(sst, map);
 		
 		return result1 * result2 * result3;
+	}
+
+	@Override
+	public MonthWorkVo getMonthWorkCount(Map<String, Object> map) {
+		MonthWorkVo mw = new MonthWorkVo();
+		
+		mw.setWorkCount(dao.selectWorkCnt(sst, map));
+		mw.setLateCount(dao.selectLateCount(sst, map));
+		mw.setEarlyoutCount(dao.selectEarlyoutCount(sst, map));
+		mw.setOffCount(dao.selectOffCount(sst, map) + dao.selectHalfOffCount(sst, map)/2);
+		
+		return mw;
 	}
 
 }
