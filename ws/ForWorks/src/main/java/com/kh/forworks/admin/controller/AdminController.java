@@ -43,12 +43,11 @@ public class AdminController {
 		
 		if(chiefAdmin != null) {
 			session.setAttribute("chiefAdmin", chiefAdmin);
-			return "redirect:/foradmin/main";
+			return "redirect:/foradmin/member/1";
 		} else {
 			session.setAttribute("toastMsg", "로그인 실패");
 			return "redirect:/foradmin";
 		}
-		
 	}
 	
 	//회사정보 설정
@@ -66,7 +65,6 @@ public class AdminController {
 	//구성원 승인
 	@GetMapping("approval")
 	public String memberApply(Model model) {
-		
 		List<MemberVo> applyList = adminService.selectApplyList();
 		
 		for(int i = 0; i < applyList.size(); i++) {
@@ -91,8 +89,6 @@ public class AdminController {
 	
 	@PostMapping("memberApprove")
 	public String memberApprove(MemberVo vo, HttpSession session) {
-		
-		System.out.println(vo);
 		int result = adminService.memberApprove(vo);
 		
 		if(result == 1) {
@@ -135,6 +131,8 @@ public class AdminController {
 		
 		return "admin/admin-memberlist";
 	}
+	
+	//구성원 수정/탈퇴처리
 	
 	//운영자 설정
 	@GetMapping("oper")

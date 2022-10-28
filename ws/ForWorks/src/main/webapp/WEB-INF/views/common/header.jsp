@@ -116,7 +116,7 @@
             </li>
             <c:if test="${loginMember.opLevel eq 2}">
 	            <li>
-	              <a class="dropdown-item" href="${root}/foradmin/member"><i class="icon-mid bi bi-wallet me-2"></i> 관리자 메뉴</a>
+	              <a class="dropdown-item" href="${root}/foradmin/member/1"><i class="icon-mid bi bi-wallet me-2"></i> 관리자 메뉴</a>
 	            </li>
             </c:if>
             <li>

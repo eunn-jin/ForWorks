@@ -38,7 +38,7 @@ public class MemberController {
 		int result = memberService.memberJoin(vo);
 		
 		if(result == 1) {
-			session.setAttribute("toastMsg", "회원가입 성공");
+			session.setAttribute("toastMsg", "가입신청 완료! 승인 대기중입니다");
 			return "redirect:/login";
 		} else {
 			session.setAttribute("toastMsg", "회원가입 실패");

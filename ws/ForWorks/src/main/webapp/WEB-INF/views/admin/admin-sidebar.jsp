@@ -68,9 +68,9 @@
 	            <span>기본 설정</span>
 	          </a>
 	          <ul class="submenu active pl-15">
-	            <li class="submenu-item">
+	            <%-- <li class="submenu-item">
 	              <a href="${root}/foradmin/main">회사 정보 설정 ? </a>
-	            </li>
+	            </li> --%>
 	            <li class="submenu-item">
 	              <a href="${root}/foradmin/pos">직무/직급 설정</a>
 	            </li>
