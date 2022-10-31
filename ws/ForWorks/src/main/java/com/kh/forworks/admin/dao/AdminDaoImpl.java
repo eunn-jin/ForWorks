@@ -58,5 +58,20 @@ public class AdminDaoImpl implements AdminDao {
 		return sst.selectList("adminMapper.selectMemberList", addVo, rowBounds);
 	}
 
+	@Override
+	public List<CorpInfoVo> selectOperList(SqlSessionTemplate sst) {
+		return sst.selectList("adminMapper.selectOperList");
+	}
+
+	@Override
+	public List<MemberVo> selectOperMember(SqlSessionTemplate sst, String oplevel) {
+		return sst.selectList("adminMapper.selectOperMember", oplevel);
+	}
+
+	@Override
+	public List<MemberVo> selectSearchMember(SqlSessionTemplate sst, CorpInfoVo vo) {
+		return sst.selectList("adminMapper.selectSearchMember", vo);
+	}
+
 
 }

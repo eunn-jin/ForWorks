@@ -16,5 +16,7 @@ public class CorpInfoVo {
 	//운영자
 	private String opLevel;
 	private String opName;
+	
+	private String keyword;
 
 }

@@ -135,8 +135,41 @@ public class AdminController {
 	//구성원 수정/탈퇴처리
 	
 	//운영자 설정
-	@GetMapping("oper")
-	public String oper() {
+	@GetMapping("oper/{oplevel}")
+	public String oper(Model model, @PathVariable String oplevel) {
+		if(Integer.parseInt(oplevel) < 2) {oplevel = "2";}
+		
+		//운영자 현황 조회
+		List<CorpInfoVo> operList = adminService.selectOperList();
+		model.addAttribute("operList", operList);
+		
+		String opPage = operList.get(Integer.parseInt(oplevel)-1).getOpName();
+		model.addAttribute("opPage", opPage);
+		
+		List<CorpInfoVo> deptList = adminService.selectDeptList();
+		List<CorpInfoVo> posList = adminService.selectPosList();
+		model.addAttribute("deptList", deptList);
+		model.addAttribute("posList", posList);
+		
+		//운영자 목록 조회
+		List<MemberVo> opMemberList = adminService.selectOperMember(oplevel);
+		model.addAttribute("opMemberList", opMemberList);
+		
 		return "admin/admin-operator";
+	}
+	
+	//운영자 지정
+	@PostMapping("opersearch")
+	@ResponseBody
+	public List<MemberVo> operSearch(Model model, String deptNo, String posNo, String keyword, String opName) {
+		CorpInfoVo vo = new CorpInfoVo();
+		vo.setDeptNo(deptNo);
+		vo.setPosNo(posNo);
+		vo.setKeyword(keyword);
+		vo.setOpName(opName);
+		
+		List<MemberVo> searchMember = adminService.selectSearchMember(vo);
+		
+		return searchMember;
 	}
 }

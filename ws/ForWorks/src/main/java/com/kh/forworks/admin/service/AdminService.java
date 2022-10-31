@@ -26,5 +26,11 @@ public interface AdminService {
 
 	List<MemberVo> memberList(PageVo pv, AddressVo addVo);
 
+	List<CorpInfoVo> selectOperList();
+
+	List<MemberVo> selectOperMember(String oplevel);
+
+	List<MemberVo> selectSearchMember(CorpInfoVo vo);
+
 
 }
