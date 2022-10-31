@@ -1,9 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page session="false" %>
+   
+
 <html>
 <head>
-	<title>Home</title>
+	<title>Home</title> 
+    <script src="${root }/resources/summernote/summernote-lite.js"></script>
+    <script src="${root }/resources/summernote/lang/summernote-ko-KR.js"></script>
+    <link rel="stylesheet" href="${root}/resources/summernote/summernote-lite.css">
 </head>
 <style>
  	body{
@@ -21,11 +25,7 @@
         font-size: larger;
         font-weight: bolder;
     }
-    #center{
-        display: grid;
-        grid-template-columns: 4fr 8fr;
-        grid-template-rows: 40px 40px 40px 50px 70px;
-    }
+    
 </style>
 <body>
 
@@ -40,8 +40,8 @@
                <div class="page-title">
                    <div class="row">
                        <div class="col-12 col-md-6 order-md-1 order-last">
-                           <h3>Layout Default</h3>
-                           <p class="text-subtitle text-muted">The default layout </p>
+                           <h3>문서 작성</h3>
+                           <p class="text-subtitle text-muted"></p>
                        </div>
                        <div class="col-12 col-md-6 order-md-2 order-first">
                            <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
@@ -59,16 +59,12 @@
 				        <form action="">
 				            
 				            <div id="center">
-				                <div>보존 마감 날짜</div>
-				                <div><input type="date"></div>
-				                <div>공개범위</div>
-				                <div>전체공개</div>
-				                <div>제목</div>
-				                <div><input type="text"></div>
-				                <div>첨부파일</div>
-				                <div><input type="file"></div>
-				                <div>내용</div>
-				                <textarea name="" id="" cols="30" rows="10"></textarea>
+				                <table>
+                                    <tr>
+                                        <td>제목</td>
+                                        <td></td>
+                                    </tr>
+                                </table>
 				            </div>
 				            
 				            <div><input type="submit" value="등록하기"></div>
@@ -83,6 +79,22 @@
 </div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
+<!--summernote-->
+<script>
+    $(document).ready(function() {
+        //여기 아래 부분
+        $('#summernote').summernote({
+            height: 300,                 // 에디터 높이
+            minHeight: null,             // 최소 높이
+            maxHeight: null,             // 최대 높이
+            focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
+            lang: "ko-KR",					// 한글 설정
+            placeholder: '최대 2048자까지 쓸 수 있습니다'	//placeholder 설정
+            
+        });
+    });
+</script>
+
 <script>
 	
 	$().ready(function() {

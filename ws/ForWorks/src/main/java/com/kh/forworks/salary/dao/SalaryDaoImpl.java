@@ -1,5 +1,6 @@
 package com.kh.forworks.salary.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -38,7 +39,27 @@ public class SalaryDaoImpl implements SalaryDao {
 	//급여대장작성 저장
 	@Override
 	public int insertSal(SqlSessionTemplate sst, SalaryVo sv) {
-		return sst.insert("salaryMapper.insertSal",sv);
+		return sst.insert("salaryMapper.insertSal" , sv);
+	}
+	//급여대장리스트
+	@Override
+	public List<SalaryVo> selectList(SqlSessionTemplate sst, SalaryVo sv) {
+		return sst.selectList("salaryMapper.selectList" , sv);
+	}
+	//공개여부 바꾸기
+	@Override
+	public int updateStatus(SqlSessionTemplate sst, String no) {
+		return sst.update("salaryMapper.updateStatus" , no);
+	}
+	//회원별 급여명세서조회
+	@Override
+	public List<SalaryVo> selectSalList(SqlSessionTemplate sst,HashMap map) {
+		return sst.selectList("salaryMapper.salList" , map);
+	}
+	//급여명세서 디테일조회
+	@Override
+	public SalaryVo selectDetail(SqlSessionTemplate sst, HashMap map) {
+		return sst.selectOne("salaryMapper.detail" , map);
 	}
 
 }

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page session="false" %>
+
+
 <html>
 <head>
 	<title>Home</title>
@@ -20,7 +21,7 @@
     }
     #title{
         text-align: center;
-        font-size: larger;
+        font-size: larger;  
         font-weight: bolder;
     }
     .back-color{
@@ -55,97 +56,17 @@
                    </div>
                </div>
                <section class="section">
-                   <div id="wrap">
-				        <div id="title">급여명세서</div>
-				        <div>2022 10월</div>
-		            	<div id="center">
-							<table>
-								<tr>
-									<td>성명</td>
-									<td>홍길동</td>
-								</tr>
-								<tr>
-									<td>지급일</td>
-									<td>2022.10.23</td>
-								</tr>
-							</table>
-							<br>
-							<table>
-								<tr>
-									<td colspan="2">임금지급내역</td>
-									<td colspan="2">공제내역</td>
-								</tr>
-								<tr>
-									<td>임금항목</td>
-									<td>지급금액(원)</td>
-									<td>공제항목</td>
-									<td>지급금액(원)</td>
-								</tr>
-
-								<tr>
-									<td>기본급</td>
-									<td>2,000,000</td>
-									<td>소득세</td>
-									<td>20,000</td>
-								</tr>
-
-								<tr>
-									<td>수당</td>
-									<td></td>
-									<td>국민연금</td>
-									<td>90,000</td>
-								</tr>
-
-								<tr>
-									<td>상여금</td>
-									<td></td>
-									<td>건강보험</td>
-									<td>68,000</td>
-								</tr>
-
-								<tr>
-									<td></td>
-									<td></td>
-									<td>고용보험</td>
-									<td>16,000</td>
-								</tr>
-
-								<tr>
-									<td>지급액 계</td>
-									<td>2,000,000</td>
-									<td>공제액 계</td>
-									<td>194,000</td>
-								</tr>
-
-								<tr>
-									<td>실지급액</td>
-									<td></td>
-									<td colspan="3">1,687,000</td>
-									<td></td>
-								</tr>
-							</table>
-							<br>
-							<span>수당내역</span>
-							<table>
-								<tr>
-									<td>수당명</td>
-									<td>시간</td>
-									<td>지급액(원)</td>
-								</tr>
-								
-							</table>
-							<span>상여금내역</span>
-							<table>
-								<tr>
-									<td>상여명</td>
-									<td>상여내역</td>
-									<td>지급액(원)</td>
-								</tr>
-							</table>
-						</div>
-		    		</div>
-					<button onclick="return window.print();">프린트</button>
-					
+				<select name="year" id="year" title="년도" ></select> 
+                <div id="wrap">
+                    <table id="test">
+                        <thead><tr><td>지급월</td><td>지급종류</td><td>지급일</td><td>상세보기</td></tr></thead>
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+                    
+		    	</div>
+	
                </section>
            </div>
            
@@ -154,6 +75,61 @@
 </div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
+
+<!--SELECTBOX 연도 설정-->
+<script>
+    $(document).ready(function(){
+        var now = new Date();
+        var year = "";
+        var com_year = now.getFullYear();
+        console.log("com_year" + com_year);
+        $("#year").append("<option value=''>연도</option>");
+        for(var i = (com_year); i >= 2000 ; i--){
+            $("#year").append("<option value='"+i+"'>"+i+"년"+"</option>");
+        }
+    })
+
+</script>
+<!--연도에 따른 급여명세서 조회-->
+<script>
+    $("select[name=year]").change(function(){
+        var year = $(this).val();
+        console.log(year);
+        $.ajax({
+            url : "/ForWorks/salary/slipList",
+            type : "POST",
+            data : {
+                year : year
+            },
+            success : function(data){
+                $('#test>tbody').empty();
+                
+                for(var i = 0 ; i <data.length ; i++){
+                    if(data[i].salCate == 1){
+                        data[i].salCate = "월급";
+                    }else if(data[i].salCate == 2){
+                        data[i].salCate = "상여";
+                    }else{
+                        data[i].salCate = "월급+상여";
+                    }
+                    $('#test>tbody').append('<tr><td>'+data[i].salMonth+'</td><td>'+data[i].salCate+'</td><td>'+data[i].payDate+'</td><td><button onclick="detail('+data[i].no+')">보기</button></td></tr>')
+                };
+               
+            }
+            ,error : function(){
+                alert("다시 시도해주세요");
+            }
+            
+        })
+    })
+</script>
+
+<script>
+    function detail(no){
+        window.open("${root}/salary/payslipDetail/"+no, "_blank", "width=500, height=500")
+    }
+    
+</script>
 
 <script>
 	
