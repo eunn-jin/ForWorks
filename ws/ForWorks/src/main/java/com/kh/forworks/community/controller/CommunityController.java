@@ -172,6 +172,12 @@ public class CommunityController {
 			List<CommentsVo> cmtList = cmsv.selectList(no);
 			System.out.println(cmtList);
 			
+			if (cmatVo!=null) {
+				String ext = cmatVo.getCmatChange().substring(cmatVo.getCmatChange().lastIndexOf("."));
+				System.out.println(ext);
+				model.addAttribute("ext",ext);
+			}
+			
 			model.addAttribute("cmuvo", cmuvo);
 			model.addAttribute("cmatVo", cmatVo);
 			model.addAttribute("cmtList", cmtList);
@@ -189,6 +195,12 @@ public class CommunityController {
 			//첨부파일 확인
 			CommunityAttachmentsVo cmatVo = cmusv.checkFile(no);
 			//System.out.println("파일 확인::"+cmatVo);
+			
+			if (cmatVo!=null) {
+				String ext = cmatVo.getCmatChange().substring(cmatVo.getCmatChange().lastIndexOf("."));
+				System.out.println(ext);
+				model.addAttribute("ext",ext);
+			}
 			
 			model.addAttribute("cmuvo", cmuvo);
 			model.addAttribute("cmatVo", cmatVo);
