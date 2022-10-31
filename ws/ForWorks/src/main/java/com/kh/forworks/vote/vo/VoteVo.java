@@ -1,11 +1,14 @@
 package com.kh.forworks.vote.vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Data;
 
 @Data
 public class VoteVo {
 	
 	//투표
+	private String rownum;
 	private String vtNo;
 	private String vtCreate;
 	private String vtEnd;
@@ -15,6 +18,9 @@ public class VoteVo {
 	private String vtTitle;
 	private String vtContent;
 	private String empNo;
+	
+	//파일 정보
+	private MultipartFile vtFile;
 	
 }
 

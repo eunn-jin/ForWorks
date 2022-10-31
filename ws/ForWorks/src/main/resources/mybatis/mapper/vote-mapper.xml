@@ -2,4 +2,94 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="voteMapper">
   
+	<select id="selectAlldp" resultType="com.kh.forworks.department.vo.DepartmentVo">
+		SELECT * 
+		FROM DEPARTMENT
+	</select>
+	
+	<!-- 전체 투표 개수 -->
+	<select id="selectTotalCount" resultType="int">
+		SELECT COUNT(*)
+		FROM VOTE
+		WHERE VT_STATUS = 'I'
+		OR VT_STATUS ='E'
+	</select>
+	
+	<select id="selectList" resultType="com.kh.forworks.vote.vo.VoteVo">
+		SELECT ROWNUM, X.*
+		FROM(SELECT 
+		    V.VT_NO
+		    ,V.VT_CREATE
+		    ,V.VT_END
+		    ,V.VT_DTDATE
+		    ,V.VT_UPDATE
+		    ,V.VT_STATUS
+		    ,V.VT_TITLE
+		    ,V.VT_CONTENT
+		    ,E.EMP_NAME AS EMP_NO
+		    
+		    FROM VOTE V
+		    
+		    JOIN EMPLOYEE E ON E.EMP_NO = V.EMP_NO
+		    WHERE V.VT_STATUS = 'I'
+		    OR V.VT_STATUS = 'E'
+		    )X
+		 ORDER BY ROWNUM DESC			
+	</select>	
+	
+	<!--투표 진행중 -->
+	<select id="selecting" resultType="int">
+		SELECT COUNT(*)
+		FROM VOTE
+		WHERE VT_STATUS = 'I'
+	</select>
+	
+	<select id="selectListing" resultType="com.kh.forworks.vote.vo.VoteVo">
+		SELECT ROWNUM, X.*
+		FROM(SELECT 
+		    V.VT_NO
+		    ,V.VT_CREATE
+		    ,V.VT_END
+		    ,V.VT_DTDATE
+		    ,V.VT_UPDATE
+		    ,V.VT_STATUS
+		    ,V.VT_TITLE
+		    ,V.VT_CONTENT
+		    ,E.EMP_NAME AS EMP_NO
+		    
+		    FROM VOTE V
+		    
+		    JOIN EMPLOYEE E ON E.EMP_NO = V.EMP_NO
+		    WHERE V.VT_STATUS = 'I'
+		    )X
+		 ORDER BY ROWNUM DESC			
+	</select>
+	
+	<!--투표 마감 -->
+	<select id="selectEnd" resultType="int">
+		SELECT COUNT(*)
+		FROM VOTE
+		WHERE VT_STATUS = 'E'
+	</select>
+	
+	<select id="selectListEnd" resultType="com.kh.forworks.vote.vo.VoteVo">
+		SELECT ROWNUM, X.*
+		FROM(SELECT 
+		    V.VT_NO
+		    ,V.VT_CREATE
+		    ,V.VT_END
+		    ,V.VT_DTDATE
+		    ,V.VT_UPDATE
+		    ,V.VT_STATUS
+		    ,V.VT_TITLE
+		    ,V.VT_CONTENT
+		    ,E.EMP_NAME AS EMP_NO
+		    
+		    FROM VOTE V
+		    
+		    JOIN EMPLOYEE E ON E.EMP_NO = V.EMP_NO
+		    WHERE V.VT_STATUS = 'E'
+		    )X
+		 ORDER BY ROWNUM DESC					
+	</select>		
 </mapper>
