@@ -1,5 +1,6 @@
 package com.kh.forworks.attendance.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -102,6 +103,11 @@ public class AttendanceDaoImpl implements AttendanceDao {
 	@Override
 	public int selectLateCount(SqlSessionTemplate sst, Map<String, Object> map) {
 		return sst.selectOne("attendanceMapper.selectLateCount", map);
+	}
+
+	@Override
+	public List<WorkVo> selectWorkList(SqlSessionTemplate sst, Map<String, Object> map) {
+		return sst.selectList("attendanceMapper.selectWorkList", map);
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.kh.forworks.attendance.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -25,6 +26,7 @@ public interface AttendanceDao {
 	int selectHalfOffCount(SqlSessionTemplate sst, Map<String, Object> map);
 	int selectEarlyoutCount(SqlSessionTemplate sst, Map<String, Object> map);
 	int selectLateCount(SqlSessionTemplate sst, Map<String, Object> map);
+	List<WorkVo> selectWorkList(SqlSessionTemplate sst, Map<String, Object> map);
 	
 
 }

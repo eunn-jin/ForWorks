@@ -1,5 +1,6 @@
 package com.kh.forworks.attendance.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.kh.forworks.attendance.vo.MonthWorkVo;
@@ -15,6 +16,7 @@ public interface AttendanceService {
 	int outWork(Map<String, Object> map);
 	
 	MonthWorkVo getMonthWorkCount(Map<String, Object> map);
+	List<WorkVo> getWorkList(Map<String, Object> map);
 
 
 }
