@@ -16,20 +16,22 @@ public class ApprovDaoImpl implements ApprovDao {
 	//미결재 문서 조회
 	@Override
 	public List<ApprovDocumentVo> selectApprovList(SqlSessionTemplate sst, String empNo) {
-		// TODO Auto-generated method stub
-		return null;
+		return sst.selectList("approvMapper.selectApprovList", empNo);
 	}
 	//미확인 협조 문서 조회
 	@Override
 	public List<ApprovDocumentVo> selectCoopList(SqlSessionTemplate sst, String empNo) {
-		// TODO Auto-generated method stub
-		return null;
+		return sst.selectList("approvMapper.selectCoopList", empNo);
 	}
 	//미확인 참조 문서 조회
 	@Override
 	public List<ApprovDocumentVo> selectReferList(SqlSessionTemplate sst, String empNo) {
-		// TODO Auto-generated method stub
-		return null;
+		return sst.selectList("approvMapper.selectReferList", empNo);
+	}
+	//반려문서 목록 호출
+	@Override
+	public List<ApprovDocumentVo> selectRejectApprovList(SqlSessionTemplate sst, String empNo) {
+		return sst.selectList("approvMapper.selectRejectApprovList", empNo);
 	}
 
 	//회원 목록 조회
@@ -98,10 +100,18 @@ public class ApprovDaoImpl implements ApprovDao {
 		return sst.insert("approvMapper.insertSignFile", vo);
 	}
 	
+	//서명 선택
 	@Override
 	public DocSignVo selectSignOne(SqlSessionTemplate sst, MemberVo memberVo) {
 		return sst.selectOne("approvMapper.selectSignOne", memberVo);
 	}
+	
+	//서명 수정
+	@Override
+	public int updateSignFile(SqlSessionTemplate sst, DocSignVo vo) {
+		return sst.update("approvMapper.updateSignOne", vo);
+	}
+	
 
 	
 }

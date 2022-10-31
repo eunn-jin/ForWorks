@@ -16,6 +16,8 @@ public interface ApprovService {
 	List<ApprovDocumentVo> selectCoopList(String empNo);
 	//미확인 참조문서 목록 호출
 	List<ApprovDocumentVo> selectReferList(String empNo);
+	//반려 문서 목록 호출
+	List<ApprovDocumentVo> selectRejectApprovList(String empNo);
 	
 	//양식 목록 호출
 	List<DocFormVo> selectFormList();
@@ -37,5 +39,8 @@ public interface ApprovService {
 	
 	//서명 호출
 	DocSignVo selectSignOne(MemberVo memberVo);
+	
+	//서명 수정
+	int updateSignFile(DocSignVo vo);
 
 }

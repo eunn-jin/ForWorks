@@ -19,6 +19,9 @@ public interface ApprovDao {
 
 	//미확인 참조문서 목록 호출
 	List<ApprovDocumentVo> selectReferList(SqlSessionTemplate sst, String empNo);
+	
+	//반려 문서 목록 호출
+	List<ApprovDocumentVo> selectRejectApprovList(SqlSessionTemplate sst, String empNo);
 
 	//회원 목록 조회
 	List<MemberVo> selectMemberList(SqlSessionTemplate sst);
@@ -55,5 +58,10 @@ public interface ApprovDao {
 
 	//서명 호출
 	DocSignVo selectSignOne(SqlSessionTemplate sst, MemberVo memberVo);
+
+	//서명 수정
+	int updateSignFile(SqlSessionTemplate sst, DocSignVo vo);
+
+	
 
 }

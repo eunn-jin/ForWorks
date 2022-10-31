@@ -45,6 +45,13 @@ public class ApprovServiceImpl implements ApprovService {
 		// TODO Auto-generated method stub
 		return dao.selectReferList(sst, empNo);
 	}
+	
+	//반려문서 목록 호출
+	@Override
+	public List<ApprovDocumentVo> selectRejectApprovList(String empNo) {
+		// TODO Auto-generated method stub
+		return dao.selectRejectApprovList(sst, empNo);
+	}
 
 	//양식 목록 호출
 	@Override
@@ -124,10 +131,19 @@ public class ApprovServiceImpl implements ApprovService {
 		return dao.insertSignFile(sst, vo);
 	}
 
+	//서명 선택
 	@Override
 	public DocSignVo selectSignOne(MemberVo memberVo) {
 		return dao.selectSignOne(sst,memberVo);
 	}
+
+	//서명 수정
+	@Override
+	public int updateSignFile(DocSignVo vo) {
+		return dao.updateSignFile(sst, vo);
+	}
+
+	
 
 
 

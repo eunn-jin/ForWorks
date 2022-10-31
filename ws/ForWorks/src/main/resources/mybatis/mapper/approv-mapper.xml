@@ -1,6 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="approvMapper">
+
+	<select id="selectApprovList" resultType="ApprovDocumentVo">
+		SELECT 
+			A.ADOC_NO
+			A.ADOC_NAME
+			A.ADOC_CONTENT
+			A.EMP_NO
+			A.DRAFT_DATE
+			A.NOELEC_STATUS
+		FROM APPROVEDOCUMENT A
+		RIGHT JOIN DOCAPPROVE D
+			ON A.ADOC_NO = D.ADOC_NO
+		WEHERE
+		D.EMP_NO = #{empNo}
+		AND
+		APPROVE_STATUS != 'R'
+	</select>
+	
+	<select id="selectCoopList" resultType="ApprovDocumentVo">
+		SELECT 
+			A.ADOC_NO
+			A.ADOC_NAME
+			A.ADOC_CONTENT
+			A.EMP_NO
+			A.DRAFT_DATE
+			A.NOELEC_STATUS
+		FROM APPROVEDOCUMENT A
+		RIGHT JOIN DOCCOOP D
+			ON A.ADOC_NO = D.ADOC_NO
+		WEHERE
+		D.EMP_NO = #{empNo}
+	</select>
+	
+	<select id="selectReferList" resultType="ApprovDocumentVo">
+		SELECT 
+			A.ADOC_NO
+			A.ADOC_NAME
+			A.ADOC_CONTENT
+			A.EMP_NO
+			A.DRAFT_DATE
+			A.NOELEC_STATUS
+		FROM APPROVEDOCUMENT A
+		RIGHT JOIN DOCREFER D
+			ON A.ADOC_NO = D.ADOC_NO
+		WEHERE
+		D.EMP_NO = #{empNo}
+	</select>
+	
+	<select id="selectRejectApprovList" resultType="ApprovDocumentVo">
+		SELECT 
+			A.ADOC_NO
+			A.ADOC_NAME
+			A.ADOC_CONTENT
+			A.EMP_NO
+			A.DRAFT_DATE
+			A.NOELEC_STATUS
+		FROM APPROVEDOCUMENT A
+		RIGHT JOIN DOCREFER D
+			ON A.ADOC_NO = D.ADOC_NO
+		WEHERE
+		D.EMP_NO = #{empNo}
+		AND
+		APPROVE_STATUS = 'R'
+	</select>
 	
 	<select id="selectMemberList" resultType="MemberVo">
 		SELECT 
@@ -186,5 +250,14 @@
 		WHERE
 		EMP_NO = #{empNo} 
 	</select>
+	
+	<update id="updateSignOne">
+		UPDATE SIGNFILE
+		SET
+		SIGN_ORIGIN = #{signOrigin},
+		SIGN_EDIT = #{signEdit} 
+		WHERE
+		EMP_NO = #{empNo} 
+	</update>
 	
 </mapper>
