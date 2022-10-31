@@ -1,5 +1,6 @@
 package com.kh.forworks.attendance.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -77,6 +78,11 @@ public class AttendanceServiceImpl implements AttendanceService {
 		mw.setOffCount(dao.selectOffCount(sst, map) + dao.selectHalfOffCount(sst, map)/2);
 		
 		return mw;
+	}
+
+	@Override
+	public List<WorkVo> getWorkList(Map<String, Object> map) {
+		return dao.selectWorkList(sst, map);
 	}
 
 }

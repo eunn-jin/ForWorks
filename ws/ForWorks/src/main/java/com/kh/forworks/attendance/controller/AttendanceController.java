@@ -83,30 +83,36 @@ public class AttendanceController {
 		MonthWorkVo monthCnt = service.getMonthWorkCount(map); 
 		monthCnt.setMonth(month);
 		
+		List<WorkVo> work = service.getWorkList(map);
+		
 		model.addAttribute("monthCnt", monthCnt);
+		model.addAttribute("workList", work);
 		
 		System.out.println(monthCnt);
+		System.out.println(work);
 		
 		return "attendance/monthAttendance";
 	}
 	
-//	@PostMapping("month")
-//	@ResponseBody
-//	public WorkVo MonthWork(String date) {
-//		
-//		//TODO: 화면에 보여줄 것들 가져오기, empNo 바꾸기
-//		int empNo = 1;
-//		
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		map.put("empNo", empNo);
-//		map.put("day", date);
-//		
-//		List<WorkVo> work = service.getDayWorkInfo(map);
-//		
-//		System.out.println("work :: " + work + ", "  + date);
-//		
-//		return work;
-//	}
+	@PostMapping("month")
+	@ResponseBody
+	public List<WorkVo> MonthWork(String month) {
+		
+		//TODO: 화면에 보여줄 것들 가져오기, empNo 바꾸기
+		int empNo = 1;
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("empNo", empNo);
+		map.put("month", month);
+		
+		MonthWorkVo monthCnt = service.getMonthWorkCount(map); 
+		monthCnt.setMonth(month);
+		List<WorkVo> workList = service.getWorkList(map);
+		
+		System.out.println("work :: " + workList + ", "  + month);
+		
+		return workList;
+	}
 	
 	@GetMapping("off")
 	public String offManage() {

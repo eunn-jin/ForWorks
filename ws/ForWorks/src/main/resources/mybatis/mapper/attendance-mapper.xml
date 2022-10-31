@@ -102,8 +102,16 @@
 		WHERE NVL(TRUNC((TO_DATE(TO_CHAR(IN_TIME, 'HH24:MI'),'HH24:MI') - TO_DATE(DI_TIME, 'HH24:MI')) * 24 * 60), 0) <![CDATA[>]]> 0
 	</select>
 	
-	<select id="selectMonthWorkList">
-		
+	<select id="selectWorkList" resultType="WorkVo">
+		SELECT 
+		    NO, NAME AS STATUS_NAME,
+		    NVL(TO_CHAR(IN_TIME, 'HH24:MI'), 0) AS IN_TIME, 
+		    NVL(TO_CHAR(OUT_TIME, 'HH24:MI'), 0) AS OUT_TIME,
+		    TO_CHAR(IN_TIME, 'YYYY-MM-DD') AS WORK_DATE
+		FROM 
+		    (SELECT * 
+		        FROM (SELECT NO, STATUS_CODE, IN_TIME, OUT_TIME, OVER_TIME FROM WORK WHERE EMP_NO = #{empNo} AND TO_CHAR(IN_TIME, 'YYYY-MM') = #{month})
+		        JOIN WORK_STATUS S ON STATUS_CODE = S.CODE)
 	</select>
 	
 </mapper>
