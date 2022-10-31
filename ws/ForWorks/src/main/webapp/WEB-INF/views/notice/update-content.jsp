@@ -82,14 +82,21 @@ table {
                                     <td style="width:10%;">등록<br>파일</td>
                                     <td style="width:40%; background: white;">
                                         
-                                        <c:if test="${ntatVo eq null}">
-                                            <div>첨부파일이 없습니다.</div>
-                                        </c:if>
-                                        <c:if test="${ntatVo ne null}">
-                                            <div>
-                                                <img src="${root}/resources/upload/notice/${ntatVo.ntatChange}" width="128px" height="128px">
+                                        <c:choose>
+                                            <c:when test="${ntatVo eq null}">
+                                                <div style="height: 10vh;">첨부파일이 없습니다.</div>
+                                            </c:when>
+                                            
+                                            <c:when test="${ext eq '.jpg' || ext eq '.png'}">
+                                            <div >
+                                                <a href="${root}/resources/upload/notice/${ntatVo.ntatChange}" download=""><img src="${root}/resources/upload/notice/${ntatVo.ntatChange}" width="128px" height="128px"></a>
                                             </div>
-                                        </c:if>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <a href="${root}/resources/upload/notice/${ntatVo.ntatChange}" download="">${ntatVo.ntatChange}</a>
+                                            </c:otherwise>
+                                            
+                                        </c:choose>
                                     </td>
 
                                     
