@@ -33,7 +33,7 @@ public class ApprovController {
 	}
 
 	@GetMapping("main")
-	public String main(HttpSession session) {
+	public String main(HttpSession session, HttpServletRequest req) {
 		
 		if(session.getAttribute("loginMember")==null) {
 			session.setAttribute("toastMsg", "로그인이 필요합니다.");
@@ -43,8 +43,16 @@ public class ApprovController {
 		String empNo = (String) session.getAttribute("empNo");
 		
 		List<ApprovDocumentVo> approvList = service.selectApprovList(empNo);
+		List<ApprovDocumentVo> rejectApprovList = service.selectRejectApprovList(empNo);
 		List<ApprovDocumentVo> coopList = service.selectCoopList(empNo);
 		List<ApprovDocumentVo> referList = service.selectReferList(empNo);
+		
+		req.setAttribute("approvList", approvList);
+		req.setAttribute("rejectApprovList", rejectApprovList);
+		req.setAttribute("coopList", coopList);
+		req.setAttribute("referList", referList);
+		
+		
 		
 		return "approv/approv-main";
 	}
@@ -156,6 +164,15 @@ public class ApprovController {
 		}
 	}
 	
+	@GetMapping("edit")
+	public String edit(HttpSession session) {
+		if(session.getAttribute("loginMember")==null) {
+			session.setAttribute("toastMsg", "로그인이 필요합니다.");
+			return "redirect:/login";
+		}
+		return "approv/approv-edit";
+	}
+	
 	@GetMapping("coop")
 	public String coop() {
 		return "approv/coop-detail";
@@ -226,6 +243,34 @@ public class ApprovController {
 		DocSignVo vo = service.selectSignOne(memberVo);
 		req.setAttribute("docSignVo", vo);
 		return "approv/sign-edit";
+	}
+	
+	@PostMapping("sign/edit")
+	public String editSign(DocSignVo vo, HttpServletRequest req, HttpSession session) {
+		
+		if(vo.getSignFile()!=null && !vo.getSignFile().isEmpty()) {
+			
+			String savePath = req.getServletContext().getRealPath("/resources/upload/sign/");
+			System.out.println(savePath);
+			vo.setSignOrigin(vo.getSignFile().getOriginalFilename());
+			
+			String changeName = FileUploader.fileUpload(vo.getSignFile(), savePath); 
+			
+			vo.setSignEdit(changeName);
+		}
+		
+		MemberVo memberVo = (MemberVo) session.getAttribute("loginMember");
+		
+		vo.setEmpNo(memberVo.getEmpNo());
+		
+		int result = service.updateSignFile(vo);
+		if(result==1) {
+			session.setAttribute("toastMsg", "서명을 저장하였습니다.");
+		}else {
+			session.setAttribute("toastMsg", "서명 저장을 실패했습니다.");
+		}
+		
+		return "approv/approv-main";
 	}
 	
 	
