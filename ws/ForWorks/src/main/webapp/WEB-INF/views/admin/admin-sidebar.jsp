@@ -98,7 +98,7 @@
           </a>
           <ul class="submenu active pl-15">
             <li class="submenu-item">
-              <a href="${root}/foradmin/oper">관리자 지정</a>
+              <a href="${root}/foradmin/oper/2">관리자 지정</a>
             </li>
           </ul>
         </li>

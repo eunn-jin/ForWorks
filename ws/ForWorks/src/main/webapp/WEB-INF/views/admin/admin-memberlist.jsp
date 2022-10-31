@@ -69,7 +69,7 @@
                    		<!-- search bar  -->
                         <div class="email-fixed-search flex-grow-1 mt-2">
                           <div class="form-group position-relative mb-0 has-icon-left">
-                            <input name="keyword" type="text" class="form-control" placeholder="이름 또는 연락처 검색" style="max-width: 600px; width: 60%" />
+                            <input value="${addressParam.keyword}" name="keyword" type="text" class="form-control" onkeypress="if(event.keyCode == 13){searchKeyword();}" placeholder="이름 또는 연락처 검색" style="max-width: 600px; width: 60%" />
                             <div class="form-control-icon">
                               <svg class="bi" width="1.5em" height="1.5em" fill="currentColor">
                                 <use xlink:href="${root}/resources/vendors/bootstrap-icons/bootstrap-icons.svg#search" />
@@ -88,10 +88,36 @@
                     			</c:otherwise>
                    			</c:choose>
                      	<c:if test="${pv.currentPage ne 1}">
-                       <a href="${root}/foradmin/member/${(pv.currentPage) - 1}" class="btn btn-sm btn-outline-primary btn-icon email-pagination-prev d-none d-sm-block" style="margin-right: 5px">&lt;</a>
+                     		<c:choose>
+                       			<c:when test="${not empty addressParam.keyword and not empty addressParam.sort}">
+		                        	<a href="${root}/foradmin/member/${(pv.currentPage) - 1}?keyword=${addressParam.keyword}&sort=${addressParam.sort}&order=${addressParam.order}" class="btn btn-sm btn-outline-primary btn-icon email-pagination-prev d-none d-sm-block" style="margin-right: 5px">&lt;</a>
+                       			</c:when>
+                       			<c:when test="${not empty addressParam.keyword}">
+		                        	<a href="${root}/foradmin/member/${(pv.currentPage) - 1}?keyword=${addressParam.keyword}" class="btn btn-sm btn-outline-primary btn-icon email-pagination-prev d-none d-sm-block" style="margin-right: 5px">&lt;</a>
+                       			</c:when>
+                       			<c:when test="${not empty addressParam.sort}">
+		                        	<a href="${root}/foradmin/member/${(pv.currentPage) - 1}?sort=${addressParam.sort}&order=${addressParam.order}" class="btn btn-sm btn-outline-primary btn-icon email-pagination-prev d-none d-sm-block" style="margin-right: 5px">&lt;</a>
+                       			</c:when>
+                       			<c:otherwise>
+		                        	<a href="${root}/foradmin/member/${(pv.currentPage) - 1}" class="btn btn-sm btn-outline-primary btn-icon email-pagination-prev d-none d-sm-block" style="margin-right: 5px">&lt;</a>
+                       			</c:otherwise>
+                       		</c:choose>
                      	</c:if>
                      	<c:if test="${pv.currentPage ne pv.maxPage}">
-                      	<a href="${root}/foradmin/member/${(pv.currentPage) + 1}" class="btn btn-sm btn-outline-primary btn-icon email-pagination-next d-none d-sm-block"style="margin-right: 5px">&gt;</a>
+                     		<c:choose>
+                       			<c:when test="${not empty addressParam.keyword and not empty addressParam.sort}">
+		                        	<a href="${root}/foradmin/member/${(pv.currentPage) + 1}?keyword=${addressParam.keyword}&sort=${addressParam.sort}&order=${addressParam.order}" class="btn btn-sm btn-outline-primary btn-icon email-pagination-next d-none d-sm-block" style="margin-right: 5px">&gt;</a>
+                       			</c:when>
+                        		<c:when test="${not empty addressParam.keyword}">
+		                        	<a href="${root}/foradmin/member/${(pv.currentPage) + 1}?keyword=${addressParam.keyword}" class="btn btn-sm btn-outline-primary btn-icon email-pagination-next d-none d-sm-block"style="margin-right: 5px">&gt;</a>
+                       			</c:when>
+                       			<c:when test="${not empty addressParam.sort}">
+		                        	<a href="${root}/foradmin/member/${(pv.currentPage) + 1}?sort=${addressParam.sort}&order=${addressParam.order}" class="btn btn-sm btn-outline-primary btn-icon email-pagination-next d-none d-sm-block"style="margin-right: 5px">&gt;</a>
+                       			</c:when>
+                       			<c:otherwise>
+		                        	<a href="${root}/foradmin/member/${(pv.currentPage) + 1}" class="btn btn-sm btn-outline-primary btn-icon email-pagination-next d-none d-sm-block"style="margin-right: 5px">&gt;</a>
+                       			</c:otherwise>
+                       		</c:choose>
                      	</c:if>
                   	</div>
                   </div>
@@ -105,16 +131,36 @@
                                <th>
                                	<c:choose>
                                		<c:when test="${addressParam.order eq 'desc'}">
-	                        			<a href="${root}/foradmin/member/1?sort=name&order=asc">이름</a>
-                                 		<svg id="orderUpIcon" class="mb-1" width="0.8em" height="0.8em">
-	                            			<use xlink:href="${root}/resources/vendors/bootstrap-icons/bootstrap-icons.svg#arrow-up"></use>
-	                        			</svg>
+	                        			<c:choose>
+	                                		<c:when test="${not empty addressParam.keyword}">
+						                        <a href="${root}/foradmin/member/1?keyword=${addressParam.keyword}&sort=name&order=asc">이름</a>
+		                                    	<svg id="orderUpIcon" class="mb-1" width="0.8em" height="0.8em">
+						                            <use xlink:href="${root}/resources/vendors/bootstrap-icons/bootstrap-icons.svg#arrow-up"></use>
+						                        </svg>
+                               				</c:when>
+                               				<c:otherwise>
+                             					<a href="${root}/foradmin/member/1?sort=name&order=asc">이름</a>
+		                                    	<svg id="orderUpIcon" class="mb-1" width="0.8em" height="0.8em">
+						                            <use xlink:href="${root}/resources/vendors/bootstrap-icons/bootstrap-icons.svg#arrow-up"></use>
+						                        </svg>
+	                                		</c:otherwise>
+	                                	</c:choose>
                                		</c:when>
                                		<c:otherwise>
-                                 		<a href="${root}/foradmin/member/1?sort=name&order=desc">이름</a>
-	                                 	<svg id="orderDownIcon" class="mb-1" width="0.8em" height="0.8em">
-				                            <use xlink:href="${root}/resources/vendors/bootstrap-icons/bootstrap-icons.svg#arrow-down"></use>
-				                        </svg>
+				                        <c:choose>
+                                  			<c:when test="${not empty addressParam.keyword}">
+		                                    	<a href="${root}/foradmin/member/1?keyword=${addressParam.keyword}&sort=name&order=desc">이름</a>
+		                                    	<svg id="orderDownIcon" class="mb-1" width="0.8em" height="0.8em">
+						                            <use xlink:href="${root}/resources/vendors/bootstrap-icons/bootstrap-icons.svg#arrow-down"></use>
+						                        </svg>
+                                 			</c:when>
+                                 			<c:otherwise>
+                                  				<a href="${root}/foradmin/member/1?sort=name&order=desc">이름</a>
+		                                    	<svg id="orderDownIcon" class="mb-1" width="0.8em" height="0.8em">
+						                            <use xlink:href="${root}/resources/vendors/bootstrap-icons/bootstrap-icons.svg#arrow-down"></use>
+						                        </svg>
+                                  			</c:otherwise>
+                                  		</c:choose>
                                		</c:otherwise>
                                	</c:choose>
                                </th>

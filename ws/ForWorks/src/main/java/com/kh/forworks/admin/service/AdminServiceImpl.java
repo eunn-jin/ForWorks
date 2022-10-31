@@ -82,5 +82,23 @@ public class AdminServiceImpl implements AdminService {
 		return adminDao.selectMemberList(sst, pv, addVo);
 	}
 
+	//운영자 현황 조회
+	@Override
+	public List<CorpInfoVo> selectOperList() {
+		return adminDao.selectOperList(sst);
+	}
+
+	//운영자 목록 조회
+	@Override
+	public List<MemberVo> selectOperMember(String oplevel) {
+		return adminDao.selectOperMember(sst, oplevel);
+	}
+
+	//관리자 지정 검색
+	@Override
+	public List<MemberVo> selectSearchMember(CorpInfoVo vo) {
+		return adminDao.selectSearchMember(sst, vo);
+	}
+
 
 }

@@ -106,4 +106,46 @@
 			</otherwise>
 		</choose>
 	</select>
+	
+	<select id="selectOperList" resultType="CorpInfoVo">
+		SELECT OP_LEVEL, OP_NAME FROM OPERATOR
+	</select>
+	
+	<select id="selectOperMember" resultType="MemberVo">
+		SELECT
+			E.EMP_NO 
+			, E.EMP_NAME
+			, D.DEPT_NAME
+			, P.POS_NAME
+		FROM EMPLOYEE E
+		LEFT JOIN OPERATOR O
+			ON E.OP_LEVEL = O.OP_LEVEL
+		LEFT JOIN DEPARTMENT D
+			ON E.DEPT_NO = D.DEPT_NO
+		LEFT JOIN POSITION P
+			ON E.POS_NO = P.POS_NO
+		WHERE E.OP_LEVEL = #{oplevel}
+	</select>
+	
+	<select id="selectSearchMember" resultType="MemberVo">
+		SELECT
+			E.EMP_NO
+			, E.EMP_NAME
+			, D.DEPT_NAME
+			, P.POS_NAME
+		FROM EMPLOYEE E
+		LEFT JOIN OPERATOR O
+			ON E.OP_LEVEL = O.OP_LEVEL
+		LEFT JOIN DEPARTMENT D
+			ON E.DEPT_NO = D.DEPT_NO
+		LEFT JOIN POSITION P
+			ON E.POS_NO = P.POS_NO
+		WHERE E.DEPT_NO = #{deptNo}
+		AND E.POS_NO = #{posNo}
+		AND O.OP_NAME != #{opName}
+		
+		<if test = "#{keyword} != null">
+			AND E.EMP_NAME LIKE '%' || #{keyword} || '%'
+		</if>
+	</select>
 </mapper>

@@ -28,5 +28,11 @@ public interface AdminDao {
 
 	List<MemberVo> selectMemberList(SqlSessionTemplate sst, PageVo pv, AddressVo addVo);
 
+	List<CorpInfoVo> selectOperList(SqlSessionTemplate sst);
+
+	List<MemberVo> selectOperMember(SqlSessionTemplate sst, String oplevel);
+
+	List<MemberVo> selectSearchMember(SqlSessionTemplate sst, CorpInfoVo vo);
+
 
 }

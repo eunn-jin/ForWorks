@@ -58,9 +58,8 @@
                    <div class="search-bar">
                         <div class="search-input-field">    
                             <img alt="" src="${root}/resources/img/member-imgs/free-icon-search-7233469.png">
-                            <input name="keyword" type="text" class="pt-2" placeholder="이름 또는 연락처 검색">
+                            <input value="${addressParam.keyword}" name="keyword" type="text" class="pt-2" onkeypress="if(event.keyCode == 13){searchKeyword();}" placeholder="이름 또는 연락처 검색">
                         </div>
-                        <button class="nav-btn btn btn-sm btn-outline-secondary" type="button" onclick="searchKeyword();">검색</button>
                     </div>
                     <div class="status-outer">
                         <div class="status-content">
@@ -130,10 +129,36 @@
 	                        			</c:otherwise>
                         			</c:choose>
 		                        	<c:if test="${pv.currentPage ne 1}">
-				                        <a href="${root}/address/external/${(pv.currentPage) - 1}" class="btn btn-sm btn-outline-primary btn-icon email-pagination-prev d-none d-sm-block" style="margin-right: 5px">&lt;</a>
+		                        		<c:choose>
+		                        			<c:when test="${not empty addressParam.keyword and not empty addressParam.sort}">
+					                        	<a href="${root}/address/external/${(pv.currentPage) - 1}?keyword=${addressParam.keyword}&sort=${addressParam.sort}&order=${addressParam.order}" class="btn btn-sm btn-outline-primary btn-icon email-pagination-prev d-none d-sm-block" style="margin-right: 5px">&lt;</a>
+		                        			</c:when>
+		                        			<c:when test="${not empty addressParam.keyword}">
+					                        	<a href="${root}/address/external/${(pv.currentPage) - 1}?keyword=${addressParam.keyword}" class="btn btn-sm btn-outline-primary btn-icon email-pagination-prev d-none d-sm-block" style="margin-right: 5px">&lt;</a>
+		                        			</c:when>
+		                        			<c:when test="${not empty addressParam.sort}">
+					                        	<a href="${root}/address/external/${(pv.currentPage) - 1}?sort=${addressParam.sort}&order=${addressParam.order}" class="btn btn-sm btn-outline-primary btn-icon email-pagination-prev d-none d-sm-block" style="margin-right: 5px">&lt;</a>
+		                        			</c:when>
+		                        			<c:otherwise>
+					                        	<a href="${root}/address/external/${(pv.currentPage) - 1}" class="btn btn-sm btn-outline-primary btn-icon email-pagination-prev d-none d-sm-block" style="margin-right: 5px">&lt;</a>
+		                        			</c:otherwise>
+		                        		</c:choose>
 		                        	</c:if>
 		                        	<c:if test="${pv.currentPage ne pv.maxPage}">
-			                        	<a href="${root}/address/external/${(pv.currentPage) + 1}" class="btn btn-sm btn-outline-primary btn-icon email-pagination-next d-none d-sm-block"style="margin-right: 5px">&gt;</a>
+		                        		<c:choose>
+		                        			<c:when test="${not empty addressParam.keyword and not empty addressParam.sort}">
+					                        	<a href="${root}/address/external/${(pv.currentPage) + 1}?keyword=${addressParam.keyword}&sort=${addressParam.sort}&order=${addressParam.order}" class="btn btn-sm btn-outline-primary btn-icon email-pagination-next d-none d-sm-block" style="margin-right: 5px">&gt;</a>
+		                        			</c:when>
+			                        		<c:when test="${not empty addressParam.keyword}">
+					                        	<a href="${root}/address/external/${(pv.currentPage) + 1}?keyword=${addressParam.keyword}" class="btn btn-sm btn-outline-primary btn-icon email-pagination-next d-none d-sm-block"style="margin-right: 5px">&gt;</a>
+		                        			</c:when>
+		                        			<c:when test="${not empty addressParam.sort}">
+					                        	<a href="${root}/address/external/${(pv.currentPage) + 1}?sort=${addressParam.sort}&order=${addressParam.order}" class="btn btn-sm btn-outline-primary btn-icon email-pagination-next d-none d-sm-block"style="margin-right: 5px">&gt;</a>
+		                        			</c:when>
+		                        			<c:otherwise>
+					                        	<a href="${root}/address/external/${(pv.currentPage) + 1}" class="btn btn-sm btn-outline-primary btn-icon email-pagination-next d-none d-sm-block"style="margin-right: 5px">&gt;</a>
+		                        			</c:otherwise>
+		                        		</c:choose>
 		                        	</c:if>
 			                    </div>
                     	</div>
@@ -147,16 +172,36 @@
                                     <th>
                                     	<c:choose>
                                     		<c:when test="${addressParam.order eq 'desc'}">
-						                        <a href="${root}/address/external/1?sort=name&order=asc">이름</a>
-		                                    	<svg id="orderUpIcon" class="mb-1" width="0.8em" height="0.8em">
-						                            <use xlink:href="${root}/resources/vendors/bootstrap-icons/bootstrap-icons.svg#arrow-up"></use>
-						                        </svg>
+						                        <c:choose>
+                                    				<c:when test="${not empty addressParam.keyword}">
+								                        <a href="${root}/address/external/1?keyword=${addressParam.keyword}&sort=name&order=asc">이름</a>
+				                                    	<svg id="orderUpIcon" class="mb-1" width="0.8em" height="0.8em">
+								                            <use xlink:href="${root}/resources/vendors/bootstrap-icons/bootstrap-icons.svg#arrow-up"></use>
+								                        </svg>
+                                    				</c:when>
+                                    				<c:otherwise>
+                                    					<a href="${root}/address/external/1?sort=name&order=asc">이름</a>
+				                                    	<svg id="orderUpIcon" class="mb-1" width="0.8em" height="0.8em">
+								                            <use xlink:href="${root}/resources/vendors/bootstrap-icons/bootstrap-icons.svg#arrow-up"></use>
+								                        </svg>
+                                    				</c:otherwise>
+                                    			</c:choose>
                                     		</c:when>
                                     		<c:otherwise>
-		                                    	<a href="${root}/address/external/1?sort=name&order=desc">이름</a>
-		                                    	<svg id="orderDownIcon" class="mb-1" width="0.8em" height="0.8em">
-						                            <use xlink:href="${root}/resources/vendors/bootstrap-icons/bootstrap-icons.svg#arrow-down"></use>
-						                        </svg>
+						                        <c:choose>
+                                    				<c:when test="${not empty addressParam.keyword}">
+				                                    	<a href="${root}/address/external/1?keyword=${addressParam.keyword}&sort=name&order=desc">이름</a>
+				                                    	<svg id="orderDownIcon" class="mb-1" width="0.8em" height="0.8em">
+								                            <use xlink:href="${root}/resources/vendors/bootstrap-icons/bootstrap-icons.svg#arrow-down"></use>
+								                        </svg>
+                                    				</c:when>
+                                    				<c:otherwise>
+                                    					<a href="${root}/address/external/1?sort=name&order=desc">이름</a>
+				                                    	<svg id="orderDownIcon" class="mb-1" width="0.8em" height="0.8em">
+								                            <use xlink:href="${root}/resources/vendors/bootstrap-icons/bootstrap-icons.svg#arrow-down"></use>
+								                        </svg>
+                                    				</c:otherwise>
+                                    			</c:choose>
                                     		</c:otherwise>
                                     	</c:choose>
                                     </th>
