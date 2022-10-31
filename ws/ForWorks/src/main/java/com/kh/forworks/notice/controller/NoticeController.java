@@ -131,7 +131,13 @@ public class NoticeController {
 		
 		//첨부파일 확인
 		NoticeAttachmentsVo ntatVo = nts.checkFile(no);
-		//System.out.println("파일 확인::"+ntatVo);
+		System.out.println("파일 확인::"+ntatVo);
+		
+		if (ntatVo!=null) {
+			String ext = ntatVo.getNtatChange().substring(ntatVo.getNtatChange().lastIndexOf("."));
+			System.out.println(ext);
+			model.addAttribute("ext",ext);
+		}
 		
 		model.addAttribute("ntvo", ntvo);
 		model.addAttribute("ntatVo", ntatVo);
@@ -156,6 +162,12 @@ public class NoticeController {
 		//System.out.println("파일 확인::"+ntatVo);
 		//System.out.println(ntvo);
 		//System.out.println(ntvo.deptNum);
+		
+		if (ntatVo!=null) {
+			String ext = ntatVo.getNtatChange().substring(ntatVo.getNtatChange().lastIndexOf("."));
+			System.out.println(ext);
+			model.addAttribute("ext",ext);
+		}
 		
 		model.addAttribute("ntvo", ntvo);
 		model.addAttribute("ntatVo", ntatVo);

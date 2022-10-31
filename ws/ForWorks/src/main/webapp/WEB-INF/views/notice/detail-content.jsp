@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>    
 <link rel="stylesheet" href="${root}/resources/css/sjy.css">
 <style>
 	table{margin: auto;}
@@ -67,14 +69,21 @@ table {
     
                                 <tr>
                                     <td class="danger">첨부파일</td>
-                                    <c:if test="${ntatVo eq null}">
-                                        <td colspan="3"><div style="height: 10vh;">첨부파일이 없습니다.</div></td>
-                                    </c:if>
-                                    <c:if test="${ntatVo ne null}">
+                                    <c:choose>
+                                    	<c:when test="${ntatVo eq null}">
+                                        	<td colspan="3"><div style="height: 10vh;">첨부파일이 없습니다.</div></td>
+                                    	</c:when>
+                                    	
+                                        <c:when test="${ext eq '.jpg' || ext eq '.png'}">
                                         <td colspan="3"><div >
-                                            <img src="${root}/resources/upload/notice/${ntatVo.ntatChange}" width="128px" height="128px">
+                                            <a href="${root}/resources/upload/notice/${ntatVo.ntatChange}" download=""><img src="${root}/resources/upload/notice/${ntatVo.ntatChange}" width="128px" height="128px"></a>
                                         </div></td>
-                                    </c:if>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <td colspan="3"><a href="${root}/resources/upload/notice/${ntatVo.ntatChange}" download="">${ntatVo.ntatChange}</a></td>
+                                        </c:otherwise>
+                                        
+                                    </c:choose>
                                 </tr>
                                 
                                 <c:if test="${loginMember.empNo eq ntvo.num}">

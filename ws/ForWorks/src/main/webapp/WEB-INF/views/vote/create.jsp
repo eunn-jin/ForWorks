@@ -36,8 +36,9 @@
                         <%@include file="/WEB-INF/views/vote/create-content.jsp" %>
                     </div>
                     <div style="text-align: right;"> 
-                        <button class="myBtn">생성</button>
+                        <button type="submit" class="myBtn">생성</button>
                     </div>
+                    </form>
                 </section>
             </div>
         
@@ -54,5 +55,6 @@
 	});
 	
 </script>
+
 
 </html>
