@@ -33,12 +33,12 @@ table {
     border-spacing: 2px;
     border-color: grey;
 }
-#comment-bot>div, #comment-bot2>div{
+#comment-bot>div, .comment-bot2>div{
     width: 80%;
     display: inline-block;
 }
         
-#comment-bot>span, #comment-bot2>span{
+#comment-bot>span, .comment-bot2>span{
     width: 10%;
 }
 </style>
@@ -93,14 +93,23 @@ table {
     
                                 <tr>
                                     <td class="danger">첨부파일</td>
-                                    <c:if test="${cmatVo eq null}">
-                                        <td colspan="3"><div style="height: 10vh;">첨부파일이 없습니다.</div></td>
-                                    </c:if>
-                                    <c:if test="${cmatVo ne null}">
-                                        <td colspan="3"><div >
-                                            <img src="${root}/resources/upload/commu/${cmatVo.cmatChange}" width="128px" height="128px"/>
-                                        </div></td>
-                                    </c:if>
+                                    <td colspan="3">
+                                    <c:choose>
+                                        <c:when test="${cmatVo eq null}">
+                                            <div style="height: 10vh;">첨부파일이 없습니다.</div>
+                                        </c:when>
+                                        
+                                        <c:when test="${ext eq '.jpg' || ext eq '.png'}">
+                                        <div >
+                                            <a href="${root}/resources/upload/commu/${cmatVo.cmatChange}" download=""><img src="${root}/resources/upload/commu/${cmatVo.cmatChange}" width="128px" height="128px"></a>
+                                        </div>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a href="${root}/resources/upload/commu/${cmatVo.cmatChange}" download="">${cmatVo.cmatChange}</a>
+                                        </c:otherwise>
+                                        
+                                    </c:choose>
+                                    </td>
                                 </tr>
                                 
                                 <tr>
@@ -125,15 +134,14 @@ table {
                                         
                                         <div id="comment-list" style="text-align: left; overflow-y: scroll; height: 20vh;" >
                                             <c:forEach items="${cmtList}" var="cm">
-                                                <div id="comment-bot2">
-                                                    
+                                                <div class="comment-bot2" id="cmt${cm.cmtNo}">
                                                     <input type="hidden" id="comment-no" value="${cm.cmtNo}">
-                                                    <div id="d">${cm.modifiyDate}</div>
-                                                    <div id="c">${cm.cmtContent}</div>
-                                                    <span id="n">${cm.empNo}</span>
+                                                    <div >${cm.modifiyDate}</div>
+                                                    <div >${cm.cmtContent}</div>
+                                                    <span >${cm.empNo}</span>
                                                     &emsp;
                                                     
-                                                    <button type="button" class=" btn-secondary" id="cmt-delete" style="border: 0;">
+                                                    <button type="button" class="btnDelete btn-secondary" onclick="d(${cm.cmtNo})" id="cmt-delete${cm.cmtNo}" value="${cm.cmtNo}" style="border: 0;">
                                                         <i class="bi bi-x-square"></i>
                                                     </button>
                                                     
@@ -165,11 +173,6 @@ table {
         </div>
 
         <script>
-                const cmtNum=document.querySelector('#comment-no').value;
-                console.log(cmtNum);
-        </script>
-
-        <script>
 	
             const cmtBtn = document.querySelector('#comment-btn');
             
@@ -190,12 +193,13 @@ table {
                         if (result =='ok') {
                             alert("댓글 등록!");
                             
-                            const target = document.querySelector('#comment-list');
+                            const target = document.querySelector('#comment-list'+'');
                             
                             $(target).prepend('<div id="comment-bot2"><div>'+commentContent+'</div><span>'+commentWriterName+'</span><hr></div>');
                             
                             //기존 입력 내용 지우기
                             document.querySelector('#comment-content').value = '';
+                            window.location.reload()
                         }
                         else{
                             alert("댓글 작성 실패..");
@@ -209,28 +213,31 @@ table {
         </script>
 
 
-
+<!-- 댓글 삭제 -->
 <script>
-	
-    const cmtDet = document.querySelector('#cmt-delete');
-    cmtDet.addEventListener('click' ,  function(){
+    const cmdNo=document.querySelectorAll('.btnDelete');
+    // const cmdNo= document.querySelector('.btnDelete');
+    console.log("cmdNo"+cmdNo);
+    const cmtDet = document.querySelector('.btnDelete');
+    // cmtDet.addEventListener('click' ,  function(){
+    // cmdNo.addEventListener('click' ,  function(){
+        function d(num){
         //댓글 번호 가져오기
-        const cmtNum=document.querySelector('#comment-no').value;
-        console.log(cmtNum);
-        
+        console.log(num);
+        // const n = document.querySelector('#cmt-delete').value;
+        // console.log(n);
         $.ajax({
             url : "${root}/comments/delete",
             type : "POST",
             data : {
-                    "cmtNo" : cmtNum 
+                    "cmtNo" : num
             },
             success : function(result){
                 if (result =='ok') {
                     alert("삭제완료!");
-                    
-                    const target = document.querySelector('#comment-bot2');
-                    console.log(target);
-                    target.remove();
+
+                    // target.remove();
+                    window.location.reload()
 
                 }else{
                     alert("댓글 삭제 실패..");
@@ -240,7 +247,7 @@ table {
                 alert("통신 에러..");	
             },
         });
-    });
-
+    // });
+    };
 
 </script>

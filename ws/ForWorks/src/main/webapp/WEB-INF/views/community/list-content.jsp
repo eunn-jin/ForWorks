@@ -145,8 +145,8 @@ tr>th:hover{
 
 				<!-- my탭 클릭시 보여지는 화면 -->
 				<div class="tab-pane fade" id="my" >
-					 <%@include file="/WEB-INF/views/community/myList.jsp" %>
-			</div>
+					<%@include file="/WEB-INF/views/community/myList.jsp" %>
+				</div>
 		</div>
 	</div>
 </div>
