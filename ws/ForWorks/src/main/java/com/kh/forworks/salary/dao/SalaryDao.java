@@ -1,5 +1,6 @@
 package com.kh.forworks.salary.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -20,5 +21,13 @@ public interface SalaryDao {
 	List<SalaryVo> selectSalary(SqlSessionTemplate sst, SalaryVo sv);
 	//급여대장등록 저장
 	int insertSal(SqlSessionTemplate sst, SalaryVo sv);
+	//급여대장리스트
+	List<SalaryVo> selectList(SqlSessionTemplate sst, SalaryVo sv);
+	//공개여부 바꾸기
+	int updateStatus(SqlSessionTemplate sst, String no);
+	//회원별 급여명세서 조회
+	List<SalaryVo> selectSalList(SqlSessionTemplate sst, HashMap map);
+	//급여명세서 디테일조회
+	SalaryVo selectDetail(SqlSessionTemplate sst, HashMap map);
 
 }

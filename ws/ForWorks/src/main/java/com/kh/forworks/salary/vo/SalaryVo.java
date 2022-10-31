@@ -13,6 +13,7 @@ public class SalaryVo {
 	private String status;
 	private String salMonth;
 	private String empMoney;
+	private String empName;
 	private String amount;
 	private String cate;
 	private String salCate;
@@ -20,5 +21,6 @@ public class SalaryVo {
 	private String benefit;
 	private String bonus;
 	private String sum;
+	private String dept;
 	
 }

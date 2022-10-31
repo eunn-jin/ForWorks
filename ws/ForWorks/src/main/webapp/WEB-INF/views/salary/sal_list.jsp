@@ -98,36 +98,19 @@
                                   </select>
                                   <button onclick="search()">조회</button>
                                   <div id="check-btn">
-                                      <button>+명세서공개</button>
+                                      <button onclick="status()">+명세서공개</button>
                                   </div>
 				        </div>
 				        <div id="center">
 				            <div class="div-top">체크</div>
 				            <div class="div-top">급여구분</div>
-				        <div class="div-top">부서명</div>
-				        <div class="div-top">사원명</div>
-				        <div class="div-top">공개여부</div>
-				        <div class="div-top">등록일</div>
-				        
-				        <div><input type="checkbox" name="" id=""></div>
-				        <div>월급</div>
-				        <div>인사</div>
-				        <div>홍길동</div>
-				        <div>공개</div>
-				        <div>2022.10.22</div>
-				        <div><input type="checkbox" name="" id=""></div>
-				        <div>월급</div>
-				        <div>인사</div>
-				        <div>홍길동</div>
-				        <div>공개</div>
-				        <div>2022.10.22</div>
-				        <div><input type="checkbox" name="" id=""></div>
-				        <div>월급</div>
-				        <div>인사</div>
-				        <div>홍길동</div>
-				        <div>공개</div>
-				        <div>2022.10.22</div>
-				        
+                            <div class="div-top">부서명</div>
+                            <div class="div-top">사원명</div>
+                            <div class="div-top">공개여부</div>
+                            <div class="div-top">지급일</div>
+                            
+                            
+
 				        </div>
 				        
 				        <div id="page-area">
@@ -163,11 +146,71 @@
 </body>
 <script>
     function search(){
-        alert("되나요");
         var salMonth = document.getElementById("salMonth").value;
         console.log(salMonth);
         var dept = document.getElementById("dept").value;
         console.log(dept);
+
+        $.ajax({
+            url : "/ForWorks/salary/list",
+            type: "POST",
+            data : {
+                salMonth : salMonth,
+                dept : dept
+            },
+            success:function(data){
+                $(".app").remove();
+                for(var i = 0 ; i < data.length ; i++){
+                    if(data[i].salCate == 1){
+                        data[i].salCate = "월급";
+                    }else if(data[i].salCate == 2){
+                        data[i].salCate = "상여";
+                    }else{
+                        data[i].salCate = "월급+상여";
+                    }
+                    
+                    $("#center").append(
+                        '<div class="app"><input type="checkbox" name="status" value="'+data[i].no+'"></div><div class="app">'+data[i].salCate+'</div><div class="app">'+dept+'</div><div class="app">'+data[i].empName+'</div><div class="app">'+data[i].status+'</div><div class="app">'+data[i].payDate+'</div>'
+                    );
+                }
+                
+            },
+            error:function(){
+                alert("실패");
+            }
+        })
+
+    }
+</script>
+
+<script>
+    function status(){
+        var x = document.getElementsByName("status");
+        var checked = 0;
+        var status = [];
+        for(i = 0 ; i < x.length ; i++){
+            checked ++;
+            if(x[i].checked == true){
+                status[i] = x[i].value;
+                console.log(status[i]);
+            }
+        }
+
+
+        $.ajax({
+            url : "/ForWorks/salary/status",
+            type: "POST",
+            data : {status : status},
+            success : function(data){
+                if(data == 1){
+                    alert("성공");
+                }
+            },
+            error : function(){
+                alert("실패");
+            }
+        })
+
     }
 </script>
 

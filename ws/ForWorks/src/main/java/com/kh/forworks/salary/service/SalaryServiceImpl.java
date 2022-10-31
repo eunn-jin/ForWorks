@@ -1,5 +1,6 @@
 package com.kh.forworks.salary.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -51,6 +52,26 @@ public class SalaryServiceImpl implements SalaryService{
 	@Override
 	public int insertSal(SalaryVo sv) {
 		return dao.insertSal(sst,sv);
+	}
+	//급여대장리스트
+	@Override
+	public List<SalaryVo> list(SalaryVo sv) {
+		return dao.selectList(sst,sv);
+	}
+	//공개여부 바꾸기
+	@Override
+	public int status(String no) {
+		return dao.updateStatus(sst, no);
+	}
+	//회원별 급여명세서조회
+	@Override
+	public List<SalaryVo> salList(HashMap map) {
+		return dao.selectSalList(sst,map);
+	}
+	//급여명세서 디테일조회
+	@Override
+	public SalaryVo selectDetail(HashMap map) {
+		return dao.selectDetail(sst,map);
 	}
 		
 	

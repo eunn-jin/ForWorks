@@ -7,6 +7,7 @@
 <html>
 <head>
 	<title>Home</title>
+	
 </head>
 <style>
     #wrap{
@@ -35,6 +36,10 @@
 		display: none;
 	
     }
+	.btn-css{
+		background-color: blueviolet;
+		border-color: #25396f;
+	}
 	
 </style>
 <body>
@@ -112,7 +117,7 @@
 										</td>
 									</tr>
 								</table>
-								<div><input type="submit" value="등록"></div>
+								<div><input type="submit" value="등록" class="btn-css"></div>
 							</form>
 							<div id="zone">
 								<div class="back-color">
@@ -152,8 +157,7 @@
 			type : "POST",
 			data : {depart : depart},
 			success : function(result){
-				console.log(result[0]);
-				
+		
 				for(var i = 0 ; i <result.length ; i++){
                         $('#emp').append(
                             '<option value='+result[i].empNo+'>'+result[i].empName+'</option>'
@@ -267,6 +271,7 @@
 		);
 	})
 </script>
+
 <!--제이쿼리 ui css-->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <!--제이쿼리 style css

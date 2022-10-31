@@ -1,5 +1,6 @@
 package com.kh.forworks.salary.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.kh.forworks.salary.vo.SalBonusVo;
@@ -19,5 +20,13 @@ public interface SalaryService {
 	List<SalaryVo> selectEmpSal(SalaryVo sv);
 	//급여대장등록 저장
 	int insertSal(SalaryVo sv);
+	//급여대장리스트
+	List<SalaryVo> list(SalaryVo sv);
+	//공개여부 바꾸기
+	int status(String no);
+	//회원별 급여명세서
+	List<SalaryVo> salList(HashMap map);
+	//급여명세서 디테일조회
+	SalaryVo selectDetail(HashMap map);
 
 }

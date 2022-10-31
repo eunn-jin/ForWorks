@@ -4,32 +4,36 @@
 <html>
 <head>
 	<title>Home</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/fontawesome.min.css" integrity="sha384-z4tVnCr80ZcL0iufVdGQSUzNvJsKjEtqYZjiQrrYKlpGow+btDHDfQWkFjoaz/Zr" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/99800bc262.js" crossorigin="anonymous"></script>
 </head>
 <style>
     #wrap{
-        width: 60vw;
+        width: 70vw;
         height: 60vh;
-        border: 5px solid black;
+        /*border: 5px solid black;*/
         display: grid;
-        grid-template-columns: 230px 230px;
-        grid-template-rows: 150px 150px;
+        grid-template-columns: 100fr;
+        grid-template-rows: 25fr 25fr 25fr 25fr;
         justify-content: center;
         align-content: center;
-        gap: 20px;
         background-color: white;
     }
     #wrap>div{
         box-sizing: border-box;
-        display: inline-block;
-        border-radius: 10%;
+        /*display: inline-block;*/
         text-align: center;
         font-size: 30px;
         display: flex;
         align-items: center;
-        justify-content: center;
-        background-color: #EEF1FF;
+        background-color: white;
         cursor: pointer;
         color : black;
+    }
+    #wrap>div:hover{
+        background-color: #f0f8ff;
+        transition: 0.5s;
+        color: #25396f;
     }
 </style>
 <body>
@@ -60,13 +64,14 @@
                </div>
                <section class="section">
                    <div id="wrap">
-				        <div onclick="location.href='${root}/salary/write'">급여대장 <br> 등록</div>
+
+                        <div onclick="location.href='${root}/salary/write'"> <ul> <i class="fa-regular fa-pen-to-square"></i>급여대장 등록</ul></div>
 				        
-				        <div onclick="location.href='${root}/salary/list'">급여대장 <br> 목록</div>
+				        <div onclick="location.href='${root}/salary/list'"><ul> <i class="bi bi-list-ol"></i>급여대장 목록</ul></div>
 				        
-				        <div onclick="location.href='${root}/bonus/list'">상여관리</div>
+				        <div onclick="location.href='${root}/bonus/list'"><ul><i class="bi bi-award"></i></i>상여관리</ul></div>
 				        
-				        <div onclick="location.href='${root}/bonus/benefit'">수당관리</div>
+				        <div onclick="location.href='${root}/bonus/benefit'"><ul><i class="bi bi-cash-coin"></i>수당관리</ul></div>
 				        
 				    </div>
                </section>

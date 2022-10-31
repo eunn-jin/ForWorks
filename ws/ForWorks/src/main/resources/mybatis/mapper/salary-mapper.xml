@@ -30,4 +30,46 @@
   		(SEQ_SALARY_NO.NEXTVAL , #{empNo} , #{startMonth}, #{endMonth}, #{payDate},'N',TO_DATE(#{salMonth},'YYYY-MM'),#{salCate})
   </insert>
   
+  <select id="selectList" resultType="SalaryVo">
+ 	SELECT A.* 
+	FROM 
+		(SELECT S.*, E.EMP_NAME, E.DEPT_NO FROM SALARY S JOIN EMPLOYEE E ON S.EMP_NO = E.EMP_NO) A 
+	JOIN 
+		DEPARTMENT D ON A.DEPT_NO = D.DEPT_NO 
+	WHERE D.DEPT_NAME = #{dept} AND SAL_MONTH = TO_DATE(#{salMonth},'YYYY-MM')
+  </select>
+  
+  <update id="updateStatus">
+  	UPDATE SALARY SET STATUS = 'Y' WHERE NO = #{no}
+  </update>
+  
+  <select id="salList" parameterType="map" resultType = "SalaryVo">
+  	SELECT NO, EMP_NO, START_MONTH, END_MONTH, TO_CHAR(PAY_DATE,'YYYY/MM/DD') PAY_DATE, STATUS, TO_CHAR(SAL_MONTH,'YYYY/MM')SAL_MONTH, SAL_CATE FROM SALARY WHERE STATUS = 'Y' AND EMP_NO = #{empNo} AND TO_CHAR(SAL_MONTH,'YYYY') = #{year}
+  </select>
+  
+  <select id="detail" resultType="SalaryVo">
+  	SELECT NO ,EMP_NO,START_MONTH,END_MONTH,TO_CHAR(PAY_DATE,'YYYY"년"MM"월"YY"일"') AS PAY_DATE,STATUS,TO_CHAR(SAL_MONTH,'YYYY"년"MM"월"') AS SAL_MONTH FROM SALARY WHERE STATUS = 'Y' AND EMP_NO = #{empNo} AND NO = #{no}
+  </select>
+  
+  
+  
+  
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
