@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.kh.forworks.PageVo;
 import com.kh.forworks.department.vo.DepartmentVo;
+import com.kh.forworks.vote.vo.VoteAttachmentsVo;
 import com.kh.forworks.vote.vo.VoteVo;
 
 public interface VoteService {
@@ -27,6 +28,9 @@ public interface VoteService {
 	int selectEnd();
 	//리스트
 	List<VoteVo> selectListEnd(PageVo pvend);
+
+	//투표생성
+	int insertVote(VoteVo vtvo, String[] vtcgArr, VoteAttachmentsVo vtatVo);
 	
 
 }
