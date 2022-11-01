@@ -191,7 +191,7 @@
         for(i = 0 ; i < x.length ; i++){
             checked ++;
             if(x[i].checked == true){
-                status[i] = x[i].value;
+                status.push(x[i].value);
                 console.log(status[i]);
             }
         }

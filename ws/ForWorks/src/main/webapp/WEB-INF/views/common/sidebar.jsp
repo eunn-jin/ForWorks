@@ -107,10 +107,13 @@
                     </a>
                     <ul class="submenu ">
                         <li class="submenu-item">
-                            <a href="${root}/docManage/list">일반문서</a>
+                            <a href="${root}/docmanage/list">일반문서</a>
                         </li>
                         <li class="submenu-item ">
                             <a href="component-badge.html">결재문서</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="${root}/docmanage/manage">문서관리</a>
                         </li>
                     </ul>
                 </li>
