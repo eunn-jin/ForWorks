@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-진행중
+
 <div id="notice" style="text-align: left;width: 100%;">
     <div id="list" style="overflow: auto; width: 100%;">
-
         <table class="table" id="table-main">
             <thead class="table-light">
                 <tr id="center">
@@ -18,11 +17,13 @@
 
             
             <c:forEach items="${vtingList }" var="vti">
+                
                 <tbody id="tbd">
                     <tr id="center">
-                        
-                        <th scope="row">${vti.vtNo}</th>
+                        <input type="hidden" value="${vti.vtNo}">
+                        <th scope="row">${vti.rownum}</th>
                         <td colspan="5">${vti.vtTitle}</td>
+                        <input type="hidden" value="${vti.num}">
                         <td >${vti.empNo}</td>
 
                         <td>진행중</td>
@@ -30,8 +31,11 @@
                         <td>${vti.vtCreate}</td>
                         <td>${vti.vtEnd}</td>
                     </tr>
-                </tbody>
+                </tbody>         
+            
             </c:forEach>
+
+
             <td  colspan="10" style="border:none; cursor: default; background: white;">
 
                 <ul class="pagination justify-content-center">

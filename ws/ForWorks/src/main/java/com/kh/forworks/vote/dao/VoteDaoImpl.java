@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.forworks.PageVo;
 import com.kh.forworks.department.vo.DepartmentVo;
+import com.kh.forworks.member.vo.MemberVo;
+import com.kh.forworks.vote.vo.VoteAttachmentsVo;
 import com.kh.forworks.vote.vo.VoteVo;
 
 @Repository
@@ -60,4 +62,42 @@ public class VoteDaoImpl implements VoteDao{
 		return sst.selectList("voteMapper.selectListEnd", null, rb(pvend));
 	}
 	//----------------------------------------------------------------------
+	//투표 내용 저장
+	@Override
+	public int insertVt(SqlSessionTemplate sst, VoteVo vtvo) {
+		return sst.insert("voteMapper.insertVt", vtvo);
+	}
+	//첨부파일 내용 저장
+	@Override
+	public int insertVtat(SqlSessionTemplate sst, VoteAttachmentsVo vtatVo) {
+		return sst.insert("voteMapper.insertVtat", vtatVo);
+	}
+	//투표 항목 저장
+	@Override
+	public int insertVtcg(SqlSessionTemplate sst, String vtct) {
+		return sst.insert("voteMapper.insertVtcg", vtct);
+	}
+	
+	//모든 회원 정보 가져오기
+	@Override
+	public List<MemberVo> mListAll(SqlSessionTemplate sst) {
+		return sst.selectList("voteMapper.mListAll");
+	}
+	//회원 대상자 저장
+	@Override
+	public int insertVtpt(SqlSessionTemplate sst, MemberVo memberVo) {
+		return sst.insert("voteMapper.insertVtpt",memberVo.getEmpNo());
+	}
+	
+	//부서 회원정보 가져오기
+	@Override
+	public List<MemberVo> mListDp(SqlSessionTemplate sst, int dept) {
+		return sst.selectList("voteMapper.mListDp", dept);
+	}
+//	//선택 부서 대상자 저장
+//	@Override
+//	public int insertVtptDp(SqlSessionTemplate sst, MemberVo memberVo) {
+//		return sst.insert("voteMapper.insertVtptDp", memberVo);
+//	}
+	
 }
