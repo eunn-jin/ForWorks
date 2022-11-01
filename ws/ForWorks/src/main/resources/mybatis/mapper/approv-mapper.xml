@@ -4,66 +4,77 @@
 
 	<select id="selectApprovList" resultType="ApprovDocumentVo">
 		SELECT 
-			A.ADOC_NO
-			A.ADOC_NAME
-			A.ADOC_CONTENT
-			A.EMP_NO
-			A.DRAFT_DATE
+			A.ADOC_NO,
+			A.ADOC_NAME,
+			A.ADOC_CONTENT,
+			A.EMP_NO,
+			A.DRAFT_DATE,
 			A.NOELEC_STATUS
-		FROM APPROVEDOCUMENT A
-		RIGHT JOIN DOCAPPROVE D
-			ON A.ADOC_NO = D.ADOC_NO
-		WEHERE
+		FROM (SELECT
+        MIN(DOCAPPROVE.APPROVE_NO) KEEP(DENSE_RANK FIRST ORDER BY EMPLOYEE.POS_NO DESC) APPROVE_NO,
+        MIN(DOCAPPROVE.ADOC_NO) KEEP(DENSE_RANK FIRST ORDER BY EMPLOYEE.POS_NO DESC) ADOC_NO,
+        MIN(DOCAPPROVE.APPROVE_STATUS) KEEP(DENSE_RANK FIRST ORDER BY EMPLOYEE.POS_NO DESC) APPROVE_STATUS,
+        MIN(DOCAPPROVE.APPROVE_DATE) KEEP(DENSE_RANK FIRST ORDER BY EMPLOYEE.POS_NO DESC) APPROVE_DATE,
+        MIN(DOCAPPROVE.EMP_NO) KEEP(DENSE_RANK FIRST ORDER BY EMPLOYEE.POS_NO DESC) EMP_NO
+        FROM DOCAPPROVE 
+        LEFT JOIN EMPLOYEE
+        ON DOCAPPROVE.EMP_NO = EMPLOYEE.EMP_NO
+        WHERE 
+        APPROVE_STATUS = 'N'
+        AND
+        APPROVE_STATUS != 'R'
+        GROUP BY ADOC_NO) D
+		LEFT JOIN APPROVEDOCUMENT A
+        ON A.ADOC_NO = D.ADOC_NO
+		WHERE
 		D.EMP_NO = #{empNo}
-		AND
-		APPROVE_STATUS != 'R'
 	</select>
 	
 	<select id="selectCoopList" resultType="ApprovDocumentVo">
 		SELECT 
-			A.ADOC_NO
-			A.ADOC_NAME
-			A.ADOC_CONTENT
-			A.EMP_NO
-			A.DRAFT_DATE
+			A.ADOC_NO,
+			A.ADOC_NAME,
+			A.ADOC_CONTENT,
+			A.EMP_NO,
+			A.DRAFT_DATE,
 			A.NOELEC_STATUS
 		FROM APPROVEDOCUMENT A
 		RIGHT JOIN DOCCOOP D
 			ON A.ADOC_NO = D.ADOC_NO
-		WEHERE
+		WHERE
 		D.EMP_NO = #{empNo}
 	</select>
 	
 	<select id="selectReferList" resultType="ApprovDocumentVo">
 		SELECT 
-			A.ADOC_NO
-			A.ADOC_NAME
-			A.ADOC_CONTENT
-			A.EMP_NO
-			A.DRAFT_DATE
+			A.ADOC_NO,
+			A.ADOC_NAME,
+			A.ADOC_CONTENT,
+			A.EMP_NO,
+			A.DRAFT_DATE,
 			A.NOELEC_STATUS
 		FROM APPROVEDOCUMENT A
 		RIGHT JOIN DOCREFER D
 			ON A.ADOC_NO = D.ADOC_NO
-		WEHERE
+		WHERE
 		D.EMP_NO = #{empNo}
 	</select>
 	
 	<select id="selectRejectApprovList" resultType="ApprovDocumentVo">
 		SELECT 
-			A.ADOC_NO
-			A.ADOC_NAME
-			A.ADOC_CONTENT
-			A.EMP_NO
-			A.DRAFT_DATE
+			A.ADOC_NO,
+			A.ADOC_NAME,
+			A.ADOC_CONTENT,
+			A.EMP_NO,
+			A.DRAFT_DATE,
 			A.NOELEC_STATUS
 		FROM APPROVEDOCUMENT A
 		RIGHT JOIN DOCREFER D
 			ON A.ADOC_NO = D.ADOC_NO
-		WEHERE
-		D.EMP_NO = #{empNo}
+		WHERE
+		A.EMP_NO = #{empNo}
 		AND
-		APPROVE_STATUS = 'R'
+		APPROVE_STATUS != 'R'
 	</select>
 	
 	<select id="selectMemberList" resultType="MemberVo">
@@ -118,7 +129,7 @@
 		VALUES
 		(
 			SEQ_DOCAPPROVE_NO.nextval,
-			#{adocNo},
+			SEQ_APPROVEDOCUMENT_NO.CURRVAL,
 			#{x}
 		)
 		</foreach>
@@ -135,7 +146,7 @@
 		VALUES
 		(
 			SEQ_DOCCOOP_NO.nextval,
-			#{adocNo},
+			SEQ_APPROVEDOCUMENT_NO.CURRVAL,
 			#{x}
 		)
 		</foreach>
@@ -152,7 +163,7 @@
 		VALUES
 		(
 			SEQ_DOCREFER_NO.nextval,
-			#{adocNo},
+			SEQ_APPROVEDOCUMENT_NO.CURRVAL,
 			#{x}
 		)
 		</foreach>

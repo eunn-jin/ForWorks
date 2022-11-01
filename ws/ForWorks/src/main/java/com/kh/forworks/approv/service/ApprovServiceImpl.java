@@ -28,35 +28,31 @@ public class ApprovServiceImpl implements ApprovService {
 	//미결재목록호출
 	@Override
 	public List<ApprovDocumentVo> selectApprovList(String empNo) {
-		// TODO Auto-generated method stub
 		return dao.selectApprovList(sst, empNo);
 	}
 
 	//미확인 협조문서 목록 호출
 	@Override
 	public List<ApprovDocumentVo> selectCoopList(String empNo) {
-		// TODO Auto-generated method stub
 		return dao.selectCoopList(sst, empNo);
 	}
 
 	//미확인 참조문서 목록 호출
 	@Override
 	public List<ApprovDocumentVo> selectReferList(String empNo) {
-		// TODO Auto-generated method stub
 		return dao.selectReferList(sst, empNo);
 	}
 	
 	//반려문서 목록 호출
 	@Override
 	public List<ApprovDocumentVo> selectRejectApprovList(String empNo) {
-		// TODO Auto-generated method stub
 		return dao.selectRejectApprovList(sst, empNo);
 	}
 
 	//양식 목록 호출
 	@Override
 	public List<DocFormVo> selectFormList() {
-		// TODO Auto-generated method stub
+		// TODO 양식 목록 호출 구현
 		return null;
 	}
 
@@ -68,15 +64,11 @@ public class ApprovServiceImpl implements ApprovService {
 		
 		int result1 = dao.insertApprovDoc(sst, vo);
 		
-		int adocNo = dao.selectDocNoOneByContent(sst, vo);
 		
-		
-		
-		vo.setAdocNo(String.valueOf(adocNo));
 		
 		result = result*result1;
-		
-		if(vo.getDocFile()!=null) {
+		System.out.println(vo.getDocFile());
+		if(vo.getDocFile().getSize()!=0) {
 			result = result*dao.insertDocFile(sst, vo);
 		}
 		

@@ -155,7 +155,6 @@ public class ApprovController {
 		
 		int result = service.updateApprov(vo);
 		
-		//TODO 결제구현 db에서 직위를 포함한 호출, 나보다 낮은 직위가 결재했거나 내가 제일 낮은 직위일경우 보이게
 		
 		if(result==1) {
 			return "redirect:/approv/main";
