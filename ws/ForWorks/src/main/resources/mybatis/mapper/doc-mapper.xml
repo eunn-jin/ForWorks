@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="docMapper">
+  	
+  	<insert id="insertDoc">
+		INSERT INTO DOC
+			(DOC_NO, TITLE, CONTENT, EMP_NO, ENROLL_DATE) 
+		VALUES
+			(SEQ_DOC_NO.NEXTVAL,#{title},#{content},#{empNo},SYSDATE)
+  	</insert>
+  	
+  	<select id="selectDoc" resultType="DocVo">
+  		SELECT DOC_NO,TITLE,CONTENT,EMP_NO,TO_CHAR(ENROLL_DATE,'YYYY"년"MM"월"DD"일"')AS ENROLL_DATE FROM DOC WHERE STATUS = 'N'
+  	</select>
+  	
+</mapper>

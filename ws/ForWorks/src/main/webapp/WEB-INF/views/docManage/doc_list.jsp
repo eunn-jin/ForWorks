@@ -104,12 +104,13 @@
 				        <div class="div-top">공개범위</div>
 				        <div class="div-top">등록일</div>
 				        
-				
-				        <div>1</div>
-				        <div>2022.12.31</div>
-				        <div>교육자료파일</div>
-				        <div>전체공개</div>
-				        <div>2022.10.22</div>
+                        <c:forEach items="${result}" var="x">
+                            <div>${x.docNo}</div>
+                            <div>2022.12.31</div>
+                            <div>${x.title}</div>
+                            <div>전체공개</div>
+                            <div>${x.enrollDate}</div>
+                        </c:forEach>
 				      
 				        
 				        </div>

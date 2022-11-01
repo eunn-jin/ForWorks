@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.kh.forworks.member.vo.MemberVo;
 import com.kh.forworks.salary.service.SalaryService;
 import com.kh.forworks.salary.vo.SalBonusVo;
@@ -106,8 +107,10 @@ public class SalaryController {
 	@PostMapping(value="empSal",produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public String empSal(SalaryVo sv) {
+			
 		//기본급 + 각종 수당 조회
 		List<SalaryVo> sal = ss.selectEmpSal(sv);
+	
 		System.out.println("기본급 : " + sal);
 		Gson g = new Gson();
 		return g.toJson(sal);
@@ -150,8 +153,12 @@ public class SalaryController {
 		int result = 0;
 		for(int i = 0 ; i < status.size(); i++) {
 			result = ss.status(Integer.toString(status.get(i)));
+			result ++;
 			System.out.println(result);
 		}
+		if(result == status.size()) {
+			result = 1;
+		}else {result = 0 ; }
 		return "" + result;
 	}
 	

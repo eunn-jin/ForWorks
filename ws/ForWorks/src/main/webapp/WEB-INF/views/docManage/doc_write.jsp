@@ -15,8 +15,8 @@
     }
     #wrap{
         background-color: white;
-        width: 60vw;
-        height: 60vh;
+        width: 70vw;
+        height: 80vh;
         font-size: 20px;
     }
     
@@ -54,23 +54,10 @@
                    </div>
                </div>
                <section class="section">
-					<div id="wrap">
-				        <div id="title">일반문서 등록</div>
-				        <form action="">
-				            
-				            <div id="center">
-				                <table>
-                                    <tr>
-                                        <td>제목</td>
-                                        <td></td>
-                                    </tr>
-                                </table>
-				            </div>
-				            
-				            <div><input type="submit" value="등록하기"></div>
-				                
-				            </form>
-				    </div>
+                <div id="wrap">
+
+                    <%@ include file="/WEB-INF/views/docManage/doc_write_content.jsp" %>
+                </div>
                </section>
            </div>
            

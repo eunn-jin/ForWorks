@@ -48,6 +48,11 @@ public class SalaryServiceImpl implements SalaryService{
 	public List<SalaryVo> selectEmpSal(SalaryVo sv) {
 		return dao.selectSalary(sst,sv);
 	}
+	//기본급 조회
+	@Override
+	public String selectMoney(SalaryVo sv) {
+		return dao.selectMoney(sst,sv);
+	}
 	//급여대장등록 저장
 	@Override
 	public int insertSal(SalaryVo sv) {

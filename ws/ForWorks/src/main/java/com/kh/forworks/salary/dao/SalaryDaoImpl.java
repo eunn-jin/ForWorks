@@ -61,5 +61,10 @@ public class SalaryDaoImpl implements SalaryDao {
 	public SalaryVo selectDetail(SqlSessionTemplate sst, HashMap map) {
 		return sst.selectOne("salaryMapper.detail" , map);
 	}
+	//기본급 조회
+	@Override
+	public String selectMoney(SqlSessionTemplate sst, SalaryVo sv) {
+		return sst.selectOne("salaryMapper.money", sv);
+	}
 
 }

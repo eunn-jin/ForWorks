@@ -19,6 +19,8 @@ public interface SalaryDao {
 	List<SalaryVo> selectAddBenefit(SqlSessionTemplate sst, SalaryVo sv);
 	//기본급 + 각종 수당 조회
 	List<SalaryVo> selectSalary(SqlSessionTemplate sst, SalaryVo sv);
+	//기본급 조회
+	String selectMoney(SqlSessionTemplate sst, SalaryVo sv);
 	//급여대장등록 저장
 	int insertSal(SqlSessionTemplate sst, SalaryVo sv);
 	//급여대장리스트

@@ -13,6 +13,8 @@
 		<typeAlias type="com.kh.forworks.salary.vo.SalaryVo" alias="SalaryVo"/>
 		<typeAlias type="com.kh.forworks.salary.vo.SalBonusVo" alias="SalBonusVo"/>	
 		<typeAlias type="com.kh.forworks.salary.vo.AddBenefitVo" alias="AddBenefitVo"/>			
+		<typeAlias type="com.kh.forworks.docmanage.vo.DocVo" alias="DocVo"/>
+		
 		<typeAlias type="com.kh.forworks.approv.vo.ApprovDocumentVo" alias="ApprovDocumentVo"/>
 		<typeAlias type="com.kh.forworks.approv.vo.DocApprovVo" alias="DocApprovVo"/>
 		<typeAlias type="com.kh.forworks.approv.vo.DocCoopVo" alias="DocCoopVo"/>
