@@ -15,7 +15,9 @@
     
 </style>
 <div id="container" style="margin: 3% 5%;">
+    
         <form action="" method="post" enctype="multipart/form-data" onsubmit="return check()">
+            
             
                 <div class="md-3"> 
                     <label for="vtTitle" class="form-label">제목</label>
@@ -57,15 +59,15 @@
                 </div>
                 
                 <div class="md-3" id="cgList"> 
-                    <label for="title" class="form-label">항목</label><br>
-
+                    <label for="vtcgName" class="form-label">항목</label><br>
+                    <input type="hidden" id="vt-list" value="2" >
                     <div>
-                        <input type="text" class="form-control"  name="title" style="width: 50%; display: inline;" required>
+                        <input type="text" class="form-control"  name="vtcgName" style="width: 50%; display: inline;" required>
                         
                     </div>
 
                     <div>
-                        <input type="text" class="form-control"  name="title" style="width: 50%; display: inline;" required>
+                        <input type="text" class="form-control"  name="vtcgName" style="width: 50%; display: inline;" required>
                         
                     </div>
 
@@ -76,6 +78,15 @@
 
                 </div>
 </div>
+
+<script>
+    function chdp() { 
+        var x = $('input[id=target2]').is(":checked");
+        if (x){$('#dplist').show(); }    
+            else { 
+                $('#dplist').hide(); } 
+    }
+</script>
 
 <script>
     var i = 1;
@@ -106,27 +117,26 @@
             return false;
         }
 
-        else if (!(start>=end)) {
+        else if (!(start<=end)) {
             alert('마감일 오류');
+            return false;
+        }
+        else if($('input[id=target2]').is(":checked") && !($('input[name=dept]').is(":checked"))){
+            alert('대상자 선택 오류(부서를 선택부탁드립니다.)');
             return false;
         } 
     }
 </script>
 
 
-<script>
-    function chdp() { 
-        var x = $('input[id=target2]').is(":checked");
-        if (x){$('#dplist').show(); }    
-            else { 
-                $('#dplist').hide(); } 
-    }
-</script>
+
 
 <script>
     function deleteCg(x) {
         console.log(x);
-        i--;
+        
+        const k = Number($('#vt-list').val())-1;
+        $('input[id=vt-list]').attr('value',k);
         $('#'+x).remove();
         
     }
@@ -137,9 +147,10 @@
     function addList() {
         
         console.log(i);
-        i++;
+        const k = Number($('#vt-list').val())+1;
+        $('input[id=vt-list]').attr('value',k);
         $('#cgAddList').append("<div id='cg"+ i +"'>"+
-            "<input type='text' class='form-control'  name='title' style='width: 50%; display: inline;'>"+
+            "<input type='text' class='form-control'  name='vtcgName' style='width: 50%; display: inline;'>"+
             "<button type='button' class='nbtn' onclick='deleteCg($(this).closest("+"&#39;div&#39;"+").attr("+"&#39;id&#39;"+"))'>x</button>"
             +"</div>");
         }
