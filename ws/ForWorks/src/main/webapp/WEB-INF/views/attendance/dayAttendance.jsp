@@ -57,14 +57,22 @@
 							<div id="clock">clock</div>
 							<div class="multi-card">
 								<div class="align-center">
-									<div class="mt-3 mb-2">
+									<div class="mt-2 mb-2">
+										<span>정규 출근 :&ensp;</span>
+										<span> ${workTime.inTime} </span>
+									</div>
+									<div class="mb-2">
 										<span>출근&ensp;</span>
 										<span> ${workTime.inTime} </span>
 									</div>
 									<button class="btn btn-primary btn-sm" id="goWorkBtn">출근하기</button>
 								</div>
 								<div class="align-center">
-									<div class="mt-3 mb-2">
+									<div class="mt-2 mb-2">
+										<span>정규 퇴근 :&ensp;</span>
+										<span> ${workTime.outTime} </span>
+									</div>
+									<div class="mb-2">
 										<span>퇴근&ensp;</span>
 										<span> ${workTime.outTime} </span>
 									</div>
