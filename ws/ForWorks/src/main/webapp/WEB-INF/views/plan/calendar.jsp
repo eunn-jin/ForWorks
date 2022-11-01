@@ -18,11 +18,9 @@
 
 <div id="app">
 	<%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
-
 	<div id="main">
         <%@ include file="/WEB-INF/views/common/header.jsp" %>
-        
-           
+
                             <h3>일정</h3>
                             <button class = "add-button" type = "button" onclick="click_add();">일정 추가</button>
                              <div id='calendar'></div>
@@ -44,20 +42,38 @@
                                     droppable : true,
                                     editable : true,
                                     nowIndicator: true, // 현재 시간 마크
+                                    eventAdd : function(obj) {
+                                    	console.log('add')
+                                    }
                                     locale: 'ko' // 한국어 설정
+                                    
+                                    	function createClnd(cal,xobj){ 
+                                    	  if(!confirm("일정을 등록 하시겠습니까?")) return false; 
+                                    	  var $obj = calFunc.getFormValue();    
+                                    	  
+                                    	  $.ajax({ 
+                                    	      url: ctx+"/adms/calendar/management/create_ajx.do", 
+                                    	      type: "POST", 
+                                    	      contentType: "application/json;charset=UTF-8",
+                                    	      data:JSON.stringify($obj) 
+                                    	 }).done(function(data) { 
+                                    	      var result = jQuery.parseJSON(data); 
+                                    	      //모든 소스에서 이벤트를 다시 가져와 화면에 다시 렌더링
+                                    	      cal.refetchEvents();
+                                    	 }).fail(function(e) {  
+                                    	     alert("실패하였습니다."+e);
+                                    	 }).always(function() { 
+                                    	     $("#name").val("");
+                                    	     $("#comment").val("");
+                                    	 }); 
+                                    	  
+                                    	}
                                 });
                                 calendar.render();
                             });
-                             function click_add() {
-                            		var url = "schedulePopup";
-                            		var name = "schedulePopup";
-                            		var option = "width = 600, height = 600 left = 100, top=50,location=no";
-                            		window.open(url,name,option)
-                            	};
                            </script>  
                     </div>
                 </div>
-          
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 <script>
@@ -69,3 +85,6 @@
 	
 </script>
 </html>
+
+
+
