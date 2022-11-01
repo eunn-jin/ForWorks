@@ -34,5 +34,13 @@ public interface AdminDao {
 
 	List<MemberVo> selectSearchMember(SqlSessionTemplate sst, CorpInfoVo vo);
 
+	int updateOpLevelByNo(SqlSessionTemplate sst, CorpInfoVo vo);
+
+	int updateOpLevelToOne(SqlSessionTemplate sst, String empNo);
+
+	MemberVo selectMemberByNo(SqlSessionTemplate sst, String empNo);
+
+	int updateMemberInfo(SqlSessionTemplate sst, MemberVo vo);
+
 
 }

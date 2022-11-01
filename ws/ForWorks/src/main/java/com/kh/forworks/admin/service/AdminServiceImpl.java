@@ -100,5 +100,29 @@ public class AdminServiceImpl implements AdminService {
 		return adminDao.selectSearchMember(sst, vo);
 	}
 
+	//관리자 추가
+	@Override
+	public int updateOperLevel(CorpInfoVo vo) {
+		return adminDao.updateOpLevelByNo(sst, vo);
+	}
+
+	//관리자 삭제
+	@Override
+	public int resetOpLevel(String empNo) {
+		return adminDao.updateOpLevelToOne(sst, empNo);
+	}
+
+	//구성원 정보 조회 (한명)
+	@Override
+	public MemberVo selectedMember(String empNo) {
+		return adminDao.selectMemberByNo(sst, empNo);
+	}
+
+	//구성원 정보 수정
+	@Override
+	public int updateMemberInfo(MemberVo vo) {
+		return adminDao.updateMemberInfo(sst, vo);
+	}
+
 
 }

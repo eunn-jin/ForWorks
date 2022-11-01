@@ -32,5 +32,13 @@ public interface AdminService {
 
 	List<MemberVo> selectSearchMember(CorpInfoVo vo);
 
+	int updateOperLevel(CorpInfoVo vo);
+
+	int resetOpLevel(String empNo);
+
+	MemberVo selectedMember(String empNo);
+
+	int updateMemberInfo(MemberVo vo);
+
 
 }
