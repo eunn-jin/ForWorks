@@ -62,22 +62,22 @@
 					</div>
 					<div class="card second-card">
 						<div class="card-body flex-col">
-							<div>${monthCnt.month}</div>
+							<div id="month">${monthCnt.month}</div>
                   <div class="text-part">
                       <span>출근 횟수 : &ensp;</span>
-                      <span> ${monthCnt.workCount} </span>
+                      <span id="workCount"> ${monthCnt.workCount} </span>
                   </div>
                   <div class="text-part">
                       <span>지각 횟수 : &ensp;</span>
-                      <span> ${monthCnt.lateCount} </span>
+                      <span id="lateCount"> ${monthCnt.lateCount} </span>
                   </div>
                   <div class="text-part">
                       <span>조퇴 횟수 : &ensp;</span>
-                      <span> ${monthCnt.earlyoutCount} </span>
+                      <span id="earlyoutCount"> ${monthCnt.earlyoutCount} </span>
                   </div>
                   <div class="text-part">
                       <span>휴가 사용 : &ensp;</span>
-                      <span> ${monthCnt.offCount} </span>
+                      <span id="offCount"> ${monthCnt.offCount} </span>
                   </div>
 						</div>
 					</div>
@@ -100,29 +100,7 @@
 </script>
 <script>
 
-	/* $('#calendar').fullCalendar({
-		header: {
-			right: 'today, customPrevButton, customNextButton',
-			left: 'title'
-		},
-		customPrevButton: {
-			text: '<',
-			click: function(){
-				
-			}
-		},
-		customNextButton: {
-			text: 'next',
-			click: function(){
-				var date = $("#calendar").fullCalendar("getDate");
-				console.log(date);
-			}
-		}
-		
-	}); */
-
-
-  $(function(){
+   $(function(){
      var calendarEl = $('#calendar')[0];
      var calendar = new FullCalendar.Calendar(calendarEl, {
        height: '700px',
@@ -138,94 +116,77 @@
        selectable: false,
        nowIndicator: true,
        dayMaxEvents: true,
+       eventBorderColor: 'none',
        locale: 'ko',
-       eventClick: function(obj) {
-         console.log(obj.event._instance.range.start);
-         console.log(obj.event._instance.range.end);
-       },
-       events : [
- 	   	{
-            groupId: 999,
-            title: 'Repeating Event',
-            start: '2022-10-16T16:00:00'
-          },
-          {
-            title: '정상 근무',
-            start: '2022-10-26'
-          },
-         {
-         	title: '지각',
-         	start: '2022-10-25T10:00:00',
-         	end: '2022-10-25T18:00:00',
-         	descrption: 'test'
-         },
-         {
-         	title: '출근',
-         	start: '2022-10-26T09:30:00'
-         },
-         {
-         	title: '퇴근',
-         	start: '2022-10-26T10:05:00'
-         }
-       ]
+       events: function(info, successCallback, failureCallback) {
+    	   var month = info.start;
+		   var monthStr = month.toISOString();
+		  
+		   $.ajax({
+			   url: '${root}/att/month',
+			   type: 'POST',
+			   data: {'month' : monthStr},
+			   success: function(res) {
+				   var events = [];
+		  			
+		  			$.each(res, function(index, data){
+		  				events.push({
+		  					title : data.statusName,
+		  					start : data.workDate
+		  				});
+		  				events.push({
+		  					title : "출근",
+		  					start : data.workDate + "T" + data.inTime
+		  				});
+		  				events.push({
+		  					title : "퇴근",
+		  					start : data.workDate + "T" + data.outTime
+		  				});
+		  			});
+		  			successCallback(events);
+		   		}
+	   		});
+		   
+		    $.ajax({
+		    	url: '${root}/att/monthCnt',
+		    	type: 'POST',
+		    	data: {'month' : monthStr},
+		    	success: function(vo) {
+		    		document.getElementById("month").innerHTML = vo.month;
+					document.getElementById("workCount").innerHTML = vo.workCount;
+					document.getElementById("lateCount").innerHTML = vo.lateCount;
+					document.getElementById("earlyoutCount").innerHTML = vo.earlyoutCount;
+					document.getElementById("offCount").innerHTML = vo.offCount;
+		    	},
+		    	error: function(e) {
+		    		console.log(e);
+		    	}
+		    });
+	   },
+       eventDidMount: function(info){
+    	   if(info.event.title == '정상 근무') {
+    		   info.el.style.backgroundColor = 'green';
+    		   info.el.style.border = 'green';
+    	   } else if (info.event.title == '휴가' || info.event.title == '반차') {
+    		   info.el.style.backgroundColor = 'orange';
+    		   info.el.style.border = 'orange';
+    	   } else if(info.event.title == '조퇴' ) {
+    		   info.el.style.backgroundColor = 'skyblue';
+    		   info.el.style.border = 'skyblue';
+    	   } else if(info.event.title == '야근') {
+    		   info.el.style.backgroundColor = 'gray';
+    		   info.el.style.border = 'gray';
+    	   } else {
+    		   info.el.style.backgroundColor = 'white';
+    		   info.el.style.border = 'white';
+    	   }
+       }
      });
-     // 캘린더 랜더링
+
      calendar.render();
-   });
-  </script>
-  <script>
-  	/* $.ajax({
-  		url: '${root}/att/month',
-  		type: 'POST',
-  		data: {'month' : '2022-10'},
-  		success: function(res){
-  			var list = res;
-  			console.log(list);
-  			
-  			var calendarEl = document.getElementById('calendar');
-  			
-  			var events = list.map(function(item){
-  				return {
-  					title : item.statusName,
-  					start : item.workDate + "T" + item.inTime
-  				}
-  			});
-  			
-  			var calendar = new FullCalendar.Calendar(calendarEl, {
-  				events: events,
-  				eventTimeFormat: {
-  					hour: '2-digit',
-  					minute: '2-digit',
-  					hour12: false
-  				}
-  			});
-  			calendar.render();
-  		}
-  	});
-  	
-  	$('.fc-prev-button:button').click(function() {
-  		console.log("btn 클릭..!");        
-		var date = $("#calendar").fullCalendar("getDate");
-		});       
-				 
-	$('.fc-next-button:button').click(function() {
-		var date = $("#calendar").fullCalendar("getDate");
-		console.log(date);
-		console.log("test");
-	});
-  	      
-		/* // 받은 날짜값을 date 형태로 형변환 해주어야 한다.    
-		function convertDate(date) {
-			        var date = new Date(date);
-			        alert(date.yyyymmdd());
-			    }
-		
-		Date.prototype.yyyymmdd = function() {        
-			var yyyy = this.getFullYear().toString();        
-			var mm = (this.getMonth() + 1).toString();        
-			var dd = this.getDate().toString();        
-			return yyyy + "-" + (mm[1] ? mm : "0" + mm[0]) + "-" + (dd[1] ? dd : "0" + dd[0]);
-		} */
-  </script>
+   });		
+   
+</script>
+
 <link rel="stylesheet" href="${root}/resources/css/attendance.css">
 </html>
