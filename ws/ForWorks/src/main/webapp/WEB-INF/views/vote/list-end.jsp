@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-마감
+
 <div id="notice" style="text-align: left;width: 100%;">
     <div id="list" style="overflow: auto; width: 100%;">
-
+        
         <table class="table" id="table-main">
             <thead class="table-light">
                 <tr id="center">
@@ -17,12 +17,14 @@
             </thead>
             
             <c:forEach items="${vtEndList}" var="vte">
+                
                 <tbody id="tbd">
                     <tr id="center">
-                        
-                        <th scope="row">${vte.vtNo}1</th>
-                        <td colspan="5">${vte.vtTitle}2</td>
-                        <td >${vte.empNo}3</td>
+                        <input type="hidden" value="${vte.vtNo}">
+                        <th scope="row">${vte.rownum}</th>
+                        <td colspan="5">${vte.vtTitle}</td>
+                        <input type="hidden" value="${vte.num}">
+                        <td >${vte.empNo}</td>
                         <td>마감</td>
                         <td>${vte.vtCreate}</td>
                         <td>${vte.vtEnd}</td>

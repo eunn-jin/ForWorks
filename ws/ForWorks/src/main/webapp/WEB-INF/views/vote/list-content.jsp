@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <style>
 tr:hover{
     cursor: pointer;
@@ -37,7 +37,7 @@ tr>th:hover{
 					<!--  투표 현황(전체) -->
 					<div id="notice" style="text-align: left;width: 100%;">
 						<div id="list" style="overflow: auto; width: 100%;">
-
+							
 							<table class="table" id="table-main">
 								<thead class="table-light">
 									<tr id="center">
@@ -50,13 +50,15 @@ tr>th:hover{
 									</tr>
 								</thead>
 
-								<%int i=0; %>
+								
 								<c:forEach items="${vtList }" var="vt">
+									
 									<tbody id="tbd">
 										<tr id="center">
 											<input type="hidden" value="${vt.vtNo}">
 											<th scope="row">${vt.rownum}</th>
 											<td colspan="5">${vt.vtTitle}</td>
+											<input type="hidden" value="${vt.num}">
 											<td >${vt.empNo}</td>
 											
 											<c:choose>
@@ -128,19 +130,29 @@ tr>th:hover{
 	$(function() {
 		$('#table-main>tbody>tr').click(function() {
 			//행 클릭 되었을때, 동작할 내용
+			console.log("${loginMember.empNo}");
+			console.log($(this).children().eq(0).val());
+			console.log($(this).children().eq(3).val());
+
+			//로그인 회원번호
+			const loginNo = "${loginMember.empNo}";
+
+			//글 작성자 번호
+			const vtw = $(this).children().eq(3).val();
 
 			//글번호 가져오기
 			const num = $(this).children().eq(0).val();
 
 			//로그인한 회원의 정보중 이름을 가져와서 현재 선택한글의 작성자와 같은지 판별
-
-			//해당 번호로 요청 보내기
+			if (loginNo == vtw) {
+				//작성자인경우
+				location.href = '${root}/vote/detailCreator/' + num;
+			}else{
+				//아닌경우
+				location.href = '${root}/vote/detailUser/' + num;
+			}
 			
-			//작성자인경우
-			location.href = '${root}/vote/detailCreator/' + num;
 
-			//아닌경우
-			//location.href = '${root}/vote/detailUser?num=' + num;
 		});
 	})
 </script>
