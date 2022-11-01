@@ -73,5 +73,25 @@ public class AdminDaoImpl implements AdminDao {
 		return sst.selectList("adminMapper.selectSearchMember", vo);
 	}
 
+	@Override
+	public int updateOpLevelByNo(SqlSessionTemplate sst, CorpInfoVo vo) {
+		return sst.update("adminMapper.updateOpLevelByNo", vo);
+	}
+
+	@Override
+	public int updateOpLevelToOne(SqlSessionTemplate sst, String empNo) {
+		return sst.update("adminMapper.updateOpLevelToOne", empNo);
+	}
+
+	@Override
+	public MemberVo selectMemberByNo(SqlSessionTemplate sst, String empNo) {
+		return sst.selectOne("adminMapper.selectMemberByNo", empNo);
+	}
+
+	@Override
+	public int updateMemberInfo(SqlSessionTemplate sst, MemberVo vo) {
+		return sst.update("adminMapper.updateMemberInfo", vo);
+	}
+
 
 }

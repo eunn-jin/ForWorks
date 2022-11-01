@@ -35,7 +35,7 @@
           </div>
           <section class="section">
             <div class="card">
-              <div class="card-header">
+              <div class="card-header pb-2">
                 <h4 class="card-title">권한 설정</h4>
               </div>
               <div class="card-body row">
@@ -80,7 +80,7 @@
                     <h4>${opPage}</h4>
                     <div class="btn-toolbar mb-2 mb-md-0">
                       <button data-bs-toggle="modal" data-bs-target="#OperEditModal" type="button" class="btn btn-sm btn-outline-secondary">
-                        관리자 지정
+                        관리자 추가
                       </button>
                     </div>
                   </div>
@@ -90,7 +90,7 @@
                         <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
                           <div class="d-flex justify-content-between">
                             <strong class="text-gray-dark">${om.empName}</strong>
-                            <a href="#" style="color: red">삭제</a>
+                            <a href="${root}/foradmin/operremove/${pageLevel}/${om.empNo}" style="color: red">삭제</a>
                           </div>
                           <span class="d-block pt-1">${om.deptName} ${om.posName}</span>
                         </div>
@@ -178,21 +178,11 @@
                     </svg>
                   </div>
                 </div>
-                <button type="button" onclick="memberSearch();" class="btn btn-primary" style="width: 15%; margin-left: 3%">검색</button>
+                <button type="button" onclick="memberSearch();" class="btn btn-primary" style="width: 18%; margin-left: 3%">검색</button>
               </div>
             </form>
           </div>
           <div id="search-content" class="modal-body pt-0">
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
-              <i class="bx bx-x d-block d-sm-none"></i>
-              <span class="d-none d-sm-block">취소</span>
-            </button>
-            <button type="button" class="btn btn-primary ml-1" data-bs-dismiss="modal">
-              <i class="bx bx-check d-block d-sm-none"></i>
-              <span class="d-none d-sm-block">관리자 지정</span>
-            </button>
           </div>
         </div>
       </div>
@@ -215,15 +205,14 @@
         data: {
           deptNo: deptNo,
           posNo: posNo,
-          keyword: keyword,
-          opName: '${opPage}'
+          keyword: keyword
         },
         success: function (data) {
           $(data).each(function () {
             $("#search-content").append(
               '<div class="p-3 mb-0 small lh-sm border-bottom w-100"><div class="d-flex justify-content-between"><strong class="text-gray-dark">' +
                 this.empName +
-                '</strong><a href="${root}/foradmin/operappend/' +
+                '</strong><a href="${root}/foradmin/operappend/${pageLevel}/' +
                 this.empNo +
                 '">지정</a></div><span class="d-block">' +
                 this.deptName +

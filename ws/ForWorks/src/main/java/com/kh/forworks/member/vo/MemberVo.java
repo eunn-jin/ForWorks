@@ -35,6 +35,7 @@ public class MemberVo {
 	
 	private String posName;
 	private String deptName;
+	private String opName;
 
 	//회원가입
 	private String empRegno1;

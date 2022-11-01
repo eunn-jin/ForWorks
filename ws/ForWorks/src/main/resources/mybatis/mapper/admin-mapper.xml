@@ -70,13 +70,11 @@
 	<select id="selectMemberList" resultType="MemberVo">
 		SELECT 
 			E.EMP_NO
+			, E.OP_LEVEL
+			, O.OP_NAME
 			, E.EMP_NAME
-			, E.EMP_EMAIL
-			, E.EMP_PHONE
-			, E.EMP_EXPHONE
-			, E.EMP_PROFILE
+			, E.EMP_REGNO
 			, E.EMP_STATUS
-			, E.STAT_NO
 			, E.POS_NO
 			, E.DEPT_NO
 			, P.POS_NAME
@@ -86,15 +84,12 @@
 			ON E.DEPT_NO = D.DEPT_NO
 		LEFT JOIN POSITION P
 			ON E.POS_NO = P.POS_NO
-		WHERE E.EMP_STATUS = 'Y'
+		LEFT JOIN OPERATOR O
+			ON E.OP_LEVEL = O.OP_LEVEL
+		WHERE E.EMP_EDATE IS NOT NULL AND E.EMP_RDATE IS NULL
 		
 		<if test='#{keyword} != null'>
-			AND 
-			(
-			E.EMP_NAME LIKE '%' || #{keyword} || '%'
-			OR E.EMP_EMAIL LIKE '%' || #{keyword} || '%'
-			OR E.EMP_PHONE LIKE '%' || #{keyword} || '%'
-			)
+			AND E.EMP_NAME LIKE '%' || #{keyword} || '%'
 		</if>
 		
 		<choose>
@@ -142,10 +137,47 @@
 			ON E.POS_NO = P.POS_NO
 		WHERE E.DEPT_NO = #{deptNo}
 		AND E.POS_NO = #{posNo}
-		AND O.OP_NAME != #{opName}
+		AND E.OP_LEVEL = 1
 		
 		<if test = "#{keyword} != null">
 			AND E.EMP_NAME LIKE '%' || #{keyword} || '%'
 		</if>
 	</select>
+	
+	<update id="updateOpLevelByNo">
+		UPDATE EMPLOYEE
+		SET OP_LEVEL = #{opLevel}
+		WHERE EMP_NO = #{empNo}
+	</update>
+	
+	<update id="updateOpLevelToOne">
+		UPDATE EMPLOYEE
+		SET OP_LEVEL = 1
+		WHERE EMP_NO = #{empNo}
+	</update>
+	
+	<select id="selectMemberByNo" resultType="MemberVo">
+		SELECT
+			EMP_NO
+			, EMP_NAME
+			, POS_NO
+			, DEPT_NO
+			, EMP_MONEY
+			, EMP_EXPHONE
+			, EMP_JDATE
+		FROM EMPLOYEE
+		WHERE EMP_NO = #{empNo}
+	</select>
+	
+	<update id="updateMemberInfo">
+		UPDATE EMPLOYEE SET
+			EMP_NAME = #{empName}
+			, DEPT_NO = #{deptNo}
+			, POS_NO = #{posNo}
+			, EMP_MONEY = #{empMoney}
+			, EMP_EXPHONE = #{empExphone}
+			, EMP_JDATE = #{empJdate}
+		WHERE EMP_NO = #{empNo}
+	</update>
+
 </mapper>

@@ -17,6 +17,8 @@ public class CorpInfoVo {
 	private String opLevel;
 	private String opName;
 	
+	//검색
 	private String keyword;
+	private String empNo;
 
 }

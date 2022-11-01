@@ -75,6 +75,11 @@ public class MemberController {
 				String exRegNo = loginMember.getEmpRegno();
 				String regNo = exRegNo.substring(0, 6) + "-*******";
 				loginMember.setEmpRegno(regNo);
+				
+				//입사일 처리
+				String exJdate = loginMember.getEmpJdate();
+				String jdate = exJdate.substring(0, 10);
+				loginMember.setEmpJdate(jdate);
 	
 				session.setAttribute("loginMember", loginMember);
 				return "redirect:/";

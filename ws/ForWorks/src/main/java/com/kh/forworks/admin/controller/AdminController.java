@@ -114,6 +114,10 @@ public class AdminController {
 			@RequestParam(value = "sort", required = false) String sort,
 			@RequestParam(value = "order", required = false) String order
 			) {
+		List<CorpInfoVo> posList = adminService.selectPosList();
+		List<CorpInfoVo> deptList = adminService.selectDeptList();
+		model.addAttribute("posList", posList);
+		model.addAttribute("deptList", deptList);
 		
 		AddressVo addVo = new AddressVo();
 		addVo.setSort(sort);
@@ -125,6 +129,12 @@ public class AdminController {
 		
 		List<MemberVo> memberList = adminService.memberList(pv, addVo);
 		
+		for(int i = 0; i < memberList.size(); i++) {
+			String regNo = memberList.get(i).getEmpRegno();
+			String changeRegNo = regNo.substring(0,2) + "." + regNo.substring(2,4) + "." + regNo.substring(4,6);
+			memberList.get(i).setEmpRegno(changeRegNo);
+		}
+		
 		model.addAttribute("pv", pv);
 		model.addAttribute("addressParam", addVo);
 		model.addAttribute("memberList", memberList);
@@ -132,7 +142,38 @@ public class AdminController {
 		return "admin/admin-memberlist";
 	}
 	
-	//구성원 수정/탈퇴처리
+	//구성원 수정
+	@PostMapping("memberInfo")
+	@ResponseBody
+	public MemberVo memberInfo(String empNo) {
+		MemberVo member = adminService.selectedMember(empNo);
+		
+		if(member.getEmpJdate() != null) {
+			String exJdate = member.getEmpJdate();
+			String jdate = exJdate.substring(0, 10);
+			member.setEmpJdate(jdate);
+		}
+		
+		return member;
+	}
+	
+	@PostMapping("memberEdit")
+	public String memberEdit(MemberVo vo, HttpSession session) {
+		int result = adminService.updateMemberInfo(vo);
+		
+		if(result == 1) {
+			session.setAttribute("toastMsg", "구성원을 수정하였습니다.");
+		} else {
+			session.setAttribute("toastMsg", "오류 발생!");
+		}
+		return "redirect:/foradmin/member/1";
+	}
+	
+	//구성원 일시정지/탈퇴
+	@GetMapping("memberPause")
+	public String memberPause() {
+		return "";
+	}
 	
 	//운영자 설정
 	@GetMapping("oper/{oplevel}")
@@ -143,8 +184,10 @@ public class AdminController {
 		List<CorpInfoVo> operList = adminService.selectOperList();
 		model.addAttribute("operList", operList);
 		
-		String opPage = operList.get(Integer.parseInt(oplevel)-1).getOpName();
-		model.addAttribute("opPage", opPage);
+		String pageLevel = operList.get(Integer.parseInt(oplevel)-1).getOpLevel();
+		String pageOpName = operList.get(Integer.parseInt(oplevel)-1).getOpName();
+		model.addAttribute("pageLevel", pageLevel);
+		model.addAttribute("opPage", pageOpName);
 		
 		List<CorpInfoVo> deptList = adminService.selectDeptList();
 		List<CorpInfoVo> posList = adminService.selectPosList();
@@ -161,15 +204,33 @@ public class AdminController {
 	//운영자 지정
 	@PostMapping("opersearch")
 	@ResponseBody
-	public List<MemberVo> operSearch(Model model, String deptNo, String posNo, String keyword, String opName) {
+	public List<MemberVo> operSearch(Model model, String deptNo, String posNo, String keyword) {
 		CorpInfoVo vo = new CorpInfoVo();
 		vo.setDeptNo(deptNo);
 		vo.setPosNo(posNo);
 		vo.setKeyword(keyword);
-		vo.setOpName(opName);
 		
 		List<MemberVo> searchMember = adminService.selectSearchMember(vo);
 		
 		return searchMember;
+	}
+	
+	@GetMapping("operappend/{opLevel}/{empNo}")
+	public String operAppend(@PathVariable String opLevel, @PathVariable String empNo) {
+		CorpInfoVo vo = new CorpInfoVo();
+		vo.setOpLevel(opLevel);
+		vo.setEmpNo(empNo);
+		
+		adminService.updateOperLevel(vo);
+		
+		return "redirect:/foradmin/oper/" + opLevel;
+	}
+	
+	//운영자 삭제
+	@GetMapping("operremove/{opLevel}/{empNo}")
+	public String operRemove(@PathVariable String opLevel, @PathVariable String empNo) {
+		adminService.resetOpLevel(empNo);
+		
+		return "redirect:/foradmin/oper/" + opLevel;
 	}
 }
