@@ -47,6 +47,25 @@ public class AttendanceController {
 		return day;
 	}
 	
+	private String monthForm(String str) {
+		String year = str.substring(0, 4);
+		String month = str.substring(5, 7);
+		String day = str.substring(8, 10);
+		
+		int yearNum = Integer.parseInt(year);
+		int monthNum = Integer.parseInt(month);
+		int dayNum = Integer.parseInt(day);
+		
+		if(dayNum != 1) {
+			monthNum = monthNum + 1 ;
+			if(monthNum == 13) {
+				yearNum++;
+				monthNum = 1;
+			}
+		}
+		
+		return yearNum + "-" + monthNum;
+	}
 
 	@GetMapping("day")
 	public String dayAtt(Model model) {
@@ -70,48 +89,39 @@ public class AttendanceController {
 	
 	@GetMapping("month")
 	public String monthAtt(Model model) {
-		
-		int empNo = 1;
-		String month = getThisMonth();
-		
-		System.out.println(month);
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("empNo", empNo);
-		map.put("month", month);
-		
-		MonthWorkVo monthCnt = service.getMonthWorkCount(map); 
-		monthCnt.setMonth(month);
-		
-		List<WorkVo> work = service.getWorkList(map);
-		
-		model.addAttribute("monthCnt", monthCnt);
-		model.addAttribute("workList", work);
-		
-		System.out.println(monthCnt);
-		System.out.println(work);
-		
 		return "attendance/monthAttendance";
 	}
 	
 	@PostMapping("month")
 	@ResponseBody
 	public List<WorkVo> MonthWork(String month) {
+		//TODO: 화면에 보여줄 것들 가져오기, empNo 바꾸기
+		int empNo = 1;
+		month = monthForm(month);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("empNo", empNo);
+		map.put("month", month);
+		
+		List<WorkVo> workList = service.getWorkList(map);
+
+		return workList;
+	}
+	
+	@PostMapping("monthCnt")
+	@ResponseBody
+	public MonthWorkVo MonthCnt(String month) {
 		
 		//TODO: 화면에 보여줄 것들 가져오기, empNo 바꾸기
 		int empNo = 1;
-		
+		month = monthForm(month);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("empNo", empNo);
 		map.put("month", month);
 		
 		MonthWorkVo monthCnt = service.getMonthWorkCount(map); 
 		monthCnt.setMonth(month);
-		List<WorkVo> workList = service.getWorkList(map);
-		
-		System.out.println("work :: " + workList + ", "  + month);
-		
-		return workList;
+
+		return monthCnt;
 	}
 	
 	@GetMapping("off")
