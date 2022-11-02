@@ -40,5 +40,7 @@ public interface AdminService {
 
 	int updateMemberInfo(MemberVo vo);
 
+	int updateMemberStatus(MemberVo vo);
+
 
 }

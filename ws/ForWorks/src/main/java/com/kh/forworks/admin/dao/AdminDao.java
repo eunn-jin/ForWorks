@@ -42,5 +42,7 @@ public interface AdminDao {
 
 	int updateMemberInfo(SqlSessionTemplate sst, MemberVo vo);
 
+	int updateMemberStatus(SqlSessionTemplate sst, MemberVo vo);
+
 
 }
