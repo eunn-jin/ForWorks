@@ -112,6 +112,18 @@ public class ApprovDaoImpl implements ApprovDao {
 		return sst.update("approvMapper.updateSignOne", vo);
 	}
 	
+	//문서 세부 확인시 관련자 확인
+	@Override
+	public int selectApprovDocEmpNo(SqlSessionTemplate sst, ApprovDocumentVo vo) {
+		return sst.selectOne("approvMapper.selectApprovDocEmpNo", vo);
+	}
+	
+	//문서 조회
+	@Override
+	public ApprovDocumentVo selectApprovDocOneByNo(SqlSessionTemplate sst, ApprovDocumentVo vo) {
+		return sst.selectOne("approvMapper.selectApprovDocOneByNo", vo);
+	}
+	
 
 	
 }

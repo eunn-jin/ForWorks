@@ -13,6 +13,7 @@ public class ApprovDocumentVo {
 	private String adocName;
 	private String adocContent;
 	private String empNo;
+	private String empName;
 	private String draftDate;
 	private String noelecStatus;
 	private String fileName;
@@ -21,5 +22,6 @@ public class ApprovDocumentVo {
 	private List<String> approvMember;
 	private List<String> coopMember;
 	private List<String> referMember;
+	private List<String> sign;
 
 }

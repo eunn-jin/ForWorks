@@ -159,7 +159,6 @@
         <main>
             
             <div id="main-wrap">
-<!-- TODO 결제문서 메인 리스트 데이터 jstl로 뿌리기 -->
                 <div id="main-header">결재문서</div>
 
                 <div class="approv-check-div">
@@ -174,36 +173,24 @@
                         </div> 
                         <div class="approv-content-wrap">
                         	<div class="approv-content-slide" id="doc-approv-slide">
-	                            <a href="" class="approv-content-a">
+                        		<c:forEach var="approv" items="${approvList}">
+	                            <a href="${root}/approv/detail/${approv.adocNo}" class="approv-content-a">
 		                            <div class="approv-check-content doc-approv">
-			                                <div class="content-title">문서제목</div>
+			                                <div class="content-title">${approv.adocName}</div>
 			                                <div class="content-bot">
-			                                    <div class="content-date content-bot-font">기안일자</div>
-			                                    <div class="content-writer content-bot-font">기안자</div>
+			                                    <div class="content-date content-bot-font">${approv.draftDate}</div>
+			                                    <div class="content-writer content-bot-font">${approv.empName}</div>
 			                                </div>
 		                            </div>
 	                            </a>
 	                            <div class="div-bar"></div>
-	                            <a href="" class="approv-content-a">
-		                            <div class="approv-check-content doc-approv">
-			                                <div class="content-title">문서제목</div>
-			                                <div class="content-bot">
-			                                    <div class="content-date content-bot-font">기안일자</div>
-			                                    <div class="content-writer content-bot-font">기안자</div>
-			                                </div>
-		                            </div>
-	                            </a>
-	                            <div class="div-bar"></div>
-	                            <a href="" class="approv-content-a">
-		                            <div class="approv-check-content doc-approv">
-			                                <div class="content-title">문서제목</div>
-			                                <div class="content-bot">
-			                                    <div class="content-date content-bot-font">기안일자</div>
-			                                    <div class="content-writer content-bot-font">기안자</div>
-			                                </div>
-		                            </div>
-	                            </a>
-	                            <div class="div-bar"></div>
+	                            </c:forEach>
+	                            <c:if test="${empty approvList}">
+	                            	<div>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</div>
+	                            	<div class="approv-check-title">
+				                        결제할 문서가 없습니다.
+				                    </div>
+	                            </c:if>
 	                            
                             </div>
                         </div>
@@ -227,36 +214,24 @@
                         </div> 
                         <div class="approv-content-wrap">
                         	<div class="approv-content-slide" id="doc-reject-slide">
-	                            <a href="" class="approv-content-a">
+                        		<c:forEach var="reject" items="${rejectApprovList}">
+	                            <a href="${root}/approv/detail/${reject.adocNo}" class="approv-content-a">
 		                            <div class="approv-check-content doc-reject">
-			                                <div class="content-title">문서제목</div>
+			                                <div class="content-title">${reject.adocName}</div>
 			                                <div class="content-bot">
-			                                    <div class="content-date content-bot-font">기안일자</div>
-			                                    <div class="content-writer content-bot-font">기안자</div>
+			                                    <div class="content-date content-bot-font">${reject.draftDate}</div>
+			                                    <div class="content-writer content-bot-font">${reject.empName}</div>
 			                                </div>
 		                            </div>
 	                            </a>
 	                            <div class="div-bar"></div>
-	                            <a href="" class="approv-content-a">
-		                            <div class="approv-check-content doc-reject">
-			                                <div class="content-title">문서제목</div>
-			                                <div class="content-bot">
-			                                    <div class="content-date content-bot-font">기안일자</div>
-			                                    <div class="content-writer content-bot-font">기안자</div>
-			                                </div>
-		                            </div>
-	                            </a>
-	                            <div class="div-bar"></div>
-	                            <a href="" class="approv-content-a">
-		                            <div class="approv-check-content doc-reject">
-			                                <div class="content-title">문서제목</div>
-			                                <div class="content-bot">
-			                                    <div class="content-date content-bot-font">기안일자</div>
-			                                    <div class="content-writer content-bot-font">기안자</div>
-			                                </div>
-		                            </div>
-	                            </a>
-	                            <div class="div-bar"></div>
+	                            </c:forEach>
+	                            <c:if test="${empty rejectApprovList}">
+	                            	<div>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</div>
+	                            	<div class="approv-check-title">
+				                        반려된 문서가 없습니다.
+				                    </div>
+	                            </c:if>
 	                            
                             </div>
                         </div>
@@ -280,36 +255,24 @@
                         </div> 
                         <div class="approv-content-wrap">
                         	<div class="approv-content-slide" id="doc-coop-slide">
-	                            <a href="" class="approv-content-a">
+                        		<c:forEach var="reject" items="${coopList}">
+	                            <a href="${root}/approv/detail/${coopList.adocNo}" class="approv-content-a">
 		                            <div class="approv-check-content doc-coop">
-			                                <div class="content-title">문서제목</div>
+			                                <div class="content-title">${coopList.adocName}</div>
 			                                <div class="content-bot">
-			                                    <div class="content-date content-bot-font">기안일자</div>
-			                                    <div class="content-writer content-bot-font">기안자</div>
+			                                    <div class="content-date content-bot-font">${coopList.draftDate}</div>
+			                                    <div class="content-writer content-bot-font">${coopList.empName}</div>
 			                                </div>
 		                            </div>
 	                            </a>
 	                            <div class="div-bar"></div>
-	                            <a href="" class="approv-content-a">
-		                            <div class="approv-check-content doc-coop">
-			                                <div class="content-title">문서제목</div>
-			                                <div class="content-bot">
-			                                    <div class="content-date content-bot-font">기안일자</div>
-			                                    <div class="content-writer content-bot-font">기안자</div>
-			                                </div>
-		                            </div>
-	                            </a>
-	                            <div class="div-bar"></div>
-	                            <a href="" class="approv-content-a">
-		                            <div class="approv-check-content doc-coop">
-			                                <div class="content-title">문서제목</div>
-			                                <div class="content-bot">
-			                                    <div class="content-date content-bot-font">기안일자</div>
-			                                    <div class="content-writer content-bot-font">기안자</div>
-			                                </div>
-		                            </div>
-	                            </a>
-	                            <div class="div-bar"></div>
+	                            </c:forEach>
+	                            <c:if test="${empty coopList}">
+	                            	<div>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</div>
+	                            	<div class="approv-check-title">
+				                        협조 문서가 없습니다.
+				                    </div>
+	                            </c:if>
 	                            
                             </div>
                         </div>
@@ -333,36 +296,25 @@
                         </div> 
                         <div class="approv-content-wrap">
                         	<div class="approv-content-slide" id="doc-refer-slide">
-	                            <a href="" class="approv-content-a">
+                        		<c:forEach var="reject" items="${referList}">
+	                            <a href="${root}/approv/detail/${referList.adocNo}" class="approv-content-a">
 		                            <div class="approv-check-content doc-refer">
-			                                <div class="content-title">문서제목</div>
+			                                <div class="content-title">${referList.adocName}</div>
 			                                <div class="content-bot">
-			                                    <div class="content-date content-bot-font">기안일자</div>
-			                                    <div class="content-writer content-bot-font">기안자</div>
+			                                    <div class="content-date content-bot-font">${referList.draftDate}</div>
+			                                    <div class="content-writer content-bot-font">${referList.empName}</div>
 			                                </div>
 		                            </div>
 	                            </a>
 	                            <div class="div-bar"></div>
-	                            <a href="" class="approv-content-a">
-		                            <div class="approv-check-content doc-refer">
-			                                <div class="content-title">문서제목</div>
-			                                <div class="content-bot">
-			                                    <div class="content-date content-bot-font">기안일자</div>
-			                                    <div class="content-writer content-bot-font">기안자</div>
-			                                </div>
-		                            </div>
-	                            </a>
-	                            <div class="div-bar"></div>
-	                            <a href="" class="approv-content-a">
-		                            <div class="approv-check-content doc-refer">
-			                                <div class="content-title">문서제목</div>
-			                                <div class="content-bot">
-			                                    <div class="content-date content-bot-font">기안일자</div>
-			                                    <div class="content-writer content-bot-font">기안자</div>
-			                                </div>
-		                            </div>
-	                            </a>
-	                            <div class="div-bar"></div>
+	                            </c:forEach>
+	                            <c:if test="${empty referList}">
+	                            	<div>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</div>
+	                            	<div class="approv-check-title">
+				                        참조 문서가 없습니다.
+				                    </div>
+	                            </c:if>
+	                            
 	                            
                             </div>
                         </div>

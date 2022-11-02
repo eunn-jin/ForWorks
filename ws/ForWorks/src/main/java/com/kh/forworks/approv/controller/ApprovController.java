@@ -136,12 +136,31 @@ public class ApprovController {
 		
 	}
 	
-	@GetMapping("detail")
-	public String detail(HttpSession session) {
+	@GetMapping("detail/{dno}")
+	public String detail(@PathVariable String dno, HttpSession session) {
 		if(session.getAttribute("loginMember")==null) {
 			session.setAttribute("toastMsg", "로그인이 필요합니다.");
 			return "redirect:/login";
 		}
+		
+		MemberVo memberVo = (MemberVo) session.getAttribute("loginMember");
+		
+		ApprovDocumentVo vo = new ApprovDocumentVo();
+		
+		vo.setEmpNo(memberVo.getEmpNo());
+		vo.setAdocNo(dno);
+		
+		
+		int result = service.selectApprovDocEmpNo(vo);
+		
+		if(result == 0) {
+			session.setAttribute("toastMsg", "접근 권한이 없습니다.");
+			return "redirect:/approv/main";	
+		}
+		
+		vo = service.selectApprovDocOneByNo(vo);
+		//TODO 기안자서명, 결제자 서명, 참조자 이름 받아오기
+		
 		return "approv/approv-detail";
 	}
 	

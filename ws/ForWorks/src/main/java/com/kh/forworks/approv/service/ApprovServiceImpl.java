@@ -135,6 +135,18 @@ public class ApprovServiceImpl implements ApprovService {
 		return dao.updateSignFile(sst, vo);
 	}
 
+	//문서 세부 확인시 관련자 확인
+	@Override
+	public int selectApprovDocEmpNo(ApprovDocumentVo vo) {
+		return dao.selectApprovDocEmpNo(sst, vo);
+	}
+
+	//문서 조회
+	@Override
+	public ApprovDocumentVo selectApprovDocOneByNo(ApprovDocumentVo vo) {
+		return dao.selectApprovDocOneByNo(sst, vo);
+	}
+
 	
 
 
