@@ -16,5 +16,13 @@ public class PlanController {
 	
 	public String calendar() {
 		return "plan/calendar";
+	}	
+	
+	@GetMapping("plan/planPop")
+	public void authorPopGET() throws Exception{
+		
+		logger.info("authorPopGET.......");
+	
 	}
+	
 }	
