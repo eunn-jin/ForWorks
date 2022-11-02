@@ -61,6 +61,12 @@ public interface ApprovDao {
 
 	//서명 수정
 	int updateSignFile(SqlSessionTemplate sst, DocSignVo vo);
+	
+	//문서 세부 확인시 관련자 확인
+	int selectApprovDocEmpNo(SqlSessionTemplate sst, ApprovDocumentVo vo);
+
+	//문서 조회
+	ApprovDocumentVo selectApprovDocOneByNo(SqlSessionTemplate sst, ApprovDocumentVo vo);
 
 	
 
