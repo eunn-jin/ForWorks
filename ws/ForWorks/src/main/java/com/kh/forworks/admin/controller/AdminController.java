@@ -58,7 +58,13 @@ public class AdminController {
 	
 	//직무,직급 설정
 	@GetMapping("pos")
-	public String pos() {
+	public String pos(Model model) {
+		List<CorpInfoVo> deptList = adminService.selectDeptList();
+		List<CorpInfoVo> posList = adminService.selectPosList();
+		
+		model.addAttribute("posList", posList);
+		model.addAttribute("deptList", deptList);
+		
 		return "admin/admin-position";
 	}
 	
@@ -153,7 +159,6 @@ public class AdminController {
 			String jdate = exJdate.substring(0, 10);
 			member.setEmpJdate(jdate);
 		}
-		
 		return member;
 	}
 	
@@ -170,9 +175,17 @@ public class AdminController {
 	}
 	
 	//구성원 일시정지/탈퇴
-	@GetMapping("memberPause")
-	public String memberPause() {
-		return "";
+	@PostMapping("memberStatus")
+	@ResponseBody
+	public String memberStatus(String empNo, String empStatus, String empRdate) {
+		MemberVo vo = new MemberVo();
+		vo.setEmpNo(empNo);
+		vo.setEmpStatus(empStatus);
+		vo.setEmpRdate(empRdate);
+		
+		int result = adminService.updateMemberStatus(vo);
+		
+		return "" + result;
 	}
 	
 	//운영자 설정

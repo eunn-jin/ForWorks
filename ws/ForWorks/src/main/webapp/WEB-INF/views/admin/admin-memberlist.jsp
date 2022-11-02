@@ -183,7 +183,7 @@
                       	<th></th>
                         <th>
                           <c:choose>
-                            <c:when test="${addressParam.order eq 'desc'}">
+                            <c:when test="${addressParam.sort eq 'name' and addressParam.order eq 'desc'}">
                               <c:choose>
                                 <c:when test="${not empty addressParam.keyword}">
                                   <a href="${root}/foradmin/member/1?keyword=${addressParam.keyword}&sort=name&order=asc">이름</a>
@@ -221,7 +221,42 @@
                         <th>부서</th>
                         <th>직급</th>
                         <th>관리 레벨</th>
-                        <th>계정 상태</th>
+                        <th>
+                          <c:choose>
+                            <c:when test="${addressParam.sort eq 'status' and addressParam.order eq 'asc'}">
+                              <c:choose>
+                                <c:when test="${not empty addressParam.keyword}">
+                                  <a href="${root}/foradmin/member/1?keyword=${addressParam.keyword}&sort=status&order=desc">계정 상태</a>
+                                  <svg id="orderUpIcon" class="mb-1" width="0.8em" height="0.8em">
+                                    <use xlink:href="${root}/resources/vendors/bootstrap-icons/bootstrap-icons.svg#arrow-up"></use>
+                                  </svg>
+                                </c:when>
+                                <c:otherwise>
+                                  <a href="${root}/foradmin/member/1?sort=status&order=desc">계정 상태</a>
+                                  <svg id="orderUpIcon" class="mb-1" width="0.8em" height="0.8em">
+                                    <use xlink:href="${root}/resources/vendors/bootstrap-icons/bootstrap-icons.svg#arrow-up"></use>
+                                  </svg>
+                                </c:otherwise>
+                              </c:choose>
+                            </c:when>
+                            <c:otherwise>
+                              <c:choose>
+                                <c:when test="${not empty addressParam.keyword}">
+                                  <a href="${root}/foradmin/member/1?keyword=${addressParam.keyword}&sort=status&order=asc">계정 상태</a>
+                                  <svg id="orderDownIcon" class="mb-1" width="0.8em" height="0.8em">
+                                    <use xlink:href="${root}/resources/vendors/bootstrap-icons/bootstrap-icons.svg#arrow-down"></use>
+                                  </svg>
+                                </c:when>
+                                <c:otherwise>
+                                  <a href="${root}/foradmin/member/1?sort=status&order=asc">계정 상태</a>
+                                  <svg id="orderDownIcon" class="mb-1" width="0.8em" height="0.8em">
+                                    <use xlink:href="${root}/resources/vendors/bootstrap-icons/bootstrap-icons.svg#arrow-down"></use>
+                                  </svg>
+                                </c:otherwise>
+                              </c:choose>
+                            </c:otherwise>
+                          </c:choose>
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -243,7 +278,7 @@
                           </c:choose>
                           <c:choose>
                           	<c:when test="${l.empStatus ne 'Y'}">
-                          		<td>일시정지</td>
+                          		<td style="color: red;">일시정지</td>
                           	</c:when>
                           	<c:otherwise>
 	                          	<td>사용중</td>
@@ -274,7 +309,8 @@
 			    상태변경
 			  </button>
 			  <ul class="dropdown-menu" style="min-width: 70px; font-size: 0.9rem; border:0.5px solid #eee;">
-			    <li><a class="dropdown-item" data-bs-target="#memberPauseModal" data-bs-toggle="modal">일시정지</a></li>
+			    <li id="pauseBtn"><a class="dropdown-item" data-bs-target="#memberPauseModal" data-bs-toggle="modal">일시정지</a></li>
+			    <li id="pausedBtn"><a class="dropdown-item" onclick="memberUnpause();">일시정지 해제</a></li>
 			    <li><a class="dropdown-item" data-bs-target="#memberQuitModal" data-bs-toggle="modal">구성원 삭제</a></li>
 			  </ul>
 			</div>
@@ -332,13 +368,14 @@
 	  <div class="modal-dialog modal-dialog-centered" role="document" style="width: 450px;">
 	    <div class="modal-content rounded-3 shadow">
 	      <div class="modal-body p-4 text-center">
-	        <h5 class="mb-4 mt-1">일시정지 하시겠습니까?</h5>
-	        <p class="mb-3">일시정지된 구성원은 FOR WORKS 서비스를 <br> 더 이상 이용할 수 없습니다.</p>
+	        <h5 class="mb-3 mt-1">일시정지 하시겠습니까?</h5>
+	        <p class="mb-2">'<span id="pauseMember"></span>'</p>
+	        <p class="mb-2">일시정지된 구성원은 FORWORKS 서비스를 <br> 더 이상 이용할 수 없습니다.</p>
 	        <p class="mb-2">구성원의 계정과 데이터는 삭제되지 않으며, <br> [일시정지 해제]를 통해 정지를 해제할 수 있습니다.</p>
 	      </div>
 	      <div class="modal-footer flex-nowrap p-0">
 	        <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 p-2 m-0 rounded-0 text-muted" data-bs-dismiss="modal">취소</button>
-	        <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 p-2 m-0 rounded-0 border-end"><strong>확인</strong></button>
+	        <button type="button" onclick="memberPause();" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 p-2 m-0 rounded-0 border-end"><strong>확인</strong></button>
 	      </div>
 	    </div>
 	  </div>
@@ -349,24 +386,27 @@
 	  <div class="modal-dialog modal-dialog-centered" role="document">
 	    <div class="modal-content rounded-3 shadow">
 	      <div class="modal-body p-4 text-center">
-	        <h5 class="mb-0 mt-1">Enable this setting?</h5>
-	        <p class="mb-0">You can always change your mind in your account settings.</p>
+	        <h5 class="mb-3 mt-1">구성원을 삭제하시겠습니까?</h5>
+	        <p class="mb-2">'<span id="quitMember"></span>'</p>
+	        <p class="mb-0">삭제된 구성원은 FORWORKS 서비스를 <br> 더 이상 이용할 수 없으며 다시 되돌릴 수 없습니다.</p>
 	      </div>
 	      <div class="modal-footer flex-nowrap p-0">
-	        <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0 border-end"><strong>Yes, enable</strong></button>
-	        <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0" data-bs-dismiss="modal">No thanks</button>
+	        <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0" data-bs-dismiss="modal">취소</button>
+	        <button type="button" onclick="memberDelete();" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0 border-end"><strong>확인</strong></button>
 	      </div>
 	    </div>
 	  </div>
 	</div>
   </body>
   <script>
+  	//검색
     function searchKeyword() {
       const keyword = document.querySelector("input[name=keyword]").value;
       location.href = "${root}/foradmin/member/1?keyword=" + keyword;
     }
 
-    $("#member-table tr").click(function () {
+  	//상세 모달
+    $("#member-table tbody tr").click(function () {
       const td = $(this).children();
       const empNo = td.eq(1).text();
 
@@ -386,6 +426,16 @@
           document.getElementById("emp_money").value = data.empMoney;
           document.getElementById("emp_exphone").value = data.empExphone;
           document.getElementById("emp_jdate").value = data.empJdate;
+          
+          console.log(data.empStatus);
+          
+          if(data.empStatus == "N") {
+        	  document.getElementById("pauseBtn").style.display = "none";
+        	  document.getElementById("pausedBtn").style.display = "block";
+          } else {
+        	  document.getElementById("pausedBtn").style.display = "none";
+        	  document.getElementById("pauseBtn").style.display = "block";
+          }
 
           $("#modalMemberEdit").modal("show");
         },
@@ -394,5 +444,89 @@
         },
       });
     });
+    
+    $("#memberPauseModal").on('show.bs.modal', function(e) {
+  		const name = document.getElementById("emp_name").value;
+  		document.getElementById("pauseMember").innerHTML = name;
+  	})
+  	
+  	$("#memberQuitModal").on('show.bs.modal', function(e) {
+  		const name = document.getElementById("emp_name").value;
+  		document.getElementById("quitMember").innerHTML = name;
+  	})
+  	
+  	//구성원 일시정지
+  	function memberPause() {
+  		const no = document.getElementById("emp_no").value;
+    	
+  		$.ajax({
+	        url: "${root}/foradmin/memberStatus",
+	        type: "POST",
+	        data: {
+	          empNo: no,
+	          empStatus: "N",
+	          empRdate: null
+	        },
+	        success: function (data) {
+	           if (data == 1) {
+		         toastContent.innerText = "일시정지 되었습니다.";
+			     $("#emp"+no).find("td:eq(7)").html("<span style='color:red;'>일시정지</span>");
+	           }
+	           $("#memberPauseModal").modal("hide");
+	        },
+	        error: function () {
+	          console.log("통신실패");
+	        },
+	     });
+    }
+    
+    //구성원 일시정지 해제
+    function memberUnpause() {
+		const no = document.getElementById("emp_no").value;
+    	
+  		$.ajax({
+	        url: "${root}/foradmin/memberStatus",
+	        type: "POST",
+	        data: {
+	          empNo: no,
+	          empStatus: "Y",
+	          empRdate: null
+	        },
+	        success: function (data) {
+	           if (data == 1) {
+		         toastContent.innerText = "일시정지를 해제하였습니다.";
+			     $("#emp"+no).find("td:eq(7)").html("<span style='color:#607080;'>사용중</span>");
+			     $("#modalMemberEdit").modal("hide");
+	           }
+	        },
+	        error: function () {
+	          console.log("통신실패");
+	        },
+	     });
+    }
+    
+    function memberDelete() {
+		const no = document.getElementById("emp_no").value;
+    	
+  		$.ajax({
+	        url: "${root}/foradmin/memberStatus",
+	        type: "POST",
+	        data: {
+	          empNo: no,
+	          empStatus: "N",
+	          empRdate: "Y"
+	        },
+	        success: function (data) {
+	           if (data == 1) {
+		         toastContent.innerText = "구성원을 삭제하였습니다.";
+			     $("#emp"+no).remove();
+			     $("#memberQuitModal").modal("hide");
+	           }
+	        },
+	        error: function () {
+	          console.log("통신실패");
+	        },
+	     });
+    }
   </script>
 </html>

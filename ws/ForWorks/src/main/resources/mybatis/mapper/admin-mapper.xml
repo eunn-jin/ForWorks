@@ -32,7 +32,7 @@
 			, EMP_PHONE
 			, EMP_EXPHONE
 		FROM EMPLOYEE
-		WHERE EMP_STATUS = 'N'
+		WHERE EMP_STATUS = 'N' AND EMP_EDATE IS NULL
 		ORDER BY EMP_NO ASC
 	</select>
 	
@@ -93,7 +93,10 @@
 		</if>
 		
 		<choose>
-			<when test="#{sort} != null">
+			<when test="#{sort} != null and 'status'.equals(sort)">
+				ORDER BY E.EMP_STATUS ${order}, E.POS_NO ASC
+			</when>
+			<when test="#{sort} != null and 'name'.equals(sort)">
 				ORDER BY E.EMP_NAME ${order}, E.POS_NO ASC
 			</when>
 			<otherwise>
@@ -165,6 +168,7 @@
 			, EMP_MONEY
 			, EMP_EXPHONE
 			, EMP_JDATE
+			, EMP_STATUS
 		FROM EMPLOYEE
 		WHERE EMP_NO = #{empNo}
 	</select>
@@ -180,4 +184,14 @@
 		WHERE EMP_NO = #{empNo}
 	</update>
 
+	<update id="updateMemberStatus">
+		UPDATE EMPLOYEE SET
+			EMP_STATUS = '${empStatus}'
+			
+			<if test='#{empRdate} != null and "Y".equals(empRdate)'>
+				, EMP_RDATE = SYSDATE
+			</if>
+			
+		WHERE EMP_NO = #{empNo}
+	</update>
 </mapper>

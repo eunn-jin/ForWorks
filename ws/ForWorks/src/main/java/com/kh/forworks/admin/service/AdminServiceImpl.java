@@ -123,6 +123,12 @@ public class AdminServiceImpl implements AdminService {
 	public int updateMemberInfo(MemberVo vo) {
 		return adminDao.updateMemberInfo(sst, vo);
 	}
+	
+	//구성원 일시정지
+	@Override
+	public int updateMemberStatus(MemberVo vo) {
+		return adminDao.updateMemberStatus(sst, vo);
+	}
 
 
 }
