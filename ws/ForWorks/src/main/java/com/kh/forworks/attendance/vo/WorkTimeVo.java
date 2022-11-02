@@ -14,9 +14,6 @@ public class WorkTimeVo {
 	private String weekWork;
 	private String dayWork;
 	
-	private String regInTime;
-	private String regOutTime;
-	
 	public void setMonthWork(int t) {
 		this.monthWork = changeFormat(t);
 	}

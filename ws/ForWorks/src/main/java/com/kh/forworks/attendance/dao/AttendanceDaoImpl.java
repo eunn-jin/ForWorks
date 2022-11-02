@@ -6,6 +6,7 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.forworks.attendance.vo.TeamWorkVo;
 import com.kh.forworks.attendance.vo.WorkTimeVo;
 import com.kh.forworks.attendance.vo.WorkVo;
 
@@ -108,6 +109,11 @@ public class AttendanceDaoImpl implements AttendanceDao {
 	@Override
 	public List<WorkVo> selectWorkList(SqlSessionTemplate sst, Map<String, Object> map) {
 		return sst.selectList("attendanceMapper.selectWorkList", map);
+	}
+
+	@Override
+	public TeamWorkVo selectTeamTime(SqlSessionTemplate sst, int empNo) {
+		return sst.selectOne("attendanceMapper.selectTeamTime", empNo);
 	}
 
 }
