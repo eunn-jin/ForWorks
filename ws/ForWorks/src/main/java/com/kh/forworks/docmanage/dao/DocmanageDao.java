@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.kh.forworks.approv.vo.DocFileVo;
 import com.kh.forworks.docmanage.vo.DocVo;
 
 public interface DocmanageDao {
@@ -11,5 +12,7 @@ public interface DocmanageDao {
 	int insertDoc(SqlSessionTemplate sst, DocVo dv);
 	//일반문서리스트
 	List<DocVo> selectDoc(SqlSessionTemplate sst);
+	//일반문서>파일업로드
+	int insertDocFile(SqlSessionTemplate sst, DocFileVo fv);
 
 }

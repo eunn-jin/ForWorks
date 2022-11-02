@@ -13,4 +13,15 @@
   		SELECT DOC_NO,TITLE,CONTENT,EMP_NO,TO_CHAR(ENROLL_DATE,'YYYY"년"MM"월"DD"일"')AS ENROLL_DATE FROM DOC WHERE STATUS = 'N'
   	</select>
   	
+  	<insert id="insertFile">
+  		INSERT INTO D_FILE 
+  		(
+  			FILE_NO , DOC_NO, FILE_PATH, UPLOAD_NAME , ORIGIN_NAME
+  		) 
+  		VALUES
+  		(
+  			SEQ_D_FILE_NO.NEXTVAL, SEQ_DOC_NO.CURRVAL, ' ' ,#{uploadName},#{originName}
+  		)
+  	</insert>
+  	
 </mapper>
