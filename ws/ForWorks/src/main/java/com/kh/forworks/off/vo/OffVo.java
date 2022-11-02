@@ -1,4 +1,4 @@
-package com.kh.forworks.attendance.vo;
+package com.kh.forworks.off.vo;
 
 import lombok.Data;
 
