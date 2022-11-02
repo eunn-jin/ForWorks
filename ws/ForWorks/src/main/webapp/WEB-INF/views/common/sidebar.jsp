@@ -79,7 +79,7 @@
                             <a href="${root}/att/month">월 근태 현황</a>
                         </li>
                         <li class="submenu-item " id="att-off">
-                            <a href="${root}/att/off">휴가관리</a>
+                            <a href="${root}/off/manage">휴가관리</a>
                         </li>
                     </ul>
                 </li>

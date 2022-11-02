@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.forworks.attendance.service.AttendanceService;
 import com.kh.forworks.attendance.vo.MonthWorkVo;
+import com.kh.forworks.attendance.vo.TeamWorkVo;
 import com.kh.forworks.attendance.vo.WorkTimeVo;
 import com.kh.forworks.attendance.vo.WorkVo;
 
@@ -39,13 +40,13 @@ public class AttendanceController {
 		return day;
 	}
 	
-	private String getThisMonth() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
-		Date now = new Date();        
-		String day = sdf.format(now);
-		
-		return day;
-	}
+//	private String getThisMonth() {
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+//		Date now = new Date();        
+//		String day = sdf.format(now);
+//		
+//		return day;
+//	}
 	
 	private String monthForm(String str) {
 		String year = str.substring(0, 4);
@@ -70,7 +71,7 @@ public class AttendanceController {
 	@GetMapping("day")
 	public String dayAtt(Model model) {
 
-		//TODO: 화면에 보여줄 것들 가져오기, empNo
+		//TODO: �솕硫댁뿉 蹂댁뿬以� 寃껊뱾 媛��졇�삤湲�, empNo
 		int empNo = 1;       
 		String day = getToday();
 		
@@ -80,9 +81,11 @@ public class AttendanceController {
 				
 		WorkTimeVo workTime = service.getWorkInfo(empNo);
 		WorkVo work = service.getDayWorkInfo(map);
-		
+		TeamWorkVo team = service.getTeamTime(empNo);
+				
 		model.addAttribute("workTime", workTime);
 		model.addAttribute("work", work);
+		model.addAttribute("team", team);
 		
 		return "attendance/dayAttendance";
 	}
@@ -95,7 +98,7 @@ public class AttendanceController {
 	@PostMapping("month")
 	@ResponseBody
 	public List<WorkVo> MonthWork(String month) {
-		//TODO: 화면에 보여줄 것들 가져오기, empNo 바꾸기
+		//TODO: �솕硫댁뿉 蹂댁뿬以� 寃껊뱾 媛��졇�삤湲�, empNo 諛붽씀湲�
 		int empNo = 1;
 		month = monthForm(month);
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -111,7 +114,7 @@ public class AttendanceController {
 	@ResponseBody
 	public MonthWorkVo MonthCnt(String month) {
 		
-		//TODO: 화면에 보여줄 것들 가져오기, empNo 바꾸기
+		//TODO: �솕硫댁뿉 蹂댁뿬以� 寃껊뱾 媛��졇�삤湲�, empNo 諛붽씀湲�
 		int empNo = 1;
 		month = monthForm(month);
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -124,20 +127,10 @@ public class AttendanceController {
 		return monthCnt;
 	}
 	
-	@GetMapping("off")
-	public String offManage() {
-		return "attendance/offManagement";
-	}
-	
-	@GetMapping("offConfirm")
-	public String offConfirm() {
-		return "attendance/offConfirm";
-	}
-	
 	@GetMapping("goWork")
 	public String goWork() {
 				        
-		//TODO:no 값을 로그인멤버 no 로 받아오기
+		//TODO:no 媛믪쓣 濡쒓렇�씤硫ㅻ쾭 no 濡� 諛쏆븘�삤湲�
 		int empNo = 1;
 		String day = getToday();
 		
@@ -150,14 +143,14 @@ public class AttendanceController {
 		if(result == 1) {
 			return "redirect:/att/day";			
 		} else {
-			//실패
+			//�떎�뙣
 			return "errorPage";
 		}
 	}
 	
 	@GetMapping("outWork/{no}")
 	public String outWork(@PathVariable int no) {
-		//TODO:empNo 값을 로그인멤버로 받아오기
+		//TODO:empNo 媛믪쓣 濡쒓렇�씤硫ㅻ쾭濡� 諛쏆븘�삤湲�
 		int empNo = 1;
 		
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -169,7 +162,7 @@ public class AttendanceController {
 		if(result == 1) {
 			return "redirect:/att/day";			
 		} else {
-			//실패
+			//�떎�뙣
 			return "errorPage";
 		}
 	}
@@ -178,7 +171,7 @@ public class AttendanceController {
 	@ResponseBody
 	public WorkVo dayWorkInfo(String date) {
 		
-		//TODO: 화면에 보여줄 것들 가져오기, empNo 바꾸기
+		//TODO: �솕硫댁뿉 蹂댁뿬以� 寃껊뱾 媛��졇�삤湲�, empNo 諛붽씀湲�
 		int empNo = 1;
 		
 		Map<String, Object> map = new HashMap<String, Object>();

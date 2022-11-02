@@ -114,4 +114,8 @@
 		        JOIN WORK_STATUS S ON STATUS_CODE = S.CODE)
 	</select>
 	
+	<select id="selectTeamTime" resultType="TeamWorkVo">
+		SELECT IN_TIME, OUT_TIME, NAME FROM WORK_TYPE WHERE END_DAY IS NULL AND DEPT_NO = (SELECT DEPT_NO FROM EMPLOYEE WHERE EMP_NO = #{empNo})
+	</select>
+	
 </mapper>

@@ -52,27 +52,36 @@
 			</div>
 			<section class="section">
 				<div class="multi-card">
+
+					<div class="card">
+						<div class="card-body flex-col">
+							<div class="mt-2 mb-2">
+								<span> ${team.name} </span>
+							</div>
+							<div class="mt-2 mb-2">
+								<span>정규 출근 :&ensp;</span>
+								<span> ${team.inTime} </span>
+							</div>
+							<div class="mt-2 mb-2">
+								<span>정규 퇴근 :&ensp;</span>
+								<span> ${team.outTime} </span>
+							</div>
+						</div>
+					</div>
+					
 					<div class="card">
 						<div class="card-body">
 							<div id="clock">clock</div>
 							<div class="multi-card">
 								<div class="align-center">
-									<div class="mt-2 mb-2">
-										<span>정규 출근 :&ensp;</span>
-										<span> ${workTime.inTime} </span>
-									</div>
-									<div class="mb-2">
+									<div class="mt-3 mb-2">
 										<span>출근&ensp;</span>
 										<span> ${workTime.inTime} </span>
 									</div>
 									<button class="btn btn-primary btn-sm" id="goWorkBtn">출근하기</button>
 								</div>
 								<div class="align-center">
-									<div class="mt-2 mb-2">
-										<span>정규 퇴근 :&ensp;</span>
-										<span> ${workTime.outTime} </span>
-									</div>
-									<div class="mb-2">
+									<div class="mt-3 mb-2">
 										<span>퇴근&ensp;</span>
 										<span> ${workTime.outTime} </span>
 									</div>

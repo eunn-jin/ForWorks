@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.forworks.attendance.dao.AttendanceDao;
 import com.kh.forworks.attendance.vo.MonthWorkVo;
+import com.kh.forworks.attendance.vo.TeamWorkVo;
 import com.kh.forworks.attendance.vo.WorkTimeVo;
 import com.kh.forworks.attendance.vo.WorkVo;
 
@@ -83,6 +84,11 @@ public class AttendanceServiceImpl implements AttendanceService {
 	@Override
 	public List<WorkVo> getWorkList(Map<String, Object> map) {
 		return dao.selectWorkList(sst, map);
+	}
+
+	@Override
+	public TeamWorkVo getTeamTime(int empNo) {
+		return dao.selectTeamTime(sst, empNo);
 	}
 
 }
