@@ -23,9 +23,51 @@
 
                             <h3>일정</h3>
                             <button class = "add-button" type = "button" onclick="click_add();">일정 추가</button>
-                             <div id='calendar'></div>
                              <script>
-                             document.addEventListener('DOMContentLoaded', function() {
+	                             document.addEventListener('DOMContentLoaded', function() {
+	                               var Calendar = FullCalendar.Calendar;
+	                               var Draggable = FullCalendar.Draggable;
+	
+	                               var containerEl = document.getElementById('external-events');
+	                               var calendarEl = document.getElementById('calendar');
+	                               var checkbox = document.getElementById('drop-remove');
+	
+	                               // initialize the external events
+	                               // -----------------------------------------------------------------
+	
+	                               new Draggable(containerEl, {
+	                                 itemSelector: '.fc-event',
+	                                 eventData: function(eventEl) {
+	                                   return {
+	                                     title: eventEl.innerText
+	                                   };
+	                                 }
+	                               });
+	
+	                               // initialize the calendar
+	                               // -----------------------------------------------------------------
+	
+	                               var calendar = new Calendar(calendarEl, {
+	                                 headerToolbar: {
+	                                   left: 'prev,next today',
+	                                   center: 'title',
+	                                   right: 'dayGridMonth,timeGridWeek,timeGridDay'
+	                                 },
+	                                 editable: true,
+	                                 droppable: true, // this allows things to be dropped onto the calendar
+	                                 drop: function(info) {
+	                                   // is the "remove after drop" checkbox checked?
+	                                   if (checkbox.checked) {
+	                                     // if so, remove the element from the "Draggable Events" list
+	                                     info.draggedEl.parentNode.removeChild(info.draggedEl);
+	                                   }
+	                                 }
+	                               });
+	
+	                               calendar.render();
+                            		 });
+	                             <div id='calendar'></div>
+                           		  document.addEventListener('DOMContentLoaded', function() {
                                 var calendarEl = document.getElementById('calendar');
                                 var calendar = new FullCalendar.Calendar(calendarEl, {
                                     initialView : 'dayGridMonth', // 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)
@@ -46,28 +88,6 @@
                                     	console.log('add')
                                     }
                                     locale: 'ko' // 한국어 설정
-                                    
-                                    	function createClnd(cal,xobj){ 
-                                    	  if(!confirm("일정을 등록 하시겠습니까?")) return false; 
-                                    	  var $obj = calFunc.getFormValue();    
-                                    	  
-                                    	  $.ajax({ 
-                                    	      url: ctx+"/adms/calendar/management/create_ajx.do", 
-                                    	      type: "POST", 
-                                    	      contentType: "application/json;charset=UTF-8",
-                                    	      data:JSON.stringify($obj) 
-                                    	 }).done(function(data) { 
-                                    	      var result = jQuery.parseJSON(data); 
-                                    	      //모든 소스에서 이벤트를 다시 가져와 화면에 다시 렌더링
-                                    	      cal.refetchEvents();
-                                    	 }).fail(function(e) {  
-                                    	     alert("실패하였습니다."+e);
-                                    	 }).always(function() { 
-                                    	     $("#name").val("");
-                                    	     $("#comment").val("");
-                                    	 }); 
-                                    	  
-                                    	}
                                 });
                                 calendar.render();
                             });
