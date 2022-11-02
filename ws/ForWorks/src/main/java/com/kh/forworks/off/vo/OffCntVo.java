@@ -8,11 +8,11 @@ public class OffCntVo {
 	private double useOff;
 	private double leftOff;
 	
-	public double setLeftOff() {
-		return this.totalOff - this.useOff;
+	public void setLeftOff() {
+		this.leftOff = this.totalOff - this.useOff; 
 	}
 	
-	public double addHalfOff(int half) {
-		return this.useOff + half/2;
+	public void addHalfOff(int half) {
+		this.useOff = this.useOff + (double)half/2;
 	}
 }

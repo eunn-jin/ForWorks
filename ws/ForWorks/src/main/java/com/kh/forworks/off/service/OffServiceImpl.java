@@ -1,11 +1,15 @@
 package com.kh.forworks.off.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.forworks.off.dao.OffDao;
 import com.kh.forworks.off.vo.OffCntVo;
+import com.kh.forworks.off.vo.OffVo;
 
 @Service
 public class OffServiceImpl implements OffService {
@@ -27,7 +31,16 @@ public class OffServiceImpl implements OffService {
 		vo.setUseOff(dao.getUseOff(sst, empNo));
 		vo.addHalfOff(dao.getUseHalfOff(sst, empNo));
 		vo.setLeftOff();
+		
+		System.out.println(dao.getUseHalfOff(sst, empNo));
+		System.out.println(vo.getUseOff());
+		
 		return vo;
+	}
+
+	@Override
+	public List<OffVo> getOffList(Map<String, Object> map) {
+		return dao.selectOffList(sst, map);
 	}
 	
 	

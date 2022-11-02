@@ -13,11 +13,16 @@
 	</select>
 	
 	<select id= "selectUseOff" resultType="int">
-		SELECT COUNT(NO) FROM OFF WHERE EMP_NO = #{empNo} AND TYPE_CODE = 1
+		SELECT COUNT(NO) FROM OFF WHERE EMP_NO = #{empNo} AND TYPE_CODE = 1 AND STATUS = 'Y'
 	</select>
 	
 	<select id= "selectUseHalfOff" resultType="int">
-		SELECT COUNT(NO) FROM OFF WHERE EMP_NO = #{empNo} AND TYPE_CODE IN (2, 3)
+		SELECT COUNT(NO) FROM OFF WHERE EMP_NO = #{empNo} AND TYPE_CODE IN (2, 3) AND STATUS = 'Y'
+	</select>
+	
+	<select id= "selectOffList" resultType="OffVo">
+		SELECT O.WRITE_DATE, O.START_DAY, O.END_DAY, TO_DATE(O.END_DAY, 'YYYYMMDD') - TO_DATE(O.START_DAY, 'YYYYMMDD') +1 AS PERIOD, O.STATUS, T.NAME AS TYPE_NAME FROM OFF O JOIN OFF_TYPE T ON O.TYPE_CODE = T.CODE 
+		WHERE O.EMP_NO = #{empNo} AND TO_CHAR(O.WRITE_DATE, 'YYYY') = #{year}
 	</select>
 	
 </mapper>

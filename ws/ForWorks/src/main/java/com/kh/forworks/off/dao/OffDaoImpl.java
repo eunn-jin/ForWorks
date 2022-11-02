@@ -1,7 +1,12 @@
 package com.kh.forworks.off.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
+
+import com.kh.forworks.off.vo.OffVo;
 
 @Repository
 public class OffDaoImpl implements OffDao {
@@ -19,6 +24,11 @@ public class OffDaoImpl implements OffDao {
 	@Override
 	public int getUseHalfOff(SqlSessionTemplate sst, int empNo) {
 		return sst.selectOne("offMapper.selectUseHalfOff", empNo);
+	}
+
+	@Override
+	public List<OffVo> selectOffList(SqlSessionTemplate sst, Map<String, Object> map) {
+		return sst.selectList("offMapper.selectOffList", map);
 	}
 
 }

@@ -60,8 +60,8 @@
 					<div class="card-body">
 						<div class="flex-row-side">
 							<div>
-								<input type="text" id="usedOffYear" name="usedOffYear" value="" />
-								<button class="btn btn-primary btn-sm">검색</button>
+								<select id="ddlYears"></select>년도&ensp;
+								<button class="btn btn-primary btn-sm" onclick="getOffInfo();">검색</button>
 							</div>
 							<div>
 								<button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#offForm">휴가 신청</button>
@@ -79,15 +79,7 @@
 										<th>처리 상태</th>
 									</tr>
 								</thead>
-								<tbody>
-									<tr>
-										<td>2022/10/17</td>
-										<td>2022/10/20</td>
-										<td>2022/10/30</td>
-										<td>11</td>
-                                        <td>연차</td>
-										<td>승인 대기</td>	
-									</tr>
+								<tbody id="offListTable">
 								</tbody>
 							</table>
 						</div>
@@ -112,7 +104,7 @@
 									<input type="text" id="demo" name="demo" value="" />
 								</div>
 								<div class="form-group">
-									<label>휴가 종류: </label>
+									<label>휴가 종류</label><br>
 									<label><input type="radio" name="type" value="">연차</label>
 									<label><input type="radio" name="type" value="">오전반차</label>
 									<label><input type="radio" name="type" value="">오후반차</label>
@@ -148,8 +140,54 @@
 </body>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
 <script>
+
+	$(function(){
+		var ddlYears = document.getElementById("ddlYears");
+		var currentYear = (new Date()).getFullYear();
+		
+		for (var i = 1950; i <= currentYear; i++) {
+		    var option = document.createElement("OPTION");
+		    option.innerHTML = i;
+		    option.value = i;
+		    ddlYears.appendChild(option);
+		    
+		    if(i == currentYear) {
+		    	option.selected
+		    }
+		}
+		$("#ddlYears").val(currentYear).attr("selected", "selected");
+	});
 	
+	function getOffInfo(){
+		var year = $("#ddlYears").val();
+		$.ajax({
+			url: '${root}/off/offInfo',
+			type: 'POST',
+			data: {'year' : year},
+			success : function(res){
+				$("#offListTable").empty();
+				$.each(res, function(i,item){
+					let tr = $("<tr></tr>");
+					$("<td></td>").html(item.writeDate).appendTo(tr);
+					$("<td></td>").html(item.startDay).appendTo(tr);
+					$("<td></td>").html(item.endDay).appendTo(tr);
+					$("<td></td>").html(item.period).appendTo(tr);
+					$("<td></td>").html(item.typeName).appendTo(tr);
+					$("<td></td>").html(item.status).appendTo(tr);					
+					$("#offListTable").append(tr);
+				});
+			},
+			error : function(e){
+				console.log(e);
+			}
+		});
+	}
+
+</script>
+<script>
+		
 	$().ready(function() {
 		$('#att-off').addClass("active");
 		$('#att-part').css("display", "block");
