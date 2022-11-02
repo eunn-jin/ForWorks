@@ -53,7 +53,7 @@
             </tr>
             <tr>
               <th>첨부파일</th>
-              <td><input type="file"></td>
+              <td><input type="file" name="file" enctype="multipart/form-data" ></td>
             </tr>
             <tr>  
               <td colspan="3"><textarea class="summernote" id="summernote" name="content"></textarea></td>

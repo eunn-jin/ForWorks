@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.forworks.approv.vo.DocFileVo;
 import com.kh.forworks.docmanage.vo.DocVo;
 
 @Repository
@@ -18,6 +19,11 @@ public class DocmanageDaoImpl implements DocmanageDao {
 	@Override
 	public List<DocVo> selectDoc(SqlSessionTemplate sst) {
 		return sst.selectList("docMapper.selectDoc");
+	}
+	//일반문서>파일업로드
+	@Override
+	public int insertDocFile(SqlSessionTemplate sst, DocFileVo fv) {
+		return sst.insert("docMapper.insertFile" , fv);
 	}
 
 }

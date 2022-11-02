@@ -2,6 +2,7 @@ package com.kh.forworks.docmanage.service;
 
 import java.util.List;
 
+import com.kh.forworks.approv.vo.DocFileVo;
 import com.kh.forworks.docmanage.vo.DocVo;
 
 public interface DocmanageService {
