@@ -2,10 +2,12 @@ package com.kh.forworks.off.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.forworks.off.service.OffService;
+import com.kh.forworks.off.vo.OffCntVo;
 
 @Controller
 @RequestMapping("off")
@@ -19,7 +21,13 @@ public class OffController {
 	}
 	
 	@GetMapping("manage")
-	public String offManage() {
+	public String offManage(Model model) {
+		
+		int empNo = 1;
+		OffCntVo offCnt = service.getOffCnt(empNo);
+		
+		model.addAttribute("offCnt", offCnt);
+		
 		return "off/offManagement";
 	}
 	

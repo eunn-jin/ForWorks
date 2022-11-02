@@ -41,15 +41,15 @@
                     <div class="card-body">
                         <div class="flex-row">
                             <div class="align-center mt-3 mb-2">
-                                <div>15</div>
+                                <div>${offCnt.totalOff}</div>
                                 <div>총 연차</div>
                             </div>
                             <div class="align-center mt-3 mb-2">
-                                <div>12</div>
+                                <div>${offCnt.useOff}</div>
                                 <div>사용 연차</div>
                             </div>
                             <div class="align-center mt-3 mb-2">
-                                <div>3</div>
+                                <div>${offCnt.leftOff}</div>
                                 <div>잔여 연차</div>
                             </div>
                         </div>
@@ -59,7 +59,7 @@
 				<div class="card">
 					<div class="card-body">
 						<div class="flex-row-side">
-							<div class>
+							<div>
 								<input type="text" id="usedOffYear" name="usedOffYear" value="" />
 								<button class="btn btn-primary btn-sm">검색</button>
 							</div>

@@ -2,4 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="offMapper">
 	
+	<select id="selectTotalOff" resultType="int">
+		SELECT CASE WHEN (MONTHS_BETWEEN(SYSDATE, EMP_JDATE)/12) <![CDATA[>=]]> 1 THEN
+                CASE WHEN CEIL(TRUNC(MONTHS_BETWEEN(SYSDATE, EMP_JDATE)/12)/2)+14 <![CDATA[>=]]> 25 THEN 25
+                    ELSE CEIL(TRUNC(MONTHS_BETWEEN(SYSDATE, EMP_JDATE)/12)/2)+14
+                	END
+                	WHEN (MONTHS_BETWEEN(SYSDATE, EMP_JDATE)/12) <![CDATA[<]]> 1 THEN TRUNC(MONTHS_BETWEEN(SYSDATE, EMP_JDATE))
+        		END AS TOTAL_OFF
+		FROM EMPLOYEE WHERE EMP_NO = #{emp_no}
+	</select>
+	
+	<select id= "selectUseOff" resultType="int">
+		SELECT COUNT(NO) FROM OFF WHERE EMP_NO = #{empNo} AND TYPE_CODE = 1
+	</select>
+	
+	<select id= "selectUseHalfOff" resultType="int">
+		SELECT COUNT(NO) FROM OFF WHERE EMP_NO = #{empNo} AND TYPE_CODE IN (2, 3)
+	</select>
+	
 </mapper>
