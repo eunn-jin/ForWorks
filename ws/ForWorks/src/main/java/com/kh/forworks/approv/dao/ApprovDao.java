@@ -68,6 +68,19 @@ public interface ApprovDao {
 	//문서 조회
 	ApprovDocumentVo selectApprovDocOneByNo(SqlSessionTemplate sst, ApprovDocumentVo vo);
 
-	
+	//문서 조회 결제자명단 호출
+	List<ApprovDocumentVo> selectApprovMemberList(SqlSessionTemplate sst, String dno);
+
+	//문서 조회 협조자명단 호출
+	List<ApprovDocumentVo> selectCoopMemberList(SqlSessionTemplate sst, String dno);
+
+	//문서 조회 결재자 서명 호출
+	List<ApprovDocumentVo> selectApprovSignList(SqlSessionTemplate sst, String dno);
+
+	//협조문서 확인처리
+	void updateDocCoopByEmpNo(SqlSessionTemplate sst, ApprovDocumentVo vo);
+
+	//참조문서 확인처리
+	void updateDocReferByEmpNo(SqlSessionTemplate sst, ApprovDocumentVo vo);
 
 }

@@ -292,9 +292,9 @@
 		FROM
 		DOCAPPROVE
 		WHERE
-		EMP_NO = ${empNo}
+		EMP_NO = #{empNo}
 		AND
-		ADOC_NO = ${adocNo}
+		ADOC_NO = #{adocNo}
 	</select>
 	
 	<select id="selectApprovDocOneByNo" resultType="ApprovDocumentVo">
@@ -310,5 +310,86 @@
         JOIN EMPLOYEE E
         ON A.EMP_NO = E.EMP_NO
 	</select>
+	
+	<select id="selectApprovMemberListByAdocNo" resultType="ApprovDocumentVo">
+        SELECT      
+            D.DEPT_NAME ||' '|| P.POS_NAME EMP_NAME
+		FROM EMPLOYEE E
+		RIGHT JOIN DOCAPPROVE D
+			ON E.EMP_NO = D.EMP_NO
+        JOIN POSITION P
+        ON P.POS_NO = E.POS_NO
+        JOIN DEPARTMENT D
+        ON D.DEPT_NO = E.DEPT_NO
+        WHERE
+        D.ADOC_NO = #{dno}
+        ORDER BY E.POS_NO
+	</select>
+	
+	<select id="selectCoopMemberListByAdocNo" resultType="ApprovDocumentVo">
+		SELECT      
+             D.DEPT_NAME ||' '|| P.POS_NAME EMP_NAME ||' '|| E.EMP_NAME EMP_NAME
+		FROM EMPLOYEE E
+		RIGHT JOIN DOCREFER D
+			ON E.EMP_NO = D.EMP_NO
+		JOIN POSITION P
+        ON P.POS_NO = E.POS_NO
+        JOIN DEPARTMENT D
+        ON D.DEPT_NO = E.DEPT_NO
+        WHERE
+        D.ADOC_NO = #{dno}
+        ORDER BY E.POS_NO
+        WHERE
+        D.ADOC_NO = #{dno} 
+        ORDER BY E.POS_NO
+	</select>
+	
+	<select id="selectSignOneByAdocNo" resultType="ApprovDocumentVo">
+		SELECT      
+            S.SIGN_EDIT SIGN_FILE
+		FROM EMPLOYEE E
+		RIGHT JOIN APPROVEDOCUMENT D
+			ON E.EMP_NO = D.EMP_NO
+		LEFT JOIN SIGNFILE S
+         	ON S.EMP_NO = E.EMP_NO
+        WHERE
+        D.ADOC_NO = #{dno}
+        ORDER BY E.POS_NO	
+	</select>
+	
+	<select id="selectSignListByAdocNo" resultType="ApprovDocumentVo">
+		SELECT      
+            S.SIGN_EDIT SIGN_FILE
+		FROM EMPLOYEE E
+		RIGHT JOIN DOCAPPROVE D
+			ON E.EMP_NO = D.EMP_NO
+		LEFT JOIN SIGNFILE S
+         	ON S.EMP_NO = E.EMP_NO
+        WHERE
+        D.ADOC_NO = #{dno} 
+        AND
+        D.APPROVE_STATUS = 'Y'
+        ORDER BY E.POS_NO
+	</select>
+	
+	<update id="updateDocCoopByEmpNo">
+		UPDATE DOCCOOP
+		SET
+		REFER_STATUS = 'Y'
+		WHERE
+		ADOC_NO = #{adocNo} 
+		AND
+		EMP_NO = #{empNo} 
+	</update>
+	
+	<update id="updateDocReferByEmpNo">
+		UPDATE DOCREFER
+		SET
+		REFER_STATUS = 'Y'
+		WHERE
+		ADOC_NO = #{adocNo} 
+		AND
+		EMP_NO = #{empNo} 
+	</update>
 	
 </mapper>

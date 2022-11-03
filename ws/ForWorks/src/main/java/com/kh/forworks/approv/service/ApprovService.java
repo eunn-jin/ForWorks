@@ -48,5 +48,20 @@ public interface ApprovService {
 	
 	//문서 조회
 	ApprovDocumentVo selectApprovDocOneByNo(ApprovDocumentVo vo);
+	
+	//문서 조회 결제자명단 호출
+	List<ApprovDocumentVo> selectApprovMemberList(String dno);
+	
+	//문서 조회 협조자명단 호출
+	List<ApprovDocumentVo> selectCoopMemberList(String dno);
+	
+	//문서 조회 결재자 서명 호출
+	List<ApprovDocumentVo> selectApprovSignList(String dno);
+	
+	//협조문서 확인처리
+	void updateDocCoopByEmpNo(ApprovDocumentVo vo);
+	
+	//참조문서 확인처리
+	void updateDocReferByEmpNo(ApprovDocumentVo vo);
 
 }
