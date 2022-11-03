@@ -68,6 +68,24 @@ public class AdminController {
 		return "admin/admin-position";
 	}
 	
+	@PostMapping("deptEdit")
+	public String deptEdit(AdminVo dept) {
+		System.out.println(dept);
+		
+		int result = adminService.updateDepartment(dept);
+		
+		return "redirect:/foradmin/pos";
+	}
+	
+	@PostMapping("posEdit")
+	public String posEdit(AdminVo pos) {
+		System.out.println(pos);
+		
+		//int result = adminService.updateDepartment(pos);
+		
+		return "redirect:/foradmin/pos";
+	}
+	
 	//구성원 승인
 	@GetMapping("approval")
 	public String memberApply(Model model) {

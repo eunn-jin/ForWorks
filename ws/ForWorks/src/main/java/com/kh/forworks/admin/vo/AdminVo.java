@@ -1,5 +1,7 @@
 package com.kh.forworks.admin.vo;
 
+import java.util.List;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import lombok.Data;
@@ -14,5 +16,8 @@ public class AdminVo {
 	public void encodePwd(PasswordEncoder pwdEnc) {
 		this.manPwd = pwdEnc.encode(this.manPwd);
 	}
+	
+	private List<CorpInfoVo> dept;
+	private List<CorpInfoVo> pos;
 
 }

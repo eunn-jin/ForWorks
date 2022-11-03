@@ -141,6 +141,7 @@
 		WHERE E.DEPT_NO = #{deptNo}
 		AND E.POS_NO = #{posNo}
 		AND E.OP_LEVEL = 1
+		AND E.EMP_STATUS = 'Y'
 		
 		<if test = "#{keyword} != null">
 			AND E.EMP_NAME LIKE '%' || #{keyword} || '%'
@@ -187,6 +188,7 @@
 	<update id="updateMemberStatus">
 		UPDATE EMPLOYEE SET
 			EMP_STATUS = '${empStatus}'
+			, OP_LEVEL = 1
 			
 			<if test='#{empRdate} != null and "Y".equals(empRdate)'>
 				, EMP_RDATE = SYSDATE
@@ -194,4 +196,29 @@
 			
 		WHERE EMP_NO = #{empNo}
 	</update>
+	
+	<update id="updateDepartment" parameterType="java.util.List">
+		<foreach item="item" index="index" collection="dept" open="DECLARE BEGIN" separator=";" close="; END;">
+		   <if test="item.deptNo != null">
+			UPDATE DEPARTMENT SET
+			DEPT_NAME = 
+				#{item.deptName}
+			WHERE DEPT_NO = 
+				#{item.deptNo}
+		   </if>
+		</foreach>
+	</update>
+	
+	<update id="updatePosition" parameterType="java.util.List">
+		<foreach item="item" index="index" collection="pos" open="DECLARE BEGIN" separator=";" close="; END;">
+		   <if test="item.posNo != null">
+			UPDATE POSITION SET
+			POS_NAME = 
+				#{item.posName}
+			WHERE POS_NO = 
+				#{item.posNo}
+		   </if>
+		</foreach>
+	</update>
+	
 </mapper>

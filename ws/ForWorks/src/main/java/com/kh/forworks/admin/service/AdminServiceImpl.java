@@ -130,5 +130,11 @@ public class AdminServiceImpl implements AdminService {
 		return adminDao.updateMemberStatus(sst, vo);
 	}
 
+	//직무테이블 변경
+	@Override
+	public int updateDepartment(AdminVo list) {
+		return adminDao.updateDepartment(sst, list);
+	}
+
 
 }

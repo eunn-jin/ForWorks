@@ -316,11 +316,11 @@
 	       if (data == 1) {
 	         toastContent.innerText = "상태를 변경하였습니다.";
 	       } else {
-	         toastContent.innerText = "변경에 실패했습니다.";
+	         toastContent.innerText = "변경 실패";
 	       }
 	     },
 	     error: function () {
-	    	 toastContent.innerText = "실패하였습니다. 관리자에게 문의하세요.";
+	       console.log("통신실패");
 	     },
 	   });
 	}
