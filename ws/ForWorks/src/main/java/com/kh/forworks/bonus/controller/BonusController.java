@@ -108,6 +108,7 @@ public class BonusController {
 	@ResponseBody
 	public String selectEmp(String depart, Model model) {
 		List<MemberVo> result = bs.selectEmp(depart);
+		System.out.println(result);
 		Gson g = new Gson();
 		return g.toJson(result);
 		//1. GSON 라이브러리
