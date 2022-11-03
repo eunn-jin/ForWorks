@@ -44,5 +44,7 @@ public interface AdminDao {
 
 	int updateMemberStatus(SqlSessionTemplate sst, MemberVo vo);
 
+	int updateDepartment(SqlSessionTemplate sst, AdminVo list);
+
 
 }

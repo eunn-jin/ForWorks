@@ -371,7 +371,8 @@
 	        <h5 class="mb-3 mt-1">일시정지 하시겠습니까?</h5>
 	        <p class="mb-2">'<span id="pauseMember"></span>'</p>
 	        <p class="mb-2">일시정지된 구성원은 FORWORKS 서비스를 <br> 더 이상 이용할 수 없습니다.</p>
-	        <p class="mb-2">구성원의 계정과 데이터는 삭제되지 않으며, <br> [일시정지 해제]를 통해 정지를 해제할 수 있습니다.</p>
+	        <p class="mb-2">구성원의 계정과 데이터는 삭제되지 않으며, <br> 관리자 직위가 해제됩니다.</p>
+	        <p class="mb-2">[일시정지 해제]를 통해 정지를 해제할 수 있습니다.</p>
 	      </div>
 	      <div class="modal-footer flex-nowrap p-0">
 	        <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 p-2 m-0 rounded-0 text-muted" data-bs-dismiss="modal">취소</button>

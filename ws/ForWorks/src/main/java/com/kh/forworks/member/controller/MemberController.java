@@ -38,10 +38,10 @@ public class MemberController {
 		int result = memberService.memberJoin(vo);
 		
 		if(result == 1) {
-			session.setAttribute("toastMsg", "가입신청 완료! 승인 대기중입니다");
+			session.setAttribute("toastMsg", "가입신청 완료! 승인 대기중입니다.");
 			return "redirect:/login";
 		} else {
-			session.setAttribute("toastMsg", "회원가입 실패");
+			session.setAttribute("toastMsg", "가입 실패.. 다시 시도해주세요");
 			return "redirect:/join";
 		}
 	}
@@ -88,7 +88,7 @@ public class MemberController {
 				return "redirect:/login";
 			}
 		} else {
-			session.setAttribute("toastMsg", "로그인 실패");
+			session.setAttribute("toastMsg", "아이디, 비밀번호를 확인해주세요");
 			return "redirect:/login";
 		}
 	}
@@ -138,7 +138,7 @@ public class MemberController {
 		int result = memberService.memberInfoEdit(vo);
 		
 		if(result == 1) {
-			session.setAttribute("toastMsg", "정보변경 성공!");
+			session.setAttribute("toastMsg", "정보를 변경하였습니다.");
 			loginMember.setEmpEmail(vo.getEmpEmail());
 			loginMember.setEmpPhone(vo.getEmpPhone());
 			loginMember.setEmpAddr1(vo.getEmpAddr1());
@@ -182,7 +182,7 @@ public class MemberController {
 		int result = memberService.memberAccountEdit(vo);
 		
 		if(result == 1) {
-			session.setAttribute("toastMsg", "계좌 변경 성공!");
+			session.setAttribute("toastMsg", "계좌를 변경하였습니다.");
 			loginMember.setEmpBank(vo.getEmpBank());
 			loginMember.setEmpAccount(vo.getEmpAccount());
 		}

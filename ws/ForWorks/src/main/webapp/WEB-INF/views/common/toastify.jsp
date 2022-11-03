@@ -60,7 +60,6 @@
 		toastContent.innerText = "";
 		toast.hide();
 	});
-	
 </script>
 
 <c:set var="toastMsg" value="${sessionScope.toastMsg}"/>

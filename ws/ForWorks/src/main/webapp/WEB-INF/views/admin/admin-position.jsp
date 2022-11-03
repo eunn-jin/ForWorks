@@ -47,14 +47,12 @@
                         <table id="deptTable" class="table table-lg mt-2">
                           <thead>
                             <tr class="deptView">
-                              <th style="width: 100px;">순서</th>
                               <th style="width: 40vw;">직무</th>
                               <th>
                               	<button type="button" id="editBtn" onclick="deptEdit();" class="btn btn-primary">수정하기</button>
                               </th>
                             </tr>
                             <tr class="deptEdit" style="display:none;">
-                              <th><i class="bi bi-filter-left"></i></th>
                               <th style="width: 50vw;">직무</th>
                               <th>
                               	<button type="submit" id="saveBtn" class="btn btn-primary">완료</button>
@@ -64,20 +62,18 @@
                           <tbody>
                           	<c:forEach items="${deptList}" var="dl">
 	                            <tr class="deptView">
-	                              <td style="width: 100px;">${dl.deptNo}</td>
 	                              <td style="width: 40vw;">${dl.deptName}</td>
 	                              <td></td>
 	                            </tr>
                           	</c:forEach>
                           	<c:forEach items="${deptList}" var="dl">
 	                            <tr class="deptEdit" style="display:none;">
-	                              <td><i class="bi bi-three-dots-vertical"></i></td>
-	                              <td style="width: 50vw;"><input value="${dl.deptName}" class="form-control form-control-sm" style="width: 200px;"></td>
+	                              <td style="width: 50vw; display:none"><input name="dept[${dl.deptNo}].deptNo" value="${dl.deptNo}" class="form-control form-control-sm" style="width: 200px;"></td>
+	                              <td style="width: 50vw;"><input name="dept[${dl.deptNo}].deptName" value="${dl.deptName}" class="form-control form-control-sm" style="width: 200px;"></td>
 	                              <td class="text-center"><a style="color: red;">삭제</a></td>
 	                            </tr>
                           	</c:forEach>
                           	<tr class="deptEdit" style="display:none; border-bottom: 1px solid white">
-                          		<td></td>
                           		<td style="width: 60vw;" class="text-center h6 text-muted"><a onclick="addTr(this);">추가</a></td>
                           		<td></td>
                           	</tr>
@@ -91,7 +87,6 @@
                         <table id="posTable" class="table table-lg mt-2">
                           <thead>
                             <tr class="posView">
-                              <th style="width: 100px;">순서</th>
                               <th style="width: 40vw;">직급</th>
                               <th>
                               	<button type="button" id="editBtn" onclick="posEdit();" class="btn btn-primary">수정하기</button>
@@ -108,15 +103,15 @@
                           <tbody>
                           	<c:forEach items="${posList}" var="pl">
 	                            <tr class="posView">
-	                              <td style="width: 100px;">${pl.posNo}</td>
 	                              <td style="width: 40vw;">${pl.posName}</td>
 	                              <td></td>
 	                            </tr>
                           	</c:forEach>
-                          	<c:forEach items="${posList}" var="pl">
+                          	<c:forEach items="${posList}" var="pl" varStatus="status">
 	                            <tr class="posEdit" style="display:none;">
+	                              <td><input class="form-control form-control-sm" style="width: 200px;"></td>
 	                              <td><i class="bi bi-three-dots-vertical"></i></td>
-	                              <td style="width: 50vw;"><input value="${pl.posName}" class="form-control form-control-sm" style="width: 200px;"></td>
+	                              <td style="width: 50vw;"><input name="pos" value="${pl.posName}" class="form-control form-control-sm" style="width: 200px;"></td>
 	                              <td class="text-center"><a style="color: red;">삭제</a></td>
 	                            </tr>
                           	</c:forEach>
@@ -140,8 +135,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/TableDnD/0.9.1/jquery.tablednd.js" integrity="sha256-d3rtug+Hg1GZPB7Y/yTcRixO/wlI78+2m08tosoRn7A=" crossorigin="anonymous"></script>
   <script>
   	function deptEdit() {
-  	  $("#deptTable").tableDnD();
-      
       const deptView = document.getElementsByClassName("deptView");
       const deptEdit = document.getElementsByClassName("deptEdit");
       
@@ -172,6 +165,5 @@
          posEditTr.style.display = "block";
        }
    	}
-  	
   </script>
 </html>
