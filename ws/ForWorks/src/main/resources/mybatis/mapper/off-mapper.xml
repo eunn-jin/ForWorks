@@ -21,8 +21,16 @@
 	</select>
 	
 	<select id= "selectOffList" resultType="OffVo">
-		SELECT O.WRITE_DATE, O.START_DAY, O.END_DAY, TO_DATE(O.END_DAY, 'YYYYMMDD') - TO_DATE(O.START_DAY, 'YYYYMMDD') +1 AS PERIOD, O.STATUS, T.NAME AS TYPE_NAME FROM OFF O JOIN OFF_TYPE T ON O.TYPE_CODE = T.CODE 
-		WHERE O.EMP_NO = #{empNo} AND TO_CHAR(O.WRITE_DATE, 'YYYY') = #{year}
+		SELECT O.WRITE_DATE, O.START_DAY, O.END_DAY, TO_DATE(O.END_DAY, 'YYYY-MM-DD') - TO_DATE(O.START_DAY, 'YYYY-MM-DD') +1 AS PERIOD, O.STATUS, T.NAME AS TYPE_NAME FROM OFF O JOIN OFF_TYPE T ON O.TYPE_CODE = T.CODE 
+		WHERE O.EMP_NO = #{empNo} AND TO_CHAR(O.WRITE_DATE, 'YYYY') = #{year} ORDER BY O.WRITE_DATE
 	</select>
+	
+	<select id="selectOffTypeList" resultType="OffTypeVo">
+		SELECT CODE, NAME FROM OFF_TYPE
+	</select>
+	
+	<insert id="insertOffForm">
+		INSERT INTO OFF (NO, WRITE_DATE, TYPE_CODE, START_DAY, END_DAY, EMP_NO) VALUES(SEQ_OFF.NEXTVAL, SYSDATE, #{type}, #{start}, #{end},  #{empNo})
+	</insert>
 	
 </mapper>
