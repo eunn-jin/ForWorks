@@ -1,12 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
+
+
 <!DOCTYPE html>
 <html>
 <head>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <meta charset="UTF-8">
 <title>결재 상세</title>
-
 <style>
 
     main{
@@ -124,9 +126,10 @@
         
     }
 
+	<c:set var="approvLenth" value="${approvDoc.approvMember}"/>
     .approv-table{
         display: grid;
-        grid-template-columns: repeat(4, 85px); /*jstl로 유동적으로 늘림*/
+        grid-template-columns: repeat(${fn:lenth(approvLenth)+1}, 85px); /*jstl로 유동적으로 늘림*/ 
         grid-template-rows: 24px 24px 76px 24px;
         
     }
@@ -142,7 +145,7 @@
     }
 
     #approv-member{
-        grid-column: 2/5; /*jstl로 유동적으로 늘림*/
+        grid-column: 2/${fn:lenth(approvLenth)+2}; /*jstl로 유동적으로 늘림*/ 
     }
 
     #creater-sign{
@@ -150,7 +153,7 @@
     }
 
     #coop-member{
-        grid-column: 2/5; /*jstl로 유동적으로 늘림*/
+        grid-column: 2/${fn:lenth(approvLenth)+2}; /*jstl로 유동적으로 늘림*/
     }
 
 </style>
@@ -159,11 +162,11 @@
         
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		<link rel="stylesheet" href="${root}/resources/css/approv/common.css">
+
 </head>
 <body>
 
     <div id="wrap">
-
 
         <main>
             
@@ -174,17 +177,17 @@
                 <div class="approv-main">
 
                     <div class="approv-detail-div">
-                        <div class="detail-title default-text">제목</div>
+                        <div class="detail-title default-text">${approvDoc.adocName}</div>
                         <div class="detail-approve default-text">
                             <div class="approv-table">
 
                                     <div>기안자</div>
                                     <div id="approv-member">결재자</div>
 
-                                    <div id="creater-sign"></div>
-                                    <div>직위</div>
-                                    <div>직위</div>
-                                    <div>직위</div>
+                                    <div id="creater-sign">${approvDoc.adocName}</div>
+                                    <c:forEach var="approvMember" items="${approvMemberList}">
+                                    <div>${approvmember}</div>
+                                    </c:forEach>
 
                                     <div class="sign-area"></div>
                                     <div class="sign-area"></div>
@@ -210,12 +213,21 @@
                     <div class="btn-area">
                         <button class="approv-btn">목록보기</button>
                         <div class="approv-btn-area">
-                            <button class="approv-btn approv-btn-margin">
-                                <span class="approv-btn-text" name="approv" value="Y">결재</span>
-                            </button>
-                            <button class="approv-btn">
-                                <span class="approv-btn-text" name="approv" value="R">반려</span>
-                            </button>
+                        	<c:choose>
+                        		<c:when test="${loginMember.empNo} eq ${approvDoc.empNo}">
+                        			<button type="button" class="approv-btn" onclick="location.href='${root}/approv/edit${approvDoc.adocNo}'">
+		                                <span class="approv-btn-text" name="approv">수정</span>
+		                            </button>
+                        		</c:when>
+                        		<c:otherwise>
+		                            <button class="approv-btn approv-btn-margin"  name="approv" value="Y">
+		                                <span class="approv-btn-text">결재</span>
+		                            </button>
+		                            <button class="approv-btn"  name="approv" value="R">
+		                                <span class="approv-btn-text">반려</span>
+		                            </button>
+                        		</c:otherwise>
+                        	</c:choose>
                         </div>
                     </div>
                 

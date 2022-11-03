@@ -147,7 +147,35 @@ public class ApprovServiceImpl implements ApprovService {
 		return dao.selectApprovDocOneByNo(sst, vo);
 	}
 
-	
+	//문서 조회 결제자명단 호출
+	@Override
+	public List<ApprovDocumentVo> selectApprovMemberList(String dno) {
+		return dao.selectApprovMemberList(sst, dno);
+	}
+
+	//문서 조회 협조자명단 호출
+	@Override
+	public List<ApprovDocumentVo> selectCoopMemberList(String dno) {
+		return dao.selectCoopMemberList(sst, dno);
+	}
+
+	//문서 조회 결재자 서명 호출
+	@Override
+	public List<ApprovDocumentVo> selectApprovSignList(String dno) {
+		return dao.selectApprovSignList(sst, dno);
+	}
+
+	//협조문서 확인처리
+	@Override
+	public void updateDocCoopByEmpNo(ApprovDocumentVo vo) {
+		dao.updateDocCoopByEmpNo(sst, vo);
+	}
+
+	//참조문서 확인처리
+	@Override
+	public void updateDocReferByEmpNo(ApprovDocumentVo vo) {
+		dao.updateDocReferByEmpNo(sst, vo);
+	}
 
 
 

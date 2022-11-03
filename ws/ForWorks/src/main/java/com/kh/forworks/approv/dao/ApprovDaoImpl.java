@@ -124,6 +124,36 @@ public class ApprovDaoImpl implements ApprovDao {
 		return sst.selectOne("approvMapper.selectApprovDocOneByNo", vo);
 	}
 	
-
+	//문서 조회 결제자명단 호출
+	@Override
+	public List<ApprovDocumentVo> selectApprovMemberList(SqlSessionTemplate sst, String dno) {
+		return sst.selectList("approvMapper.selectApprovMemberListByAdocNo", dno);
+	}
+	
+	//문서 조회 협조자명단 호출
+	@Override
+	public List<ApprovDocumentVo> selectCoopMemberList(SqlSessionTemplate sst, String dno) {
+		return sst.selectList("approvMapper.selectCoopMemberListByAdocNo", dno);
+	}
+	
+	//문서 조회 결재자 서명 호출
+	@Override
+	public List<ApprovDocumentVo> selectApprovSignList(SqlSessionTemplate sst, String dno) {
+		List<ApprovDocumentVo> resultList = sst.selectList("approvMapper.selectSignOneByAdocNo", dno);
+		resultList.addAll(sst.selectList("approvMapper.selectSignListByAdocNo", dno));
+		return resultList;
+	}
+	
+	//협조문서 확인처리
+	@Override
+	public void updateDocCoopByEmpNo(SqlSessionTemplate sst, ApprovDocumentVo vo) {
+		sst.update("approvMapper.updateDocCoopByEmpNo", vo);
+	}
+	
+	//협조문서 확인처리
+	@Override
+	public void updateDocReferByEmpNo(SqlSessionTemplate sst, ApprovDocumentVo vo) {
+		sst.update("approvMapper.updateDocReferByEmpNo", vo);
+	}
 	
 }

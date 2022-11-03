@@ -73,7 +73,6 @@ public class ApprovController {
 	
 	@PostMapping("create")
 	public String create(ApprovDocumentVo vo, HttpSession session, HttpServletRequest req) {
-
 		
 		if(vo.getDocFile()!=null && !vo.getDocFile().isEmpty()) {
 			String savePath = req.getServletContext().getRealPath("/resources/upload/doc/");
@@ -137,7 +136,7 @@ public class ApprovController {
 	}
 	
 	@GetMapping("detail/{dno}")
-	public String detail(@PathVariable String dno, HttpSession session) {
+	public String detail(@PathVariable String dno, HttpSession session, HttpServletRequest req) {
 		if(session.getAttribute("loginMember")==null) {
 			session.setAttribute("toastMsg", "로그인이 필요합니다.");
 			return "redirect:/login";
@@ -159,7 +158,14 @@ public class ApprovController {
 		}
 		
 		vo = service.selectApprovDocOneByNo(vo);
-		//TODO 기안자서명, 결제자 서명, 참조자 이름 받아오기
+		List<ApprovDocumentVo> approvMemberList = service.selectApprovMemberList(dno);
+		List<ApprovDocumentVo> coopMemberList = service.selectCoopMemberList(dno);
+		List<ApprovDocumentVo> approvSignList= service.selectApprovSignList(dno);
+		
+		req.setAttribute("approvDoc", vo);
+		req.setAttribute("approvMemberList", approvMemberList);
+		req.setAttribute("coopMemberList", coopMemberList);
+		req.setAttribute("approvSignList", approvSignList);
 		
 		return "approv/approv-detail";
 	}
@@ -188,42 +194,115 @@ public class ApprovController {
 			session.setAttribute("toastMsg", "로그인이 필요합니다.");
 			return "redirect:/login";
 		}
+		//TODO 문서 수정
 		return "approv/approv-edit";
 	}
 	
-	@GetMapping("coop")
-	public String coop() {
+	@GetMapping("coop/{dno}")
+	public String coop(@PathVariable String dno, HttpSession session, HttpServletRequest req) {
+		if(session.getAttribute("loginMember")==null) {
+			session.setAttribute("toastMsg", "로그인이 필요합니다.");
+			return "redirect:/login";
+		}
+		
+		MemberVo memberVo = (MemberVo) session.getAttribute("loginMember");
+		
+		ApprovDocumentVo vo = new ApprovDocumentVo();
+		
+		vo.setEmpNo(memberVo.getEmpNo());
+		vo.setAdocNo(dno);
+		
+		
+		int result = service.selectApprovDocEmpNo(vo);
+		
+		if(result == 0) {
+			session.setAttribute("toastMsg", "접근 권한이 없습니다.");
+			return "redirect:/approv/main";	
+		}
+		
+		service.updateDocCoopByEmpNo(vo);
+		
+		vo = service.selectApprovDocOneByNo(vo);
+		List<ApprovDocumentVo> approvMemberList = service.selectApprovMemberList(dno);
+		List<ApprovDocumentVo> coopMemberList = service.selectCoopMemberList(dno);
+		List<ApprovDocumentVo> approvSignList= service.selectApprovSignList(dno);
+		
+		req.setAttribute("approvDoc", vo);
+		req.setAttribute("approvMemberList", approvMemberList);
+		req.setAttribute("coopMemberList", coopMemberList);
+		req.setAttribute("approvSignList", approvSignList);
+		
 		return "approv/coop-detail";
 	}
 	
-	@GetMapping("refer")
-	public String refer() {
+	@GetMapping("refer/{dno}")
+	public String refer(@PathVariable String dno, HttpSession session, HttpServletRequest req) {
+		if(session.getAttribute("loginMember")==null) {
+			session.setAttribute("toastMsg", "로그인이 필요합니다.");
+			return "redirect:/login";
+		}
+		
+		MemberVo memberVo = (MemberVo) session.getAttribute("loginMember");
+		
+		ApprovDocumentVo vo = new ApprovDocumentVo();
+		
+		vo.setEmpNo(memberVo.getEmpNo());
+		vo.setAdocNo(dno);
+		
+		
+		int result = service.selectApprovDocEmpNo(vo);
+		
+		if(result == 0) {
+			session.setAttribute("toastMsg", "접근 권한이 없습니다.");
+			return "redirect:/approv/main";	
+		}
+		
+		service.updateDocReferByEmpNo(vo);
+		
+		vo = service.selectApprovDocOneByNo(vo);
+		List<ApprovDocumentVo> approvMemberList = service.selectApprovMemberList(dno);
+		List<ApprovDocumentVo> coopMemberList = service.selectCoopMemberList(dno);
+		List<ApprovDocumentVo> approvSignList= service.selectApprovSignList(dno);
+		
+		req.setAttribute("approvDoc", vo);
+		req.setAttribute("approvMemberList", approvMemberList);
+		req.setAttribute("coopMemberList", coopMemberList);
+		req.setAttribute("approvSignList", approvSignList);
+		
 		return "approv/refer-detail";
 	}
 	
 	@GetMapping("form/create")
 	public String createForm() {
+		//TODO 양식 생성
 		return "approv/form-create";
 	}
 	
 	@GetMapping("form/main")
 	public String mainForm() {
+		//TODO 양식 목록
 		List<DocFormVo> formList = service.selectFormList();
 		return "approv/form-main";
 	}
 	
 	@GetMapping("form/detail")
 	public String detailForm() {
+		//TODO 양식 상세확인
 		return "approv/form-detail";
 	}
 	
 	@GetMapping("form/edit")
 	public String editForm() {
+		//TODO 양식 수정
 		return "approv/form-edit";
 	}
 	
 	@GetMapping("sign/create")
-	public String createSign() {
+	public String createSign(HttpSession session) {
+		if(session.getAttribute("loginMember")==null) {
+			session.setAttribute("toastMsg", "로그인이 필요합니다.");
+			return "redirect:/login";
+		}
 		return "approv/sign-create";
 	}
 	

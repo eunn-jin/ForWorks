@@ -23,5 +23,9 @@ public class ApprovDocumentVo {
 	private List<String> coopMember;
 	private List<String> referMember;
 	private List<String> sign;
+	
+	public void addSignList(List<String> sign) {
+		this.sign.addAll(sign);
+	}
 
 }
