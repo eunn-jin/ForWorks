@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.kh.forworks.off.vo.OffTypeVo;
 import com.kh.forworks.off.vo.OffVo;
 
 public interface OffDao {
@@ -14,5 +15,7 @@ public interface OffDao {
 	int getUseHalfOff(SqlSessionTemplate sst, int empNo);
 	
 	List<OffVo> selectOffList(SqlSessionTemplate sst, Map<String, Object> map);
+	List<OffTypeVo> selectOffTypeList(SqlSessionTemplate sst);
+	int insertOffForm(SqlSessionTemplate sst, Map<String, Object> map);
 
 }

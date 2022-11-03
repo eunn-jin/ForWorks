@@ -21,7 +21,6 @@
 
 <body>
 <div id="app">
-
 	<%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
 
 	<div id="main">
@@ -101,18 +100,13 @@
 								</div>
 								<div class="form-group">
 									<label>기간: </label>
-									<input type="text" id="demo" name="demo" value="" />
+									<input type="text" id="off-day-range" name="off-day-range"/>
 								</div>
 								<div class="form-group">
 									<label>휴가 종류</label><br>
-									<label><input type="radio" name="type" value="">연차</label>
-									<label><input type="radio" name="type" value="">오전반차</label>
-									<label><input type="radio" name="type" value="">오후반차</label>
-									<label><input type="radio" name="type" value="">조퇴</label>
-									<label><input type="radio" name="type" value="">경조사</label>
-									<label><input type="radio" name="type" value="">보건휴가</label>
-									<label><input type="radio" name="type" value="">출산휴가</label>
-									<label><input type="radio" name="type" value="">육아휴직</label>
+									<c:forEach var="i" items="${offTypeList}">
+										<label><input type="radio" name="type" value="${i.code}">${i.name}</label>
+									</c:forEach>
 								</div>
 							</div>
 							<div class="modal-footer">
@@ -122,7 +116,7 @@
 									<span class="d-none d-sm-block">취소하기</span>
 								</button>
 								<button type="button" class="btn btn-primary ml-1"
-									data-bs-dismiss="modal">
+									data-bs-dismiss="modal" onclick="submitOffForm();">
 									<i class="bx bx-check d-block d-sm-none"></i>
 									<span class="d-none d-sm-block">신청하기</span>
 								</button>
@@ -187,12 +181,14 @@
 
 </script>
 <script>
-		
+	var startDay;
+	var endDay;
+	
 	$().ready(function() {
 		$('#att-off').addClass("active");
 		$('#att-part').css("display", "block");
 
-		$('#demo').daterangepicker({
+		$('#off-day-range').daterangepicker({
 			"locale": {
 				"format": "YYYY-MM-DD",
 				"separator": " ~ ",
@@ -208,9 +204,43 @@
 			},
 			"drops": "down"
 		}, function (start, end, label) {
-			console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
+			startDay = start.format('YYYY-MM-DD');
+			endDay = end.format('YYYY-MM-DD');
 		});
 	});
+	
+	function submitOffForm(){
+
+		var radioVal = $('input[name="type"]:checked').val();
+		
+		if(startDay != null && endDay != null) {
+			if(radioVal != null) {
+				$.ajax({
+					url: '${root}/off/submitOff',
+					method: 'POST',
+					data : {
+						"start" : startDay,
+						"end" : endDay,
+						"type" : radioVal
+					},
+					success : function(res) {
+						if(res == "success") {						
+							toastContent.innerText = "휴가 작성이 완료되었습니다.";
+						} else {
+							toastContent.innerText = "에러 발생. 나중에 다시 시도해주세요";
+						}
+					},
+					error : function(){
+						toastContent.innerText = "에러 발생. 나중에 다시 시도해주세요";
+					}
+				});
+			} else {
+				toastContent.innerText = "휴가 종류를 선택해주세요";
+			}			
+		} else {			
+			toastContent.innerText = "날짜를 다시 확인해주세요";
+		}
+	}
 	
 </script>
 <link rel="stylesheet" href="${root}/resources/css/attendance.css">
