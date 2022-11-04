@@ -146,14 +146,14 @@ public class ApprovDaoImpl implements ApprovDao {
 	
 	//협조문서 확인처리
 	@Override
-	public void updateDocCoopByEmpNo(SqlSessionTemplate sst, ApprovDocumentVo vo) {
-		sst.update("approvMapper.updateDocCoopByEmpNo", vo);
+	public int updateDocCoopByEmpNo(SqlSessionTemplate sst, ApprovDocumentVo vo) {
+		return sst.update("approvMapper.updateDocCoopByEmpNo", vo);
 	}
 	
 	//협조문서 확인처리
 	@Override
-	public void updateDocReferByEmpNo(SqlSessionTemplate sst, ApprovDocumentVo vo) {
-		sst.update("approvMapper.updateDocReferByEmpNo", vo);
+	public int updateDocReferByEmpNo(SqlSessionTemplate sst, ApprovDocumentVo vo) {
+		return sst.update("approvMapper.updateDocReferByEmpNo", vo);
 	}
 	
 }

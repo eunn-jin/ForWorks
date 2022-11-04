@@ -155,7 +155,6 @@
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		<link rel="stylesheet" href="${root}/resources/css/approv/common.css">
     <div id="wrap">
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         <main>
             
             <div id="main-wrap">
@@ -255,13 +254,13 @@
                         </div> 
                         <div class="approv-content-wrap">
                         	<div class="approv-content-slide" id="doc-coop-slide">
-                        		<c:forEach var="reject" items="${coopList}">
-	                            <a href="${root}/approv/detail/${coopList.adocNo}" class="approv-content-a">
+                        		<c:forEach var="coop" items="${coopList}">
+	                            <a href="${root}/approv/coop/${coop.adocNo}" class="approv-content-a">
 		                            <div class="approv-check-content doc-coop">
-			                                <div class="content-title">${coopList.adocName}</div>
+			                                <div class="content-title">${coop.adocName}</div>
 			                                <div class="content-bot">
-			                                    <div class="content-date content-bot-font">${coopList.draftDate}</div>
-			                                    <div class="content-writer content-bot-font">${coopList.empName}</div>
+			                                    <div class="content-date content-bot-font">${coop.draftDate}</div>
+			                                    <div class="content-writer content-bot-font">${coop.empName}</div>
 			                                </div>
 		                            </div>
 	                            </a>
@@ -296,13 +295,13 @@
                         </div> 
                         <div class="approv-content-wrap">
                         	<div class="approv-content-slide" id="doc-refer-slide">
-                        		<c:forEach var="reject" items="${referList}">
-	                            <a href="${root}/approv/detail/${referList.adocNo}" class="approv-content-a">
+                        		<c:forEach var="refer" items="${referList}">
+	                            <a href="${root}/approv/refer/${refer.adocNo}" class="approv-content-a">
 		                            <div class="approv-check-content doc-refer">
-			                                <div class="content-title">${referList.adocName}</div>
+			                                <div class="content-title">${refer.adocName}</div>
 			                                <div class="content-bot">
-			                                    <div class="content-date content-bot-font">${referList.draftDate}</div>
-			                                    <div class="content-writer content-bot-font">${referList.empName}</div>
+			                                    <div class="content-date content-bot-font">${refer.draftDate}</div>
+			                                    <div class="content-writer content-bot-font">${refer.empName}</div>
 			                                </div>
 		                            </div>
 	                            </a>
@@ -364,7 +363,7 @@
 	let approvCurrentPage = 1;
 	
 	function approvSlideShow() {
-		approvSlide.style.transform = 'translateX(-'+((approvCurrentPage - 1) * 342)+'px)';
+		approvSlide.style.transform = 'translateX(-'+((approvCurrentPage - 1) * 1368)+'px)';
 	}
 	
 	approvLeftBtn.onclick = function(){
@@ -396,7 +395,7 @@
 	let rejectCurrentPage = 1;
 	
 	function rejectSlideShow() {
-		rejectSlide.style.transform = 'translateX(-'+((rejectCurrentPage - 1) * 342)+'px)';
+		rejectSlide.style.transform = 'translateX(-'+((rejectCurrentPage - 1) * 1368)+'px)';
 	}
 	
 	rejectLeftBtn.onclick = function(){
@@ -428,7 +427,7 @@
 	let coopCurrentPage = 1;
 	
 	function coopSlideShow() {
-		coopSlide.style.transform = 'translateX(-'+((coopCurrentPage - 1) * 342)+'px)';
+		coopSlide.style.transform = 'translateX(-'+((coopCurrentPage - 1) * 1368)+'px)';
 	}
 	
 	coopLeftBtn.onclick = function(){
@@ -460,7 +459,7 @@
 	let referCurrentPage = 1;
 	
 	function referSlideShow() {
-		referSlide.style.transform = 'translateX(-'+((referCurrentPage - 1) * 342)+'px)';
+		referSlide.style.transform = 'translateX(-'+((referCurrentPage - 1) * 1368)+'px)';
 	}
 	
 	referLeftBtn.onclick = function(){
