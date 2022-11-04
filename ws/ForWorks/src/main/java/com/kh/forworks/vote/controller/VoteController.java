@@ -1,5 +1,6 @@
 package com.kh.forworks.vote.controller;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,7 @@ import com.kh.forworks.Pagination;
 import com.kh.forworks.community.vo.CommunityVo;
 import com.kh.forworks.department.vo.DepartmentVo;
 import com.kh.forworks.member.vo.MemberVo;
+import com.kh.forworks.noticeattachments.vo.NoticeAttachmentsVo;
 import com.kh.forworks.vote.service.VoteService;
 import com.kh.forworks.vote.vo.VoteAttachmentsVo;
 import com.kh.forworks.vote.vo.VoteCategoryVo;
@@ -94,6 +96,7 @@ public class VoteController {
 			}else {
 				return "error";
 			}
+			
 		}
 	}
 	
@@ -114,6 +117,10 @@ public class VoteController {
 	//투표 생성
 	@PostMapping("create")
 	public String create(VoteVo vtvo ,VoteCategoryVo vtcg, VoteParticipationVo vtpt, VoteAttachmentsVo vtatVo, HttpSession session, HttpServletRequest req) {
+		
+		vtvo.setVtCreate(vtvo.getVtCreate().replace('T', ' '));
+		vtvo.setVtEnd(vtvo.getVtEnd().replace('T', ' '));
+		
 		
 		System.out.println(vtvo);
 		System.out.println(vtcg);
@@ -151,7 +158,8 @@ public class VoteController {
 		int result = vtsv.insertVote(vtvo, vtcgArr, vtatVo);
 		
 		if (result == 1) {
-			return "redirect:/list/1";
+			session.setAttribute("toastify", "투표 등록완료!");
+			return "redirect:/vote/list/1";
 		}else {return "error";}
 	}
 	
@@ -162,20 +170,210 @@ public class VoteController {
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 		
 		//번호에 맞는 투표 정보 가져오기
-		//VoteVo vtvo = vtsv.selectOneVt(pno);
+		VoteVo vtvo = vtsv.selectOneVt(pno);
 		
 		//번호에 맞는 항목들 가져오기
+		List<VoteCategoryVo> vtcgList = vtsv.selectVtcg(pno);
+		
+		//투표 대상자 가져오기(전체대상자:: 투표참여o, x)
+		List<VoteParticipationVo> vtptList = vtsv.selectVtpt(pno);
+		
+		System.out.println(vtvo);
+		System.out.println(vtcgList);
+		System.out.println(vtptList);
 		
 		
-		//투표 대상자 가져오기
+		model.addAttribute("vtvo", vtvo);
+		model.addAttribute("vtcgList", vtcgList);
+		model.addAttribute("vtptList", vtptList);
 		
 		return "vote/detailCreator";
 	}
 	
-	//투표 상세보기(사용자)
-		@GetMapping("detailUser/{pno}")
-		public String detaiUser() {
-			return "vote/detailUser";
+	//투표 종료
+	@GetMapping("end/{pno}")
+	public String end(@PathVariable int pno, HttpSession session) {
+		
+		int result = vtsv.voteEnd(pno); 
+		String toastify = "-"+pno+"번 투표 종료-";
+		
+		if (result == 1) {
+			session.setAttribute("toastMsg", toastify);
+			return"redirect:/vote/list/1";
+		}else {return "error";}
+	}
+	//투표 수정
+	@GetMapping("update/{pno}")
+	public String update(@PathVariable String pno, Model model) {
+		
+		//번호에 맞는 투표 정보 가져오기
+		VoteVo vtvo = vtsv.selectOneVt(pno);
+		
+		//번호에 맞는 항목들 가져오기
+		List<VoteCategoryVo> vtcgList = vtsv.selectVtcg(pno);
+		
+		//첨부파일 가져오기
+		VoteAttachmentsVo vtatList = vtsv.seleVtat(pno);
+		
+		//투표 대상자 가져오기(전체대상자:: 투표참여o, x)
+		List<VoteParticipationVo> vtptList = vtsv.selectVtpt(pno);
+		
+		System.out.println(vtvo);
+		System.out.println(vtcgList);
+		System.out.println(vtptList);
+		System.out.println(vtatList);
+		
+		model.addAttribute("vtvo", vtvo);
+		model.addAttribute("vtcgList", vtcgList);
+		model.addAttribute("vtptList", vtptList);	
+		model.addAttribute("vtatList", vtatList);
+		
+		
+		return"vote/update";
+	}
+	@PostMapping("update/{pno}")
+	public String update(@PathVariable String pno, Model model,HttpSession session, VoteVo vtvo, VoteCategoryVo vtcg, VoteAttachmentsVo vtat, HttpServletRequest req) {
+		
+		vtvo.setVtCreate(vtvo.getVtCreate().replace('T', ' '));
+		vtvo.setVtEnd(vtvo.getVtEnd().replace('T', ' '));
+		vtvo.setVtNo(pno);
+		vtcg.setVtNo(pno);
+		
+		System.out.println("-------수정페이지 Post값 넘기기-------");
+		System.out.println(vtvo);
+		System.out.println(vtcg);
+		System.out.println(vtat);
+		System.out.println("///////////////////////////////////");
+		
+		
+		//기존 파일 삭제
+		String savePath = req.getServletContext().getRealPath("/resources/upload/vote/");
+		//MemberVo loginMember = (MemberVo)(session.getAttribute("loginMember"));
+		
+		//첨부파일 확인 (투표첨부파일 테이블에 등록된 파일이 있으면 update, 등록된 파일이 없으면 insert)
+		VoteAttachmentsVo vtatCheck = vtsv.checkFile(pno);
+		//System.out.println("파일 확인(정보수정post)::"+ntatVocheck);
+		
+		//해당 게시글의 첨부파일이있으면 삭제
+		if (!(vtvo.getVtFile().isEmpty())) {
+			String fileName = vtat.getVtatOrigin();
+			File f =  new File(savePath +  fileName);
+			System.out.println(f);
+			if(f.exists()) { //파일 존재하는지 확인
+				f.delete();
+				System.out.println("첨부파일(공지) 삭제완료");
+			}
 		}
+		
+		//파일 유무 확인
+		if (vtvo.getVtFile() != null && !vtvo.getVtFile().isEmpty()) {
+			//파일 있음
+			//파일 업로드 후 저장된 파일명 얻기 
+			String changeName = FileUploader.fileUpload(vtvo.getVtFile(), savePath);
+			//System.out.println(changeName);
+			String originName = vtvo.getVtFile().getOriginalFilename();
+			//System.out.println(originName);
+			vtat.setVtatChange(changeName);
+			vtat.setVtatOrigin(originName);
+			vtat.setVtatPath(savePath);
+			vtat.setVtNo(pno);
+			//System.out.println("공지파일::"+ntatVo);
+		}else {vtat=null;}
+		
+		String[] vtcgArr=null ;
+		if (vtcg.getVtcgName() != null) {
+			vtcgArr =vtcg.getVtcgName().split(",");
+			
+		}
+		
+		//update(투표, 첨부파일,) 및 항목 insert (새로추가된 항목, 추가된 첨부파일)
+		int result = vtsv.edit(vtvo, vtcgArr, vtat, vtatCheck, pno);
+		
+
+		
+		if (result==1) {
+			session.setAttribute("toastMsg", "투표 내용 수정완료!");
+			return"redirect:/vote/list/1";
+		}else {return "error";}
+	}
+	//투표 삭제
+	@GetMapping("delete/{pno}")
+	public String delete(@PathVariable int pno, HttpSession session) {
+		
+		int result = vtsv.voteDelete(pno);
+		
+		String toastify = "-"+pno+"번 투표 삭제-";
+		
+		if(result == 1) {
+			session.setAttribute("toastMsg", toastify);
+			return"redirect:/vote/list/1";
+		}else {return "error";}
+	}
+	//투표 생성자
+	//--------------------------------------------------
+	
+	//투표 상세보기(사용자)
+	@GetMapping("detailUser/{pno}")
+	public String detaiUser(@PathVariable String pno, Model model, HttpSession session) {
+		
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		
+		//번호에 맞는 투표 정보 가져오기
+		VoteVo vtvo = vtsv.selectOneVt(pno);
+		
+		//번호에 맞는 항목들 가져오기
+		List<VoteCategoryVo> vtcgList = vtsv.selectVtcg(pno);
+		
+		//투표 대상자 가져오기(전체대상자:: 투표참여o, x)
+		List<VoteParticipationVo> vtptList = vtsv.selectVtpt(pno);
+		
+		//로그인 사원이 투표 참여 대상자인지 확인(참여x)
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("pno", pno);
+		map.put("no", loginMember.getEmpNo());
+		int check = vtsv.check(map);
+		
+		//투표를 참여 했는지 확인
+		//참여한 인원은 선택한 내용이 체크되어있고 재투표시 알람확인창 나오게하기
+		VoteParticipationVo chvo = vtsv.checkDo(map);
+		System.out.println(chvo);
+		
+		
+		System.out.println(vtvo);
+		System.out.println(vtcgList);
+		System.out.println(vtptList);
+		
+		model.addAttribute("vtvo", vtvo);
+		model.addAttribute("vtcgList", vtcgList);
+		model.addAttribute("vtptList", vtptList);
+		model.addAttribute("check", check);
+		model.addAttribute("chvo",chvo);
+		
+		return "vote/detailUser";
+	}
+	//사원이 투표를 하였을때
+	//필요한값 :: 체트된 항목 번호, 회원번호, 투표 번호
+	@PostMapping("detailUser/{pno}")
+	public String detailUser(@PathVariable String pno, HttpSession session ,VoteParticipationVo vo){
+		
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		System.out.println(pno);
+		System.out.println(loginMember.getEmpNo());
+		
+		System.out.println(vo);
+		//set 회원 번호, 게시글 번호, 
+		vo.setVtNo(pno);
+		vo.setEmpNo(loginMember.getEmpNo());
+		System.out.println(vo);
+		
+		//투표 입력내용 넣기
+		int result = vtsv.insertUserVt(vo);
+		
+		if(result ==1) {
+			session.setAttribute("toastMsg", "투표 완료!");
+			return "redirect:/vote/list/1";
+		}else {return"error";}
+	}
+	
 
 }

@@ -1,5 +1,6 @@
 package com.kh.forworks.vote.service;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,6 +13,8 @@ import com.kh.forworks.department.vo.DepartmentVo;
 import com.kh.forworks.member.vo.MemberVo;
 import com.kh.forworks.vote.dao.VoteDao;
 import com.kh.forworks.vote.vo.VoteAttachmentsVo;
+import com.kh.forworks.vote.vo.VoteCategoryVo;
+import com.kh.forworks.vote.vo.VoteParticipationVo;
 import com.kh.forworks.vote.vo.VoteVo;
 
 @Service
@@ -120,6 +123,97 @@ public class VoteServiceImpl implements VoteService{
 		
 		return result[0]*result[1]*result[2]*result[3];
 	}
+
+	//투표 정보 가져오기
+	@Override
+	public VoteVo selectOneVt(String pno) {
+		return dao.selectOneVt(sst,pno);
+	}
+
+	//투표 항복 정보 가져오기
+	@Override
+	public List<VoteCategoryVo> selectVtcg(String pno) {
+		return dao.selectVtcg(sst,pno);
+	}
+
+	//투표 참가자 정보 가져오기
+	@Override
+	public List<VoteParticipationVo> selectVtpt(String pno) {
+		return dao.selectVtpt(sst,pno);
+	}
+	//투표 첨부파일 가져오기
+	@Override
+	public VoteAttachmentsVo seleVtat(String pno) {
+		return dao.selectVtat(sst, pno);
+	}
+
+	
+	//투표 종료
+	@Override
+	public int voteEnd(int pno) {
+		return dao.end(sst, pno);
+	}
+	
+	//투표삭제
+	@Override
+	public int voteDelete(int pno) {
+		return dao.delete(sst,pno);
+	}
+	
+	//투표 대상자 투표
+	@Override
+	public int insertUserVt(VoteParticipationVo vo) {
+		return dao.insertUserVt(sst,vo);
+	}
+
+	//로그인사원이 대상자 여부 확인
+	@Override
+	public int check(HashMap<String, String> map) {
+		return dao.check(sst, map);
+	}
+	
+	//대상자중 참여한 투표정보 가져오기
+	@Override
+	public VoteParticipationVo checkDo(HashMap<String, String> map) {
+		return dao.checkDo(sst,map);
+	}
+	
+	// 투표 첨부파일 확인
+	@Override
+	public VoteAttachmentsVo checkFile(String pno) {
+		return dao.checkFile(sst,pno);
+	}
+	
+	//투표내용 수정
+	@Override
+	public int edit(VoteVo vtvo, String[] vtcgArr, VoteAttachmentsVo vtat, VoteAttachmentsVo vtatCheck, String pno) {
+		int[] result = new int[4]; 
+
+		//투표 내용수정
+		result[0] = dao.editVt(sst,vtvo);
+		
+		//투표 첨부파일 확인후 update||insert 선택
+		if (vtat != null && vtatCheck !=null) {
+			result[1] = dao.editVtat(sst,vtat);
+		}else if(vtat != null && vtatCheck ==null) {
+			result[1] = dao.editVtatInsert(sst, vtat);
+		}
+		//추가된 항목이 있는지 확인후 insert
+		if(vtcgArr != null) {
+			for (int i = 0; i < vtcgArr.length; i++) {
+				System.out.println(vtcgArr[i]);
+				//항목개수 만큼 insert작업
+				HashMap<String, String> map = new HashMap<String, String>();
+				map.put("vtcg", vtcgArr[i]);
+				map.put("pno", vtvo.getVtNo());
+				result[2]=dao.editInsertVtcg(sst,map);
+			}
+			
+		}else {result[2]=1;}
+		
+		return result[0]*result[1]*result[2];
+	}
+	
 	
 	
 }
