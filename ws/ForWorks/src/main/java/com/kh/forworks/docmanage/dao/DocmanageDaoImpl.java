@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.forworks.PageVo;
 import com.kh.forworks.docmanage.vo.DfileVo;
 import com.kh.forworks.docmanage.vo.DocVo;
+import com.kh.forworks.member.vo.MemberVo;
 
 @Repository
 public class DocmanageDaoImpl implements DocmanageDao {
@@ -20,8 +21,8 @@ public class DocmanageDaoImpl implements DocmanageDao {
 	}
 	//일반문서 리스트
 	@Override
-	public List<DocVo> selectDoc(SqlSessionTemplate sst) {
-		return sst.selectList("docMapper.selectDoc");
+	public List<DocVo> selectRangeDoc(SqlSessionTemplate sst , String range) {
+		return sst.selectList("docMapper.selectRangeDoc" , range);
 	}
 	//일반문서>파일업로드
 	@Override
@@ -50,8 +51,18 @@ public class DocmanageDaoImpl implements DocmanageDao {
 	}
 	//공개범위 받아오기
 	@Override
-	public HashMap<String, Object> selectRange(SqlSessionTemplate sst) {
-		return (HashMap<String, Object>) sst.selectList("docMapper.selectRange");
+	public List<MemberVo> selectDept(SqlSessionTemplate sst) {
+		return  sst.selectList("docMapper.selectDept");
+	}
+	//문서작성 후 문서관리등록
+	@Override
+	public int insertDocControl(SqlSessionTemplate sst, DocVo dv) {
+		return sst.insert("docMapper.insertControl", dv);
+	}
+	//전체 문서갯수조회(range)
+	@Override
+	public int selectRangeCountAll(SqlSessionTemplate sst , String range) {
+		return sst.selectOne("docMapper.selectRangeCountAll" , range);
 	}
 
 }

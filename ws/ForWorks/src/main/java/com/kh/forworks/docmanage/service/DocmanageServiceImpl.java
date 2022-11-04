@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.kh.forworks.docmanage.dao.DocmanageDao;
 import com.kh.forworks.docmanage.vo.DfileVo;
 import com.kh.forworks.docmanage.vo.DocVo;
+import com.kh.forworks.member.vo.MemberVo;
 
 @Service
 public class DocmanageServiceImpl implements DocmanageService{
@@ -26,15 +27,20 @@ public class DocmanageServiceImpl implements DocmanageService{
 	@Override
 	public int write(DocVo dv,DfileVo df) {
 		int result = 0;
-		int result1 = 0;
+		int result1 = 1;
 		result = dao.insertDoc(sst,dv);
-		result1 = dao.insertDocFile(sst, df);
-		return result = result*result1 ; 
+		if(result == 1) {
+			result = dao.insertDocControl(sst,dv);
+		}
+		if(!dv.getFile()[0].isEmpty()) {
+			result1 = dao.insertDocFile(sst, df);			
+		}
+		return result = result*result1; 
 	}
 	//일반문서 리스트
 	@Override
-	public List<DocVo> selectDoc() {
-		return dao.selectDoc(sst);
+	public List<DocVo> selectRangeDoc(String range) {
+		return dao.selectRangeDoc(sst,range);
 	}
 	//전체 문서갯수조회
 	@Override
@@ -53,8 +59,13 @@ public class DocmanageServiceImpl implements DocmanageService{
 	}
 	//공개범위 받아오기
 	@Override
-	public HashMap<String, Object> selectRange() {
-		return dao.selectRange(sst);
+	public List<MemberVo> selectDept() {
+		return (List<MemberVo>) dao.selectDept(sst);
+	}
+	//전체 문서갯수조회(range)
+	@Override
+	public int selectRangeTotalCnt(String range) {
+		return dao.selectRangeCountAll(sst, range);
 	}
 	
 	

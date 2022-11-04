@@ -107,7 +107,12 @@
                             <div>${x.docNo}</div>
                             <div>2022.12.31</div>
                             <div>${x.title}</div>
-                            <div>전체공개</div>
+                            <div>
+                            	<c:choose>
+                            		<c:when test="${x.range} eq 'OPEN'">전체공개</c:when>
+                            		<c:otherwise>해당부서</c:otherwise>
+                            	</c:choose>
+                            </div>
                             <div>${x.enrollDate}</div>
                         </c:forEach>
 				      
@@ -115,13 +120,17 @@
 				        </div>
 				        
 				        <div id="page-area">
-				            <a href=""><</a>
-				            <a href="">1</a>
-				            <a href="">2</a>
-				            <a href="">3</a>
-				            <a href="">4</a>
-				            <a href="">5</a>
-				            <a href="">></a>
+				            <c:if test="${pv.startPage ne 1 }">
+								<a href="${root}/docManage/doc_manage/${pv.startPage - 1}" class="btn btn-primary btn-sm">이전</a>	
+							</c:if>
+							
+							<c:forEach begin="${pv.startPage}" end="${pv.endPage}" var="i">
+								<a href="${root}/docmanage/manage/${i}" class="btn btn-primary btn-sm">${i}</a>
+							</c:forEach>
+							
+							<c:if test="${pv.endPage ne pv.maxPage }">
+								<a href="${root}/docmanage/manage/${pv.endPage + 1}" class="btn btn-primary btn-sm">다음</a>	
+							</c:if>
 				        </div>
 				
 				        <div id="search-area">

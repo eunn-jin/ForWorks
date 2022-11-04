@@ -36,18 +36,21 @@
 
           <table>
             <tr>
+              <th>보존 시작 날짜</th>
+              <td><input type="date" name="contEnrollDate"></td>
+            </tr>
+            <tr>
               <th>보존 마감 날짜</th>
               <td><input type="date" name="contEndDate"></td>
             </tr>
             <tr>
               <th>공개범위</th>
               <td>
-                <select name="rangeNo" id="range_no">
-                  <option value="">전체공개</option>
-                  <c:forEach items="${rangeName}" var="d">
-                    <option value="${d}">${d}</option>
+                    <label><input type="checkbox" name="range_" id="all" value="OPEN">전체공개</label>
+                  <c:forEach items="${dept}" var="d">
+                    <label> <input type="checkbox" name="range_" value="${d.deptNo}${d.deptName}">${d.deptName}</label>
                   </c:forEach>
-                </select>
+                
               </td>
             </tr>
             <tr>
@@ -73,8 +76,23 @@ $('.summernote').summernote({
 	  height: 350,
 	  lang: "ko-KR"
 	});
-
-
 </script>
+<script>
+  $(document).ready(function() {
+	$("#all").click(function() {
+		if($("#all").is(":checked")) $("input[name=range_]").prop("checked", true);
+		else $("input[name=range_]").prop("checked", false);
+	});
+
+	$("input[name=range_]").click(function() {
+		var total = $("input[name=range_]").length;
+		var checked = $("input[name=range_]:checked").length;
+
+		if(total != checked) $("#all").prop("checked", false);
+		else $("#all").prop("checked", true); 
+	});
+});
+</script>
+
 </body>
 </html>

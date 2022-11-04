@@ -9,8 +9,13 @@
 			(SEQ_DOC_NO.NEXTVAL,#{title},#{content},#{empNo},SYSDATE)
   	</insert>
   	
-  	<select id="selectDoc" resultType="DocVo">
-  		SELECT DOC_NO,TITLE,CONTENT,EMP_NO,TO_CHAR(ENROLL_DATE,'YYYY"년"MM"월"DD"일"')AS ENROLL_DATE FROM DOC WHERE STATUS = 'N'
+  	<select id="selectRangeDoc" resultType="DocVo">
+  		SELECT 
+  			D.DOC_NO, D.TITLE, D.CONTENT, D.EMP_NO, D.ENROLL_DATE, D.STATUS, 
+        	C.ENROLL_DATE AS CONT_ENROLL_DATE, C.END_DATE AS CONT_END_DATE, C.RANGE, C.STATUS AS CONTSTATUS 
+        FROM DOC D JOIN DOC_CONTROL C 
+        ON D.DOC_NO = C.DOC_NO 
+        WHERE RANGE LIKE '%'||#{range}||'%' OR RANGE LIKE 'OPEN'
   	</select>
   	
   	<insert id="insertFile">
@@ -39,10 +44,37 @@
 	<select id="selectOneDoc" resultType="DocVo">
 		SELECT * FROM DOC WHERE DOC_NO = #{no}
 	</select>
-  	
-  	<select id="selectRange" resultType="java.util.HashMap">
-  		SELECT G.*,R.NAME FROM RANGE_G G JOIN RANGE R ON G.RANGE_NO = R.RANGE_NO
+
+  	<select id="selectDept" resultType="MemberVo">
+  		SELECT DEPT_NO , DEPT_NAME FROM DEPARTMENT
   	</select>
+  	
+  	<insert id="insertControl">
+  		INSERT INTO DOC_CONTROL
+  		(NO
+		,ENROLL_DATE
+		,END_DATE
+		,RANGE
+		,STATUS
+		,DOC_NO)
+		VALUES
+		(
+		SEQ_DOC_CONTROL_NO.NEXTVAL
+		,#{contEnrollDate}
+		,#{contEndDate}
+		,#{range}
+		,'N'
+		,SEQ_DOC_NO.CURRVAL
+		)
+  	</insert>
+  	
+  	<select id="selectRangeCountAll" resultType="int">
+  		SELECT COUNT(D.DOC_NO) FROM DOC D JOIN DOC_CONTROL C ON D.DOC_NO = C.DOC_NO WHERE RANGE LIKE '%'||#{range}||'%' OR RANGE LIKE 'OPEN'
+  	</select>
+  	
+  	
+  	
+  	
 </mapper>
 
 
