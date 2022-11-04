@@ -4,8 +4,6 @@ import lombok.Data;
 
 @Data
 public class VoteAttachmentsVo {
-
-	 
 	private String vtatNo;
 	private String vtatChange;
 	private String vtatOrigin;
