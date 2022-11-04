@@ -27,7 +27,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 	}
 
 	@Override
-	public WorkTimeVo getWorkInfo(int empNo) {
+	public WorkTimeVo getWorkInfo(String empNo) {
 		WorkTimeVo wvo = dao.selectInOutTime(sst, empNo);
 		
 		int day = dao.selectDayWork(sst, empNo);
@@ -87,7 +87,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 	}
 
 	@Override
-	public TeamWorkVo getTeamTime(int empNo) {
+	public TeamWorkVo getTeamTime(String empNo) {
 		return dao.selectTeamTime(sst, empNo);
 	}
 

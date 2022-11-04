@@ -11,10 +11,10 @@ import com.kh.forworks.attendance.vo.WorkVo;
 
 public interface AttendanceDao {
 
-	WorkTimeVo selectInOutTime(SqlSessionTemplate sst, int empNo);
-	int selectDayWork(SqlSessionTemplate sst, int empNo);
-	int selectWeekWork(SqlSessionTemplate sst, int empNo);
-	int selectMonthWork(SqlSessionTemplate sst, int empNo);
+	WorkTimeVo selectInOutTime(SqlSessionTemplate sst, String empNo);
+	int selectDayWork(SqlSessionTemplate sst, String empNo);
+	int selectWeekWork(SqlSessionTemplate sst, String empNo);
+	int selectMonthWork(SqlSessionTemplate sst, String empNo);
 	
 	int insertInTime(SqlSessionTemplate sst, Map map);
 	int updateOutTime(SqlSessionTemplate sst, Map<String, Object> map);
@@ -28,7 +28,7 @@ public interface AttendanceDao {
 	int selectEarlyoutCount(SqlSessionTemplate sst, Map<String, Object> map);
 	int selectLateCount(SqlSessionTemplate sst, Map<String, Object> map);
 	List<WorkVo> selectWorkList(SqlSessionTemplate sst, Map<String, Object> map);
-	TeamWorkVo selectTeamTime(SqlSessionTemplate sst, int empNo);
+	TeamWorkVo selectTeamTime(SqlSessionTemplate sst, String empNo);
 	
 
 }

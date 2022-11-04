@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +22,7 @@ import com.kh.forworks.attendance.vo.MonthWorkVo;
 import com.kh.forworks.attendance.vo.TeamWorkVo;
 import com.kh.forworks.attendance.vo.WorkTimeVo;
 import com.kh.forworks.attendance.vo.WorkVo;
+import com.kh.forworks.member.vo.MemberVo;
 
 @Controller
 @RequestMapping("att/")
@@ -69,10 +72,10 @@ public class AttendanceController {
 	}
 
 	@GetMapping("day")
-	public String dayAtt(Model model) {
+	public String dayAtt(Model model, HttpSession session) {
 
-		//TODO: �솕硫댁뿉 蹂댁뿬以� 寃껊뱾 媛��졇�삤湲�, empNo
-		int empNo = 1;       
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		String empNo = loginMember.getEmpNo();
 		String day = getToday();
 		
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -86,6 +89,7 @@ public class AttendanceController {
 		model.addAttribute("workTime", workTime);
 		model.addAttribute("work", work);
 		model.addAttribute("team", team);
+		model.addAttribute("today", day);
 		
 		return "attendance/dayAttendance";
 	}
@@ -97,9 +101,11 @@ public class AttendanceController {
 	
 	@PostMapping("month")
 	@ResponseBody
-	public List<WorkVo> MonthWork(String month) {
-		//TODO: �솕硫댁뿉 蹂댁뿬以� 寃껊뱾 媛��졇�삤湲�, empNo 諛붽씀湲�
-		int empNo = 1;
+	public List<WorkVo> MonthWork(String month, HttpSession session) {
+
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		String empNo = loginMember.getEmpNo();
+		
 		month = monthForm(month);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("empNo", empNo);
@@ -112,10 +118,10 @@ public class AttendanceController {
 	
 	@PostMapping("monthCnt")
 	@ResponseBody
-	public MonthWorkVo MonthCnt(String month) {
+	public MonthWorkVo MonthCnt(String month, HttpSession session) {
 		
-		//TODO: �솕硫댁뿉 蹂댁뿬以� 寃껊뱾 媛��졇�삤湲�, empNo 諛붽씀湲�
-		int empNo = 1;
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		String empNo = loginMember.getEmpNo();
 		month = monthForm(month);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("empNo", empNo);
@@ -128,10 +134,10 @@ public class AttendanceController {
 	}
 	
 	@GetMapping("goWork")
-	public String goWork() {
+	public String goWork(HttpSession session) {
 				        
-		//TODO:no 媛믪쓣 濡쒓렇�씤硫ㅻ쾭 no 濡� 諛쏆븘�삤湲�
-		int empNo = 1;
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		String empNo = loginMember.getEmpNo();
 		String day = getToday();
 		
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -143,16 +149,15 @@ public class AttendanceController {
 		if(result == 1) {
 			return "redirect:/att/day";			
 		} else {
-			//�떎�뙣
 			return "errorPage";
 		}
 	}
 	
 	@GetMapping("outWork/{no}")
-	public String outWork(@PathVariable int no) {
-		//TODO:empNo 媛믪쓣 濡쒓렇�씤硫ㅻ쾭濡� 諛쏆븘�삤湲�
-		int empNo = 1;
+	public String outWork(@PathVariable int no, HttpSession session) {
 		
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		String empNo = loginMember.getEmpNo();
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("no", no);
 		map.put("empNo", empNo);
@@ -162,17 +167,16 @@ public class AttendanceController {
 		if(result == 1) {
 			return "redirect:/att/day";			
 		} else {
-			//�떎�뙣
 			return "errorPage";
 		}
 	}
 	
 	@PostMapping("dayWorkInfo")
 	@ResponseBody
-	public WorkVo dayWorkInfo(String date) {
+	public WorkVo dayWorkInfo(String date, HttpSession session) {
 		
-		//TODO: �솕硫댁뿉 蹂댁뿬以� 寃껊뱾 媛��졇�삤湲�, empNo 諛붽씀湲�
-		int empNo = 1;
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		String empNo = loginMember.getEmpNo();
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("empNo", empNo);

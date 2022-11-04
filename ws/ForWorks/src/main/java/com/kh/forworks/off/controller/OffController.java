@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.forworks.member.vo.MemberVo;
 import com.kh.forworks.off.service.OffService;
 import com.kh.forworks.off.vo.OffCntVo;
 import com.kh.forworks.off.vo.OffTypeVo;
@@ -30,14 +33,17 @@ public class OffController {
 	}
 	
 	@GetMapping("manage")
-	public String offManage(Model model) {
+	public String offManage(Model model, HttpSession session) {
 		
-		int empNo = 1;
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		String empNo = loginMember.getEmpNo();
+		
 		OffCntVo offCnt = service.getOffCnt(empNo);
 		List<OffTypeVo> offTypeList = service.getOffTypeList();
 		
 		model.addAttribute("offCnt", offCnt);
 		model.addAttribute("offTypeList", offTypeList);
+		model.addAttribute("joinDay", loginMember.getEmpJdate().substring(0,4));
 		
 		return "off/offManagement";
 	}
@@ -49,9 +55,10 @@ public class OffController {
 
 	@PostMapping("offInfo")
 	@ResponseBody
-	public List<OffVo> getOffInfo(String year) {
+	public List<OffVo> getOffInfo(String year, HttpSession session) {
 		
-		int empNo = 1; 
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		String empNo = loginMember.getEmpNo();
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("empNo", empNo);
 		map.put("year", year);
@@ -63,10 +70,10 @@ public class OffController {
 	
 	@PostMapping("submitOff")
 	@ResponseBody
-	public String submitOffForm(String start, String end ,int type) {
+	public String submitOffForm(String start, String end ,int type, HttpSession session) {
 		
-		int empNo = 1;
-		
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		String empNo = loginMember.getEmpNo();
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("empNo", empNo);
 		map.put("start", start);
