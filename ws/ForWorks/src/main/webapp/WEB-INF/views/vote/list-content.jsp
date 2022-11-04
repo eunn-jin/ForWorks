@@ -128,11 +128,11 @@ tr>th:hover{
 
 <script>
 	$(function() {
-		$('#table-main>tbody>tr').click(function() {
+		$('#table-main>tbody>#center').click(function() {
 			//행 클릭 되었을때, 동작할 내용
 			console.log("${loginMember.empNo}");
-			console.log($(this).children().eq(0).val());
-			console.log($(this).children().eq(3).val());
+			// console.log($(this).children().eq(0).val());
+			// console.log($(this).children().eq(3).val());
 
 			//로그인 회원번호
 			const loginNo = "${loginMember.empNo}";
