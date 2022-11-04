@@ -25,7 +25,7 @@ public class OffServiceImpl implements OffService {
 	}
 
 	@Override
-	public OffCntVo getOffCnt(int empNo) {
+	public OffCntVo getOffCnt(String empNo) {
 		
 		OffCntVo vo = new OffCntVo();
 		vo.setTotalOff(dao.getTotalOff(sst, empNo));

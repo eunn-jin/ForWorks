@@ -131,7 +131,7 @@
 						<div class="flex-row-side">
 							<div class>
 								<span class="text-part">근무일자</span>
-								<input type="date" id="workDate">
+								<input type="date" id="workDate" min="${loginMember.empJdate}" max="${today}">
 								<button class="btn btn-primary btn-sm" id="workDateBtn">검색</button>
 							</div>
 							<!-- <div>

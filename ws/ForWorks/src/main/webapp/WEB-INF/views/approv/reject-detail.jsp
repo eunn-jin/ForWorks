@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html>
 <head>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <meta charset="UTF-8">
-<title>협조 상세</title>
-
+<title>결재 상세</title>
 <style>
 
     main{
@@ -104,8 +105,7 @@
         font-size: 14px;
         display: grid;
         border-top: 1px solid black;
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(2, 0.5fr);
+        grid-template-columns: repeat(3, 1fr);
         width: 100%;
     }
 
@@ -154,25 +154,23 @@
         grid-column: 2/${fn:length(approvMemberList)+2}; /*jstl로 유동적으로 늘림*/
     }
 
-    
-
 </style>
 
-</head>
-<body>
         <%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
         
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		<link rel="stylesheet" href="${root}/resources/css/approv/common.css">
 
+</head>
+<body>
+
     <div id="wrap">
 
         <main>
-
             
             <div id="main-wrap">
 
-                <div id="main-header">협조상세</div>
+                <div id="main-header">반려된 문서</div>
 
                 <div class="approv-main">
 
@@ -188,11 +186,12 @@
 	                                    <c:forEach var="SignList" items="${approvSignList}" begin="0" end="0">
 	                                    <img alt="" src="${root}/resources/upload/sign/${SignList.signFile}">
 	                                    </c:forEach>
-                                    </div>
+                                    </div> <!-- 사인넣기 -->
                                     <c:forEach var="approvMember" items="${approvMemberList}">
                                     <div>${approvMember.empName}</div>
                                     </c:forEach>
 									
+									<!-- TODO 기안자 사인 따로받고 foreach문 사인으로 돌리고 반복횟수는 approvMemberList로 -->
 									<c:forEach var="SignList" items="${approvSignList}" begin="0" end="${fn:length(approvMemberList)}" varStatus="status">
 									<c:if test="${status.index eq 0}">
                                     <div class="sign-area"></div>
@@ -225,12 +224,18 @@
                         <c:if test="${s.last}"><div class="detail-position default-text">${depart}</div></c:if>
                         </c:forEach>
                     </div>
-
-                    </div>
-
+					<form action="" method="post">
                     <div class="btn-area">
-                        <button class="approv-btn" onclick="location.href='${root}/approv/main">목록보기</button>
+                        <button type="button" class="approv-btn" onclick="location.href='${root}/approv/main">목록보기</button>
+                        <div class="approv-btn-area">
+                       		<c:if test="${loginMember.empNo} eq ${approvDoc.empNo}">
+                       			<button type="button" class="approv-btn" onclick="location.href='${root}/approv/edit${approvDoc.adocNo}'">
+	                                <span class="approv-btn-text" name="approv">수정</span>
+	                            </button>
+                       		</c:if>
+                        </div>
                     </div>
+                    </form>
                 
                 </div>
             </div>

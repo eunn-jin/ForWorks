@@ -85,8 +85,8 @@
 <script>
 	
 	$().ready(function() {
-		console.log("test:");
-		$('#ex1').addClass("active");
+		$('#salary-main').addClass("active");
+		$('#salary-part').css("display", "block");
 	});
 	
 </script>

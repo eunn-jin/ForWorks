@@ -14,7 +14,7 @@ import com.kh.forworks.attendance.vo.WorkVo;
 public class AttendanceDaoImpl implements AttendanceDao {
 
 	@Override
-	public WorkTimeVo selectInOutTime(SqlSessionTemplate sst, int empNo) {
+	public WorkTimeVo selectInOutTime(SqlSessionTemplate sst, String empNo) {
 		if(sst.selectOne("attendanceMapper.selectInOutTime", empNo) == null) {
 			WorkTimeVo vo = new WorkTimeVo();
 			vo.setInTime("미등록");
@@ -26,7 +26,7 @@ public class AttendanceDaoImpl implements AttendanceDao {
 	}
 
 	@Override
-	public int selectDayWork(SqlSessionTemplate sst, int empNo) {	
+	public int selectDayWork(SqlSessionTemplate sst, String empNo) {	
 		if(sst.selectOne("attendanceMapper.selectDayWork", empNo) == null) {
 			return 0;
 		} else {
@@ -35,7 +35,7 @@ public class AttendanceDaoImpl implements AttendanceDao {
 	}
 	
 	@Override
-	public int selectWeekWork(SqlSessionTemplate sst, int empNo) {	
+	public int selectWeekWork(SqlSessionTemplate sst, String empNo) {	
 		if(sst.selectOne("attendanceMapper.selectWeekWork", empNo) == null) {
 			return 0;
 		} else {			
@@ -44,7 +44,7 @@ public class AttendanceDaoImpl implements AttendanceDao {
 	}
 	
 	@Override
-	public int selectMonthWork(SqlSessionTemplate sst, int empNo) {
+	public int selectMonthWork(SqlSessionTemplate sst, String empNo) {
 		if(sst.selectOne("attendanceMapper.selectMonthWork", empNo) == null) {
 			return 0;
 		} else {			
@@ -112,7 +112,7 @@ public class AttendanceDaoImpl implements AttendanceDao {
 	}
 
 	@Override
-	public TeamWorkVo selectTeamTime(SqlSessionTemplate sst, int empNo) {
+	public TeamWorkVo selectTeamTime(SqlSessionTemplate sst, String empNo) {
 		return sst.selectOne("attendanceMapper.selectTeamTime", empNo);
 	}
 

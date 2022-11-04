@@ -167,14 +167,14 @@ public class ApprovServiceImpl implements ApprovService {
 
 	//협조문서 확인처리
 	@Override
-	public void updateDocCoopByEmpNo(ApprovDocumentVo vo) {
-		dao.updateDocCoopByEmpNo(sst, vo);
+	public int updateDocCoopByEmpNo(ApprovDocumentVo vo) {
+		return dao.updateDocCoopByEmpNo(sst, vo);
 	}
 
 	//참조문서 확인처리
 	@Override
-	public void updateDocReferByEmpNo(ApprovDocumentVo vo) {
-		dao.updateDocReferByEmpNo(sst, vo);
+	public int updateDocReferByEmpNo(ApprovDocumentVo vo) {
+		return dao.updateDocReferByEmpNo(sst, vo);
 	}
 
 

@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class WorkTimeVo {
 	private int no;
-	private int empNo;
+	private String empNo;
 	
 	private String inTime;
 	private String outTime;

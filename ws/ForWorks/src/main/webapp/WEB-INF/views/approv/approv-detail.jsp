@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-
-
 <!DOCTYPE html>
 <html>
 <head>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <meta charset="UTF-8">
 <title>결재 상세</title>
 <style>
@@ -126,10 +125,9 @@
         
     }
 
-	<c:set var="approvLenth" value="${approvDoc.approvMember}"/>
     .approv-table{
         display: grid;
-        grid-template-columns: repeat(${fn:lenth(approvLenth)+1}, 85px); /*jstl로 유동적으로 늘림*/ 
+        grid-template-columns: repeat(${fn:length(approvMemberList)+1}, 85px); /*jstl로 유동적으로 늘림*/ 
         grid-template-rows: 24px 24px 76px 24px;
         
     }
@@ -145,7 +143,7 @@
     }
 
     #approv-member{
-        grid-column: 2/${fn:lenth(approvLenth)+2}; /*jstl로 유동적으로 늘림*/ 
+        grid-column: 2/${fn:length(approvMemberList)+2}; /*jstl로 유동적으로 늘림*/ 
     }
 
     #creater-sign{
@@ -153,7 +151,7 @@
     }
 
     #coop-member{
-        grid-column: 2/${fn:lenth(approvLenth)+2}; /*jstl로 유동적으로 늘림*/
+        grid-column: 2/${fn:length(approvMemberList)+2}; /*jstl로 유동적으로 늘림*/
     }
 
 </style>
@@ -184,34 +182,51 @@
                                     <div>기안자</div>
                                     <div id="approv-member">결재자</div>
 
-                                    <div id="creater-sign">${approvDoc.adocName}</div>
+                                    <div id="creater-sign">
+	                                    <c:forEach var="SignList" items="${approvSignList}" begin="0" end="0">
+	                                    <img alt="" src="${root}/resources/upload/sign/${SignList.signFile}">
+	                                    </c:forEach>
+                                    </div> <!-- 사인넣기 -->
                                     <c:forEach var="approvMember" items="${approvMemberList}">
-                                    <div>${approvmember}</div>
+                                    <div>${approvMember.empName}</div>
                                     </c:forEach>
-
+									
+									<!-- TODO 기안자 사인 따로받고 foreach문 사인으로 돌리고 반복횟수는 approvMemberList로 -->
+									<c:forEach var="SignList" items="${approvSignList}" begin="0" end="${fn:length(approvMemberList)}" varStatus="status">
+									<c:if test="${status.index eq 0}">
                                     <div class="sign-area"></div>
-                                    <div class="sign-area"></div>
-                                    <div class="sign-area"></div>
+                                    </c:if>
+									<c:if test="${status.index ne 0}">
+                                    <div class="sign-area"><img alt="" src="${root}/resources/upload/sign/${SignList.signFile}"></div>
+                                    </c:if>
+                                    </c:forEach>
+                                    
 
                                     <div>협조자</div>
-                                    <div id="coop-member"></div>
+                                    <div id="coop-member">
+                                    <c:forEach var="coopMember" items="${coopMemberList}">
+                                    ${coopMember.empName} &nbsp;
+                                    </c:forEach>
+                                    </div>
 
                             </div>
                         </div>
                         <div class="detail-content">
-                            <p>내용</p>
+                            <p>${approvDoc.adocContent}</p>
                         </div>
                         <div class="detail-etc default-text">
-                            <div class="etc-item">문서번호</div>
-                            <div class="etc-item">문서생성일자</div>
-                            <div class="etc-item">문서결재일자</div>
+                            <div class="etc-item">문서번호 : ${approvDoc.adocNo}</div>
+                            <div class="etc-item">문서생성일자 : ${approvDoc.draftDate}</div>
                         </div>
-                        <div class="detail-part default-text">처부</div>
-                        <div class="detail-position default-text">직위</div>
+                        <c:set var="splName" value="${fn:split(approvDoc.empName, ' ')}"/>
+                        <c:forEach var="depart" items="${splName}" varStatus="s">
+                        <c:if test="${s.count==1}"><div class="detail-part default-text">${depart}</div></c:if>
+                        <c:if test="${s.last}"><div class="detail-position default-text">${depart}</div></c:if>
+                        </c:forEach>
                     </div>
-
+					<form action="" method="post">
                     <div class="btn-area">
-                        <button class="approv-btn">목록보기</button>
+                        <button type="button" class="approv-btn" onclick="location.href='${root}/approv/main">목록보기</button>
                         <div class="approv-btn-area">
                         	<c:choose>
                         		<c:when test="${loginMember.empNo} eq ${approvDoc.empNo}">
@@ -230,6 +245,7 @@
                         	</c:choose>
                         </div>
                     </div>
+                    </form>
                 
                 </div>
             </div>

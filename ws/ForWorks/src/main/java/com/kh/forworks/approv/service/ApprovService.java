@@ -59,9 +59,9 @@ public interface ApprovService {
 	List<ApprovDocumentVo> selectApprovSignList(String dno);
 	
 	//협조문서 확인처리
-	void updateDocCoopByEmpNo(ApprovDocumentVo vo);
+	int updateDocCoopByEmpNo(ApprovDocumentVo vo);
 	
 	//참조문서 확인처리
-	void updateDocReferByEmpNo(ApprovDocumentVo vo);
+	int updateDocReferByEmpNo(ApprovDocumentVo vo);
 
 }

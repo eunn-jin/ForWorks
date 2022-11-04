@@ -13,7 +13,6 @@
 <link rel="stylesheet" href="${root}/resources/vendors/perfect-scrollbar/perfect-scrollbar.css">
 <!-- <link rel="stylesheet" href="resources/vendors/bootstrap-icons/bootstrap-icons.css"> -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-<!-- <link rel="stylesheet" href="${root}/resources/css/common/app.css"> -->
 <link rel="stylesheet" href="${root}/resources/css/common.css">
 	
 <div id="sidebar" class="active">
@@ -41,31 +40,6 @@
 
                 <li class="sidebar-title">Menu</li>
 
-                <li class="sidebar-item" id="ex1">
-                    <a href="index.html" class='sidebar-link'>
-                        <i class="bi bi-grid-fill"></i>
-                        <span>ex1</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item has-sub">
-                    <a href="#" class='sidebar-link'>
-                        <i class="bi bi-cloud-lightning-rain"></i>
-                        <span>ex2</span>
-                    </a>
-                    <ul class="submenu ">
-                        <li class="submenu-item active ">
-                            <a href="component-alert.html">sub_ex1</a>
-                        </li>
-                        <li class="submenu-item ">
-                            <a href="component-badge.html">sub_ex2</a>
-                        </li>
-                        <li class="submenu-item ">
-                            <a href="component-breadcrumb.html">sub_ex3</a>
-                        </li>
-                    </ul>
-                </li>
-                
                 <li class="sidebar-item has-sub">
                     <a href="#" class='sidebar-link'>
                         <i class="bi bi-cloud-lightning-rain"></i>
@@ -89,11 +63,11 @@
                         <i class="bi bi-cloud-lightning-rain"></i>
                         <span>급여관리</span>
                     </a>
-                    <ul class="submenu ">
-                        <li class="submenu-item">
+                    <ul class="submenu" id="salary-part">
+                        <li class="submenu-item" id="salary-pay">
                             <a href="${root}/salary/payslip">급여명세서</a>
                         </li>
-                        <li class="submenu-item ">
+                        <li class="submenu-item " id="salary-main">
                             <a href="${root}/salary/main">급여관리자</a>
                         </li>
                       
@@ -105,14 +79,14 @@
                         <i class="bi bi-cloud-lightning-rain"></i>
                         <span>문서관리</span>
                     </a>
-                    <ul class="submenu ">
-                        <li class="submenu-item">
+                    <ul class="submenu" id="doc-part">
+                        <li class="submenu-item" id="doc-list">
                             <a href="${root}/docmanage/list">일반문서</a>
                         </li>
-                        <li class="submenu-item ">
+                        <li class="submenu-item "id="doc-write">
                             <a href="component-badge.html">결재문서</a>
                         </li>
-                        <li class="submenu-item ">
+                        <li class="submenu-item"  id="doc-manage">
                             <a href="${root}/docmanage/manage/1">문서관리</a>
                         </li>
                     </ul>

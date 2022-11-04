@@ -245,10 +245,10 @@
 	                                      <div class="avatar">
 	                                      	<c:choose>
 	                                      		<c:when test="${not empty l.empProfile}">
-	                                       	 		<img src="${root}/resources/img/member-imgs/user.png" alt="img" />
+	                                       	 		<img style="width: 38px; height: 38px; object-fit: cover" src="${root}/resources/upload/profile/${l.empProfile}" alt="img" />
 	                                      		</c:when>
 	                                      		<c:otherwise>
-	                                       	 		<img src="${root}/resources/img/member-imgs/user.png" alt="img" />
+	                                       	 		<img style="width: 38px; height: 38px" src="${root}/resources/img/member-imgs/user.png" alt="img" />
 	                                      		</c:otherwise>
 	                                      	</c:choose>
 	                                      	<c:choose>
@@ -329,6 +329,10 @@
 		const keyword = document.querySelector("input[name=keyword]").value;
 		location.href = "${root}/address/${addressParam.nav}/1?keyword=" + keyword;
 	}
+	
+	$().ready(function() {
+		$('#address').addClass("active");
+	});
 	
 </script>
 </body>

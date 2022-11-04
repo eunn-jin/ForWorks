@@ -134,8 +134,8 @@
 <script>
 	
 	$().ready(function() {
-		console.log("test:");
-		$('#ex1').addClass("active");
+		$('#salary-pay').addClass("active");
+		$('#salary-part').css("display", "block");
 	});
 	
 </script>
