@@ -1,31 +1,55 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="root" value="${pageContext.request.contextPath}" />
 <html>
   <head>
     <title>ForWorks</title>
     <style>
-		.input-size {
-		    max-width: 350px;
-		}
-		
-		.img-edit-plus {
-		    top: -10px;
-		}
-		
-		.info-flex {
-			display: flex;
-			flex-direction: column;
-		}
-		
-		.info-span {
-			padding-bottom: 25px;
-		}
-		
-		.user-edit {
-			margin-left: 20px;
-		}
-		
+      .input-size {
+        max-width: 350px;
+      }
+
+      .img-edit-plus {
+        top: -10px;
+      }
+
+      .info-flex {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .info-span {
+        padding-bottom: 25px;
+      }
+
+      .user-edit {
+        margin-left: 20px;
+      }
+
+      #profile {
+        position: absolute;
+      }
+
+      #profile-img {
+        margin-left: 5px;
+        bottom: 5px;
+      }
+
+      #profile-edit {
+        position: relative;
+        top: 22px;
+        right: 25px;
+        width: 30px;
+        height: 30px;
+        background-color: #ffffff;
+        border: 1px solid #eeeeee;
+        border-radius: 50%;
+        padding-top: 5px;
+        padding-left: 5px;
+      }
+
+      #profile-edit:hover {
+        border: 1px solid #d3d3d3;
+      }
     </style>
   </head>
   <body>
@@ -46,68 +70,141 @@
           <div class="page-content">
             <section class="section d-flex">
               <%@ include file="/WEB-INF/views/member/mypage-sidebar.jsp" %>
-              <div class="card" style="width: calc(100% - 300px); min-width: 300px; padding: 5px;">
+              <div class="card" style="width: calc(100% - 300px); min-width: 500px; padding: 5px; overflow: auto">
                 <div class="card-header mt-1">
                   <h4>내 정보 조회</h4>
                 </div>
                 <div class="card-body">
                   <div class="user-info row m-3 mb-4 mt-0">
                     <div class="row row-cols-1 row-cols-md-4">
-			      	 <div class="col themed-grid-col">
-						<div class="avatar avatar-xl img-edit">
-	                        <button class="fs-3 img-edit-btn btn">
-	                          <img src="${root}/resources/img/member-imgs/user.png" alt="이미지" />
-	                        </button>
-	                      </div>
-						</div>
-				      <div class="col themed-grid-col"><h5 class="mt-4">${loginMember.empName}</h5></div>
-				      <div class="col themed-grid-col info-flex"><h6 class=" info-span">부서</h6><h6>직급</h6></div>
-				      <div class="col themed-grid-col info-flex"><span class=" info-span">${loginMember.deptName}</span><span>${loginMember.posName}</span></div>
-				     </div>
-                     <div class="row row-cols-1 row-cols-md-4 gy-4 mt-0">
-				      <div class="col themed-grid-col"><h6>아이디</h6></div>
-				      <div class="col themed-grid-col">${loginMember.empId}</div>
-				      <div class="col themed-grid-col"><h6>내선번호</h6></div>
-				      <div class="col themed-grid-col">${loginMember.empExphone}</div>
-				      <div class="col themed-grid-col"><h6>주민번호</h6></div>
-				      <div class="col themed-grid-col">${loginMember.empRegno}</div>
-				      <div class="col themed-grid-col"><h6>입사일</h6></div>
-				      <div class="col themed-grid-col">${loginMember.empJdate}</div>
-				    </div>
+                      <div class="col themed-grid-col">
+                        <div id="profile">
+                         <form id="profile-form" action="${root}/member/profileEdit" method="post" enctype="multipart/form-data">
+                          <div id="profile-img" class="avatar avatar-xl img-edit">
+                          	<c:choose>
+                          		<c:when test="${not empty loginMember.empProfile}">
+	                            	<img id="profile-thumb" style="border-radius: 40%; object-fit: cover; width: 80px; height: 80px" src="${root}/resources/upload/profile/${loginMember.empProfile}" alt="이미지" />
+                          		</c:when>
+                          		<c:otherwise>
+	                            	<img id="profile-thumb" style="width: 80px; height: 80px" src="${root}/resources/img/member-imgs/user.png" alt="이미지" />
+                          		</c:otherwise>
+                          	</c:choose>
+                          </div>
+                          <button id="profile-edit" class="btn dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                            <i class="bi bi-camera-fill"></i>
+                          </button>
+                          <ul class="dropdown-menu" style="min-width: 50px; left: 65px; top: 79px; border: 1px solid #eee">
+						    <li><label for="profile-input" class="dropdown-item">변경</label></li>
+						    <c:if test="${not empty loginMember.empProfile}">
+						    	<li><a class="dropdown-item" href="${root}/member/profileDelete">삭제</a></li>
+						    </c:if>
+						  </ul>
+                          <input name="profile" type="file" id="profile-input" style="display: none" />
+                         </form>
+                        </div>
+                      </div>
+                      <div class="col themed-grid-col"><h5 class="mt-4">${loginMember.empName}</h5></div>
+                      <div class="col themed-grid-col info-flex">
+                        <h6 class="info-span">부서</h6>
+                        <h6>직급</h6>
+                      </div>
+                      <div class="col themed-grid-col info-flex">
+                        <span class="info-span">${loginMember.deptName}</span><span>${loginMember.posName}</span>
+                      </div>
+                    </div>
+                    <div class="row row-cols-1 row-cols-md-4 gy-4 mt-0">
+                      <div class="col themed-grid-col"><h6>아이디</h6></div>
+                      <div class="col themed-grid-col">${loginMember.empId}</div>
+                      <div class="col themed-grid-col"><h6>내선번호</h6></div>
+                      <div class="col themed-grid-col">${loginMember.empExphone}</div>
+                      <div class="col themed-grid-col"><h6>주민번호</h6></div>
+                      <div class="col themed-grid-col">${loginMember.empRegno}</div>
+                      <div class="col themed-grid-col"><h6>입사일</h6></div>
+                      <div class="col themed-grid-col">${loginMember.empJdate}</div>
+                    </div>
                   </div>
                   <div class="divider divider-left mb-3">
                     <div class="divider-text"><h6>연락처 변경</h6></div>
                   </div>
                   <div class="user-edit">
-	                  <form action="" method="post">
-	                    <div class="row mb-3">
-	                      <label for="inputEmail3" class="col-sm-2 col-form-label" style="width: 90px">이메일</label>
-	                      <div class="col-sm-10">
-	                        <input name="empEmail" value="${loginMember.empEmail}" type="email" class="form-control input-size" id="inputEmail3" placeholder="someone@example.com" required />
-	                      </div>
-	                    </div>
-	                    <div class="row mb-3">
-	                      <label for="inputPhone" class="col-sm-2 col-form-label" style="width: 90px">휴대전화</label>
-	                      <div class="col-sm-10">
-	                        <input name="empPhone" value="${loginMember.empPhone}" type="text" class="form-control input-size" id="inputPhone" placeholder="01012345678" maxlength="11" required />
-	                      </div>
-	                    </div>
-	                    <div class="row mb-3">
-	                      <label for="inputPassword3" class="col-sm-2 col-form-label" style="width: 90px">주소</label>
-	                      <div class="col-sm-10">
-	                        <div class="d-flex input-size">
-	                          <input name="empPcode" value="${loginMember.empPcode}" class="form-control" type="text" id="sample6_postcode" placeholder="우편번호" maxlength="5" required />
-	                          <input class="btn btn-outline-primary" type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" />
-	                        </div>
-	                        <input name="empAddr1" value="${loginMember.empAddr1}" class="form-control input-size" type="text" id="sample6_address" placeholder="주소" required />
-	                        <input name="empAddr2" value="${loginMember.empAddr2}" class="form-control input-size" type="text" id="sample6_detailAddress" placeholder="상세주소" required />
-	                        <div class="d-flex">
-	                          <input name="empAddr3" value="${loginMember.empAddr3}" class="form-control input-size" type="text" id="sample6_extraAddress" placeholder="참고항목" />
-	                          <button type="submit" class="btn btn-primary me-1 mb-1" style="margin-left: 20px">변경하기</button>
-	                        </div>
-	                      </div>
-	                    </div>
-	                  </form>
+                    <form action="" method="post">
+                      <div class="row mb-3">
+                        <label for="inputEmail3" class="col-sm-2 col-form-label" style="width: 90px">이메일</label>
+                        <div class="col-sm-10">
+                          <input
+                            name="empEmail"
+                            value="${loginMember.empEmail}"
+                            type="email"
+                            class="form-control input-size"
+                            id="inputEmail3"
+                            placeholder="someone@example.com"
+                            required
+                          />
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <label for="inputPhone" class="col-sm-2 col-form-label" style="width: 90px">휴대전화</label>
+                        <div class="col-sm-10">
+                          <input
+                            name="empPhone"
+                            value="${loginMember.empPhone}"
+                            type="text"
+                            class="form-control input-size"
+                            id="inputPhone"
+                            placeholder="01012345678"
+                            maxlength="11"
+                            required
+                          />
+                        </div>
+                      </div>
+                      <div class="row mb-3">
+                        <label for="inputPassword3" class="col-sm-2 col-form-label" style="width: 90px">주소</label>
+                        <div class="col-sm-10">
+                          <div class="d-flex input-size">
+                            <input
+                              name="empPcode"
+                              value="${loginMember.empPcode}"
+                              class="form-control"
+                              type="text"
+                              id="sample6_postcode"
+                              placeholder="우편번호"
+                              maxlength="5"
+                              required
+                            />
+                            <input class="btn btn-outline-primary" type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" />
+                          </div>
+                          <input
+                            name="empAddr1"
+                            value="${loginMember.empAddr1}"
+                            class="form-control input-size"
+                            type="text"
+                            id="sample6_address"
+                            placeholder="주소"
+                            required
+                          />
+                          <input
+                            name="empAddr2"
+                            value="${loginMember.empAddr2}"
+                            class="form-control input-size"
+                            type="text"
+                            id="sample6_detailAddress"
+                            placeholder="상세주소"
+                            required
+                          />
+                          <div class="d-flex">
+                            <input
+                              name="empAddr3"
+                              value="${loginMember.empAddr3}"
+                              class="form-control input-size"
+                              type="text"
+                              id="sample6_extraAddress"
+                              placeholder="참고항목"
+                            />
+                            <button type="submit" class="btn btn-primary me-1 mb-1" style="margin-left: 20px">변경하기</button>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -118,12 +215,6 @@
     </div>
     <%@ include file="/WEB-INF/views/common/footer.jsp" %>
   </body>
-  <script>
-    $().ready(function () {
-      console.log("test:");
-      $("#ex1").addClass("active");
-    });
-  </script>
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <script type="text/javascript">
     function sample6_execDaumPostcode() {
@@ -175,6 +266,12 @@
       }).open();
     }
   </script>
-  <script src="${root}/resources/js/member/parsley.min.js"></script>
-  <script src="${root}/resources/js/member/parsley.js"></script>
+  <script>
+	  const fileInputTag = document.querySelector("input[name=profile]");
+	
+	  fileInputTag.onchange = function () {
+	   	const form = document.getElementById("profile-form");
+	   	form.submit();
+	  };
+	</script>
 </html>

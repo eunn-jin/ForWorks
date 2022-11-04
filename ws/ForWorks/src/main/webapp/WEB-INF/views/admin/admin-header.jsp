@@ -26,7 +26,7 @@
         <div class="dropdown pt-3">
           <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
             <div class="user-menu d-flex">
-              <div class="user-name text-end me-3">
+              <div class="user-name text-end me-2" style="padding-top: 5px; padding-right: 8px">
               	<c:choose>
               		<c:when test="${not empty chiefAdmin}">
 	                	<h6 class="mb-0 text-gray-600">최고 관리자</h6>
@@ -34,13 +34,20 @@
               		</c:when>
               		<c:otherwise>
 		                <h6 class="mb-0 text-gray-600">${loginMember.empName}</h6>
-		                <p class="mb-0 text-sm text-gray-600">${loginMember.posName}</p>
+		                <p class="mb-0 text-sm text-gray-600">${loginMember.deptName} ${loginMember.posName}</p>
               		</c:otherwise>	
               	</c:choose>
               </div>
               <div class="user-img d-flex align-items-center">
-                <div class="avatar avatar-md">
-                  <img src="${root}/resources/img/member-imgs/user.png" />
+                <div class="avatar">
+                  <c:choose>
+                   <c:when test="${not empty loginMember.empProfile}">
+                       <img style="border-radius: 30%; width: 45px; height: 45px; object-fit: cover" src="${root}/resources/upload/profile/${loginMember.empProfile}" alt="이미지" />
+                   </c:when>
+                   <c:otherwise>
+		               <img src="${root}/resources/img/member-imgs/user.png" alt="profile" />
+                   </c:otherwise>
+                  </c:choose>
                 </div>
               </div>
             </div>

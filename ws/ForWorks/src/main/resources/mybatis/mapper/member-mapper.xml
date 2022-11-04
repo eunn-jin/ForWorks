@@ -101,4 +101,9 @@
 		UPDATE EMPLOYEE SET EMP_PWD = #{empPwd}
 		WHERE EMP_NO = #{empNo}
 	</update>
+	
+	<update id="updateEmpProfile">
+		UPDATE EMPLOYEE SET EMP_PROFILE = #{empProfile}
+		WHERE EMP_NO = #{empNo}
+	</update>
 </mapper>

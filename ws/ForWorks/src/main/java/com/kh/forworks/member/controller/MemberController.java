@@ -1,6 +1,9 @@
 package com.kh.forworks.member.controller;
 
+import java.io.File;
+
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.forworks.FileUploader;
 import com.kh.forworks.member.service.MemberService;
 import com.kh.forworks.member.vo.MemberVo;
 
@@ -163,7 +167,46 @@ public class MemberController {
 	}
 	
 	//프로필사진 변경
-	
+	@PostMapping("member/profileEdit")
+	public String memberprofile(MemberVo vo, HttpServletRequest req, HttpSession session) {
+		String savePath = req.getServletContext().getRealPath("/resources/upload/profile/");
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		//기존 파일 삭제
+		String fileName = loginMember.getEmpProfile();
+		File f = new File(savePath + fileName);
+		if(f.exists()) {
+			f.delete();
+		}
+		loginMember.setEmpProfile(null);
+		
+		//새 파일 등록
+		if(vo.getProfile() != null && !vo.getProfile().isEmpty()) {
+			String changeName = FileUploader.fileUpload(vo.getProfile(), savePath);
+			vo.setEmpProfile(changeName);
+			
+			String empNo = loginMember.getEmpNo();
+			vo.setEmpNo(empNo);
+			
+			int result = memberService.updateMemberProfile(vo);
+			if(result == 1) {
+				loginMember.setEmpProfile(changeName);
+			}
+		}
+		return "redirect:/mypage";
+	}
+	@GetMapping("member/profileDelete")
+	public String memberprofileDelete(HttpServletRequest req, HttpSession session) {
+		String savePath = req.getServletContext().getRealPath("/resources/upload/profile/");
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		//기존 파일 삭제
+		String fileName = loginMember.getEmpProfile();
+		File f = new File(savePath + fileName);
+		if(f.exists()) {
+			f.delete();
+		}
+		loginMember.setEmpProfile(null);
+		return "redirect:/mypage";
+	}
 	
 	//마이페이지 급여계좌설정
 	@GetMapping("mypage/account")
