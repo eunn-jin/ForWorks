@@ -147,8 +147,8 @@
 <script>
 	
 	$().ready(function() {
-		console.log("test:");
-		$('#ex1').addClass("active");
+		$('#doc-list').addClass("active");
+		$('#doc-part').css("display", "block");
 	});
 	
 </script>
