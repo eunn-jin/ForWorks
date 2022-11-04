@@ -113,7 +113,7 @@
                             <a href="component-badge.html">결재문서</a>
                         </li>
                         <li class="submenu-item ">
-                            <a href="${root}/docmanage/manage">문서관리</a>
+                            <a href="${root}/docmanage/manage/1">문서관리</a>
                         </li>
                     </ul>
                 </li>

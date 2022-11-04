@@ -1,7 +1,7 @@
 package com.kh.forworks.docmanage.controller;
 
 import java.io.File;
-import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,13 +11,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.kh.forworks.approv.vo.DocFileVo;
+import com.kh.forworks.PageVo;
+import com.kh.forworks.Pagination;
 import com.kh.forworks.docmanage.service.DocmanageService;
+import com.kh.forworks.docmanage.vo.DfileVo;
 import com.kh.forworks.docmanage.vo.DocVo;
 import com.kh.forworks.member.vo.MemberVo;
 
@@ -41,8 +43,10 @@ public class DocmanageController {
 	}
 	//일반문서 작성(화면)
 	@GetMapping("write")
-	public String write() {
-		return "docManage/doc_write";
+	public String write(Model model) {
+	//공개범위 받아오기
+//	range = ds.selectRange();
+	return "docManage/doc_write";
 	}
 	//일반문서 디테일(화면)
 	@GetMapping("detail")
@@ -51,9 +55,34 @@ public class DocmanageController {
 	}
 	
 	//문서관리(화면)
-	@GetMapping("manage")
-	public String manage() {
-		return "docManage/doc_manage";
+	@GetMapping("manage/{pno}")
+	public String manage(Model model , @PathVariable int pno , HttpSession session) {
+		//로그인 데이터 가져오기
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		if(loginMember != null) {
+			String empNo = loginMember.getEmpNo();
+			System.out.println(empNo);
+			
+			//페이징처리
+			int totalCount = ds.selectTotalCnt(empNo);
+			PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
+			//게시글 가져오기
+			HashMap map = new HashMap();
+			map.put("pv", pv);
+			map.put("empNo", empNo);
+			List<DocVo> voList = ds.selectDocByEmp(map);
+			
+			System.out.println(voList);
+			
+			model.addAttribute("voList",voList);
+			model.addAttribute("pv",pv);
+			
+			return "docManage/doc_manage";		
+		}else {
+			session.setAttribute("toastMsg", "로그인 정보가 필요합니다.");
+			return "redirect:/login";
+		}
+		
 	}
 	//테스트
 	/*
@@ -92,6 +121,14 @@ public class DocmanageController {
 	 * return "redirect:/"; }
 	 */
 	
+	//문서관리디테일
+	@GetMapping("manDetail/{no}")
+	public String manDetail(@PathVariable String no , Model model) {
+		DocVo vo = ds.selectOneDoc(no);
+		model.addAttribute("vo",vo);
+		return "docManage/doc_man_detail";
+	}
+	
 	
 	//일반문서 작성
 	@PostMapping("write")
@@ -101,11 +138,10 @@ public class DocmanageController {
 		String empNo = loginMember.getEmpNo();
 		dv.setEmpNo(empNo);
 		
-		
-		
 		System.out.println("called...");//swy
 		  
 		  MultipartFile[] fArr = dv.getFile();
+		  DfileVo df = new DfileVo();
 		  
 		  System.out.println(fArr[0].isEmpty());//swy
 		  System.out.println(fArr.length);//swy
@@ -116,26 +152,28 @@ public class DocmanageController {
 		 
 		  //원본파일명 
 		  String originName = f.getOriginalFilename(); 
-		  String ext =
-		  originName.substring(originName.lastIndexOf('.'));
+		  String ext = originName.substring(originName.lastIndexOf('.'));
 		  
 		  long now = System.currentTimeMillis(); 
 		  int randomNum = (int)(Math.random() *  90000 + 1000); String changeFileName = now + "_" + randomNum;
 		  
-		  String rootpath = req.getServletContext().getRealPath("/resources/doc-file/"); 
+		  String rootpath = req.getServletContext().getRealPath("/resources/doc-file/upload/"); 
 		  File targetFile= new File(rootpath + changeFileName + ext);
 		  
-		  System.out.println(rootpath); System.out.println(changeFileName);
-		  System.out.println(ext);
-		  
-		  try { f.transferTo(targetFile); } 
+
+		  try { 
+			  f.transferTo(targetFile); 
+			  df.setOriginName(originName);
+			  df.setUploadName(changeFileName+ext);
+			  df.setFilePath(rootpath);
+			 } 
 		  catch (Exception e) { e.printStackTrace();
 		  }
 		  
 		  } 
 		 }
 		 
-		int result = ds.write(dv);
+		int result = ds.write(dv,df);
 		if(result == 1) {
 			session.setAttribute("toastMsg", "문서 등록 완료");
 			return "docManage/doc_list";
