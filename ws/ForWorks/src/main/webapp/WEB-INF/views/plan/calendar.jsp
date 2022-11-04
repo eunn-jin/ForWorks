@@ -31,9 +31,9 @@
                             		var calendar = new FullCalendar.Calendar(calendarEl, {
                             			//날짜 클릭 시, 팝업창 화면 출력
                             			dateClick: function() {
-                            				var url = "planPop.jsp";
+                            				var url = "planPop";
                                     		var name = "일정 추가";
-                                    		var option = "width = 600, height = 600 left = 100, top=50,location=no";
+                                    		var option = "width = 867, height = 489";
                                     		window.open(url,name,option)
                             			},
                             			initialView : 'dayGridMonth', // 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)
@@ -67,6 +67,27 @@
 		$('#ex1').addClass("active");
 	});
 	
+	$(window).load(function() {
+		<%-- // 팝업 창 크기를 HTML 크기에 맞추어 자동으로 크기를 조정하는 함수. --%>
+		var strWidth;
+		var strHeight;
+		//innerWidth / innerHeight / outerWidth / outerHeight 지원 브라우저
+		if ( window.innerWidth && window.innerHeight && window.outerWidth && window.outerHeight ) {
+			strWidth = $('#.pj_popup').outerWidth() + (window.outerWidth - window.innerWidth);
+			strHeight = $('#.pj_popup').outerHeight() + (window.outerHeight - window.innerHeight);
+		}
+		else {
+			var strDocumentWidth = $(document).outerWidth();
+			var strDocumentHeight = $(document).outerHeight();
+			window.resizeTo ( strDocumentWidth, strDocumentHeight );
+			var strMenuWidth = strDocumentWidth - $(window).width();
+			var strMenuHeight = strDocumentHeight - $(window).height();
+			strWidth = $('#.pj_popup').outerWidth() + strMenuWidth;
+			strHeight = $('#.pj_popup').outerHeight() + strMenuHeight;
+		}
+		//resize
+		window.resizeTo( strWidth, strHeight );
+	});
 </script>
 </html>
 
