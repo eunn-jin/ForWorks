@@ -39,8 +39,9 @@ public class ApprovController {
 			session.setAttribute("toastMsg", "로그인이 필요합니다.");
 			return "redirect:/login";
 		}
+		MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
+		String empNo = loginMember.getEmpNo();
 		
-		String empNo = (String) session.getAttribute("empNo");
 		
 		List<ApprovDocumentVo> approvList = service.selectApprovList(empNo);
 		List<ApprovDocumentVo> rejectApprovList = service.selectRejectApprovList(empNo);
@@ -51,8 +52,7 @@ public class ApprovController {
 		req.setAttribute("rejectApprovList", rejectApprovList);
 		req.setAttribute("coopList", coopList);
 		req.setAttribute("referList", referList);
-		
-		
+		System.out.println(approvList);
 		
 		return "approv/approv-main";
 	}
@@ -167,6 +167,7 @@ public class ApprovController {
 		req.setAttribute("coopMemberList", coopMemberList);
 		req.setAttribute("approvSignList", approvSignList);
 		
+		
 		return "approv/approv-detail";
 	}
 	
@@ -188,14 +189,86 @@ public class ApprovController {
 		}
 	}
 	
-	@GetMapping("edit")
-	public String edit(HttpSession session) {
+	@GetMapping("reject/{dno}")
+	public String reject(@PathVariable String dno, HttpSession session, HttpServletRequest req) {
 		if(session.getAttribute("loginMember")==null) {
 			session.setAttribute("toastMsg", "로그인이 필요합니다.");
 			return "redirect:/login";
 		}
-		//TODO 문서 수정
+		
+		MemberVo memberVo = (MemberVo) session.getAttribute("loginMember");
+		
+		ApprovDocumentVo vo = new ApprovDocumentVo();
+		
+		vo.setEmpNo(memberVo.getEmpNo());
+		vo.setAdocNo(dno);
+		
+		
+		int result = service.selectApprovDocEmpNo(vo);
+		
+		if(result == 0) {
+			session.setAttribute("toastMsg", "접근 권한이 없습니다.");
+			return "redirect:/approv/main";	
+		}
+		
+		vo = service.selectApprovDocOneByNo(vo);
+		List<ApprovDocumentVo> approvMemberList = service.selectApprovMemberList(dno);
+		List<ApprovDocumentVo> coopMemberList = service.selectCoopMemberList(dno);
+		List<ApprovDocumentVo> approvSignList= service.selectApprovSignList(dno);
+		
+		req.setAttribute("approvDoc", vo);
+		req.setAttribute("approvMemberList", approvMemberList);
+		req.setAttribute("coopMemberList", coopMemberList);
+		req.setAttribute("approvSignList", approvSignList);
 		return "approv/approv-edit";
+	}
+	
+	@GetMapping("edit/{dno}")
+	public String edit(@PathVariable String dno, HttpSession session, HttpServletRequest req) {
+		if(session.getAttribute("loginMember")==null) {
+			session.setAttribute("toastMsg", "로그인이 필요합니다.");
+			return "redirect:/login";
+		}
+		
+		MemberVo memberVo = (MemberVo) session.getAttribute("loginMember");
+		
+		ApprovDocumentVo vo = new ApprovDocumentVo();
+		
+		vo.setEmpNo(memberVo.getEmpNo());
+		vo.setAdocNo(dno);
+		
+		
+		int result = service.selectApprovDocEmpNo(vo);
+		
+		if(result == 0) {
+			session.setAttribute("toastMsg", "접근 권한이 없습니다.");
+			return "redirect:/approv/main";	
+		}
+		
+		vo = service.selectApprovDocOneByNo(vo);
+		
+		
+		req.setAttribute("approvDoc", vo);
+		
+		return "approv/approv-edit";
+	}
+	
+	@PostMapping("edit/{dno}")
+	public String edit(@PathVariable String dno, DocApprovVo vo, HttpSession session, @RequestParam String approv ) {
+		
+		vo.setAdocNo(dno);
+		MemberVo memberVo = (MemberVo) session.getAttribute("loginMember");
+		vo.setEmpNo(memberVo.getEmpNo());
+		vo.setApproveStatus(approv);
+		
+		int result = service.updateApprov(vo);
+		
+		
+		if(result==1) {
+			return "redirect:/approv/main";
+		}else {
+			return "redirect:/";
+		}
 	}
 	
 	@GetMapping("coop/{dno}")
@@ -220,7 +293,7 @@ public class ApprovController {
 			return "redirect:/approv/main";	
 		}
 		
-		service.updateDocCoopByEmpNo(vo);
+		int result1 = service.updateDocCoopByEmpNo(vo);
 		
 		vo = service.selectApprovDocOneByNo(vo);
 		List<ApprovDocumentVo> approvMemberList = service.selectApprovMemberList(dno);
@@ -257,7 +330,9 @@ public class ApprovController {
 			return "redirect:/approv/main";	
 		}
 		
-		service.updateDocReferByEmpNo(vo);
+		int result1 = service.updateDocReferByEmpNo(vo);
+		
+		System.out.println(result1);
 		
 		vo = service.selectApprovDocOneByNo(vo);
 		List<ApprovDocumentVo> approvMemberList = service.selectApprovMemberList(dno);
@@ -331,7 +406,7 @@ public class ApprovController {
 			session.setAttribute("toastMsg", "서명 저장을 실패했습니다.");
 		}
 		
-		return "approv/approv-main";
+		return "redirect:/approv/approv-main";
 	}
 	
 	@GetMapping("sign/edit")

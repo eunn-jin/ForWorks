@@ -22,10 +22,8 @@ public class ApprovDocumentVo {
 	private List<String> approvMember;
 	private List<String> coopMember;
 	private List<String> referMember;
-	private List<String> sign;
+	private String signFile;
 	
-	public void addSignList(List<String> sign) {
-		this.sign.addAll(sign);
-	}
+	
 
 }

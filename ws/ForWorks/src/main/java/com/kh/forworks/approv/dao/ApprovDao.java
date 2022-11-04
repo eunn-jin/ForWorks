@@ -78,9 +78,9 @@ public interface ApprovDao {
 	List<ApprovDocumentVo> selectApprovSignList(SqlSessionTemplate sst, String dno);
 
 	//협조문서 확인처리
-	void updateDocCoopByEmpNo(SqlSessionTemplate sst, ApprovDocumentVo vo);
+	int updateDocCoopByEmpNo(SqlSessionTemplate sst, ApprovDocumentVo vo);
 
 	//참조문서 확인처리
-	void updateDocReferByEmpNo(SqlSessionTemplate sst, ApprovDocumentVo vo);
+	int updateDocReferByEmpNo(SqlSessionTemplate sst, ApprovDocumentVo vo);
 
 }
