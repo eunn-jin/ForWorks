@@ -38,8 +38,8 @@
                 <div class="md-3"> 
                     
                     <label for="period" class="form-label">설문기간</label><br>
-                    <input type="date" class="form-control" id="vtCreate" name="vtCreate" style="width: 24.5%;display: inline;"  required>~
-                    <input type="date" class="form-control" id="vtEnd" name="vtEnd" style="width: 24.5%; display: inline;" required>
+                    <input type="datetime-local" class="form-control" id="vtCreate" name="vtCreate" style="width: 24.5%;display: inline;"  required>~
+                    <input type="datetime-local" class="form-control" id="vtEnd" name="vtEnd" style="width: 24.5%; display: inline;" required>
                 </div>
 
                 <div class="md-3"> 
@@ -96,28 +96,41 @@
 <script>
     //투표 시작일 가져오기
     var start;
-    var today =new Date().toISOString().substring(0, 10);
+    var today =new Date();
     var end;
+    var stday;
+    var edday;
+    console.log(today);
+    
     $('#vtCreate').change(function () {
         start = $(this).val();
-        console.log(start);
+
+        stday = new Date(start);
+        console.log(stday);
+        console.log((stday<=today));
+        
 
     })
 
     $('#vtEnd').change(function () {
         end = $(this).val();
-        console.log(end);
 
+        edday = new Date(end);
+        console.log(edday);
+        console.log((edday<=today));
+        console.log(stday);
+        console.log(stday>=edday);
     })
+
 
     function check() {
         
-        if (!(start >= today)) {
+        if (stday <= today) {
             alert('시작일 오류');
             return false;
         }
 
-        else if (!(start<=end)) {
+        else if ( (stday>=edday) && (edday<=today)) {
             alert('마감일 오류');
             return false;
         }
