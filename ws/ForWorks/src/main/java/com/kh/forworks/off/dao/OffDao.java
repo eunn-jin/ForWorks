@@ -10,9 +10,9 @@ import com.kh.forworks.off.vo.OffVo;
 
 public interface OffDao {
 
-	int getTotalOff(SqlSessionTemplate sst, int empNo);
-	int getUseOff(SqlSessionTemplate sst, int empNo);
-	int getUseHalfOff(SqlSessionTemplate sst, int empNo);
+	int getTotalOff(SqlSessionTemplate sst, String empNo);
+	int getUseOff(SqlSessionTemplate sst, String empNo);
+	int getUseHalfOff(SqlSessionTemplate sst, String empNo);
 	
 	List<OffVo> selectOffList(SqlSessionTemplate sst, Map<String, Object> map);
 	List<OffTypeVo> selectOffTypeList(SqlSessionTemplate sst);

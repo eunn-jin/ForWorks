@@ -13,17 +13,17 @@ import com.kh.forworks.off.vo.OffVo;
 public class OffDaoImpl implements OffDao {
 
 	@Override
-	public int getTotalOff(SqlSessionTemplate sst, int empNo) {
+	public int getTotalOff(SqlSessionTemplate sst, String empNo) {
 		return sst.selectOne("offMapper.selectTotalOff", empNo);
 	}
 
 	@Override
-	public int getUseOff(SqlSessionTemplate sst, int empNo) {
+	public int getUseOff(SqlSessionTemplate sst, String empNo) {
 		return sst.selectOne("offMapper.selectUseOff", empNo);
 	}
 
 	@Override
-	public int getUseHalfOff(SqlSessionTemplate sst, int empNo) {
+	public int getUseHalfOff(SqlSessionTemplate sst, String empNo) {
 		return sst.selectOne("offMapper.selectUseHalfOff", empNo);
 	}
 

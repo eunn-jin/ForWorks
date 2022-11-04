@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class MonthWorkVo {
-	private int empNo;
+	private String empNo;
 	private String month;
 	
 	private int workCount;

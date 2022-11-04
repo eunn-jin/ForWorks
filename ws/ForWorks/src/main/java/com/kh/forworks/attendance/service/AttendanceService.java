@@ -10,7 +10,7 @@ import com.kh.forworks.attendance.vo.WorkVo;
 
 public interface AttendanceService {
 
-	WorkTimeVo getWorkInfo(int empNo);
+	WorkTimeVo getWorkInfo(String empNo);
 	WorkVo getDayWorkInfo(Map<String, Object> map);
 
 	int goWork(Map map);
@@ -18,6 +18,6 @@ public interface AttendanceService {
 	
 	MonthWorkVo getMonthWorkCount(Map<String, Object> map);
 	List<WorkVo> getWorkList(Map<String, Object> map);
-	TeamWorkVo getTeamTime(int empNo);
+	TeamWorkVo getTeamTime(String empNo);
 
 }

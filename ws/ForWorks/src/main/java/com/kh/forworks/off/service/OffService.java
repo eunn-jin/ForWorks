@@ -9,7 +9,7 @@ import com.kh.forworks.off.vo.OffVo;
 
 public interface OffService {
 
-	OffCntVo getOffCnt(int empNo);
+	OffCntVo getOffCnt(String empNo);
 
 	List<OffVo> getOffList(Map<String, Object> map);
 
