@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <link rel="stylesheet" href="${root}/resources/css/sjy.css">
 <style>
     div,input{margin-bottom: 1%;}
@@ -21,34 +22,45 @@
             
                 <div class="md-3"> 
                     <label for="vtTitle" class="form-label">제목</label>
-                    <input type="text" class="form-control" id="vtTitle" name="vtTitle" style="height: 10vh;" required>
+                    <input type="text" class="form-control" id="vtTitle" name="vtTitle" style="height: 10vh;" value="${vtvo.vtTitle}" required>
                     <br>
                 </div>
             
-                <div class="md-3">
-                    <input type="file" class="form-control" style="width: 50%;" name="vtFile">
+                <div class="md-3" >
+                    <input  type="file" class="form-control" style="width: 50%;" name="vtFile" >
+                    <input type="hidden" name="vtatOrigin" value="${vtatList.vtatChange}">
+                    <c:choose>
+                        <c:when test="${vtatList.vtatChange ne null}">
+                            <div class="form-control"  style="width: 50%;">
+                                현재파일 :: <a  href="${root}/resources/upload/vote/${vtatList.vtatChange}" download="">${vtatList.vtatChange}</a>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="form-control"  style="width: 50%;">파일이없습니다.</div>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
                 <hr>
                 
                 <div class="md-3"> 
                     <label for="vtContent" class="form-label">내용</label>
-                    <input type="text" class="form-control" id="vtContent" name="vtContent" style="width: 50%;" required>
+                    <input type="text" class="form-control" id="vtContent" name="vtContent" style="width: 50%;" value="${vtvo.vtContent}" required>
                 </div>
 
                 <div class="md-3"> 
                     
                     <label for="period" class="form-label">설문기간</label><br>
-                    <input type="datetime-local" class="form-control" id="vtCreate" name="vtCreate" style="width: 24.5%;display: inline;"  required>~
-                    <input type="datetime-local" class="form-control" id="vtEnd" name="vtEnd" style="width: 24.5%; display: inline;" required>
+                    <input type="datetime-local" class="form-control" id="vtCreate" name="vtCreate" style="width: 24.5%;display: inline;" value="${vtvo.vtCreate}" required>~
+                    <input type="datetime-local" class="form-control" id="vtEnd" name="vtEnd" style="width: 24.5%; display: inline;" value="${vtvo.vtEnd}" required>
                 </div>
 
-                <div class="md-3"> 
+                <!-- 부서정보 가져오기 -->
+                <!-- <div class="md-3"> 
                     <label for="target" class="form-label">대상자</label>    &nbsp;&nbsp;&nbsp;
                     <label for="target1"><input type="radio" id="target1" name="target"  value="all"  onclick="chdp()" checked>전체</label>
                     <label for="target2"><input type="radio" id="target2" name="target"  value="dp" onclick="chdp()">부서선택</label>
                     <br>
                     <div id="dplist">
-                        <!-- 부서정보 가져오기 -->
                         <c:forEach items="${dpvo }" var="dp">
                             
                             <label for="d${dp.deptNo}">${dp.deptName}<input type="checkbox" id="d${dp.deptNo}" name="dept" value="${dp.deptNo}" ></label> &emsp;
@@ -56,20 +68,19 @@
 
 
                     </div>
-                </div>
+                </div> -->
                 
                 <div class="md-3" id="cgList"> 
                     <label for="vtcgName" class="form-label">항목</label><br>
-                    <input type="hidden" id="vt-list" value="2" >
-                    <div>
-                        <input type="text" class="form-control"  name="vtcgName" style="width: 50%; display: inline;" required>
+                    <input type="hidden" id="vt-list" value="${fn:length(vtcgList) }" >
+                    <c:forEach items="${vtcgList}" var="vtcg">
+                        <c:set var="i" value="${i+1}"/>
+                            <div id="cg${i}">
+                                <input type="text" class="form-control" style="width: 50%; display: inline;" value="${vtcg.vtcgName}" disabled>
+                            
+                            </div>
                         
-                    </div>
-
-                    <div>
-                        <input type="text" class="form-control"  name="vtcgName" style="width: 50%; display: inline;" required>
-                        
-                    </div>
+                    </c:forEach>
 
                     
                 </div>
@@ -149,16 +160,16 @@
         console.log(x);
         
         const k = Number($('#vt-list').val())-1;
-        $('input[id=vt-list]').attr('value',k);
-        $('#'+x).remove();
-        
+            $('input[id=vt-list]').attr('value',k);
+            $('#'+x).remove();
+            
     }
-</script>
+    </script>
 
 <script>
     console.log(i);
+    console.log($("input[name='vtcgName']").length);
     function addList() {
-        
         console.log(i);
         const k = Number($('#vt-list').val())+1;
         $('input[id=vt-list]').attr('value',k);

@@ -6,7 +6,7 @@
 	<title>Home</title>
 </head>
 <body>
-    <%@ include file="/WEB-INF/views/common/toastify.jsp" %>
+
 <div id="app">
 
 	<%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
@@ -32,9 +32,14 @@
                     </div>
                 </div>
                 <section class="section">
-                    <div class="card" style="flex-direction: row;">
-                        <%@include file="/WEB-INF/views/vote/list-content.jsp" %>
+                    <div class="card">
+                        <%@include file="/WEB-INF/views/vote/update-content.jsp" %>
                     </div>
+                    <div style="text-align: right;"> 
+                        <button type="submit" class="myBtn">수정</button>
+                        <a href="${root}/vote/list/1"><button type="button" class="myBtn">list</button></a>
+                    </div>
+                    </form>
                 </section>
             </div>
         
@@ -51,5 +56,6 @@
 	});
 	
 </script>
+
 
 </html>

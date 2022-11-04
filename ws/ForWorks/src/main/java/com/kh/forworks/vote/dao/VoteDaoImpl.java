@@ -1,5 +1,6 @@
 package com.kh.forworks.vote.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
@@ -10,6 +11,8 @@ import com.kh.forworks.PageVo;
 import com.kh.forworks.department.vo.DepartmentVo;
 import com.kh.forworks.member.vo.MemberVo;
 import com.kh.forworks.vote.vo.VoteAttachmentsVo;
+import com.kh.forworks.vote.vo.VoteCategoryVo;
+import com.kh.forworks.vote.vo.VoteParticipationVo;
 import com.kh.forworks.vote.vo.VoteVo;
 
 @Repository
@@ -99,5 +102,92 @@ public class VoteDaoImpl implements VoteDao{
 //	public int insertVtptDp(SqlSessionTemplate sst, MemberVo memberVo) {
 //		return sst.insert("voteMapper.insertVtptDp", memberVo);
 //	}
+
+	//투표 정보 가져오기
+	@Override
+	public VoteVo selectOneVt(SqlSessionTemplate sst, String pno) {
+		// TODO Auto-generated method stub
+		return sst.selectOne("voteMapper.selectOneVt", pno);
+	}
+
+	//투표 항복 정보 가져오기
+	@Override
+	public List<VoteCategoryVo> selectVtcg(SqlSessionTemplate sst, String pno) {
+		return sst.selectList("voteMapper.selectVtcg", pno);
+	}
+
+	//투표 참가자 정보 가져오기
+	@Override
+	public List<VoteParticipationVo> selectVtpt(SqlSessionTemplate sst, String pno) {
+		return sst.selectList("voteMapper.selectVtpt", pno);
+	}
+	
+	//투표 첨부파일 정보
+	@Override
+	public VoteAttachmentsVo selectVtat(SqlSessionTemplate sst, String pno) {
+		return sst.selectOne("voteMapper.selectVtat",pno);
+	}
+
+	
+	//투표종료
+	@Override
+	public int end(SqlSessionTemplate sst, int pno) {
+		return sst.update("voteMapper.end",pno);
+	}
+
+	//투표삭제
+	@Override
+	public int delete(SqlSessionTemplate sst, int pno) {
+		return sst.update("voteMapper.delete",pno);
+	}
+	
+	//투표 대상자 투표
+	@Override
+	public int insertUserVt(SqlSessionTemplate sst, VoteParticipationVo vo) {
+		return sst.insert("voteMapper.insertUserVt",vo);
+	}
+	
+	//투표 대상지인지 확인
+	@Override
+	public int check(SqlSessionTemplate sst, HashMap<String, String> map) {
+		return sst.selectOne("voteMapper.check",map);
+	}
+
+	//대상자중 참여한 투표정보 가져오기
+	@Override
+	public VoteParticipationVo checkDo(SqlSessionTemplate sst, HashMap<String, String> map) {
+		return sst.selectOne("voteMapper.checkDo",map);
+	}
+	
+	//투표 첨부파일 확인
+	@Override
+	public VoteAttachmentsVo checkFile(SqlSessionTemplate sst, String pno) {
+		return sst.selectOne("voteMapper.checkFile",pno);
+	}
+	
+	//투표 수정
+	@Override
+	public int editVt(SqlSessionTemplate sst, VoteVo vtvo) {
+		return sst.update("voteMapper.editVt", vtvo);
+	}
+	
+	//투표 첨부파일 수정
+	@Override
+	public int editVtat(SqlSessionTemplate sst, VoteAttachmentsVo vtat) {
+		return sst.update("voteMapper.editVtat", vtat);
+	}
+	
+	//투표 첨부파일 등록(수정페이지에서)
+	@Override
+	public int editVtatInsert(SqlSessionTemplate sst, VoteAttachmentsVo vtat) {
+		return sst.insert("voteMapper.editVtatInsert", vtat);
+	}
+	
+	//투표항목 등록(수정)
+	@Override
+	public int editInsertVtcg(SqlSessionTemplate sst, HashMap<String, String> map) {
+		return sst.insert("voteMapper.editInsertVtcg", map);
+	}
+
 	
 }

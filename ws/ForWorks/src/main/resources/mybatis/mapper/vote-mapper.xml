@@ -139,7 +139,111 @@
 	
 	<!-- //선택 부서 대상자 저장 -->
 	<!-- 보류 -->
-
-
 	
+	
+	<!-- 정보가져오기 -->
+	
+	<select id="selectOneVt" resultType="com.kh.forworks.vote.vo.VoteVo">
+		SELECT *
+		FROM VOTE
+		WHERE VT_NO = #{pno}
+	</select>
+	
+	<select id="selectVtcg" resultType="com.kh.forworks.vote.vo.VoteCategoryVo">
+		SELECT *
+		FROM VOTE_CATEGORY
+		WHERE VT_NO = #{pno}	
+	</select>
+	
+	<select id="selectVtpt" resultType="com.kh.forworks.vote.vo.VoteParticipationVo">
+		SELECT *
+		FROM VOTE_PARTICIPATION
+		WHERE VT_NO = #{pno}
+	</select>
+	
+	<select id="selectVtat" resultType="com.kh.forworks.vote.vo.VoteAttachmentsVo">
+		SELECT *
+		FROM VOTE_ATTACHMENTS
+		WHERE VT_NO = #{pno}
+	</select>
+	
+	<update id="end">
+		UPDATE VOTE SET VT_STATUS = 'E'
+		WHERE VT_NO = #{pno}
+		AND VT_STATUS ='I'
+	</update>
+	
+	<update id="delete">
+		UPDATE VOTE SET VT_STATUS = 'D'
+		WHERE VT_NO = #{pno}
+		AND VT_STATUS ='I'
+	</update>
+	
+	<update id="insertUserVt">
+		UPDATE VOTE_PARTICIPATION SET 
+		VTCG_NO = #{vtcgNo},
+		VTPT_DATE = SYSDATE,
+		VTPT_EDIT = SYSDATE,
+		VTPT_STATUS = 'Y'
+		WHERE VT_NO= #{vtNo}
+		AND EMP_NO= #{empNo}
+	</update>
+	
+	<!-- //로그인사원이 대상자 여부 확인 -->
+	<select id="check" resultType="int">
+		SELECT COUNT(*)
+		FROM VOTE_PARTICIPATION
+		WHERE EMP_NO = #{no}
+		AND VT_NO = #{pno}
+		AND VTPT_STATUS = 'N'
+	</select>
+	
+	<!-- 참여대상이고 참여를했을경우 -->
+	<select id="checkDo" resultType="com.kh.forworks.vote.vo.VoteParticipationVo">
+		SELECT *
+		FROM VOTE_PARTICIPATION
+		WHERE EMP_NO = #{no}
+		AND VT_NO = #{pno}
+		AND VTPT_STATUS = 'Y'		
+	</select>
+	
+	<!--파일 존재여부 확인 -->
+	<select id="checkFile" resultType="com.kh.forworks.vote.vo.VoteAttachmentsVo">
+		SELECT *
+		FROM VOTE_ATTACHMENTS
+		WHERE VT_NO = #{pno}
+	</select>
+	
+	<!-- 투표 정보수정 -->
+	<update id="editVt">
+		UPDATE VOTE SET
+		VT_CREATE	=	#{vtCreate},
+		VT_END		=	#{vtEnd},
+		VT_UPDATE	=	SYSDATE,
+		VT_TITLE	=	#{vtTitle},
+		VT_CONTENT	=	#{vtContent}
+		
+		WHERE VT_STATUS = 'I'
+		AND VT_NO = ${vtNo}
+	</update>
+	
+	<update id="editVtat">
+		UPDATE VOTE_ATTACHMENTS SET
+		VTAT_CHANGE	=	#{vtatChange},
+		VTAT_ORIGIN	=	#{vtatOrigin},
+		VTAT_PATH	=	#{vtatPath},
+		WHERE VT_NO = #{pno}
+	</update>
+	
+	<insert id="editVtatInsert">
+		INSERT INTO VOTE_ATTACHMENTS
+		(VTAT_NO, VTAT_CHANGE, VTAT_ORIGIN, VTAT_PATH, VT_NO)
+		VALUES
+		(SEQ_VOTE_ATTACHMENTS_VTATNO.NEXTVAL, #{vtatChange}, #{vtatOrigin}, #{vtatPath}, #{pno})		
+	</insert>
+	
+	<insert id="editInsertVtcg">
+		INSERT INTO VOTE_CATEGORY(VTCG_NO, VT_NO, VTCG_NAME)
+		VALUES(SEQ_VOTE_CATEGORY_VTCGNO.NEXTVAL, #{pno}, #{vtcg})	
+	</insert>
 </mapper>

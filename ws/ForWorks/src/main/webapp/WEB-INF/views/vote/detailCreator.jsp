@@ -38,9 +38,9 @@
                         <%@include file="/WEB-INF/views/vote/detailCreator-content.jsp" %>
                     </div>
                             <div style="text-align: right;"> 
-                                <button class="myBtn">종료</button>
-                                <button class="myBtn">수정</button>
-                                <button class="myBtn">삭제</button>
+                                <button type="button" class="myBtn" id="e">종료</button>
+                                <button type="button" class="myBtn" id="u">수정</button>
+                                <button type="button" class="myBtn" id="d">삭제</button>
                             </div>
                         
                 </section>
@@ -51,6 +51,19 @@
 </div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
+
+<script>
+    var x;
+    var y;
+    console.log("aaaaaa");
+    for (let i = 0; i < ${fn:length(vtcgList) }; i++) {
+        x = ${vtcgList[i].vtcgName};
+        console.log(x);
+        y = ${vtcgList[i].vtcgCnt};
+        console.log(y);
+    }
+</script>
+
 <script>
 	
 	$().ready(function() {
@@ -58,6 +71,33 @@
 		$('#ex1').addClass("active");
 	});
 	
+</script>
+
+<script>
+    const today  = new Date();
+    const edday  = new Date('${vtvo.vtEnd}');
+    console.log(today);
+    console.log(edday);
+    console.log(edday<=today);
+    var e = document.getElementById('e');
+    e.addEventListener('click',function () {
+       location.href = "${root}/vote/end/"+${vtvo.vtNo};
+    });
+
+    var u = document.getElementById('u');
+    u.addEventListener('click',function () {
+        if (edday<=today) {
+            alert('투표기간이 지났습니다.');
+            return;
+        }
+        location.href = "${root}/vote/update/"+${vtvo.vtNo};
+    });
+
+    var d = document.getElementById('d');
+    d.addEventListener('click',function () {
+       location.href = "${root}/vote/delete/"+${vtvo.vtNo};
+    });
+
 </script>
 
 </html>

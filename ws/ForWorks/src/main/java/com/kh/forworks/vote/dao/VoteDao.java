@@ -1,5 +1,6 @@
 package com.kh.forworks.vote.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -8,6 +9,8 @@ import com.kh.forworks.PageVo;
 import com.kh.forworks.department.vo.DepartmentVo;
 import com.kh.forworks.member.vo.MemberVo;
 import com.kh.forworks.vote.vo.VoteAttachmentsVo;
+import com.kh.forworks.vote.vo.VoteCategoryVo;
+import com.kh.forworks.vote.vo.VoteParticipationVo;
 import com.kh.forworks.vote.vo.VoteVo;
 
 public interface VoteDao {
@@ -43,6 +46,42 @@ public interface VoteDao {
 	List<MemberVo> mListDp(SqlSessionTemplate sst, int dept);
 	//선택 부서 대상자 저장
 	//int insertVtpt(SqlSessionTemplate sst, MemberVo memberVo);
+
+	//투표 정보 가져오기
+	VoteVo selectOneVt(SqlSessionTemplate sst, String pno);
+	//투표 항복 정보 가져오기
+	List<VoteCategoryVo> selectVtcg(SqlSessionTemplate sst, String pno);
+	//투표 참가자 정보 가져오기
+	List<VoteParticipationVo> selectVtpt(SqlSessionTemplate sst, String pno);
+	//투표 첨부파일
+	VoteAttachmentsVo selectVtat(SqlSessionTemplate sst, String pno);
+	
+	//투표종료
+	int end(SqlSessionTemplate sst, int pno);
+	//투표삭제
+	int delete(SqlSessionTemplate sst, int pno);
+	
+	//투표 대상자 투표
+	int insertUserVt(SqlSessionTemplate sst, VoteParticipationVo vo);
+
+	////로그인사원이 대상자 여부 확인
+	int check(SqlSessionTemplate sst, HashMap<String, String> map);
+	//대상자중 참여한 투표정보 가져오기
+	VoteParticipationVo checkDo(SqlSessionTemplate sst, HashMap<String, String> map);
+
+	//투표 수정
+	int editVt(SqlSessionTemplate sst, VoteVo vtvo);
+	// 투표 첨부파일 확인
+	VoteAttachmentsVo checkFile(SqlSessionTemplate sst, String pno);
+	//투표 첨부파일 수정
+	int editVtat(SqlSessionTemplate sst, VoteAttachmentsVo vtat);
+	//투표 첨부파일 등록(수정페이지에서)
+	int editVtatInsert(SqlSessionTemplate sst, VoteAttachmentsVo vtat);
+	//투표 항목 등록(수정)
+	int editInsertVtcg(SqlSessionTemplate sst, HashMap<String, String> map);
+
+
+	
 
 	
 
