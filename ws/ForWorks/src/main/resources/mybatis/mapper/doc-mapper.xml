@@ -20,8 +20,37 @@
   		) 
   		VALUES
   		(
-  			SEQ_D_FILE_NO.NEXTVAL, SEQ_DOC_NO.CURRVAL, ' ' ,#{uploadName},#{originName}
+  			SEQ_D_FILE_NO.NEXTVAL, SEQ_DOC_NO.CURRVAL, #{filePath} ,#{uploadName},#{originName}
   		)
   	</insert>
   	
+  	<select id="selectCountAll" resultType="int">
+  		SELECT COUNT(*) FROM DOC WHERE EMP_NO = #{empNo}
+  	</select>
+  	
+	<select id="selectDocByEmp" resultType="DocVo">
+		SELECT 
+			DOC_NO,TITLE,CONTENT,EMP_NO,TO_CHAR(ENROLL_DATE,'YYYY"년"MM"월"DD"일"')AS ENROLL_DATE, STATUS
+		FROM DOC 
+		WHERE EMP_NO = #{map.empNo}
+		ORDER BY DOC_NO DESC
+	</select>  	
+	
+	<select id="selectOneDoc" resultType="DocVo">
+		SELECT * FROM DOC WHERE DOC_NO = #{no}
+	</select>
+  	
+  	<select id="selectRange" resultType="java.util.HashMap">
+  		SELECT G.*,R.NAME FROM RANGE_G G JOIN RANGE R ON G.RANGE_NO = R.RANGE_NO
+  	</select>
 </mapper>
+
+
+
+
+
+
+
+
+
+

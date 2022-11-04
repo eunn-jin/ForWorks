@@ -14,8 +14,8 @@
         height: 60vh;
         border: 1px solid black;/*확인용*/
         display: grid;
-        grid-template-columns: 3fr 4fr 4fr 4fr 4fr;
-        grid-template-rows: repeat(11,30px);
+        grid-template-columns: 2fr 3fr 4fr 3fr 4fr 2fr;
+        grid-template-rows: repeat(11,50px);
         text-align: center;
         background-color: white;
     }
@@ -24,6 +24,7 @@
         color: black;
         font-weight: bolder;
         border-bottom: 1px solid #7D6CFF;
+        padding-top: 10px;
     }
     #page-area{
         width: 30%;
@@ -94,7 +95,7 @@
 				           <a href="">결재문서</a>
 				        </div>
 				        <div id="check-btn">
-				            <button onclick="location.href='write'">+ 일반문서작성</button>
+				            <button onclick="location.href='${root}/docmanage/write'">+ 일반문서작성</button>
 				        </div>
 				        <div id="center">
 				            <div class="div-top">글번호</div>
@@ -102,26 +103,32 @@
 				        <div class="div-top">제목</div>
 				        <div class="div-top">공개범위</div>
 				        <div class="div-top">등록일</div>
+                        <div class="div-top">게시상태</div>
 				        
-                        <c:forEach items="${result}" var="x">
+                        <c:forEach items="${voList}" var="x">
                             <div>${x.docNo}</div>
                             <div>2022.12.31</div>
-                            <div>${x.title}</div>
+                            <div><a href="${root}/docmanage/manDetail/${x.docNo}">${x.title}</a></div>
                             <div>전체공개</div>
                             <div>${x.enrollDate}</div>
+                            <div>${x.status}</div>
                         </c:forEach>
 				      
 				        
 				        </div>
 				        
 				        <div id="page-area">
-				            <a href=""><</a>
-				            <a href="">1</a>
-				            <a href="">2</a>
-				            <a href="">3</a>
-				            <a href="">4</a>
-				            <a href="">5</a>
-				            <a href="">></a>
+				            <c:if test="${pv.startPage ne 1 }">
+								<a href="/app99/board/list/${pv.startPage - 1}" class="btn btn-primary btn-sm">이전</a>	
+							</c:if>
+							
+							<c:forEach begin="${pv.startPage}" end="${pv.endPage}" var="i">
+								<a href="/app99/board/list/${i}" class="btn btn-primary btn-sm">${i}</a>
+							</c:forEach>
+							
+							<c:if test="${pv.endPage ne pv.maxPage }">
+								<a href="/app99/board/list/${pv.endPage + 1}" class="btn btn-primary btn-sm">다음</a>	
+							</c:if>
 				        </div>
 				
 				        <div id="search-area">
