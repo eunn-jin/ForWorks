@@ -93,18 +93,25 @@
         <div class="dropdown">
           <a href="#" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             <div class="user-menu d-flex">
-              <div class="user-name text-end me-3">
+              <div class="user-name text-end me-2" style="padding-top: 5px; padding-right: 8px">
                 <h6 class="mb-0 text-gray-600">${loginMember.empName}</h6>
                 <p class="mb-0 text-sm text-gray-600">${loginMember.deptName} ${loginMember.posName}</p>
               </div>
               <div class="user-img d-flex align-items-center">
-                <div class="avatar avatar-md">
-                  <img src="${root}/resources/img/member-imgs/user.png" />
+                <div class="avatar">
+                  <c:choose>
+                   <c:when test="${not empty loginMember.empProfile}">
+                       <img style="border-radius: 30%; width: 45px; height: 45px; object-fit: cover" src="${root}/resources/upload/profile/${loginMember.empProfile}" alt="이미지" />
+                   </c:when>
+                   <c:otherwise>
+		               <img src="${root}/resources/img/member-imgs/user.png" alt="profile" />
+                   </c:otherwise>
+                  </c:choose>
                 </div>
               </div>
             </div>
           </a>
-          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton" style="min-width: 11rem;" data-ps-popper="static">
+          <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="dropdownMenuButton" style="min-width: 10.5rem;" data-ps-popper="static" >
             <li>
               <h6 class="dropdown-header">Hello, ${loginMember.empName}!</h6>
             </li>

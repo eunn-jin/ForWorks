@@ -1,15 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     <div class="" style="width: 260px; margin-right: 30px">
        <div class="card mb-4">
          <div class="card-body py-4 px-4">
            <div class="d-flex align-items-center">
              <div class="avatar avatar-xl">
-               <img src="${root}/resources/img/member-imgs/user.png" alt="Face 1" />
+             	<c:choose>
+                   <c:when test="${not empty loginMember.empProfile}">
+                       <img style="border-radius: 40%; width: 70px; height: 70px; object-fit: cover" src="${root}/resources/upload/profile/${loginMember.empProfile}" alt="이미지" />
+                   </c:when>
+                   <c:otherwise>
+		               <img src="${root}/resources/img/member-imgs/user.png" alt="profile" />
+                   </c:otherwise>
+                </c:choose>
              </div>
              <div class="ms-3 name">
-               <h5 class="font-bold">${loginMember.empName}</h5>
-               <h6 class="text-muted mb-1">4조 주식회사</h6>
-               <h6 class="text-muted mb-0">${loginMember.deptName} ${loginMember.posName}</h6>
+               <h5 class="font-bold pt-1">${loginMember.empName}</h5>
+               <h6 class="text-muted mb-1" style="font-size: 14px">4조 주식회사</h6>
+               <h6 class="text-muted mb-0" style="font-size: 14px">${loginMember.deptName} ${loginMember.posName}</h6>
              </div>
            </div>
          </div>

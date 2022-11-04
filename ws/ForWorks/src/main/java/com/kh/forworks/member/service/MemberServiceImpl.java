@@ -83,4 +83,10 @@ public class MemberServiceImpl implements MemberService {
 		}
 	}
 
+	//프로필사진 변경
+	@Override
+	public int updateMemberProfile(MemberVo vo) {
+		return memberDao.updateMemberProfileByNo(sst, vo);
+	}
+
 }

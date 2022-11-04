@@ -43,4 +43,9 @@ public class MemberDaoImpl implements MemberDao {
 		return sst.update("memberMapper.updatePwdByNo", vo);
 	}
 
+	@Override
+	public int updateMemberProfileByNo(SqlSessionTemplate sst, MemberVo vo) {
+		return sst.update("memberMapper.updateEmpProfile", vo);
+	}
+
 }

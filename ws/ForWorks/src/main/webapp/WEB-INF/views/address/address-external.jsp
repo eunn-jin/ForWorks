@@ -401,6 +401,10 @@
 		const keyword = document.querySelector("input[name=keyword]").value;
 		location.href = "${root}/address/external/1?keyword=" + keyword;
 	}
+	
+	$().ready(function() {
+		$('#address').addClass("active");
+	});
 </script>
 </body>
 </html>

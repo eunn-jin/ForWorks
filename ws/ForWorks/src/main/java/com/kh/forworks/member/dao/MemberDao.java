@@ -20,4 +20,6 @@ public interface MemberDao {
 
 	int updatePwdByNo(SqlSessionTemplate sst, MemberVo vo);
 
+	int updateMemberProfileByNo(SqlSessionTemplate sst, MemberVo vo);
+
 }

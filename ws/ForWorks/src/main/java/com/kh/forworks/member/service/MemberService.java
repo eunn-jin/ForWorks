@@ -18,4 +18,6 @@ public interface MemberService {
 
 	int changePwd(MemberVo vo);
 
+	int updateMemberProfile(MemberVo vo);
+
 }
