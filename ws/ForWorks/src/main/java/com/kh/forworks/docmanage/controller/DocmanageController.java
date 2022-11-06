@@ -60,8 +60,10 @@ public class DocmanageController {
 	return "docManage/doc_write";
 	}
 	//일반문서 디테일(화면)
-	@GetMapping("detail")
-	public String detail() {
+	@GetMapping("detail/{no}")
+	public String detail(@PathVariable String no, Model model) {
+		DocVo vo = ds.selectOneDoc(no);
+		model.addAttribute("vo",vo);
 		return "docManage/doc_detail";
 	}
 	

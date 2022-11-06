@@ -28,5 +28,7 @@ public interface DocmanageDao {
 	int insertDocControl(SqlSessionTemplate sst, DocVo dv);
 	//전체 문서갯수조회(range)
 	int selectRangeCountAll(SqlSessionTemplate sst, String range);
+	//당일 기준 업데이트해서 비공개처리
+	int updateRange(SqlSessionTemplate sst);
 
 }

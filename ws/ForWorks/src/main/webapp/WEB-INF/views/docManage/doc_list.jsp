@@ -60,6 +60,9 @@
         color: #7D6CFF;
         font-weight: bolder;
     }
+    .title{
+        text-align: left;
+    }
 </style>
 <body>
 
@@ -97,7 +100,7 @@
 				            <button onclick="location.href='write'">+ 일반문서작성</button>
 				        </div>
 				        <div id="center">
-				            <div class="div-top">글번호</div>
+				            <div class="div-top">NO</div>
 				            <div class="div-top">보존마감일</div>
 				        <div class="div-top">제목</div>
 				        <div class="div-top">공개범위</div>
@@ -105,8 +108,8 @@
 				        
                         <c:forEach items="${result}" var="x">
                             <div>${x.docNo}</div>
-                            <div>2022.12.31</div>
-                            <div>${x.title}</div>
+                            <div>${x.contEndDate}</div>
+                            <div class="title"><a href="${root}/docmanage/detail/${x.docNo}">${x.title}</a></div>
                             <div>
                             	<c:choose>
                             		<c:when test="${x.range} eq 'OPEN'">전체공개</c:when>

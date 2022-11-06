@@ -40,7 +40,11 @@ public class DocmanageServiceImpl implements DocmanageService{
 	//일반문서 리스트
 	@Override
 	public List<DocVo> selectRangeDoc(String range) {
-		return dao.selectRangeDoc(sst,range);
+		int a = dao.updateRange(sst);
+		System.out.println(a);
+		List<DocVo> vo = dao.selectRangeDoc(sst,range);
+		System.out.println(vo);
+		return vo;
 	}
 	//전체 문서갯수조회
 	@Override

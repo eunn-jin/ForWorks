@@ -33,6 +33,9 @@
         text-align: center;
         margin-top: 50px;
     }
+    table>tr{
+        border-bottom: 1px solid gray;
+    }
 </style>
 <body>
 
@@ -63,24 +66,29 @@
                <section class="section">
 					<div id="wrap">
                         
-                            <span class="center-top">등록일 2022-10-22</span>
-                            <span class="center-top">작성자 홍길동</span>
-                        
-				            
+				            <table>
+                                <tr>
+                                    <td>${vo.title}</td>
+                                </tr>
+                                <tr>
+                                    <td>보존기간</td>
+                                    <td>${vo.contEnrollDate} ~ ${vo.contEndDate}</td>
+                                </tr>
+                                <tr>
+                                    <td>첨부파일</td>
+                                    <td><input type="file" readonly></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3"><div>${vo.content}</div></td>
+                                </tr>
+                            </table>
+
+
 				            <div id="center">
-				                <div>보존 마감 날짜</div>
-				                <div><input type="date" value="2023-02-02" readonly></div>
-				                <div>공개범위</div>
-				                <div>전체공개</div>
-				                <div>제목</div>
-				                <div><input type="text" readonly value="불러온 제목입니다"></div>
-				                <div>첨부파일</div>
-				                <div><input type="file"></div>
-				                <div>내용</div>
-				                <textarea name="" id="" cols="30" rows="10" readonly>불러온 내용입니다</textarea>
+				                
 				            </div>
 				            
-				            <div id="back-btn"><input type="submit" value="뒤로가기" ></div>
+				            <div id="back-btn"><button  onclick="window.history.back()">목록</button></div>
 				                
 				    </div>
                </section>

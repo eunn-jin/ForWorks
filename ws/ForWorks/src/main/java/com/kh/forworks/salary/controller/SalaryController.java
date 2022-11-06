@@ -70,7 +70,65 @@ public class SalaryController {
 		String empNo = loginMember.getEmpNo();
 		map.put("empNo", empNo);
 		map.put("no", no);
+		
 		SalaryVo result = ss.selectDetail(map);
+		System.out.println("result출력" + result);
+		List<SalaryVo> result1 = null;
+		List<SalBonusVo> result2 = null;
+		if(result.getSalCate().equals("1")) {
+			System.out.println("result1실행");
+			result1 = ss.selectEmpSal(result);
+			int a = 0;
+			int sum = Integer.parseInt(result1.get(0).getEmpMoney());
+			for(int i = 0 ; i < result1.size();i++) {
+				a += Integer.parseInt(result1.get(i).getAmount());
+				sum +=Integer.parseInt(result1.get(i).getAmount());
+			}
+			result.setAmount(Integer.toString(a));
+			result.setSum(Integer.toString(sum));
+			
+			System.out.println(result1);
+			
+			model.addAttribute("result1",result1);
+		}else if(result.getSalCate().equals("2")) {
+			System.out.println("result2실행");
+			result2 = ss.selectBonus(result);
+			int a = 0;
+			for(int i = 0 ; i < result2.size();i++) {
+				a += Integer.parseInt(result2.get(i).getPayment());
+			}
+			result.setBonusSum(Integer.toString(a));
+			
+			model.addAttribute("result2",result2);
+		}else if(result.getSalCate().equals("3")) {
+			System.out.println("result1실행");
+			result1 = ss.selectEmpSal(result);
+			int a = 0;
+			int sum = Integer.parseInt(result1.get(0).getEmpMoney());
+			for(int i = 0 ; i < result1.size();i++) {
+				a += Integer.parseInt(result1.get(i).getAmount());
+				sum +=Integer.parseInt(result1.get(i).getAmount());
+			}
+			result.setAmount(Integer.toString(a));
+			
+			System.out.println(result1);
+			
+			model.addAttribute("result1",result1);
+			
+			System.out.println("result2실행");
+			result2 = ss.selectBonus(result);
+			int x = 0;
+			for(int i = 0 ; i < result2.size();i++) {
+				x += Integer.parseInt(result2.get(i).getPayment());
+				sum +=Integer.parseInt(result2.get(i).getPayment());
+			}
+			result.setBonusSum(Integer.toString(a));
+			result.setSum(Integer.toString(sum));
+			model.addAttribute("result2",result2);
+		}
+		
+		System.out.println("detail : " +result);
+		
 		model.addAttribute("result" , result);
 		return "salary/payslipDetail";
 	}
@@ -169,13 +227,10 @@ public class SalaryController {
 		//회원정보 가져오기
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 		String empNo = loginMember.getEmpNo();
-		System.out.println("출1:" + empNo);
-		System.out.println("출1:" + year);
 		HashMap map = new HashMap();
 		map.put("year", year);
 		map.put("empNo", empNo);
 		List<SalaryVo> salList = ss.salList(map);
-		System.out.println("출2:" +salList );
 		Gson g = new Gson();
 		return g.toJson(salList);
 	}

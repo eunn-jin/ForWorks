@@ -64,5 +64,10 @@ public class DocmanageDaoImpl implements DocmanageDao {
 	public int selectRangeCountAll(SqlSessionTemplate sst , String range) {
 		return sst.selectOne("docMapper.selectRangeCountAll" , range);
 	}
+	//당일기준 업데이트해서 비공개처리
+	@Override
+	public int updateRange(SqlSessionTemplate sst) {
+		return sst.update("docMapper.updateRange");
+	}
 
 }

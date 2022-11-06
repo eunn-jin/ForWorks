@@ -42,7 +42,9 @@
 	</select>  	
 	
 	<select id="selectOneDoc" resultType="DocVo">
-		SELECT * FROM DOC WHERE DOC_NO = #{no}
+		SELECT 
+		    D.DOC_NO , D.TITLE, D.CONTENT, D.EMP_NO , D.STATUS, TO_CHAR(D.ENROLL_DATE,'YYYY"년"MM"월"DD"일"')AS ENROLL_DATE , TO_CHAR(C.ENROLL_DATE,'YYYY"년"MM"월"DD"일"')AS CONT_ENROLL_DATE, TO_CHAR(C.END_DATE,'YYYY"년"MM"월"DD"일"')AS CONT_END_DATE, RANGE, C.STATUS AS CONT_STATUS
+		FROM DOC D JOIN DOC_CONTROL C ON D.DOC_NO = C.DOC_NO WHERE D.DOC_NO = #{no}
 	</select>
 
   	<select id="selectDept" resultType="MemberVo">
@@ -72,7 +74,9 @@
   		SELECT COUNT(D.DOC_NO) FROM DOC D JOIN DOC_CONTROL C ON D.DOC_NO = C.DOC_NO WHERE RANGE LIKE '%'||#{range}||'%' OR RANGE LIKE 'OPEN'
   	</select>
   	
-  	
+  	<update id="updateRange">
+  		UPDATE DOC_CONTROL SET RANGE = NULL WHERE END_DATE &lt; SYSDATE
+  	</update>
   	
   	
 </mapper>

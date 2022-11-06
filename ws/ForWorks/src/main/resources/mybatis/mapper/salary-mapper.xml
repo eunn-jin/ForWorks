@@ -46,7 +46,7 @@
   </select>
   
   <select id="detail" resultType="SalaryVo">
-  	SELECT NO ,EMP_NO,START_MONTH,END_MONTH,TO_CHAR(PAY_DATE,'YYYY"년"MM"월"YY"일"') AS PAY_DATE,STATUS,TO_CHAR(SAL_MONTH,'YYYY"년"MM"월"') AS SAL_MONTH FROM SALARY WHERE STATUS = 'Y' AND EMP_NO = #{empNo} AND NO = #{no}
+  	SELECT NO ,EMP_NO, SAL_CATE ,START_MONTH,END_MONTH,TO_CHAR(PAY_DATE,'YYYY"년"MM"월"YY"일"') AS PAY_DATE,STATUS,TO_CHAR(SAL_MONTH,'YYYY"년"MM"월"') AS SAL_MONTH FROM SALARY WHERE STATUS = 'Y' AND EMP_NO = #{empNo} AND NO = #{no}
   </select>
   
   <select id="money">
