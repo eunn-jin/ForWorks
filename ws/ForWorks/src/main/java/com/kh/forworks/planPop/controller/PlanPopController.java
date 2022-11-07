@@ -2,7 +2,10 @@ package com.kh.forworks.planPop.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.kh.forworks.planPop.vo.planPopVo;
 
 
 @Controller
@@ -14,5 +17,10 @@ public class PlanPopController {
 	
 	public String calendar() {
 		return "plan/planPop";
-	}	
+	}
+	
+	@PostMapping("planPop")
+	public String planPop(planPopVo vo) {
+		
+	}
 }	
