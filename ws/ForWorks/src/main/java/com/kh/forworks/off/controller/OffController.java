@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -65,9 +64,7 @@ public class OffController {
 	public String offConfirm(Model model, HttpSession session) {
 		
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
-		String empNo = loginMember.getEmpNo();
 		String month = getThisMonth();
-		
 		//권한 있는지 없는지 확인
 		String posNo = loginMember.getPosNo();
 		if(Integer.parseInt(posNo) == offConfirmPos) {
@@ -129,8 +126,6 @@ public class OffController {
 	public List<OffVo> getDeptOffList(String month, HttpSession session) {
 		
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
-		String empNo = loginMember.getEmpNo();
-		
 		//권한 있는지 없는지 확인
 		String posNo = loginMember.getPosNo();
 		if(Integer.parseInt(posNo) == offConfirmPos) {

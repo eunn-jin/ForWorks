@@ -13,11 +13,18 @@
 	</select>
 	
 	<select id= "selectUseOff" resultType="int">
-		SELECT COUNT(NO) FROM OFF WHERE EMP_NO = #{empNo} AND TYPE_CODE = 1 AND STATUS = 'Y'
+		SELECT SUM(TO_DATE(END_DAY, 'YYYY-MM-DD') - TO_DATE(START_DAY, 'YYYY-MM-DD') +1) AS PERIOD 
+		FROM OFF 
+		WHERE EMP_NO = #{empNo} 
+		AND WRITE_DATE > (SELECT (EMP_JDATE + TRUNC(MONTHS_BETWEEN(SYSDATE, EMP_JDATE) / 12)*365 +1) FROM EMPLOYEE WHERE EMP_NO = #{empNo}) 
+		AND TYPE_CODE = 1 AND STATUS = 'Y'
 	</select>
 	
 	<select id= "selectUseHalfOff" resultType="int">
-		SELECT COUNT(NO) FROM OFF WHERE EMP_NO = #{empNo} AND TYPE_CODE IN (2, 3) AND STATUS = 'Y'
+		SELECT COUNT(NO) FROM OFF 
+		WHERE EMP_NO = #{empNo} 
+		AND WRITE_DATE > (SELECT (EMP_JDATE + TRUNC(MONTHS_BETWEEN(SYSDATE, EMP_JDATE) / 12)*365 +1) FROM EMPLOYEE WHERE EMP_NO = #{empNo})
+		AND TYPE_CODE IN (2, 3) AND STATUS = 'Y'
 	</select>
 	
 	<select id= "selectOffList" resultType="OffVo">
