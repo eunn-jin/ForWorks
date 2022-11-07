@@ -16,6 +16,10 @@
 	#demo {
 		width: 230px;
 	}
+	
+	input[type="checkbox"] {
+		width: 100%;
+	}
 
 </style>
 
@@ -41,18 +45,19 @@
 					<div class="card-body">
 						<div class="flex-row-side">
 							<div class>
-								<input type="month">
-								<button class="btn btn-primary btn-sm">검색</button>
+								<input type="month" value="${month}">
+								<button class="btn btn-primary btn-sm" onclick="monthBtn();">검색</button>
 							</div>
 							<div>
-								<button class="btn btn-outline-primary btn-sm">휴가 승락</button>
-								<button class="btn btn-outline-primary btn-sm">휴가 거절</button>
+								<button class="btn btn-outline-primary btn-sm" onclick="okBtn();">휴가 승락</button>
+								<button class="btn btn-outline-primary btn-sm" onclick="noBtn();">휴가 거절</button>
 							</div>
 						</div>
 						<div class="table-responsive mt-5">
 							<table class="table table-bordered mb-0">
 								<thead>
 									<tr>
+										<th>선택</th>
 										<th>신청인</th>
 										<th>신청 날짜</th>
 										<th>시작일</th>
@@ -62,16 +67,23 @@
 										<th>처리 상태</th>
 									</tr>
 								</thead>
-								<tbody>
-									<tr>
-										<td>조은진</td>
-										<td>2022/10/17</td>
-										<td>2022/10/20</td>
-										<td>2022/10/30</td>
-										<td>10</td>
-                                        <td>연차</td>
-										<td>승인 대기</td>	
-									</tr>
+								<tbody id = "offListTable">
+									<c:forEach items="${OffList}" var="off">
+										<tr>
+											<td>
+												<c:if test="${off.status eq '대기중'}">
+													<input type="checkbox" name="OffNo" value="${off.no}">
+												</c:if>
+											</td>
+											<td>${off.empName}</td>
+											<td>${off.writeDate}</td>
+											<td>${off.startDay}</td>
+											<td>${off.endDay}</td>
+											<td>${off.period}</td>
+	                                        <td>${off.typeName}</td>
+											<td>${off.status}</td>
+										</tr>
+									</c:forEach>	
 								</tbody>
 							</table>
 						</div>
@@ -85,5 +97,67 @@
 	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </div>
 </body>
+<script>
+	function okBtn(){
+		var len = $("input[name=OffNo]:checked").length;
+		var checkArr = [];
+		if(len > 0) {			
+			$("input[name=OffNo]:checked").each(function(e){
+				checkArr.push($(this).val());
+			});
+		}
+		location.href = "${root}/off/accept?no=" + checkArr;
+	};
+	
+	function noBtn(){
+		var len = $("input[name=OffNo]:checked").length;
+		var checkArr = [];
+		if(len > 0) {			
+			$("input[name=OffNo]:checked").each(function(e){
+				checkArr.push($(this).val());
+			});
+		}
+		location.href = "${root}/off/reject?no=" + checkArr;
+	};
+	
+	
+	function monthBtn(){
+		var month = $("input[type=month]").val();
+		console.log(month);
+		$.ajax({
+			url: '${root}/off/deptOffList',
+			type: 'POST',
+			data: {'month' : month},
+			success : function(res){
+				$("#offListTable").empty();
+				$.each(res, function(i,item){
+					let tr = $("<tr></tr>");
+					if(item.status == "대기중"){						
+						$("<td><input type='checkbox' name='OffNo' value="+item.no+"></td>").appendTo(tr);
+					} else {
+						$("<td></td>").appendTo(tr);
+					}
+					$("<td></td>").html(item.empName).appendTo(tr);
+					$("<td></td>").html(item.writeDate).appendTo(tr);
+					$("<td></td>").html(item.startDay).appendTo(tr);
+					$("<td></td>").html(item.endDay).appendTo(tr);
+					$("<td></td>").html(item.period).appendTo(tr);
+					$("<td></td>").html(item.typeName).appendTo(tr);
+					$("<td></td>").html(item.status).appendTo(tr);
+					$("#offListTable").append(tr);
+				});
+			},
+			error : function(e){
+				console.log(e);
+			}
+		});
+	}
+	
+	$().ready(function() {
+		$('#att-offCon').addClass("active");
+		$('#att-part').css("display", "block");
+	});
+	
+</script>
 <link rel="stylesheet" href="${root}/resources/css/attendance.css">
 </html>

@@ -42,4 +42,19 @@ public class OffDaoImpl implements OffDao {
 		return sst.insert("offMapper.insertOffForm", map);
 	}
 
+	@Override
+	public List<OffVo> selectDeptOffList(SqlSessionTemplate sst, Map<String, Object> map) {
+		return sst.selectList("offMapper.selectDeptOffList", map);
+	}
+
+	@Override
+	public int updateOffAccept(SqlSessionTemplate sst, String no) {
+		return sst.update("offMapper.updateOffAccept", no);
+	}
+	
+	@Override
+	public int updateOffReject(SqlSessionTemplate sst, String no) {
+		return sst.update("offMapper.updateOffReject", no);
+	}
+
 }

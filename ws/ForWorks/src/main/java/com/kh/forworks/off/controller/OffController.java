@@ -1,5 +1,7 @@
 package com.kh.forworks.off.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.forworks.member.vo.MemberVo;
@@ -21,11 +24,21 @@ import com.kh.forworks.off.vo.OffCntVo;
 import com.kh.forworks.off.vo.OffTypeVo;
 import com.kh.forworks.off.vo.OffVo;
 
+
 @Controller
 @RequestMapping("off")
 public class OffController {
 
 	private final OffService service;
+	private final int offConfirmPos = 6;
+	
+	private String getThisMonth() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+		Date now = new Date();        
+		String day = sdf.format(now);
+		
+		return day;
+	}
 	
 	@Autowired
 	public OffController(OffService service) {
@@ -49,7 +62,29 @@ public class OffController {
 	}
 	
 	@GetMapping("confirm")
-	public String offConfirm() {
+	public String offConfirm(Model model, HttpSession session) {
+		
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		String empNo = loginMember.getEmpNo();
+		String month = getThisMonth();
+		
+		//권한 있는지 없는지 확인
+		String posNo = loginMember.getPosNo();
+		if(Integer.parseInt(posNo) == offConfirmPos) {
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("deptNo", loginMember.getDeptNo());
+			map.put("month", month);
+			
+			List<OffVo> OffList = service.getDeptOffList(map);
+			model.addAttribute("OffList", OffList);
+			
+		} else {
+			session.setAttribute("toastMsg", "열람 권한이 없습니다.");
+		}
+		
+		model.addAttribute("month", month);
+		
 		return "off/offConfirm";
 	}
 
@@ -88,4 +123,53 @@ public class OffController {
 			return "fail";
 		}
 	}
+	
+	@PostMapping("deptOffList")
+	@ResponseBody
+	public List<OffVo> getDeptOffList(String month, HttpSession session) {
+		
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		String empNo = loginMember.getEmpNo();
+		
+		//권한 있는지 없는지 확인
+		String posNo = loginMember.getPosNo();
+		if(Integer.parseInt(posNo) == offConfirmPos) {
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("deptNo", loginMember.getDeptNo());
+			map.put("month", month);
+			
+			List<OffVo> OffList = service.getDeptOffList(map);
+			return OffList;
+		} else {
+			return null;
+		}
+	}
+	
+	@GetMapping("accept")
+	public String offAccept(@RequestParam String no[], HttpSession session) {	
+		int result = service.setOffAccept(no);
+		
+		if(result == 1) {			
+			return "redirect:/off/confirm";
+		} else {
+			session.setAttribute("toastMsg", "에러가 발생했습니다. 나중에 다시 시도해주세요.");
+			return "redirect:/off/confirm";
+		}
+		
+	}
+	
+	@GetMapping("reject")
+	public String offReject(@RequestParam String no[], HttpSession session) {	
+		int result = service.setOffReject(no);
+		
+		if(result == 1) {			
+			return "redirect:/off/confirm";
+		} else {
+			session.setAttribute("toastMsg", "에러가 발생했습니다. 나중에 다시 시도해주세요.");
+			return "redirect:/off/confirm";
+		}
+		
+	}
+	
 }
