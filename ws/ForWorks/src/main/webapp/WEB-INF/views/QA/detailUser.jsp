@@ -35,14 +35,12 @@
                 <section class="section" >
                     <div class="card" >
                         
-                        <%@include file="/WEB-INF/views/survey/detailUser-content.jsp" %>
+                        <%@include file="/WEB-INF/views/QA/detailUser-content.jsp" %>
                     </div>
                             <div style="text-align: right;"> 
                                 <button class="myBtn">ㅁㅁ</button>
                                 <button class="myBtn">투표</button>
-                                
                             </div>
-                        
                 </section>
             </div>
         
