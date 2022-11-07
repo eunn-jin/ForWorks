@@ -43,14 +43,6 @@ public class AttendanceController {
 		return day;
 	}
 	
-//	private String getThisMonth() {
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
-//		Date now = new Date();        
-//		String day = sdf.format(now);
-//		
-//		return day;
-//	}
-	
 	private String monthForm(String str) {
 		String year = str.substring(0, 4);
 		String month = str.substring(5, 7);

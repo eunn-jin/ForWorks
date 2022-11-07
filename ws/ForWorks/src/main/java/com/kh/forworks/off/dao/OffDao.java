@@ -17,5 +17,7 @@ public interface OffDao {
 	List<OffVo> selectOffList(SqlSessionTemplate sst, Map<String, Object> map);
 	List<OffTypeVo> selectOffTypeList(SqlSessionTemplate sst);
 	int insertOffForm(SqlSessionTemplate sst, Map<String, Object> map);
-
+	List<OffVo> selectDeptOffList(SqlSessionTemplate sst, Map<String, Object> map);
+	int updateOffAccept(SqlSessionTemplate sst, String no);
+	int updateOffReject(SqlSessionTemplate sst, String no);
 }

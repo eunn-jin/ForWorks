@@ -6,6 +6,7 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.forworks.off.dao.OffDao;
 import com.kh.forworks.off.vo.OffCntVo;
@@ -49,6 +50,31 @@ public class OffServiceImpl implements OffService {
 	@Override
 	public int submitOff(Map<String, Object> map) {
 		return dao.insertOffForm(sst, map);
+	}
+
+	@Override
+	public List<OffVo> getDeptOffList(Map<String, Object> map) {
+		return dao.selectDeptOffList(sst, map);
+	}
+
+	@Override
+	@Transactional
+	public int setOffAccept(String[] no) {
+		int result = 1;
+		for(int i=0; i<no.length; i++) {
+			result *= dao.updateOffAccept(sst, no[i]);
+		}
+		return result;
+	}
+	
+	@Override
+	@Transactional
+	public int setOffReject(String[] no) {
+		int result = 1;
+		for(int i=0; i<no.length; i++) {
+			result *= dao.updateOffReject(sst, no[i]);
+		}
+		return result;
 	}
 	
 	

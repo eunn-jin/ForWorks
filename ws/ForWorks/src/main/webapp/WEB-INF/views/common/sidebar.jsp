@@ -30,7 +30,7 @@
                 <div class="profile">
                     <a href="#">
 	                    <img src="${root}/resources/img/imgTest.jpg">                
-	                	<span class="user-name"> Hong gil dong</span>
+	                	<span class="user-name"> ${loginMember.empName} </span>
                     </a>
                 </div>
             </div>
@@ -55,6 +55,11 @@
                         <li class="submenu-item " id="att-off">
                             <a href="${root}/off/manage">휴가관리</a>
                         </li>
+                        <c:if test="${loginMember.posNo eq 6}">
+                        	<li class="submenu-item " id="att-offCon">
+	                            <a href="${root}/off/confirm">휴가 신청 확인</a>
+	                        </li>
+                        </c:if>
                     </ul>
                 </li>
                 
