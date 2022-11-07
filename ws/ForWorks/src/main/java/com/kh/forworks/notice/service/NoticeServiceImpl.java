@@ -83,11 +83,13 @@ public class NoticeServiceImpl implements NoticeService{
 		
 		int result2 =0;
 		//공지사항 파일 수정
-		if (ntatVo != null && ntatVocheck !=null) {
-			result2 = dao.editNtat(sst,ntatVo);
-		}else if(ntatVo != null && ntatVocheck ==null) {
-			result2 = dao.editNtatInsert(sst, ntatVo);
-		}
+		if (!(ntvo.getNtFileName().isEmpty())) {
+			if (ntatVocheck !=null) {
+				result2 = dao.editNtat(sst,ntatVo);
+			}else if( ntatVocheck ==null) {
+				result2 = dao.editNtatInsert(sst, ntatVo);
+			}
+		}else {result2 =1;}
 		return result+result2;
 	}
 	

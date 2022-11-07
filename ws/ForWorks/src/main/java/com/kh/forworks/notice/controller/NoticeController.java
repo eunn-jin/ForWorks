@@ -194,9 +194,10 @@ public class NoticeController {
 		//System.out.println("파일 확인(정보수정post)::"+ntatVocheck);
 		
 		//해당 게시글의 첨부파일이있으면 삭제
-		if (ntatVo != null) {
+		if (!(ntvo.getNtFileName().isEmpty())) {
 			String fileName = ntatVo.getNtatOrigin();
 			File f =  new File(savePath +  fileName);
+			System.out.println("f::" + f);
 			if(f.exists()) { //파일 존재하는지 확인
 				f.delete();
 				//System.out.println("첨부파일(공지) 삭제완료");
@@ -205,8 +206,6 @@ public class NoticeController {
 		
 		//파일 유무 확인
 		if (ntvo.getNtFileName() != null && !ntvo.getNtFileName().isEmpty()) {
-			
-			
 			//파일 있음
 			//파일 업로드 후 저장된 파일명 얻기 
 			String changeName = FileUploader.fileUpload(ntvo.getNtFileName(), savePath);
