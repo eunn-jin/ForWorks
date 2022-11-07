@@ -23,12 +23,12 @@ public interface VoteDao {
 	List<VoteVo> selectList(SqlSessionTemplate sst, PageVo pv);
 	
 	//진행중
-	int selecting(SqlSessionTemplate sst);
-	List<VoteVo> selectListing(SqlSessionTemplate sst, PageVo pving);
+	int selecting(SqlSessionTemplate sst, String no);
+	List<VoteVo> selectListing(SqlSessionTemplate sst, PageVo pving,String no);
 
 	//마감
-	int selectEnd(SqlSessionTemplate sst);
-	List<VoteVo> selectListEnd(SqlSessionTemplate sst, PageVo pvend);
+	int selectEnd(SqlSessionTemplate sst,String no);
+	List<VoteVo> selectListEnd(SqlSessionTemplate sst, PageVo pvend,String no);
 	
 	//투표 내용 저장
 	int insertVt(SqlSessionTemplate sst, VoteVo vtvo);
@@ -64,7 +64,7 @@ public interface VoteDao {
 	//투표 대상자 투표
 	int insertUserVt(SqlSessionTemplate sst, VoteParticipationVo vo);
 
-	////로그인사원이 대상자 여부 확인
+	//로그인사원이 대상자 여부 확인
 	int check(SqlSessionTemplate sst, HashMap<String, String> map);
 	//대상자중 참여한 투표정보 가져오기
 	VoteParticipationVo checkDo(SqlSessionTemplate sst, HashMap<String, String> map);
@@ -79,6 +79,16 @@ public interface VoteDao {
 	int editVtatInsert(SqlSessionTemplate sst, VoteAttachmentsVo vtat);
 	//투표 항목 등록(수정)
 	int editInsertVtcg(SqlSessionTemplate sst, HashMap<String, String> map);
+
+	//투표 참여했는지 확인
+	VoteParticipationVo checkVote(SqlSessionTemplate sst, HashMap<String, String> map);
+	
+	//특표수 증가
+	int increaseVote(SqlSessionTemplate sst, VoteCategoryVo vtcg);
+	//감소
+	int decreaseVote(SqlSessionTemplate sst, VoteParticipationVo checkpt);
+	//투표내용 변경
+	int editVote(SqlSessionTemplate sst, HashMap<String, String> map);
 
 
 	
