@@ -79,16 +79,7 @@ table {
 
                                     <td style="width:10%;">등록<br>파일</td>
                                     <td style="width:40%; background: white;">
-                                        
-                                        <!-- <c:if test="${cmatVo eq null}">
-                                            <div>첨부파일이 없습니다.</div>
-                                        </c:if>
-                                        <c:if test="${cmatVo ne null}">
-                                            <div>
-                                                <img src="${root}/resources/upload/commu/${cmatVo.cmatChange}" width="128px" height="128px">
-                                            </div>
-                                        </c:if> -->
-
+                                        <input type="hidden" name="cmatOrigin" value="${cmatVo.cmatChange}">
                                         <c:choose>
                                             <c:when test="${cmatVo eq null}">
                                                 <div style="height: 10vh;">첨부파일이 없습니다.</div>

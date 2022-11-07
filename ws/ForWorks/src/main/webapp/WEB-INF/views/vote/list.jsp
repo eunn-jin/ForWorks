@@ -3,7 +3,7 @@
 
 <html>
 <head>
-	<title>Home</title>
+	<title>투표</title>
 </head>
 <body>
     <%@ include file="/WEB-INF/views/common/toastify.jsp" %>

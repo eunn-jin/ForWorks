@@ -27,6 +27,7 @@ tr>th:hover{
 			<ul class="nav nav-tabs">
 				<li class="nav-item"><a class="nav-link active"
 					data-toggle="tab" href="#all">전체</a></li>
+	
 				<li class="nav-item"><a class="nav-link" data-toggle="tab"
 					href="#ing">진행</a></li>
 				<li class="nav-item"><a class="nav-link" data-toggle="tab"
@@ -110,6 +111,8 @@ tr>th:hover{
 
 					</div>
 				</div>
+
+
 				<div class="tab-pane fade" id="ing">
 					<%@include file="/WEB-INF/views/vote/list-ing.jsp" %>
 					
