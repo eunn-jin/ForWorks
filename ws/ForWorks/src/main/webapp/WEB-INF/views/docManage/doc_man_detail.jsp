@@ -61,29 +61,47 @@
                    </div>
                </div>
                <section class="section">
-					<div id="wrap">
+                <div id="wrap">
+                    <form action="" method="post">
+
+                    
+                    <table>
+                        <tr>
+                            <td> 
+                                <label><input type="checkbox" name="contStatus" id="Y" value="Y"  <c:if test="${vo.contStatus eq 'Y'}">checked</c:if>>게시중</label>
+                                <label><input type="checkbox" name="contStatus" id="N" value="N" <c:if test="${vo.contStatus eq 'N'}">checked</c:if>>비공개</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>${vo.title}</td>
+                        </tr>
+                        <tr>
+                            <td>보존기간</td>
+                            <td>${vo.contEnrollDate} ~ ${vo.contEndDate}</td>
+                        </tr>
+                        <tr>
+                            <td>첨부파일</td>
+                            <td>
+                                <c:if test="${fv ne null}">       	
+                                        <a download href="${root}/doc-file/upload/${fv.uploadName}">${fv.originName}</a>
+                                </c:if>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"><div>${vo.content}</div></td>
+                        </tr>
+                        <c:if test="${fv.ext eq '.jpg' || fv.ext eq '.png' }">
+                            <c:if test="${fv ne null}">       	
+                                   <img src="${root}/doc-file/upload/${fv.uploadName}"/>
+                            </c:if>
+                        </c:if>
+                    </table>
+                    <input type="submit" value="게시상태수정">
+                    </form>
+
+                    <div id="back-btn"><button  onclick="window.history.back()">목록</button></div>
                         
-                            <span class="center-top">등록일 2022-10-22</span>
-                            <span class="center-top">작성자 홍길동</span>
-                        
-				            
-				            <div id="center">
-				                <div>보존 마감 날짜</div>
-				                <div><input type="date" value="2023-02-02" readonly></div>
-				                <div>공개범위</div>
-				                <div>전체공개</div>
-				                <div>제목</div>
-				                <div><input type="text" readonly value="${vo.title}"></div>
-				                <div>첨부파일</div>
-				                <div><input type="file"></div>
-				                <div>내용</div>
-                                <div>${vo.content}</div>
-				                <!--<textarea name="" id="" cols="30" rows="10" readonly></textarea>-->
-				            </div>
-				            
-				            <div id="back-btn"><input type="button" value="뒤로가기" ></div>
-				                
-				    </div>
+            </div>
                </section>
            </div>
            
@@ -92,6 +110,8 @@
 </div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
+
+
 <script>
 	
 	$().ready(function() {

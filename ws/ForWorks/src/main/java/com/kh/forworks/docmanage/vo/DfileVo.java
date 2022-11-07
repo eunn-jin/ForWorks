@@ -9,4 +9,5 @@ public class DfileVo {
 	private String filePath;
 	private String uploadName;
 	private String originName;
+	private String ext;
 }

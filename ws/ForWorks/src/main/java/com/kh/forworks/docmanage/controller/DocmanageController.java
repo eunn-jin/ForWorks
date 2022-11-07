@@ -20,6 +20,7 @@ import com.kh.forworks.PageVo;
 import com.kh.forworks.Pagination;
 import com.kh.forworks.docmanage.service.DocmanageService;
 import com.kh.forworks.docmanage.vo.DfileVo;
+import com.kh.forworks.docmanage.vo.DocControlVo;
 import com.kh.forworks.docmanage.vo.DocVo;
 import com.kh.forworks.member.vo.MemberVo;
 
@@ -34,23 +35,42 @@ public class DocmanageController {
 		this.ds = ds;
 	}
 	//일반문서 리스트(화면)
-	@GetMapping("list")
-	public String list(Model model) {
-		List<DocVo> result = ds.selectDoc();
-		System.out.println(result);
+	@GetMapping("list/{pno}")
+	public String list(Model model, HttpSession session ,@PathVariable int pno ) {
+		MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
+		String deptName = loginMember.getDeptName();
+		String deptNo = loginMember.getDeptNo();
+		String range = deptNo+deptName;
+		
+		//페이징처리
+		int totalCount = ds.selectRangeTotalCnt(range);
+		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
+		
+		List<DocVo> result = ds.selectRangeDoc(range);
 		model.addAttribute("result",result);
+		model.addAttribute("pv",pv);
 		return "docManage/doc_list";
 	}
 	//일반문서 작성(화면)
 	@GetMapping("write")
 	public String write(Model model) {
-	//공개범위 받아오기
-//	range = ds.selectRange();
+	//부서 받아오기
+	List<MemberVo> dept = ds.selectDept();
+	model.addAttribute("dept",dept);
 	return "docManage/doc_write";
 	}
 	//일반문서 디테일(화면)
-	@GetMapping("detail")
-	public String detail() {
+	@GetMapping("detail/{no}")
+	public String detail(@PathVariable String no, Model model) {
+		DocVo vo = ds.selectOneDoc(no);
+		System.out.println("디테일조회 " + vo);
+		if(vo.getFileNo() != null) {
+			DfileVo fv = ds.selectFileDoc(no);
+			fv.setExt(fv.getOriginName().substring(fv.getOriginName().lastIndexOf('.')));
+			model.addAttribute("fv",fv);
+			System.out.println("디테일조회fv " + fv);
+		}
+		model.addAttribute("vo",vo);
 		return "docManage/doc_detail";
 	}
 	
@@ -121,13 +141,6 @@ public class DocmanageController {
 	 * return "redirect:/"; }
 	 */
 	
-	//문서관리디테일
-	@GetMapping("manDetail/{no}")
-	public String manDetail(@PathVariable String no , Model model) {
-		DocVo vo = ds.selectOneDoc(no);
-		model.addAttribute("vo",vo);
-		return "docManage/doc_man_detail";
-	}
 	
 	
 	//일반문서 작성
@@ -137,6 +150,17 @@ public class DocmanageController {
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 		String empNo = loginMember.getEmpNo();
 		dv.setEmpNo(empNo);
+		//범위
+//		DocControlVo dcv = new DocControlVo();
+		String range3="";
+		String[] range2 = dv.getRange_();
+		if(range2 != null) {
+			for(int i = 0 ; i < range2.length;i++) {
+				range3+=range2[i]+",";
+				dv.setRange(range3);
+//				dcv.setRange(range3);
+			}
+		}
 		
 		System.out.println("called...");//swy
 		  
@@ -176,13 +200,60 @@ public class DocmanageController {
 		int result = ds.write(dv,df);
 		if(result == 1) {
 			session.setAttribute("toastMsg", "문서 등록 완료");
-			return "docManage/doc_list";
+			return "docManage/doc_manage";
 		}else {
 			session.setAttribute("toastMsg", "다시 시도해주세요");
-			return "docManage/doc_list";
+			return "docManage/doc_write";
 		}
-		
-		
-		
+
 	}
+	//문서관리디테일
+	@GetMapping("manDetail/{no}")
+	public String manDetail(@PathVariable String no , Model model) {
+		DocVo vo = ds.selectOneDoc(no);
+
+		if(vo.getFileNo() != null) {
+			DfileVo fv = ds.selectFileDoc(no);
+			fv.setExt(fv.getOriginName().substring(fv.getOriginName().lastIndexOf('.')));
+			model.addAttribute("fv",fv);
+			System.out.println("디테일조회fv " + fv);
+		}
+		model.addAttribute("vo",vo);
+		return "docManage/doc_man_detail";
+	}
+	//문서관리디테일-게시상태수정
+	@PostMapping("manDetail/{no}")
+	public String manDetail(@PathVariable String no, DocVo vo , HttpSession session) {
+
+		System.out.println(vo.getContStatus());
+		vo.setDocNo(no);
+		int result = ds.updateStatus(vo);
+		
+		
+		if(result == 1) {
+			session.setAttribute("toastMsg", "게시상태 변경 완료!");
+			return "docManage/manage/1";
+		}else {
+			session.setAttribute("toastMsg", "보존기간을 확인해주세요.");
+			return "docManage/doc_man_detail";
+		}
+
+	}
+	
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

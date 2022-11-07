@@ -86,7 +86,7 @@
                     </a>
                     <ul class="submenu" id="doc-part">
                         <li class="submenu-item" id="doc-list">
-                            <a href="${root}/docmanage/list">일반문서</a>
+                            <a href="${root}/docmanage/list/1">일반문서</a>
                         </li>
                         <li class="submenu-item "id="doc-write">
                             <a href="component-badge.html">결재문서</a>

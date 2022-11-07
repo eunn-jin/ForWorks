@@ -69,72 +69,70 @@
                    <div id="wrap">
 				        <div id="title">급여대장 등록</div>
 						<form action="" method="post">
-				        <div>
-							<input type="month" name="salMonth">
-						</div>
-		           	 	<div id="center">
+							<div><input type="month" name="salMonth"></div>
+							<div id="center">
 
-								<table>
-									<tr>
-										<td>부서명</td>
-										<td>
-											<select name="dept" id="dept">
-												<option value="">부서선택</option>
-												<c:forEach items="${departList}" var="d">
-													<option value="${d}">${d}</option>
-												</c:forEach>
-											</select>
-										</td>
-									</tr>
-									<tr>
-										<td>사원명</td>
-										<td>
-											<select name="empNo" id="emp">
-												<option value="">직원선택</option>
-											</select>
-										</td>
-									</tr>
-									<tr>
-										<td>정산기간</td>
-										<td><input name="startMonth" id="start-month"> ~ <input name="endMonth" id="end-month"></td>
-									</tr>
-									<tr>
-										<td>지급날짜</td>
-										<td><input type="date" name="payDate"></td>
-									</tr>
-									<tr>
-										<td>급여구분</td>
-										<td>
-											<select name="salCate" id="cate">
-												<option value="">선택</option>
-												<option value="1">월급</option>
-												<option value="2">상여</option>
-												<option value="3">월급+상여</option>
-											</select>
-										</td>
-									</tr>
-								</table>
-								<div><input type="submit" value="등록" class="btn-css"></div>
-							</form>
-							<div id="zone">
-								<div class="back-color">
-									<div id="s-zone">월급</div>
-									<table id="s-table">
-										
+									<table>
+										<tr>
+											<td>부서명</td>
+											<td>
+												<select name="dept" id="dept">
+													<option value="">부서선택</option>
+													<c:forEach items="${departList}" var="d">
+														<option value="${d}">${d}</option>
+													</c:forEach>
+												</select>
+											</td>
+										</tr>
+										<tr>
+											<td>사원명</td>
+											<td>
+												<select name="empNo" id="emp">
+													<option value="">직원선택</option>
+												</select>
+											</td>
+										</tr>
+										<tr>
+											<td>정산기간</td>
+											<td><input name="startMonth" id="start-month"> ~ <input name="endMonth" id="end-month"></td>
+										</tr>
+										<tr>
+											<td>지급날짜</td>
+											<td><input type="date" name="payDate"></td>
+										</tr>
+										<tr>
+											<td>급여구분</td>
+											<td>
+												<select name="salCate" id="cate">
+													<option value="">선택</option>
+													<option value="1">월급</option>
+													<option value="2">상여</option>
+													<option value="3">월급+상여</option>
+												</select>
+											</td>
+										</tr>
 									</table>
-								</div>
-								<div class="back-color2">
-									<div id="bonus-zone">상여</div>
-									<table id="b-table">
-										
-									</table>
-								</div>
-							</div>	
-							<div style="float:right;" id="total">
-								총급여 : 
+									<div id="zone">
+										<div class="back-color">
+											<div id="s-zone">월급</div>
+											<table id="s-table">
+												
+											</table>
+										</div>
+										<div class="back-color2">
+											<div id="bonus-zone">상여</div>
+											<table id="b-table">
+												
+											</table>
+										</div>
+									</div>	
+									<div style="float:right;" id="total">
+										총급여 : 
+									</div>
+									
+									<div><input type="submit" value="등록" class="btn-css"></div>
+								</form>
 							</div>
-							
-						</div>
 		    		</div>
                </section>
            </div>
@@ -205,7 +203,7 @@
 							$('#s-table').append('<tr><td>'+data[i].cate+'</td><td>'+data[i].amount+'</td></tr>');
 							total += parseInt(data[i].amount);
 						}
-					$('#total').append(total+"원");
+					$('#total').append('<input type="number" value="'+total+'">'+"원");
 				},
 				error : function(){
 					alert("실패");
@@ -240,6 +238,8 @@
 				}
 			})
 		}
+
+		
 	})
 </script>
 <!--연도 selectbox-->

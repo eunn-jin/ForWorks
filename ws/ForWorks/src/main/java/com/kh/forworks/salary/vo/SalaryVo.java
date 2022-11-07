@@ -22,5 +22,6 @@ public class SalaryVo {
 	private String bonus;
 	private String sum;
 	private String dept;
+	private String bonusSum;
 	
 }
