@@ -16,5 +16,8 @@ public interface CommentsDao {
 
 	//댓글삭제
 	int delete(SqlSessionTemplate sst, String no);
+	
+	//삭제번호로 댓글정보가져오기
+	CommentsVo selectOne(SqlSessionTemplate sst, String cmtNo);
 
 }

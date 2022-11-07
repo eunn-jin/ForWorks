@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="qaMapper">
+
+	<select id="selectList" resultType="com.kh.forworks.qa.vo.QAVo">
+		SELECT ROWNUM, X.*
+		FROM(SELECT 
+		    Q.QA_NO
+		    ,Q.QA_SDATE
+		    ,Q.QA_EDATE
+		    ,Q.QA_UDATE
+		    ,Q.QA_DDATE
+		    ,Q.QA_STATUS
+		    ,Q.QA_TITLE
+		    ,Q.QA_CONTENT
+		    ,E.EMP_NAME AS EMP_NO
+		    ,Q.EMP_NO AS NUM
+		    
+		    FROM QA Q
+		    
+		    JOIN EMPLOYEE E ON E.EMP_NO = Q.EMP_NO
+		    WHERE Q.QA_STATUS = 'I'
+		    OR Q.QA_STATUS = 'E'
+            ORDER BY Q.QA_NO
+		    )X
+		 ORDER BY QA_NO DESC		
+	</select>	
+	
+	
+	<!-- 설문지 등록 -->
+	<!-- //투표 내용 저장 -->
+	<insert id="insertQa">
+		INSERT INTO QA(QA_NO, QA_SDATE, QA_EDATE, QA_TITLE, QA_CONTENT,EMP_NO)
+		VALUES(SEQ_QA_QANO.NEXTVAL, #{qaSdate}, #{qaEdate}, #{qaTitle},#{qaContent},#{empNo})	
+	</insert>
+	
+	<!-- //첨부파일 내용 저장 -->
+	<insert id="insertQaat">
+		INSERT INTO QA_ATTACHMENTS
+		(QAAT_NO, QAAT_CHANGE, QAAT_ORIGIN, QAAT_PATH, QA_NO)
+		VALUES
+		(SEQ_QA_ATTACHMENTS_QAATNO.NEXTVAL, #{qaatChange}, #{qaatOrigin}, #{qaatPath}, SEQ_QA_QANO.CURRVAL)		
+	</insert>
+	
+	<!-- //투표 항목 저장 -->
+	<insert id="insertQacg">
+		INSERT INTO QA_CATEGORY(QACG_NO, QA_NO, QACG_NAME)
+		VALUES(SEQ_QA_CATEGORY_QACGNO.NEXTVAL, SEQ_QA_QANO.CURRVAL, #{qact})	
+	</insert>
+	
+
+</mapper>

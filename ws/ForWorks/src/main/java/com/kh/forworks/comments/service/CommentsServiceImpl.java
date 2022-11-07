@@ -35,9 +35,26 @@ public class CommentsServiceImpl implements CommentsService{
 	
 	//댓글 삭제
 	@Override
-	public int delete(String no) {
-		return dao.delete(sst, no);
+	public int delete(String cmtno, String no) {
+		
+		//댓글 작성자가 로그인한 사원인지 확인
+		CommentsVo dvo =dao.selectOne(sst, cmtno);
+		//System.out.println(dvo);
+		
+		//만약 로그인 사원번호와 댓글 사원번호가 일치하면 삭제
+		if (no.equals(dvo.getEmpNo()) ) {
+			return dao.delete(sst, cmtno);
+			
+		}else {
+			//일치하지 않은 경우
+			return 0; 
+		}
+		
+		
 	}
+
+
+	
     
     
 }

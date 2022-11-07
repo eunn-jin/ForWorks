@@ -50,15 +50,24 @@ public class CommentsController {
 	@ResponseBody
 	public String delete(CommentsVo vo, HttpSession session) {
 		
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		//System.out.println(loginMember);
+		//System.out.println(vo);
+		//삭제하는 글번호의 정보 가져오기
+		
+		
         //System.out.println(vo.getCmtNo());
         //db 다녀오기
-        int result =  cmsv.delete(vo.getCmtNo());
+        int result =  cmsv.delete(vo.getCmtNo(), loginMember.getEmpNo());
         //System.out.println("db갔다옴");
         //결과응답
         if (result == 1) {
             //s
             return "ok";
-        }else {
+        }else if (result == 0) {
+			return "check";
+		}
+        else {
             ///f
             return "fail";
         }

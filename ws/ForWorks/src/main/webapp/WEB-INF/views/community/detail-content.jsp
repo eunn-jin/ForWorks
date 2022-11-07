@@ -85,9 +85,8 @@ table {
                                 <tr>
                                     <td class="danger">글내용</td>
                                     <td colspan="3" style=" background : white; text-align: left;">
-                                        <textarea id="summernote" name="content" class="form-control" style="background-color: white; text-align: left; height: 30vh;" disabled
-                                        >${cmuvo.cmuContent} 
-                                        </textarea>
+                                        <!-- <textarea id="summernote" name="content" class="form-control" style="background-color: white; text-align: left; height: 30vh;" disabled>${cmuvo.cmuContent} </textarea> -->
+                                        <div style="background-color: white; text-align: left; height: 30vh;" th:utext="${cmuvo.cmuContent}">${cmuvo.cmuContent}</div>
                                     </td>
                                 </tr>
     
@@ -231,6 +230,7 @@ table {
             type : "POST",
             data : {
                     "cmtNo" : num
+
             },
             success : function(result){
                 if (result =='ok') {
@@ -239,7 +239,10 @@ table {
                     // target.remove();
                     window.location.reload()
 
-                }else{
+                }else if(result == 'check'){
+                    alert("댓글 작성자가 아닙니다.");
+                }
+                else{
                     alert("댓글 삭제 실패..");
                 }
             },

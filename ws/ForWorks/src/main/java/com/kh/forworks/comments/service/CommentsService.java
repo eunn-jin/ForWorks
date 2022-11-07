@@ -13,6 +13,7 @@ public interface CommentsService {
 	List<CommentsVo> selectList(String no);
 
 	//뎃글 삭제
-	int delete(String no);
+	int delete(String cmtno, String no);
+
 
 }

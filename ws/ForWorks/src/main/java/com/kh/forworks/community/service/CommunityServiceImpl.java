@@ -85,11 +85,13 @@ public class CommunityServiceImpl implements CommunityService{
 		
 		//파일수정
 		int result2 = 0;
-		if (cmatVo != null && cmatVoCheck != null) {
-			result2 = dao.editCmat(sst, cmatVo);
-		}else if(cmatVo != null && cmatVoCheck == null){
-			result2 = dao.editCmatInsert(sst, cmatVo);
-		}
+		if (!(cmuvo.getCmuFileName().isEmpty())) {
+			if (cmatVo != null && cmatVoCheck != null) {
+				result2 = dao.editCmat(sst, cmatVo);
+			}else if(cmatVo != null && cmatVoCheck == null){
+				result2 = dao.editCmatInsert(sst, cmatVo);
+			}
+		}else {result2=1;}
 		return result1 + result2;
 	}
 	

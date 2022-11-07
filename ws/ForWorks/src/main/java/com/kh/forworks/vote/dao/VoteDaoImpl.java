@@ -45,24 +45,24 @@ public class VoteDaoImpl implements VoteDao{
 
 	//진행중
 	@Override
-	public int selecting(SqlSessionTemplate sst) {
-		return sst.selectOne("voteMapper.selecting");
+	public int selecting(SqlSessionTemplate sst, String no) {
+		return sst.selectOne("voteMapper.selecting",no);
 	}
 
 	@Override
-	public List<VoteVo> selectListing(SqlSessionTemplate sst, PageVo pving) {
-		return sst.selectList("voteMapper.selectListing",null,rb(pving));
+	public List<VoteVo> selectListing(SqlSessionTemplate sst, PageVo pving,String no) {
+		return sst.selectList("voteMapper.selectListing",no,rb(pving));
 	}
 	
 	//마감
 	@Override
-	public int selectEnd(SqlSessionTemplate sst) {
-		return sst.selectOne("voteMapper.selectEnd");
+	public int selectEnd(SqlSessionTemplate sst,String no) {
+		return sst.selectOne("voteMapper.selectEnd",no);
 	}
 
 	@Override
-	public List<VoteVo> selectListEnd(SqlSessionTemplate sst, PageVo pvend) {
-		return sst.selectList("voteMapper.selectListEnd", null, rb(pvend));
+	public List<VoteVo> selectListEnd(SqlSessionTemplate sst, PageVo pvend,String no) {
+		return sst.selectList("voteMapper.selectListEnd", no, rb(pvend));
 	}
 	//----------------------------------------------------------------------
 	//투표 내용 저장
@@ -106,7 +106,6 @@ public class VoteDaoImpl implements VoteDao{
 	//투표 정보 가져오기
 	@Override
 	public VoteVo selectOneVt(SqlSessionTemplate sst, String pno) {
-		// TODO Auto-generated method stub
 		return sst.selectOne("voteMapper.selectOneVt", pno);
 	}
 
@@ -187,6 +186,29 @@ public class VoteDaoImpl implements VoteDao{
 	@Override
 	public int editInsertVtcg(SqlSessionTemplate sst, HashMap<String, String> map) {
 		return sst.insert("voteMapper.editInsertVtcg", map);
+	}
+	
+	//투표 참여했는지 확인
+	@Override
+	public VoteParticipationVo checkVote(SqlSessionTemplate sst, HashMap<String, String> map) {
+		return sst.selectOne("voteMapper.checkVote", map);
+	}
+	
+	//특표수 증가
+	@Override
+	public int increaseVote(SqlSessionTemplate sst, VoteCategoryVo vtcg) {
+		return sst.update("voteMapper.increaseVote",vtcg);
+	}
+	//감소
+	@Override
+	public int decreaseVote(SqlSessionTemplate sst, VoteParticipationVo checkpt) {
+		return sst.update("voteMapper.decreaseVote",checkpt);
+	}
+	
+	//투표내용 변경
+	@Override
+	public int editVote(SqlSessionTemplate sst, HashMap<String, String> map) {
+		return sst.update("voteMapper.editVote",map);
 	}
 
 	
