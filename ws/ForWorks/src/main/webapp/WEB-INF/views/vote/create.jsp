@@ -3,7 +3,7 @@
 
 <html>
 <head>
-	<title>Home</title>
+	<title>투표-생성</title>
 </head>
 <body>
 
