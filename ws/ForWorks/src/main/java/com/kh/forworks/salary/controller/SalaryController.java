@@ -73,6 +73,12 @@ public class SalaryController {
 		
 		SalaryVo result = ss.selectDetail(map);
 		System.out.println("result출력" + result);
+		
+		result.setStartMonth(result.getStartMonth().substring(0,10));
+		result.setEndMonth(result.getEndMonth().substring(0,10));
+		
+		System.out.println(result.getEndMonth());
+		
 		List<SalaryVo> result1 = null;
 		List<SalBonusVo> result2 = null;
 		if(result.getSalCate().equals("1")) {

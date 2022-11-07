@@ -69,5 +69,15 @@ public class DocmanageDaoImpl implements DocmanageDao {
 	public int updateRange(SqlSessionTemplate sst) {
 		return sst.update("docMapper.updateRange");
 	}
+	//문서에 업로드된 파일가져오기
+	@Override
+	public DfileVo selectFileDoc(SqlSessionTemplate sst, String no) {
+		return sst.selectOne("docMapper.selectFile",no);
+	}
+	//문서관리디테일-게시상태수정
+	@Override
+	public int updateStatus(SqlSessionTemplate sst, DocVo vo) {
+		return sst.update("docMapper.updateStatus" , vo);
+	}
 
 }

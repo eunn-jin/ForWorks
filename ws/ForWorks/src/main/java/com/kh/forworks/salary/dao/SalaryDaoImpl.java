@@ -24,6 +24,8 @@ public class SalaryDaoImpl implements SalaryDao {
 	//직원,날짜로 보너스조회
 	@Override
 	public List<SalBonusVo> selectBonus(SqlSessionTemplate sst, SalaryVo sv) {
+		System.out.println(sv.getStartMonth());
+		System.out.println(sv.getEndMonth());
 		return sst.selectList("salaryMapper.selectBonus", sv);
 	}
 	//초과수당조회

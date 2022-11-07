@@ -30,5 +30,9 @@ public interface DocmanageDao {
 	int selectRangeCountAll(SqlSessionTemplate sst, String range);
 	//당일 기준 업데이트해서 비공개처리
 	int updateRange(SqlSessionTemplate sst);
+	//문서에 업로드된 파일 가져오기
+	DfileVo selectFileDoc(SqlSessionTemplate sst, String no);
+	//문서관리디테일-게시상태수정
+	int updateStatus(SqlSessionTemplate sst, DocVo vo);
 
 }

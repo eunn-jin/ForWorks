@@ -111,7 +111,7 @@
                             <div><a href="${root}/docmanage/manDetail/${x.docNo}">${x.title}</a></div>
                             <div>전체공개</div>
                             <div>${x.enrollDate}</div>
-                            <div>${x.status}</div>
+                            <div>${x.contStatus}</div>
                         </c:forEach>
 				      
 				        

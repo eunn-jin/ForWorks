@@ -71,6 +71,16 @@ public class DocmanageServiceImpl implements DocmanageService{
 	public int selectRangeTotalCnt(String range) {
 		return dao.selectRangeCountAll(sst, range);
 	}
+	//문서에 업로드된 파일가져오기
+	@Override
+	public DfileVo selectFileDoc(String no) {
+		return dao.selectFileDoc(sst, no);
+	}
+	//문서관리디테일-게시상태수정
+	@Override
+	public int updateStatus(DocVo vo) {
+		return dao.updateStatus(sst,vo);
+	}
 	
 	
 }

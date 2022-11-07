@@ -22,4 +22,8 @@ public interface DocmanageService {
 	List<MemberVo> selectDept();
 	//전체 문서갯수조회(range)
 	int selectRangeTotalCnt(String range);
+	//문서에업로드된파일가져오기
+	DfileVo selectFileDoc(String no);
+	//문서관리디테일-게시상태수정
+	int updateStatus(DocVo vo);
 }

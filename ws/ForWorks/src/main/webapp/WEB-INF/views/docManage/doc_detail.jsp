@@ -76,11 +76,20 @@
                                 </tr>
                                 <tr>
                                     <td>첨부파일</td>
-                                    <td><input type="file" readonly></td>
+                                    <td>
+	                                    <c:if test="${fv ne null}">       	
+	                                    		<a download href="${root}/doc-file/upload/${fv.uploadName}">${fv.originName}</a>
+	                                    </c:if>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td colspan="3"><div>${vo.content}</div></td>
                                 </tr>
+                                <c:if test="${fv.ext eq '.jpg' || fv.ext eq '.png' }">
+                                	<c:if test="${fv ne null}">       	
+                                   		<img src="${root}/doc-file/upload/${fv.uploadName}"/>
+                                    </c:if>
+                                </c:if>
                             </table>
 
 

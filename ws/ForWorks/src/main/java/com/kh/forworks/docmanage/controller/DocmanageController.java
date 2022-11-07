@@ -63,6 +63,13 @@ public class DocmanageController {
 	@GetMapping("detail/{no}")
 	public String detail(@PathVariable String no, Model model) {
 		DocVo vo = ds.selectOneDoc(no);
+		System.out.println("디테일조회 " + vo);
+		if(vo.getFileNo() != null) {
+			DfileVo fv = ds.selectFileDoc(no);
+			fv.setExt(fv.getOriginName().substring(fv.getOriginName().lastIndexOf('.')));
+			model.addAttribute("fv",fv);
+			System.out.println("디테일조회fv " + fv);
+		}
 		model.addAttribute("vo",vo);
 		return "docManage/doc_detail";
 	}
@@ -134,13 +141,6 @@ public class DocmanageController {
 	 * return "redirect:/"; }
 	 */
 	
-	//문서관리디테일
-	@GetMapping("manDetail/{no}")
-	public String manDetail(@PathVariable String no , Model model) {
-		DocVo vo = ds.selectOneDoc(no);
-		model.addAttribute("vo",vo);
-		return "docManage/doc_man_detail";
-	}
 	
 	
 	//일반문서 작성
@@ -205,8 +205,55 @@ public class DocmanageController {
 			session.setAttribute("toastMsg", "다시 시도해주세요");
 			return "docManage/doc_write";
 		}
-		
-		
-		
+
 	}
+	//문서관리디테일
+	@GetMapping("manDetail/{no}")
+	public String manDetail(@PathVariable String no , Model model) {
+		DocVo vo = ds.selectOneDoc(no);
+
+		if(vo.getFileNo() != null) {
+			DfileVo fv = ds.selectFileDoc(no);
+			fv.setExt(fv.getOriginName().substring(fv.getOriginName().lastIndexOf('.')));
+			model.addAttribute("fv",fv);
+			System.out.println("디테일조회fv " + fv);
+		}
+		model.addAttribute("vo",vo);
+		return "docManage/doc_man_detail";
+	}
+	//문서관리디테일-게시상태수정
+	@PostMapping("manDetail/{no}")
+	public String manDetail(@PathVariable String no, DocVo vo , HttpSession session) {
+
+		System.out.println(vo.getContStatus());
+		vo.setDocNo(no);
+		int result = ds.updateStatus(vo);
+		
+		
+		if(result == 1) {
+			session.setAttribute("toastMsg", "게시상태 변경 완료!");
+			return "docManage/manage/1";
+		}else {
+			session.setAttribute("toastMsg", "보존기간을 확인해주세요.");
+			return "docManage/doc_man_detail";
+		}
+
+	}
+	
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

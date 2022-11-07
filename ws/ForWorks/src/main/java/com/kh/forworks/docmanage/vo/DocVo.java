@@ -24,6 +24,6 @@ public class DocVo {
 	private String adocNo;
 	private String range;
 	
-	
+	private String fileNo;
 	
 }
