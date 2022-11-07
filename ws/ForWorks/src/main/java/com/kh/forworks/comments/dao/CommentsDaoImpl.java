@@ -22,10 +22,17 @@ public class CommentsDaoImpl implements CommentsDao{
 		//System.out.println("매퍼 접근");
 		return sst.selectList("commentsMapper.selectList", no);
 	}
-
+	
+	//댓글삭제
 	@Override
 	public int delete(SqlSessionTemplate sst, String no) {
 		return sst.update("commentsMapper.delete",no);
+	}
+
+	//삭제번호로 댓글정보가져오기
+	@Override
+	public CommentsVo selectOne(SqlSessionTemplate sst, String cmtNo) {
+		return sst.selectOne("commentsMapper.selectOne", cmtNo);
 	}
 
 }
