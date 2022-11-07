@@ -41,9 +41,30 @@
 	
 	<!--투표 진행중 -->
 	<select id="selecting" resultType="int">
-		SELECT COUNT(*)
-		FROM VOTE
-		WHERE VT_STATUS = 'I'
+		SELECT count(ROWNUM)
+		FROM(SELECT 
+		    V.VT_NO
+		    ,V.VT_CREATE
+		    ,V.VT_END
+		    ,V.VT_DTDATE
+		    ,V.VT_UPDATE
+		    ,V.VT_STATUS
+		    ,V.VT_TITLE
+		    ,V.VT_CONTENT
+		    ,E.EMP_NAME AS EMP_NO
+		    ,V.EMP_NO AS NUM
+            ,VP.EMP_NO AS UNO
+		    
+		    FROM VOTE V
+		    
+		    JOIN EMPLOYEE E ON E.EMP_NO = V.EMP_NO
+            JOIN VOTE_PARTICIPATION VP ON VP.VT_NO = V.VT_NO
+		    WHERE V.VT_STATUS = 'I'
+            AND VP.EMP_NO = #{no}
+		    
+            ORDER BY V.VT_NO
+		    )X
+		 ORDER BY VT_NO DESC
 	</select>
 	
 	<select id="selectListing" resultType="com.kh.forworks.vote.vo.VoteVo">
@@ -59,25 +80,23 @@
 		    ,V.VT_CONTENT
 		    ,E.EMP_NAME AS EMP_NO
 		    ,V.EMP_NO AS NUM
+            ,VP.EMP_NO AS UNO
 		    
 		    FROM VOTE V
 		    
 		    JOIN EMPLOYEE E ON E.EMP_NO = V.EMP_NO
+            JOIN VOTE_PARTICIPATION VP ON VP.VT_NO = V.VT_NO
 		    WHERE V.VT_STATUS = 'I'
+            AND VP.EMP_NO = #{no}
+		    
             ORDER BY V.VT_NO
 		    )X
-		 ORDER BY VT_NO DESC	
+		 ORDER BY VT_NO DESC
 	</select>
 	
 	<!--투표 마감 -->
 	<select id="selectEnd" resultType="int">
-		SELECT COUNT(*)
-		FROM VOTE
-		WHERE VT_STATUS = 'E'
-	</select>
-	
-	<select id="selectListEnd" resultType="com.kh.forworks.vote.vo.VoteVo">
-		SELECT ROWNUM, X.*
+		SELECT count(ROWNUM)
 		FROM(SELECT 
 		    V.VT_NO
 		    ,V.VT_CREATE
@@ -89,11 +108,42 @@
 		    ,V.VT_CONTENT
 		    ,E.EMP_NAME AS EMP_NO
 		    ,V.EMP_NO AS NUM
+            ,VP.EMP_NO AS UNO
 		    
 		    FROM VOTE V
 		    
 		    JOIN EMPLOYEE E ON E.EMP_NO = V.EMP_NO
+            JOIN VOTE_PARTICIPATION VP ON VP.VT_NO = V.VT_NO
 		    WHERE V.VT_STATUS = 'E'
+            AND VP.EMP_NO = #{no}
+		    
+            ORDER BY V.VT_NO
+		    )X
+		 ORDER BY VT_NO DESC
+	</select>
+	
+	<select id="selectListEnd" resultType="com.kh.forworks.vote.vo.VoteVo">
+			SELECT ROWNUM, X.*
+		FROM(SELECT 
+		    V.VT_NO
+		    ,V.VT_CREATE
+		    ,V.VT_END
+		    ,V.VT_DTDATE
+		    ,V.VT_UPDATE
+		    ,V.VT_STATUS
+		    ,V.VT_TITLE
+		    ,V.VT_CONTENT
+		    ,E.EMP_NAME AS EMP_NO
+		    ,V.EMP_NO AS NUM
+            ,VP.EMP_NO AS UNO
+		    
+		    FROM VOTE V
+		    
+		    JOIN EMPLOYEE E ON E.EMP_NO = V.EMP_NO
+            JOIN VOTE_PARTICIPATION VP ON VP.VT_NO = V.VT_NO
+		    WHERE V.VT_STATUS = 'E'
+            AND VP.EMP_NO = #{no}
+		    
             ORDER BY V.VT_NO
 		    )X
 		 ORDER BY VT_NO DESC					
@@ -144,8 +194,18 @@
 	<!-- 정보가져오기 -->
 	
 	<select id="selectOneVt" resultType="com.kh.forworks.vote.vo.VoteVo">
-		SELECT *
-		FROM VOTE
+		SELECT 
+			V.VT_NO
+			,V.VT_CREATE
+			,V.VT_END
+			,V.VT_DTDATE
+			,V.VT_UPDATE
+			,V.VT_STATUS
+			,V.VT_TITLE
+			,V.VT_CONTENT
+			,E.EMP_NAME AS EMP_NO 
+		FROM VOTE V
+		JOIN EMPLOYEE E ON E.EMP_NO = V.EMP_NO
 		WHERE VT_NO = #{pno}
 	</select>
 	
@@ -156,8 +216,21 @@
 	</select>
 	
 	<select id="selectVtpt" resultType="com.kh.forworks.vote.vo.VoteParticipationVo">
-		SELECT *
-		FROM VOTE_PARTICIPATION
+		SELECT 
+		   VP.VTPT_NO
+		    ,VP.EMP_NO
+		    ,VP.VT_NO
+		    ,VP.VTCG_NO
+		    ,VP.VTPT_DATE
+		    ,VP.VTPT_EDIT
+		    ,VP.VTPT_STATUS
+		    ,E.EMP_NAME
+		    ,D.DEPT_NAME
+		FROM VOTE_PARTICIPATION VP
+		JOIN EMPLOYEE E
+		ON E.EMP_NO = VP.EMP_NO
+		JOIN DEPARTMENT D
+		ON D.DEPT_NO = E.DEPT_NO
 		WHERE VT_NO = #{pno}
 	</select>
 	
@@ -168,7 +241,9 @@
 	</select>
 	
 	<update id="end">
-		UPDATE VOTE SET VT_STATUS = 'E'
+		UPDATE VOTE SET 
+		VT_STATUS = 'E',
+		VT_END = SYSDATE
 		WHERE VT_NO = #{pno}
 		AND VT_STATUS ='I'
 	</update>
@@ -231,8 +306,8 @@
 		UPDATE VOTE_ATTACHMENTS SET
 		VTAT_CHANGE	=	#{vtatChange},
 		VTAT_ORIGIN	=	#{vtatOrigin},
-		VTAT_PATH	=	#{vtatPath},
-		WHERE VT_NO = #{pno}
+		VTAT_PATH	=	#{vtatPath}
+		WHERE VT_NO = #{vtNo}
 	</update>
 	
 	<insert id="editVtatInsert">
@@ -246,4 +321,39 @@
 		INSERT INTO VOTE_CATEGORY(VTCG_NO, VT_NO, VTCG_NAME)
 		VALUES(SEQ_VOTE_CATEGORY_VTCGNO.NEXTVAL, #{pno}, #{vtcg})	
 	</insert>
+	
+	<!-- 투표 참여했는지 확인 -->
+	<select id="checkVote" resultType="com.kh.forworks.vote.vo.VoteParticipationVo">
+		SELECT *
+		FROM VOTE_PARTICIPATION
+		WHERE EMP_NO = #{no}
+		AND VT_NO = #{pno}
+	</select>
+	
+	<update id="increaseVote">
+		UPDATE 
+		VOTE_VOTECG
+		SET VTCG_CNT = VTCG_CNT+1
+		WHERE VT_NO = #{vtNo}
+		AND VTCG_NO= #{vtcgNo}
+		
+	</update>
+	<update id="decreaseVote">
+		UPDATE 
+		VOTE_VOTECG
+		SET VTCG_CNT = VTCG_CNT-1
+		WHERE VT_NO =#{vtNo}
+		AND VTCG_NO= #{vtcgNo}
+		
+	</update>
+		
+	<update id="editVote">
+		UPDATE 
+        VOTE_PARTICIPATION
+        SET VTCG_NO = #{cgno},
+        VTPT_EDIT=SYSDATE
+        WHERE EMP_NO = #{no}
+        AND VT_NO = #{pno}
+        AND VTPT_STATUS ='Y'
+	</update>
 </mapper>
