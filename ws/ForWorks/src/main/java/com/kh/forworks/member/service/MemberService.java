@@ -20,4 +20,10 @@ public interface MemberService {
 
 	int updateMemberProfile(MemberVo vo);
 
+	MemberVo checkMember(MemberVo vo);
+
+	int updateTempPwd(MemberVo vo);
+
+	int updateProfileNull(MemberVo loginMember);
+
 }

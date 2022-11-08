@@ -77,7 +77,7 @@
            <div class="px-4">
              <button class="btn btn-block font-bold mt-3 mb-3">
                <div>for-works와 함께한지</div>
-               <div>100일</div>
+               <div>${fwDate}일</div>
              </button>
            </div>
          </div>

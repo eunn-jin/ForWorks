@@ -48,4 +48,14 @@ public class MemberDaoImpl implements MemberDao {
 		return sst.update("memberMapper.updateEmpProfile", vo);
 	}
 
+	@Override
+	public MemberVo checkEmailMember(SqlSessionTemplate sst, MemberVo vo) {
+		return sst.selectOne("memberMapper.selectOneByEmail", vo);
+	}
+
+	@Override
+	public int updateProfileNull(SqlSessionTemplate sst, MemberVo loginMember) {
+		return sst.update("memberMapper.updateProfileNull", loginMember);
+	}
+
 }

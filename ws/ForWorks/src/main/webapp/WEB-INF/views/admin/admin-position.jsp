@@ -109,7 +109,6 @@
                           	</c:forEach>
                           	<c:forEach items="${posList}" var="pl" varStatus="status">
 	                            <tr class="posEdit" style="display:none;">
-	                              <td><input class="form-control form-control-sm" style="width: 200px;"></td>
 	                              <td><i class="bi bi-three-dots-vertical"></i></td>
 	                              <td style="width: 50vw;"><input name="pos" value="${pl.posName}" class="form-control form-control-sm" style="width: 200px;"></td>
 	                              <td class="text-center"><a style="color: red;">삭제</a></td>
