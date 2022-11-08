@@ -89,4 +89,23 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.updateMemberProfileByNo(sst, vo);
 	}
 
+	//회원 찾기 (아이디, 이름, 이메일)
+	@Override
+	public MemberVo checkMember(MemberVo vo) {
+		return memberDao.checkEmailMember(sst, vo);
+	}
+
+	//임시비밀번호로 변경
+	@Override
+	public int updateTempPwd(MemberVo vo) {
+		vo.encodePwd(pwdEnc);
+		return memberDao.updatePwdByNo(sst, vo);
+	}
+
+	//프로필 사진 삭제
+	@Override
+	public int updateProfileNull(MemberVo loginMember) {
+		return memberDao.updateProfileNull(sst, loginMember);
+	}
+
 }
