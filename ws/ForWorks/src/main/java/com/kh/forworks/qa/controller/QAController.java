@@ -21,6 +21,7 @@ import com.kh.forworks.Pagination;
 import com.kh.forworks.department.vo.DepartmentVo;
 import com.kh.forworks.member.vo.MemberVo;
 import com.kh.forworks.qa.service.QAService;
+import com.kh.forworks.qa.vo.QAAnswerVo;
 import com.kh.forworks.qa.vo.QAAttachmentsVo;
 import com.kh.forworks.qa.vo.QACategoryVo;
 import com.kh.forworks.qa.vo.QAParticipationVo;
@@ -91,7 +92,7 @@ public class QAController {
 //						System.out.println("--------------");
 //						System.out.println(qaEndList);
 //						System.out.println(pvend);
-						return "survey/list";
+						return "QA/list";
 					}else {
 						return "error";
 					}
@@ -112,7 +113,7 @@ public class QAController {
 		
 		model.addAttribute("dpvo", dpvo);
 		
-		return "survey/create";
+		return "QA/create";
 	}
 	
 	//설문 생성
@@ -122,6 +123,9 @@ public class QAController {
 		qavo.setQaSdate(qavo.getQaSdate().replace('T', ' '));
 		qavo.setQaEdate(qavo.getQaEdate().replace('T', ' '));
 		
+		//회원정보 set
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		qavo.setEmpNo(loginMember.getEmpNo()); //설문 vo에 로그인회원 번호 대입
 		
 		System.out.println(qavo);
 		System.out.println(qacg);
@@ -134,15 +138,15 @@ public class QAController {
 		System.out.println(qacgArr.length);
 		
 		
-		//회원정보 set
-		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
-		qavo.setEmpNo(loginMember.getEmpNo()); //설문 vo에 로그인회원 번호 대입
 		
 		//파일 유무 확인
 		//파일 유무 확인
-		if (qavo.getQaFile() != null && !qavo.getQaFile().isEmpty()) {
+		//System.out.println((qavo.getQaFile()));
+		
+		if (qavo.getQaFile() != null ) {
 			//파일 있음
-			//파일 업로드 후 저장된 파일명 얻기 
+			//System.out.println("QA파일존재");
+			//파일 업로드 후 저장된 파일명 얻기
 			String savePath = req.getServletContext().getRealPath("/resources/upload/QA/");
 			String changeName = FileUploader.fileUpload(qavo.getQaFile(), savePath);
 			String originName = qavo.getQaFile().getOriginalFilename();
@@ -163,7 +167,7 @@ public class QAController {
 	}
 	
 	//설문 상세보기(생성자)
-	@GetMapping("detailCreator")
+	@GetMapping("detailCreator/{pno}")
 	public String deatilCreator(@PathVariable String pno, Model model, HttpSession session) {
 
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
@@ -180,14 +184,21 @@ public class QAController {
 		//첨부파일 가져오기
 		QAAttachmentsVo qaatList = qasv.seleQaat(pno);
 		
+		//참가자 답변내용 가져오기
+		List<QAAnswerVo> qaawList =qasv.selectQaaw(pno);
+		
 		System.out.println(qavo);
 		System.out.println(qacgList);
 		System.out.println(qaptList);
+		System.out.println(qaatList);
+		System.out.println(qaawList);
 		
 		
 		model.addAttribute("qavo", qavo);
 		model.addAttribute("qacgList", qacgList);
 		model.addAttribute("qaptList", qaptList);
+		model.addAttribute("qaptList", qaatList);
+		model.addAttribute("qaptList", qaawList);
 		
 		return "QA/detailCreator";
 	}

@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.kh.forworks.PageVo;
 import com.kh.forworks.department.vo.DepartmentVo;
+import com.kh.forworks.qa.vo.QAAnswerVo;
 import com.kh.forworks.qa.vo.QAAttachmentsVo;
 import com.kh.forworks.qa.vo.QACategoryVo;
 import com.kh.forworks.qa.vo.QAParticipationVo;
@@ -64,6 +65,9 @@ public interface QAService {
 	
 	//설문에 참여했는지 확인
 	QAParticipationVo checkQA(HashMap<String, String> map);
+	
+	//설문 참여자 답변내용
+	List<QAAnswerVo> selectQaaw(String pno);
 	
 	
 
