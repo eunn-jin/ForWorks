@@ -235,13 +235,15 @@
 
                         <div class="title-area" id="form-area">
                         
-                            <input list="" class="approv-area title-input" placeholder="양식 선택" name="docForm">
-                                <datalist>
-                                	
-                                </datalist>
+                            <input list="formList" class="approv-area title-input" placeholder="양식 선택" name="docForm">
+                               	<datalist id="formList">
+                               		<c:forEach var="x" items="${formList}">
+                               			<option value="${x.formNo}" label="${x.formName}"></option>
+                               		</c:forEach>
+                           		</datalist>
                             </input>
 
-                            <button class="approv-btn form-btn">선택</button>
+                            <button type="button" class="approv-btn form-btn">선택</button>
 
                         </div>
                         <div class="title-area">
@@ -265,8 +267,8 @@
 
 
                         <div class="btn-area">
-                        	<button type="button" class="approv-btn" onclick="location.href='${root}/approv/create/noelec'" style="font-size: 20px;">비전자문서 작성</button>
-                            <button type="button" class="approv-btn" onclick="location.href='${root}/approv/main'">뒤로가기</button>
+                        	<button type="button" class="approv-btn" onclick="location.href='${root}/approv/create/noelec';" style="font-size: 20px;">비전자문서 작성</button>
+                            <button type="button" class="approv-btn" onclick="location.href='${root}/approv/main';">뒤로가기</button>
                             <button class="approv-btn">작성하기</button>
                         </div>
                     

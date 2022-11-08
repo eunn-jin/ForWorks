@@ -191,13 +191,19 @@
                                     <div>${approvMember.empName}</div>
                                     </c:forEach>
 									
-									<!-- TODO 기안자 사인 따로받고 foreach문 사인으로 돌리고 반복횟수는 approvMemberList로 -->
 									<c:forEach var="SignList" items="${approvSignList}" begin="0" end="${fn:length(approvMemberList)}" varStatus="status">
 									<c:if test="${status.index eq 0}">
                                     <div class="sign-area"></div>
                                     </c:if>
 									<c:if test="${status.index ne 0}">
-                                    <div class="sign-area"><img alt="" src="${root}/resources/upload/sign/${SignList.signFile}"></div>
+                                    <c:choose>
+	                                    <c:when test="${SignList.signFile eq null}">
+	                                    	<div class="sign-area"></div>
+	                                    </c:when>
+	                                    <c:otherwise>
+	                                    	<div class="sign-area"><img alt="" src="${root}/resources/upload/sign/${SignList.signFile}"></div>
+	                                    </c:otherwise>
+                                    </c:choose>
                                     </c:if>
                                     </c:forEach>
                                     
@@ -224,13 +230,16 @@
                         <c:if test="${s.last}"><div class="detail-position default-text">${depart}</div></c:if>
                         </c:forEach>
                     </div>
-					<form action="" method="post">
+					<form action="${root}/approv/remove/${approvDoc.adocNo}" method="post">
                     <div class="btn-area">
-                        <button type="button" class="approv-btn" onclick="location.href='${root}/approv/main">목록보기</button>
+                        <button type="button" class="approv-btn" onclick="location.href='${root}/approv/main';">목록보기</button>
                         <div class="approv-btn-area">
-                       		<c:if test="${loginMember.empNo} eq ${approvDoc.empNo}">
-                       			<button type="button" class="approv-btn" onclick="location.href='${root}/approv/edit${approvDoc.adocNo}'">
+                       		<c:if test="${loginMember.empNo eq approvDoc.empNo}">
+                       			<button type="button" class="approv-btn" onclick="location.href='${root}/approv/edit/${approvDoc.adocNo}';">
 	                                <span class="approv-btn-text" name="approv">수정</span>
+	                            </button>
+	                            <button class="approv-btn">
+	                                <span class="approv-btn-text" name="approv">삭제</span>
 	                            </button>
                        		</c:if>
                         </div>

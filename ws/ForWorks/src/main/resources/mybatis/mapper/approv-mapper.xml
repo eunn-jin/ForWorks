@@ -404,4 +404,135 @@
 		EMP_NO = #{empNo} 
 	</update>
 	
+	<select id="selectApprovDocEditEmpNo" resultType="int">
+		SELECT
+			ADOC_NO,
+			EMP_NO
+		FROM
+		APPROVEDOCUMENT
+		WHERE
+		EMP_NO = #{empNo}
+		AND
+		ADOC_NO = #{adocNo}
+	</select>
+	
+	<update id="updateApprovDoc">
+		UPDATE APPROVEDOCUMENT
+		SET
+		ADOC_NAME = #{adocName},
+		ADOC_CONTENT = #{adocContent}
+		WHERE
+		EMP_NO = #{empNo}
+		AND
+		ADOC_NO = #{adocNo}
+	</update>
+	
+	<update id="updateDocApprovEdit">
+		UPDATE DOCAPPROVE
+		SET
+		APPROV_STATUS = 'N'
+		WHERE
+		ADOC_NO = #{adocNo} 
+	</update>
+	
+	<delete id="deleteApprovDoc">
+		DELETE FROM APPROVEDOCUMENT
+		WHERE
+		ADOC_NO = #{adocNo}
+	</delete>
+	
+	<delete id="deleteDocApprov">
+		DELETE FROM DOCAPPROVE
+		WHERE
+		ADOC_NO = #{adocNo}
+	</delete>
+	
+	<delete id="deleteDocCoop">
+		DELETE FROM DOCCOOP
+		WHERE
+		ADOC_NO = #{adocNo}
+	</delete>
+	
+	<delete id="deleteDocRefer">
+		DELETE FROM DOCREFER
+		WHERE
+		ADOC_NO = #{adocNo}
+	</delete>
+	
+	<insert id="insertForm">
+		INSERT INTO DOCFORM
+		(
+			FORM_NO,
+			FORM_NAME,
+			FORM_CONTENT,
+			FORM_CREATE,
+			FORM_EDIT
+		)
+		VALUES
+		(
+			SEQ_DOCFORM_NO.NEXTVAL,
+			#{formName},
+			#{formContent},
+			SYSDATE,
+			SYSDATE		
+		)
+	</insert>
+	
+	<select id="selectFormOne" resultType="DocFormVo">
+		SELECT
+			FORM_NO,
+			FORM_NAME,
+			FORM_CONTENT,
+			FORM_CREATE,
+			FORM_EDIT
+		FROM
+		DOCFORM
+		WHERE
+		FORM_NO = #{fno}
+	</select>
+	
+	<update id="updateFormOne">
+		UPDATE DOCFORM
+		SET
+		FORM_NAME = #{formName},
+		FORM_CONTENT = #{formContent},
+		FORM_EDIT = SYSDATE
+		WHERE
+		FORM_NO = #{formNo}
+	</update>
+	
+	<delete id="deleteFormOne">
+		DELETE FROM DOCFORM
+		WHERE
+		FORM_NO = #{formNo}
+	</delete>
+	
+	<select id="selectFormList" resultType="DocFormVo">
+		SELECT
+			FORM_NO,
+			FORM_NAME,
+			FORM_CONTENT,
+			FORM_CREATE,
+			FORM_EDIT
+		FROM
+		DOCFORM
+		ORDER BY FORM_NO DESC
+	</select>
+	
+	<select id="selectFormListCount" resultType="int">
+		SELECT
+			COUNT(FORM_NO)
+		FROM
+		DOCFORM
+	</select>
+	
+	<select id="selectFormContentOne" resultType="string">
+		SELECT
+			FORM_CONTENT
+		FROM
+		DOCFORM
+		WHERE
+		FORM_NO = #{formNo}
+	</select>
+	
 </mapper>

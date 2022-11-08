@@ -2,6 +2,7 @@ package com.kh.forworks.approv.service;
 
 import java.util.List;
 
+import com.kh.forworks.PageVo;
 import com.kh.forworks.approv.vo.ApprovDocumentVo;
 import com.kh.forworks.approv.vo.DocApprovVo;
 import com.kh.forworks.approv.vo.DocFormVo;
@@ -20,7 +21,7 @@ public interface ApprovService {
 	List<ApprovDocumentVo> selectRejectApprovList(String empNo);
 	
 	//양식 목록 호출
-	List<DocFormVo> selectFormList();
+	List<DocFormVo> selectFormList(PageVo pv);
 	
 	//전자문서 작성
 	int insertApprovDoc(ApprovDocumentVo vo);
@@ -63,5 +64,35 @@ public interface ApprovService {
 	
 	//참조문서 확인처리
 	int updateDocReferByEmpNo(ApprovDocumentVo vo);
+	
+	//문서 작성자 확인
+	int selectApprovDocEditEmpNo(ApprovDocumentVo vo);
+	
+	//문서 수정
+	int updateApprovDoc(DocApprovVo vo);
+	
+	//문서 삭제
+	int deleteApprovDoc(DocApprovVo vo);
+	
+	//양식 생성
+	int insertForm(DocFormVo vo);
+	
+	//양식 페이지 호출
+	DocFormVo selectFormOne(String fno);
+	
+	//양식 수정
+	int updateFormOne(DocFormVo vo);
+	
+	//양식 삭제
+	int deleteFormOne(DocFormVo vo);
+	
+	//양식 개수
+	int selectFormListCount();
+	
+	//양식 호출
+	List<DocFormVo> selectFormListAll();
+	
+	//미리보기용 반환정보
+	String selectFormContentOne(String formNo);
 
 }

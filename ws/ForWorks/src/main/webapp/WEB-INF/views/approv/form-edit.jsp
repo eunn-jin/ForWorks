@@ -133,28 +133,28 @@
                 <div id="main-header">양식 수정</div>
 
                 <div class="approv-main">
-
+				<form action="" method="post">
 					<div class="approv-title-wrap">
 					
                         <div class="form-title-label approv-area"><div>제목</div></div>
 
-						<input type="text" class="approv-area title-input" placeholder="양식의 이름을 입력해주세요">
+						<input type="text" class="approv-area title-input" placeholder="양식의 이름을 입력해주세요" name="formName" value="${docForm.formName}">
 					
                     </div>
 
                     <div class="approv-detail-div">
-                        <textarea id="summernote" name="editordata"> </textarea>
+                        <textarea id="summernote" name="formContent"> </textarea>
                     </div>
 
                     <div class="btn-area">
-                        <button class="approv-btn">목록보기</button>
+                        <button type="button" class="approv-btn" onclick="location.href='${root}/approv/form/main/1';">목록보기</button>
                         <div class="approv-btn-area">
                             <button class="approv-btn">
                                 <span class="approv-btn-text">수정</span>
                             </button>
                         </div>
                     </div>
-                
+                </form>
                 </div>
             </div>
 
@@ -164,6 +164,7 @@
 </body>
 
 <script>
+	
 	
 	$(document).ready(function() {
 		$('#summernote').summernote({
@@ -184,6 +185,7 @@
 	          
 		});
 	});
-
+	
+	$('#summernote').summernote('code', '${docForm.formContent}');
 </script>
 </html>
