@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="${root}/resources/css/sjy.css">
 <html>
 <head>
-	<title>Home</title>
+	<title>설문-상세보기(작성자)</title>
 </head>
 <body style="display: inline;">
 
