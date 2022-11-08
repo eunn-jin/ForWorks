@@ -21,7 +21,7 @@
             
                 <div class="md-3"> 
                     <label for="vtTitle" class="form-label">제목</label>
-                    <input type="text" class="form-control" id="vtTitle" name="vtTitle" style="height: 10vh;" required>
+                    <input type="text" class="form-control" id="vtTitle" name="vtTitle" style="height: 10vh;" required placeholder="제목을 입력해주세요">
                     <br>
                 </div>
             
@@ -32,7 +32,7 @@
                 
                 <div class="md-3"> 
                     <label for="vtContent" class="form-label">내용</label>
-                    <input type="text" class="form-control" id="vtContent" name="vtContent" style="width: 50%;" required>
+                    <input type="text" class="form-control" id="vtContent" name="vtContent" style="width: 50%;" required placeholder="내용을 입력해주세요">
                 </div>
 
                 <div class="md-3"> 
@@ -62,12 +62,12 @@
                     <label for="vtcgName" class="form-label">항목</label><br>
                     <input type="hidden" id="vt-list" value="2" >
                     <div>
-                        <input type="text" class="form-control"  name="vtcgName" style="width: 50%; display: inline;" required>
+                        <input type="text" class="form-control"  name="vtcgName" style="width: 50%; display: inline;" required placeholder="항목을 입력해주세요">
                         
                     </div>
 
                     <div>
-                        <input type="text" class="form-control"  name="vtcgName" style="width: 50%; display: inline;" required>
+                        <input type="text" class="form-control"  name="vtcgName" style="width: 50%; display: inline;" required placeholder="항목을 입력해주세요">
                         
                     </div>
 
@@ -162,9 +162,9 @@
         console.log(i);
         const k = Number($('#vt-list').val())+1;
         $('input[id=vt-list]').attr('value',k);
-        $('#cgAddList').append("<div id='cg"+ i +"'>"+
-            "<input type='text' class='form-control'  name='vtcgName' style='width: 50%; display: inline;'>"+
-            "<button type='button' class='nbtn' onclick='deleteCg($(this).closest("+"&#39;div&#39;"+").attr("+"&#39;id&#39;"+"))'>x</button>"
+        $('#cgAddList').append("<div id='cg"+ $('#vt-list').val() +"'>"+
+            "<input type='text' class='form-control'  name='vtcgName' style='width: 50%; display: inline;' placeholder='항목을 입력해주세요'>"+
+            "<button type='button' class='nbtn' onclick='deleteCg($(this).closest("+"&#39;div&#39;"+").attr("+"&#39;id&#39;"+"))'><i style='font-size:20px;' class='bi bi-dash-square' ></i></button>"
             +"</div>");
         }
 </script>

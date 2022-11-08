@@ -140,7 +140,7 @@ public class VoteController {
 		
 		//파일 유무 확인
 		//파일 유무 확인
-		if (vtvo.getVtFile() != null && !vtvo.getVtFile().isEmpty()) {
+		if (vtvo.getVtFile() != null) {
 			//파일 있음
 			//파일 업로드 후 저장된 파일명 얻기 
 			String savePath = req.getServletContext().getRealPath("/resources/upload/vote/");
