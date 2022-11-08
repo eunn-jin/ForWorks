@@ -24,4 +24,14 @@ public class SalaryVo {
 	private String dept;
 	private String bonusSum;
 	
+	private String addOverTime;
+	private String addCalc;
+	
+	private String tax1;
+	private String tax2;
+	private String tax3;
+	private String tax4;
+	
+	private String sumxtax;
+	
 }

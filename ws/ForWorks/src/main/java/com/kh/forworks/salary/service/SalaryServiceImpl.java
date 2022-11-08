@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.forworks.salary.dao.SalaryDao;
+import com.kh.forworks.salary.vo.AddBenefitVo;
 import com.kh.forworks.salary.vo.SalBonusVo;
 import com.kh.forworks.salary.vo.SalaryVo;
 
@@ -40,7 +41,7 @@ public class SalaryServiceImpl implements SalaryService{
 	}
 	//초과수당조회
 	@Override
-	public List<SalaryVo> selectAddBenefit(SalaryVo sv) {
+	public List<AddBenefitVo> selectAddBenefit(SalaryVo sv) {
 		return dao.selectAddBenefit(sst, sv);
 	}
 	//기본급 + 각종수당 조회

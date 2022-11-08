@@ -188,6 +188,8 @@
 				type : "POST",
 				data :{ 
 					empNo : empNo,
+					startMonth : startMonth,
+					endMonth : endMonth
 				},
 				success : function(data){
 					var total = 0;
@@ -195,20 +197,24 @@
 					console.log(data);
 					$('#s-table').append('<tr><td>기본급</td><td>'+data[0].empMoney+'</td></tr>')
 						total += parseInt(data[0].empMoney);
-						$('#s-table').append('<tr><td>수당명</td><td>수당금</td></tr>')
-						for(var i = 0; i < data.length;i++){
-							if(data[i].amount == 0 && data[i].cate == " "){
-								data[i].cate = "해당없음";
+						$('#s-table').append('<tr><td>수당명</td><td>수당금</td>')
+							for(var i = 0; i < data.length;i++){
+								if(data[i].amount == 0 && data[i].cate == " "){
+									data[i].cate = "해당없음";
+								}
+								$('#s-table').append('<tr><td>'+data[i].cate+'</td><td>'+data[i].amount+'</td></tr>');
+								total += parseInt(data[i].amount);
 							}
-							$('#s-table').append('<tr><td>'+data[i].cate+'</td><td>'+data[i].amount+'</td></tr>');
-							total += parseInt(data[i].amount);
-						}
-					$('#total').append('<input type="number" value="'+total+'">'+"원");
+						$('#s-table').append('<tr><td>초과수당</td><td>'+data[0].addOverTime+"(분)"+data[0].addCalc+'</td></tr>')
+						total += parseInt(data[0].addCalc);
+
+						$('#total').append('<input type="number" value="'+total+'">'+"원");
 				},
 				error : function(){
 					alert("실패");
 				}
 			})
+			
 		}
 
 

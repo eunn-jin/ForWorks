@@ -15,7 +15,7 @@
         height: 60vh;
         border: 1px solid black;/*확인용*/
         display: grid;
-        grid-template-columns: 2fr 4fr 4fr 4fr 4fr 6fr;
+        grid-template-columns: 2fr 4fr 4fr 4fr 4fr 6fr 2fr;
         grid-template-rows: repeat(11,30px);
         text-align: center;
         background-color: white;
@@ -108,9 +108,7 @@
                             <div class="div-top">사원명</div>
                             <div class="div-top">공개여부</div>
                             <div class="div-top">지급일</div>
-                            
-                            
-
+                            <div class="div-top">보기</div>
 				        </div>
 				        
 				        <div id="page-area">
@@ -170,7 +168,7 @@
                     }
                     
                     $("#center").append(
-                        '<div class="app"><input type="checkbox" name="status" value="'+data[i].no+'"></div><div class="app">'+data[i].salCate+'</div><div class="app">'+dept+'</div><div class="app">'+data[i].empName+'</div><div class="app">'+data[i].status+'</div><div class="app">'+data[i].payDate+'</div>'
+                        '<div class="app"><input type="checkbox" name="status" value="'+data[i].no+'"></div><div class="app">'+data[i].salCate+'</div><div class="app">'+dept+'</div><div class="app">'+data[i].empName+'</div><div class="app">'+data[i].status+'</div><div class="app">'+data[i].payDate+'</div><div><button onclick="detail('+data[i].no+')">보기</button></div>'
                     );
                 }
                 
@@ -213,7 +211,12 @@
 
     }
 </script>
-
+<script>
+    function detail(no){
+        window.open("${root}/salary/payslipDetail/"+no, "_blank", "width=500, height=500")
+    }
+    
+</script>
 <script>
 	
 	$().ready(function() {

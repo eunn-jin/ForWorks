@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.kh.forworks.salary.vo.AddBenefitVo;
 import com.kh.forworks.salary.vo.SalBonusVo;
 import com.kh.forworks.salary.vo.SalaryVo;
 
@@ -16,7 +17,7 @@ public interface SalaryDao {
 	//직원,날짜별 보너스 조회
 	List<SalBonusVo> selectBonus(SqlSessionTemplate sst, SalaryVo sv);
 	//초과수당 조회
-	List<SalaryVo> selectAddBenefit(SqlSessionTemplate sst, SalaryVo sv);
+	List<AddBenefitVo> selectAddBenefit(SqlSessionTemplate sst, SalaryVo sv);
 	//기본급 + 각종 수당 조회
 	List<SalaryVo> selectSalary(SqlSessionTemplate sst, SalaryVo sv);
 	//기본급 조회
