@@ -3,7 +3,7 @@
 
 <html>
 <head>
-	<title>Home</title>
+	<title>설문-설문지 생성</title>
 </head>
 <body>
 
