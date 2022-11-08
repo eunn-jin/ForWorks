@@ -75,7 +75,9 @@ public class VoteServiceImpl implements VoteService{
 		result[0]=dao.insertVt(sst, vtvo);
 		
 		//파일 유무 확인후 첨부파일 테이블에 저장
-		result[1]=dao.insertVtat(sst, vtatVo);
+		if(vtatVo != null) {
+			result[1]=dao.insertVtat(sst, vtatVo);
+		}else {result[1]=1;}
 		
 		//항목 
 		for (int i = 0; i < vtcgArr.length; i++) {

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.forworks.PageVo;
 import com.kh.forworks.department.vo.DepartmentVo;
 import com.kh.forworks.member.vo.MemberVo;
+import com.kh.forworks.qa.vo.QAAnswerVo;
 import com.kh.forworks.qa.vo.QAAttachmentsVo;
 import com.kh.forworks.qa.vo.QACategoryVo;
 import com.kh.forworks.qa.vo.QAParticipationVo;
@@ -69,55 +70,55 @@ public class QADaoImpl implements QADao{
 	//설문지 등록
 	@Override
 	public int insertQa(SqlSessionTemplate sst, QAVo qavo) {
-		return sst.insert("qaMapper.insertqa", qavo);
+		return sst.insert("qaMapper.insertQa", qavo);
 	}
 	//설문지 첨부파일 등록
 	@Override
 	public int insertQaAt(SqlSessionTemplate sst, QAAttachmentsVo qaatVo) {
-		return sst.insert("qaMapper.insertqaat", qaatVo);
+		return sst.insert("qaMapper.insertQaat", qaatVo);
 	}
 	//설문지 항목 등록
 	@Override
 	public int insertQacg(SqlSessionTemplate sst, String qact) {
-		return sst.insert("qaMapper.insertqacg", qact);
+		return sst.insert("qaMapper.insertQacg", qact);
 	}
 	//모든 회원정보
 	@Override
 	public List<MemberVo> mListAll(SqlSessionTemplate sst) {
-		return sst.selectList("qaMapper.mListAll");
+		return sst.selectList("voteMapper.mListAll");
 	}
 	//부서별 회원정보
 	@Override
 	public List<MemberVo> mListDp(SqlSessionTemplate sst, int dept) {
-		return sst.selectList("qaMapper.mListDp", dept);
+		return sst.selectList("voteMapper.mListDp", dept);
 	}
 	//참여 대상자 사원 등록
 	@Override
 	public int insertQapt(SqlSessionTemplate sst, MemberVo memberVo) {
-		return sst.insert("qaMapper.insertqapt",memberVo.getEmpNo());
+		return sst.insert("qaMapper.insertQapt",memberVo.getEmpNo());
 	}
 	
 	// 설문지 정보 가져오기
 	@Override
 	public QAVo selectOneQa(SqlSessionTemplate sst, String pno) {
-		return sst.selectOne("qaMapper.selectOneqa", pno);
+		return sst.selectOne("qaMapper.selectOneQa", pno);
 	}
 	
 	//설문지에 맞는 항목 정보 가져오기
 	@Override
 	public List<QACategoryVo> selectQacg(SqlSessionTemplate sst, String pno) {
-		return sst.selectList("qaMapper.selectqacg", pno);
+		return sst.selectList("qaMapper.selectQacg", pno);
 	}
 	
 	//설문지에 맞는 참가자 정보 가져오기
 	@Override
 	public List<QAParticipationVo> selectQapt(SqlSessionTemplate sst, String pno) {
-		return sst.selectList("qaMapper.selectqapt", pno);
+		return sst.selectList("qaMapper.selectQapt", pno);
 	}
 	//설문지 첨부파일 가져오기
 	@Override
 	public QAAttachmentsVo selectQaat(SqlSessionTemplate sst, String pno) {
-		return sst.selectOne("qaMapper.selectqaat",pno);
+		return sst.selectOne("qaMapper.selectQaat",pno);
 	}
 	
 	//설문 종료
@@ -135,7 +136,7 @@ public class QADaoImpl implements QADao{
 	//설문지 대상자 테이블에 insert
 	@Override
 	public int insertUserQa(SqlSessionTemplate sst, QAParticipationVo vo) {
-		return sst.insert("qaMapper.insertUserqa",vo);
+		return sst.insert("qaMapper.insertUserQa",vo);
 	}
 	
 	//설문 참여대상자 확인
@@ -159,17 +160,17 @@ public class QADaoImpl implements QADao{
 	//설문 수정
 	@Override
 	public int editQa(SqlSessionTemplate sst, QAVo qavo) {
-		return sst.update("qaMapper.editqa", qavo);
+		return sst.update("qaMapper.editQa", qavo);
 	}
 	//설문 첨부파일 수정
 	@Override
 	public int editQaat(SqlSessionTemplate sst, QAAttachmentsVo qaat) {
-		return sst.update("qaMapper.editqaat", qaat);
+		return sst.update("qaMapper.editQaat", qaat);
 	}
 	//설문 첨부파일 등록(수정중 첨부파일이 없을경우)
 	@Override
 	public int editQaatInsert(SqlSessionTemplate sst, QAAttachmentsVo qaat) {
-		return sst.insert("qaMapper.editqaatInsert", qaat);
+		return sst.insert("qaMapper.editQaatInsert", qaat);
 	}
 
 	//투표 참여햇는지 확인
@@ -181,7 +182,7 @@ public class QADaoImpl implements QADao{
 	//설문지 항목 추가
 	@Override
 	public int editInsertQacg(SqlSessionTemplate sst, HashMap<String, String> map) {
-		return sst.insert("qaMapper.editInsertqacg", map);
+		return sst.insert("qaMapper.editInsertQacg", map);
 	}
 	
 	//설문지 항목에대한 내용 등록
@@ -194,6 +195,12 @@ public class QADaoImpl implements QADao{
 	@Override
 	public int updateQA(SqlSessionTemplate sst, QACategoryVo qacg) {
 		return sst.update("qaMapper.decreaseVote",qacg);
+	}
+
+	//설문 참여자 답변내용
+	@Override
+	public List<QAAnswerVo> selectQaaw(SqlSessionTemplate sst, String pno) {
+		return sst.selectList("qaMapper.selectQaaw",pno);
 	}
 	
 

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <style>
 tr:hover{
     cursor: pointer;
@@ -20,13 +20,14 @@ tr>th:hover{
 <!-- 검색박스 -->
 
 
-<div class="container" style="margin: 3% ;">
+<div class="container" style="margin: 3% 5%;">
 	<div class="row">
 		<div class="col">
 			
 			<ul class="nav nav-tabs">
 				<li class="nav-item"><a class="nav-link active"
 					data-toggle="tab" href="#all">전체</a></li>
+	
 				<li class="nav-item"><a class="nav-link" data-toggle="tab"
 					href="#ing">진행</a></li>
 				<li class="nav-item"><a class="nav-link" data-toggle="tab"
@@ -35,64 +36,90 @@ tr>th:hover{
 			<div class="tab-content">
 				<div class="tab-pane fade show active" id="all">
 					<!--  투표 현황(전체) -->
-					<div id="notice" style="text-align: left; ">
+					<div id="notice" style="text-align: left;width: 100%;">
 						<div id="list" style="overflow: auto; width: 100%;">
-
+							
 							<table class="table" id="table-main">
 								<thead class="table-light">
 									<tr id="center">
 										<th scope="col">#</th>
 										<th scope="col" colspan="5">제목</th>
-										<th scope="col">작성자</th>
+										<th scope="col">진행자</th>
 										<th scope="col">상태</th>
 										<th scope="col">시작일</th>
 										<th scope="col">종료일</th>
 									</tr>
 								</thead>
 
-								<%int i=0; %>
-								<c:forEach begin="1" step="1" end="10">
-									<tbody>
+								
+								<c:forEach items="${qaList }" var="qa">
+									
+									<tbody id="tbd">
 										<tr id="center">
-
-											<th scope="row">1</th>
-											<td colspan="5">전체 공지사항ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</td>
-
-											<td>Mark</td>
-											<td>진행</td>
-											<td>22-09-28</td>
-											<td>22-10-05</td>
+											<input type="hidden" value="${qa.qaNo}">
+											<th scope="row">${qa.rownum}</th>
+											<td colspan="5">${qa.qaTitle}</td>
+											<input type="hidden" value="${qa.num}">
+											<td >${qa.empNo}</td>
+											
+											<c:choose>
+												<c:when test="${qa.qaStatus eq 'I'}">
+													<td>진행중</td>
+												</c:when>
+												<c:when test="${qa.qaStatus eq 'E'}">
+													<td>마감</td>
+												</c:when>
+											</c:choose>
+											
+											<td>${qa.qaSdate}</td>
+											<td>${qa.qaEdate}</td>
 										</tr>
 									</tbody>
 								</c:forEach>
-								<td colspan="10"style="border: none; cursor: default; background: white;">
+								<td  colspan="10" style="border:none; cursor: default; background: white;">
+            
 									<ul class="pagination justify-content-center">
-										<li class="page-item disabled"><a class="page-link"><</a>
-										</li>
-										<li class="page-item active" aria-current="page"><a
-											class="page-link b" href="#">1</a></li>
-										<li class="page-item"><a class="page-link b" href="#">2</a></li>
-										<li class="page-item"><a class="page-link b" href="#">3</a></li>
-										<li class="page-item"><a class="page-link b" href="#">></a>
-										</li>
+										
+										<c:if test="${pv.startPage ne 1 }">	
+											<li><a href="${root}/QA/list/1" class="page-link b disabled">처음</a></li>
+											<li class="page-item"><a href="${root}/QA/list/${pv.startPage -1 }" class="page-link">이전</a></li>
+										</c:if>
+					
+										
+					
+										<c:forEach begin="${pv.startPage }" end="${pv.endPage }" var="i">
+											<li class="page-item " aria-current="page">
+												<a class="page-link b" href="${root}/QA/list/${i}">${i}</a>
+											</li>
+										</c:forEach>
+					
+										<c:if test="${pv.endPage ne pv.maxPage }">
+											<li><a class="page-link b" href="${root}/QA/list/${pv.endPage +1 }">다음</a></li>
+											<li><a href="${root}/QA/list/${pv.maxPage }" class="page-link b">끝</a></li>
+										</c:if>
 									</ul>
+								
 								</td>
 
 							</table>
 						</div>
 						<!-- 생성권한이 있는 사람만 -->
 						<div style="text-align: right;">
-							<a href="/forworks/survey/create"><button class="myBtn"
-									style="margin-right: 5%;">설문지생성</button></a>
+							<a href="/forworks/QA/create"><button class="myBtn"
+									style="margin-right: 5%;">투표생성</button></a>
 						</div>
 
 					</div>
 				</div>
+
+
 				<div class="tab-pane fade" id="ing">
-					<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aut culpa recusandae, magnam dicta laboriosam architecto fugit excepturi illo quo laudantium deserunt exercitationem cumque blanditiis sint, obcaecati libero. Delectus, vero sed?</p>
+					<%@include file="/WEB-INF/views/QA/list-ing.jsp" %>
+					
 				</div>
 				<div class="tab-pane fade" id="end">
-					<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aut natus nisi nulla vero ex quaerat expedita amet nam sint odio ab assumenda, ullam suscipit consequatur architecto deleniti, repellendus minus minima.</p>
+					<%@include file="/WEB-INF/views/QA/list-end.jsp" %>
+					
 				</div>
 			</div>
 		</div>
@@ -104,21 +131,31 @@ tr>th:hover{
 
 <script>
 	$(function() {
-		$('#table-main>tbody>tr').click(function() {
+		$('#table-main>tbody>#center').click(function() {
 			//행 클릭 되었을때, 동작할 내용
+			console.log("${loginMember.empNo}");
+			// console.log($(this).children().eq(0).val());
+			// console.log($(this).children().eq(3).val());
+
+			//로그인 회원번호
+			const loginNo = "${loginMember.empNo}";
+
+			//글 작성자 번호
+			const qaw = $(this).children().eq(3).val();
 
 			//글번호 가져오기
-			const num = $(this).children().eq(0).text();
+			const num = $(this).children().eq(0).val();
 
 			//로그인한 회원의 정보중 이름을 가져와서 현재 선택한글의 작성자와 같은지 판별
-
-			//해당 번호로 요청 보내기
+			if (loginNo == qaw) {
+				//작성자인경우
+				location.href = '${root}/QA/detailCreator/' + num;
+			}else{
+				//아닌경우
+				location.href = '${root}/QA/detailUser/' + num;
+			}
 			
-			//작성자인경우
-			location.href = '${root}/survey/detailCreator?num=' + num;
 
-			//아닌경우
-			//location.href = '${root}/survey/detailUser?num=' + num;
 		});
 	})
 </script>

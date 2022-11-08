@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import com.kh.forworks.PageVo;
 import com.kh.forworks.department.vo.DepartmentVo;
 import com.kh.forworks.member.vo.MemberVo;
+import com.kh.forworks.qa.vo.QAAnswerVo;
 import com.kh.forworks.qa.vo.QAAttachmentsVo;
 import com.kh.forworks.qa.vo.QACategoryVo;
 import com.kh.forworks.qa.vo.QAParticipationVo;
@@ -94,6 +95,9 @@ public interface QADao {
 	
 	//설문 참여했는지 확인
 	QAParticipationVo checkQa(SqlSessionTemplate sst, HashMap<String, String> map);
+	
+	//설문 참여자 답변내용
+	List<QAAnswerVo> selectQaaw(SqlSessionTemplate sst, String pno);
 
 
 }

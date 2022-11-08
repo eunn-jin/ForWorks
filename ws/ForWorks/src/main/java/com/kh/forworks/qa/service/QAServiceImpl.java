@@ -11,6 +11,7 @@ import com.kh.forworks.PageVo;
 import com.kh.forworks.department.vo.DepartmentVo;
 import com.kh.forworks.member.vo.MemberVo;
 import com.kh.forworks.qa.dao.QADao;
+import com.kh.forworks.qa.vo.QAAnswerVo;
 import com.kh.forworks.qa.vo.QAAttachmentsVo;
 import com.kh.forworks.qa.vo.QACategoryVo;
 import com.kh.forworks.qa.vo.QAParticipationVo;
@@ -76,7 +77,11 @@ public class QAServiceImpl implements QAService{
 		result[0]=dao.insertQa(sst, qavo);
 		
 		//파일 유무 확인후 첨부파일 테이블에 저장
-		result[1]=dao.insertQaAt(sst, qaatVo);
+		System.out.println(qaatVo==null);
+		
+		if (qaatVo != null) {
+			result[1]=dao.insertQaAt(sst, qaatVo);
+		}else {result[1]=1;}
 		
 		//항목 
 		for (int i = 0; i < qacgArr.length; i++) {
@@ -244,6 +249,12 @@ public class QAServiceImpl implements QAService{
 	@Override
 	public QAParticipationVo checkQA(HashMap<String, String> map) {
 		return dao.checkQa(sst,map);
+	}
+
+	//설문 참여자 답변내용
+	@Override
+	public List<QAAnswerVo> selectQaaw(String pno) {
+		return dao.selectQaaw(sst,pno);
 	}
 
 
