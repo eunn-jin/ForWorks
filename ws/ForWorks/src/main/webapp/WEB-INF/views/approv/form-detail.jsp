@@ -256,11 +256,9 @@
                             </div>
                         </div>
                         <div class="detail-content">
-                            <p>내용</p>
+                            ${docForm.formContent }
                         </div>
                         <div class="detail-etc default-text">
-                            <div class="etc-item">내용</div>
-                            <div class="etc-item">내용</div>
                             <div class="etc-item">내용</div>
                             <div class="etc-item">내용</div>
                         </div>
@@ -269,14 +267,16 @@
                     </div>
 
                     <div class="btn-area">
-                        <button class="approv-btn">목록보기</button>
+                        <button type="button" class="approv-btn" onclick="location.href='${root}/approv/form/main/1'">목록보기</button>
                         <div class="approv-btn-area">
-                            <button class="approv-btn approv-btn-margin">
+                            <button type="button" class="approv-btn approv-btn-margin" onclick="location.href='${root}/approv/form/edit/${docForm.formNo}'">
                                 <span class="approv-btn-text">수정</span>
                             </button>
+                            <form action="${root}/approv/form/delete/${docForm.formNo}" method="post">
                             <button class="approv-btn">
                                 <span class="approv-btn-text">삭제</span>
                             </button>
+                            </form>
                         </div>
                     </div>
                 

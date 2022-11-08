@@ -248,7 +248,7 @@
 
                             <div class="title-label approv-area"><div>제목</div></div>
 
-                            <input type="text" class="approv-area title-input" name="adocName" placeholder="제목을 입력해주세요">
+                            <input type="text" class="approv-area title-input" name="adocName" placeholder="제목을 입력해주세요" value="${approvDoc.adocName}">
                         </div>
 
                         <div class="approv-create-div">
@@ -265,89 +265,15 @@
 
 
                         <div class="btn-area">
-                            <button class="approv-btn">뒤로가기</button>
-                            <button class="approv-btn">작성하기</button>
+                            <button type="button" class="approv-btn" onclick="location.href='${root}/approv/main';">목록으로 가기</button>
+                            <button class="approv-btn">수정하기</button>
                         </div>
                     
                     </div>
                     
             </div>
             
-            <div id="add-member">
-                        <div class="margin-top"></div>
-                        <div class="approv-member-area">
-
-                            <div class="member-label approv-area"><div>결재자 추가</div></div>
-
-                            <div class="member-input-area">
-
-                                <div class="member-area-horizon" id="approv-member">
-                                	<div class="approv-member">
-                                    
-                                    </div>
-                                </div>
-
-                                <button type="button" class="member-btn" id="btn-add-approv" onclick="approvAdd()">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
-                                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                                    </svg>
-                                </button>
-
-                            </div>
-
-                        </div>
-
-                        <div class="div-bar"></div>
-
-                        <div class="approv-member-area">
-
-                            <div class="member-label approv-area"><div>협조자 추가</div></div>
-
-                            <div class="member-input-area">
-
-                                <div class="member-area-horizon" id="coop-member">
-                                	<div class="coop-member">
-                                    
-                                    </div>
-                                </div>
-
-                                <button type="button" class="member-btn" id="btn-add-coop" onclick="coopAdd()">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
-                                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                                    </svg>
-                                </button>
-
-                            </div>
-
-                        </div>
-
-                        <div class="div-bar"></div>
-
-                        <div class="approv-member-area">
-
-                            <div class="member-label approv-area"><div>참조자 추가</div></div>
-
-                            <div class="member-input-area">
-
-                                <div class="member-area-horizon" id="refer-member">
-									<div class="refer-member">
-                                    
-									</div>
-                                </div>
-
-                                <button type="button" class="member-btn" id="btn-add-refer" onclick="referAdd()">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
-                                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                                    </svg>
-                                </button>
-
-                            </div>
-
-                        </div>
-                    </div>
+            
         </main>        
         </form>
 
@@ -357,7 +283,7 @@
 </body>
 
 <script>
-	
+	$('#summernote').summernote('code', '${approvDoc.adocContent}');
 	$(document).ready(function() {
 		$('#summernote').summernote({
 			  height: 420,                 // 에디터 높이
@@ -380,55 +306,7 @@
 
 </script>
 
-<script>
 
-    function approvAdd() {
-		const count = document.getElementsByClassName('approv-member').length
-		
-		const obj = document.getElementById("approv-member");
-		const newDiv = document.createElement("div");
-        newDiv.setAttribute("id", "approv-member"+count);
-        newDiv.setAttribute("class", "approv-member");
-		newDiv.innerHTML = '<input list="memberList" class="approv-area member-input" name="approvMember"><datalist id="memberList"><c:forEach var="x" items="${MemberList}"><option value="${x.empNo}" label="${x.deptName} ${x.posName} ${x.empName}" ></option></c:forEach></datalist>\n<button type="button" class="member-btn" id="btn-min-approv" onclick="divMin(\'approv-member'+count+'\')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-square" viewBox="0 0 16 16"><path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/><path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/></svg></button>';
-		obj.appendChild(newDiv);
-	}
-
-    function coopAdd() {
-		const count = document.getElementsByClassName('coop-member').length
-		
-		const obj = document.getElementById("coop-member");
-		const newDiv = document.createElement("div");
-        newDiv.setAttribute("id", "coop-member"+count);
-        newDiv.setAttribute("class", "coop-member");
-		newDiv.innerHTML = '<input list="memberList" class="approv-area member-input" name="coopMember"><datalist id="memberList"><c:forEach var="x" items="${MemberList}"><option value="${x.empNo}" label="${x.deptName} ${x.posName} ${x.empName}" ></option></c:forEach></datalist>\n<button type="button" class="member-btn" id="btn-min-coop" onclick="divMin(\'coop-member'+count+'\')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-square" viewBox="0 0 16 16"><path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/><path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/></svg></button>';
-		obj.appendChild(newDiv);
-	}
-	
-	function referAdd() {
-		const count = document.getElementsByClassName('refer-member').length
-		
-		const obj = document.getElementById("refer-member");
-		const newDiv = document.createElement("div");
-        newDiv.setAttribute("id", "refer-member"+count);
-        newDiv.setAttribute("class", "refer-member");
-		newDiv.innerHTML = '<input list="memberList" class="approv-area member-input" name="referMember"><datalist id="memberList"><c:forEach var="x" items="${MemberList}"><option value="${x.empNo}" label="${x.deptName} ${x.posName} ${x.empName}" ></option></c:forEach></datalist>\n<button type="button" class="member-btn" id="btn-min-refer" onclick="divMin(\'refer-member'+count+'\')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-square" viewBox="0 0 16 16"><path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/><path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/></svg></button>';
-		obj.appendChild(newDiv);
-	}
-
-
-    
-	
-</script>
-
-<script>
-  
-    function divMin(x) {
-		const delDiv = document.getElementById(x);
-
-        delDiv.remove();
-	}
-
-</script>
 
 </html>
 

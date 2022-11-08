@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.forworks.PageVo;
 import com.kh.forworks.approv.dao.ApprovDao;
 import com.kh.forworks.approv.vo.ApprovDocumentVo;
 import com.kh.forworks.approv.vo.DocApprovVo;
@@ -51,9 +52,8 @@ public class ApprovServiceImpl implements ApprovService {
 
 	//양식 목록 호출
 	@Override
-	public List<DocFormVo> selectFormList() {
-		// TODO 양식 목록 호출 구현
-		return null;
+	public List<DocFormVo> selectFormList(PageVo pv) {
+		return dao.selectFormList(sst, pv);
 	}
 
 	//전자문서 생성
@@ -175,6 +175,84 @@ public class ApprovServiceImpl implements ApprovService {
 	@Override
 	public int updateDocReferByEmpNo(ApprovDocumentVo vo) {
 		return dao.updateDocReferByEmpNo(sst, vo);
+	}
+
+	//문서 작성자 확인
+	@Override
+	public int selectApprovDocEditEmpNo(ApprovDocumentVo vo) {
+		return dao.selectApprovDocEditEmpNo(sst, vo);
+	}
+
+	//문서수정
+	@Override
+	public int updateApprovDoc(DocApprovVo vo) {
+		int result1 = dao.updateApprovDoc(sst,vo);
+		int result2 = dao.updateDocApprovEdit(sst, vo);
+		int result = result1*result2;
+		
+		if(result>1) {
+			result = 1;
+		}
+		
+		return result;
+	}
+
+	//문서삭제
+	@Override
+	public int deleteApprovDoc(DocApprovVo vo) {
+		int result1 = dao.deleteDocApprov(sst, vo);
+		int result2 = dao.deleteDocCoop(sst, vo);
+		int result3 = dao.deleteDocRefer(sst, vo);
+		int result4 = dao.deleteApprovDoc(sst,vo);
+		int result = result1*result2*result3*result4;
+		
+		if(result>1) {
+			result = 1;
+		}
+		
+		return result;
+	}
+
+	//양식 생성
+	@Override
+	public int insertForm(DocFormVo vo) {
+		return dao.insertForm(sst, vo);
+	}
+
+	//양식 선택
+	@Override
+	public DocFormVo selectFormOne(String fno) {
+		return dao.selectFormOne(sst, fno);
+	}
+
+	//양식 수정
+	@Override
+	public int updateFormOne(DocFormVo vo) {
+		return dao.updateFormOne(sst, vo);
+	}
+
+	//양식 삭제
+	@Override
+	public int deleteFormOne(DocFormVo vo) {
+		return dao.deleteFormOne(sst, vo);
+	}
+
+	//양식개수
+	@Override
+	public int selectFormListCount() {
+		return dao.selectFormListCount(sst);
+	}
+
+	//모든양식 호출
+	@Override
+	public List<DocFormVo> selectFormListAll() {
+		return dao.selectFormListAll(sst);
+	}
+
+	//미리보기용 반환정보
+	@Override
+	public String selectFormContentOne(String formNo) {
+		return dao.selectFormContentOne(sst, formNo);
 	}
 
 

@@ -2,11 +2,14 @@ package com.kh.forworks.approv.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.forworks.PageVo;
 import com.kh.forworks.approv.vo.ApprovDocumentVo;
 import com.kh.forworks.approv.vo.DocApprovVo;
+import com.kh.forworks.approv.vo.DocFormVo;
 import com.kh.forworks.approv.vo.DocSignVo;
 import com.kh.forworks.member.vo.MemberVo;
 
@@ -154,6 +157,99 @@ public class ApprovDaoImpl implements ApprovDao {
 	@Override
 	public int updateDocReferByEmpNo(SqlSessionTemplate sst, ApprovDocumentVo vo) {
 		return sst.update("approvMapper.updateDocReferByEmpNo", vo);
+	}
+	
+	//문서 작성자 확인
+	@Override
+	public int selectApprovDocEditEmpNo(SqlSessionTemplate sst, ApprovDocumentVo vo) {
+		return sst.selectOne("approvMapper.selectApprovDocEditEmpNo", vo);
+	}
+	//문서 수정
+	@Override
+	public int updateApprovDoc(SqlSessionTemplate sst, DocApprovVo vo) {
+		return sst.update("approvMapper.updateApprovDoc", vo);
+	}
+	
+	//문서 결제 초기화
+	@Override
+	public int updateDocApprovEdit(SqlSessionTemplate sst, DocApprovVo vo) {
+		return sst.update("approvMapper.updateDocApprovEdit", vo);
+	}
+	
+	//문서 삭제
+	@Override
+	public int deleteApprovDoc(SqlSessionTemplate sst, DocApprovVo vo) {
+		return sst.delete("approvMapper.deleteApprovDoc", vo);
+	}
+	
+	//문서 결제선 삭제
+	@Override
+	public int deleteDocApprov(SqlSessionTemplate sst, DocApprovVo vo) {
+		return sst.delete("approvMapper.deleteDocApprov", vo);
+	}
+	
+	//협조 삭제
+	@Override
+	public int deleteDocCoop(SqlSessionTemplate sst, DocApprovVo vo) {
+		return sst.delete("approvMapper.deleteDocCoop", vo);
+	}
+	
+	//참조 삭제
+	@Override
+	public int deleteDocRefer(SqlSessionTemplate sst, DocApprovVo vo) {
+		return sst.delete("approvMapper.deleteDocRefer", vo);
+	}
+	
+	//양식 생성
+	@Override
+	public int insertForm(SqlSessionTemplate sst, DocFormVo vo) {
+		return sst.insert("approvMapper.insertForm", vo);
+	}
+	
+	//양식 페이지 리스트 호출
+	@Override
+	public List<DocFormVo> selectFormList(SqlSessionTemplate sst, PageVo pv) {
+		
+		int offset = (pv.getCurrentPage()-1)*pv.getBoardLimit();	
+		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
+		
+		return sst.selectList("approvMapper.selectFormList", null, rb);
+	}
+	
+	//양식 선택
+	@Override
+	public DocFormVo selectFormOne(SqlSessionTemplate sst, String fno) {
+		return sst.selectOne("approvMapper.selectFormOne", fno);
+	}
+	
+	//양식 수정
+	@Override
+	public int updateFormOne(SqlSessionTemplate sst, DocFormVo vo) {
+		return sst.update("approvMapper.updateFormOne", vo);
+	}
+	
+	//양식 삭제
+	@Override
+	public int deleteFormOne(SqlSessionTemplate sst, DocFormVo vo){
+		return sst.delete("approvMapper.deleteFormOne", vo);
+	}
+	
+	//양식 개수
+	@Override
+	public int selectFormListCount(SqlSessionTemplate sst) {
+		return sst.selectOne("approvMapper.selectFormListCount");
+	}
+	
+	//양식 리스트 호출
+	@Override
+	public List<DocFormVo> selectFormListAll(SqlSessionTemplate sst) {
+		return sst.selectList("approvMapper.selectFormList");
+	}
+	
+	//미리보기용 양식내용
+	@Override
+	public String selectFormContentOne(SqlSessionTemplate sst, String formNo) {
+		return sst.selectOne("approvMapper.selectFormContentOne", formNo);
 	}
 	
 }

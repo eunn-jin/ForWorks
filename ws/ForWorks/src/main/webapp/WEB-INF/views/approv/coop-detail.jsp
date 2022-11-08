@@ -229,7 +229,7 @@
                     </div>
 
                     <div class="btn-area">
-                        <button class="approv-btn" onclick="location.href='${root}/approv/main">목록보기</button>
+                        <button class="approv-btn" onclick="location.href='${root}/approv/main'">목록보기</button>
                     </div>
                 
                 </div>
