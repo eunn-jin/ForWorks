@@ -1,7 +1,5 @@
 package com.kh.forworks.off.controller;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.forworks.DateFunction;
 import com.kh.forworks.member.vo.MemberVo;
 import com.kh.forworks.off.service.OffService;
 import com.kh.forworks.off.vo.OffCntVo;
@@ -30,14 +29,6 @@ public class OffController {
 
 	private final OffService service;
 	private final int offConfirmPos = 6;
-	
-	private String getThisMonth() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
-		Date now = new Date();        
-		String day = sdf.format(now);
-		
-		return day;
-	}
 	
 	@Autowired
 	public OffController(OffService service) {
@@ -64,7 +55,7 @@ public class OffController {
 	public String offConfirm(Model model, HttpSession session) {
 		
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
-		String month = getThisMonth();
+		String month = DateFunction.getThisMonth();
 		//권한 있는지 없는지 확인
 		String posNo = loginMember.getPosNo();
 		if(Integer.parseInt(posNo) == offConfirmPos) {

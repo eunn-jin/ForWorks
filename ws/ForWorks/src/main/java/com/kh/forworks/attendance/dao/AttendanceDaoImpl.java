@@ -7,16 +7,16 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.forworks.attendance.vo.TeamWorkVo;
-import com.kh.forworks.attendance.vo.WorkTimeVo;
+import com.kh.forworks.attendance.vo.TodayWorkVo;
 import com.kh.forworks.attendance.vo.WorkVo;
 
 @Repository
 public class AttendanceDaoImpl implements AttendanceDao {
 
 	@Override
-	public WorkTimeVo selectInOutTime(SqlSessionTemplate sst, String empNo) {
+	public TodayWorkVo selectInOutTime(SqlSessionTemplate sst, String empNo) {
 		if(sst.selectOne("attendanceMapper.selectInOutTime", empNo) == null) {
-			WorkTimeVo vo = new WorkTimeVo();
+			TodayWorkVo vo = new TodayWorkVo();
 			vo.setInTime("미등록");
 			vo.setOutTime("미등록");
 			return vo;
@@ -27,34 +27,27 @@ public class AttendanceDaoImpl implements AttendanceDao {
 
 	@Override
 	public int selectDayWork(SqlSessionTemplate sst, String empNo) {	
-		if(sst.selectOne("attendanceMapper.selectDayWork", empNo) == null) {
-			return 0;
-		} else {
-			return sst.selectOne("attendanceMapper.selectDayWork", empNo);			
-		}
+		return sst.selectOne("attendanceMapper.selectDayWork", empNo);			
 	}
 	
 	@Override
-	public int selectWeekWork(SqlSessionTemplate sst, String empNo) {	
-		if(sst.selectOne("attendanceMapper.selectWeekWork", empNo) == null) {
-			return 0;
-		} else {			
-			return sst.selectOne("attendanceMapper.selectWeekWork", empNo); 
-		}
+	public int selectWeekWork(SqlSessionTemplate sst, String empNo) {				
+		return sst.selectOne("attendanceMapper.selectWeekWork", empNo); 
 	}
 	
 	@Override
-	public int selectMonthWork(SqlSessionTemplate sst, String empNo) {
-		if(sst.selectOne("attendanceMapper.selectMonthWork", empNo) == null) {
-			return 0;
-		} else {			
-			return sst.selectOne("attendanceMapper.selectMonthWork", empNo);
-		}
+	public int selectMonthWork(SqlSessionTemplate sst, String empNo) {		
+		return sst.selectOne("attendanceMapper.selectMonthWork", empNo);
 	}
 
 	@Override
 	public int insertInTime(SqlSessionTemplate sst, Map map) {
 		return sst.insert("attendanceMapper.insertInTime", map);
+	}
+	
+	@Override
+	public int updateInTime(SqlSessionTemplate sst, Map map) {
+		return sst.update("attendanceMapper.updateInTime", map);
 	}
 
 	@Override

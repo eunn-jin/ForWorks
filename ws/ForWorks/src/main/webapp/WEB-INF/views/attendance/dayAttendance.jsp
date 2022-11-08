@@ -220,7 +220,7 @@
 </script>
 <script>
 	$("button[id='goWorkBtn']").click(function(){
-		location.href="${root}/att/goWork";
+		location.href="${root}/att/goWork/"+${workTime.no};
 	});
 	
 	$("button[id='outWorkBtn']").click(function(){
