@@ -3,7 +3,7 @@
 
 <html>
 <head>
-	<title>Home</title>
+	<title>설문조사</title>
 </head>
 <body>
 
