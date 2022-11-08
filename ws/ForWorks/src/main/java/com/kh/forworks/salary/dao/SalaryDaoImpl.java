@@ -6,6 +6,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.forworks.salary.vo.AddBenefitVo;
 import com.kh.forworks.salary.vo.SalBonusVo;
 import com.kh.forworks.salary.vo.SalaryVo;
 
@@ -30,8 +31,8 @@ public class SalaryDaoImpl implements SalaryDao {
 	}
 	//초과수당조회
 	@Override
-	public List<SalaryVo> selectAddBenefit(SqlSessionTemplate sst, SalaryVo sv) {
-		return sst.selectOne("salaryMapper.selectBenefit",sv);
+	public List<AddBenefitVo> selectAddBenefit(SqlSessionTemplate sst, SalaryVo sv) {
+		return sst.selectList("salaryMapper.selectBenefit",sv);
 	}
 	//기본급 + 각종 수당 조회
 	@Override

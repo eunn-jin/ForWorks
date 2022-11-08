@@ -81,6 +81,11 @@ public class DocmanageServiceImpl implements DocmanageService{
 	public int updateStatus(DocVo vo) {
 		return dao.updateStatus(sst,vo);
 	}
+	//검색
+	@Override
+	public List<DocVo> selectSearch(HashMap map) {
+		return dao.selectSearch(sst,map);
+	}
 	
 	
 }

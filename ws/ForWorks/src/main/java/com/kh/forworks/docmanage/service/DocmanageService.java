@@ -26,4 +26,6 @@ public interface DocmanageService {
 	DfileVo selectFileDoc(String no);
 	//문서관리디테일-게시상태수정
 	int updateStatus(DocVo vo);
+	//검색
+	List<DocVo> selectSearch(HashMap map);
 }

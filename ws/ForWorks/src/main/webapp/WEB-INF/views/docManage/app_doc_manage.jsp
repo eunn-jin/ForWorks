@@ -91,8 +91,8 @@
                <section class="section">
 					<div id="wrap">
 				        <div id="check-cate">
-				           <a href="${root}/docmanage/manage/1">일반문서</a>
-				           <a href="${root}/appmanage/manage/1">결재문서</a>
+				           <a href="">일반문서</a>
+				           <a href="">결재문서</a>
 				        </div>
 				        <div id="check-btn">
 				            <button onclick="location.href='${root}/docmanage/write'">+ 일반문서작성</button>

@@ -47,6 +47,7 @@ public class DocmanageDaoImpl implements DocmanageDao {
 	//문서관리 디테일
 	@Override
 	public DocVo selectOneDoc(SqlSessionTemplate sst, String no) {
+		System.out.println("=======================");
 		return sst.selectOne("docMapper.selectOneDoc" , no);
 	}
 	//공개범위 받아오기
@@ -78,6 +79,11 @@ public class DocmanageDaoImpl implements DocmanageDao {
 	@Override
 	public int updateStatus(SqlSessionTemplate sst, DocVo vo) {
 		return sst.update("docMapper.updateStatus" , vo);
+	}
+	//검색
+	@Override
+	public List<DocVo> selectSearch(SqlSessionTemplate sst, HashMap map) {
+		return sst.selectList("docMapper.search",map);
 	}
 
 }

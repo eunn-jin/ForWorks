@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.Gson;
 import com.kh.forworks.PageVo;
 import com.kh.forworks.Pagination;
 import com.kh.forworks.docmanage.service.DocmanageService;
@@ -47,6 +49,7 @@ public class DocmanageController {
 		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
 		
 		List<DocVo> result = ds.selectRangeDoc(range);
+		System.out.println("출" + result);
 		model.addAttribute("result",result);
 		model.addAttribute("pv",pv);
 		return "docManage/doc_list";
@@ -59,6 +62,7 @@ public class DocmanageController {
 	model.addAttribute("dept",dept);
 	return "docManage/doc_write";
 	}
+		
 	//일반문서 디테일(화면)
 	@GetMapping("detail/{no}")
 	public String detail(@PathVariable String no, Model model) {
@@ -239,8 +243,26 @@ public class DocmanageController {
 		}
 
 	}
-	
-	
+	//검색
+	@PostMapping(value="search",produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String search(String sContent, HttpSession session,Model model) {
+		MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
+		String deptName = loginMember.getDeptName();
+		String deptNo = loginMember.getDeptNo();
+		String range = deptNo+deptName;
+		
+		HashMap map = new HashMap();
+		map.put("range", range);
+		map.put("sContent", sContent);
+		
+		System.out.println("출력문" + range +sContent);
+		
+		List<DocVo> result = ds.selectSearch(map);
+		System.out.println("출력문2" +result);
+		Gson g = new Gson();
+		return g.toJson(result);
+	}
 	
 }
 

@@ -33,9 +33,6 @@
         text-align: center;
         margin-top: 50px;
     }
-    table>tr{
-        border-bottom: 1px solid gray;
-    }
 </style>
 <body>
 
@@ -64,42 +61,47 @@
                    </div>
                </div>
                <section class="section">
-					<div id="wrap">
-                        
-				            <table>
-                                <tr>
-                                    <td>${vo.title}</td>
-                                </tr>
-                                <tr>
-                                    <td>보존기간</td>
-                                    <td>${vo.contEnrollDate} ~ ${vo.contEndDate}</td>
-                                </tr>
-                                <tr>
-                                    <td>첨부파일</td>
-                                    <td>
-	                                    <c:if test="${fv ne null}">       	
-	                                    		<a download href="${root}/resources/doc-file/upload/${fv.uploadName}">${fv.originName}</a>
-	                                    </c:if>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3"><div>${vo.content}</div></td>
-                                </tr>
+                <div id="wrap">
+                    <form action="" method="post">
+
+                    
+                    <table>
+                        <tr>
+                            <td> 
+                                <label><input type="checkbox" name="contStatus" id="Y" value="Y"  <c:if test="${vo.contStatus eq 'Y'}">checked</c:if>>게시중</label>
+                                <label><input type="checkbox" name="contStatus" id="N" value="N" <c:if test="${vo.contStatus eq 'N'}">checked</c:if>>비공개</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>${vo.title}</td>
+                        </tr>
+                        <tr>
+                            <td>보존기간</td>
+                            <td>${vo.contEnrollDate} ~ ${vo.contEndDate}</td>
+                        </tr>
+                        <tr>
+                            <td>첨부파일</td>
+                            <td>
                                 <c:if test="${fv ne null}">       	
-                                    <c:if test="${fv.ext eq '.jpg' || fv.ext eq '.png' }">
-                                   		<img src="${root}/resources/doc-file/upload/${fv.uploadName}"/>
-                                    </c:if>
+                                        <a download href="${root}/doc-file/upload/${fv.uploadName}">${fv.originName}</a>
                                 </c:if>
-                            </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"><div>${vo.content}</div></td>
+                        </tr>
+                        <c:if test="${fv.ext eq '.jpg' || fv.ext eq '.png' }">
+                            <c:if test="${fv ne null}">       	
+                                   <img src="${root}/doc-file/upload/${fv.uploadName}"/>
+                            </c:if>
+                        </c:if>
+                    </table>
+                    <input type="submit" value="게시상태수정">
+                    </form>
 
-
-				            <div id="center">
-				                
-				            </div>
-				            
-				            <div id="back-btn"><button  onclick="window.history.back()">목록</button></div>
-				                
-				    </div>
+                    <div id="back-btn"><button  onclick="window.history.back()">목록</button></div>
+                        
+            </div>
                </section>
            </div>
            
@@ -108,6 +110,8 @@
 </div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
+
+
 <script>
 	
 	$().ready(function() {

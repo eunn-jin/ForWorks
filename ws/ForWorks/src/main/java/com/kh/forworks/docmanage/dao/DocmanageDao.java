@@ -34,5 +34,7 @@ public interface DocmanageDao {
 	DfileVo selectFileDoc(SqlSessionTemplate sst, String no);
 	//문서관리디테일-게시상태수정
 	int updateStatus(SqlSessionTemplate sst, DocVo vo);
+	//검색
+	List<DocVo> selectSearch(SqlSessionTemplate sst, HashMap map);
 
 }
