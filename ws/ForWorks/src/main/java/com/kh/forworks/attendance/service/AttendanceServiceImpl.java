@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.forworks.attendance.dao.AttendanceDao;
-import com.kh.forworks.attendance.vo.MonthWorkVo;
+import com.kh.forworks.attendance.vo.MonthWorkCntVo;
 import com.kh.forworks.attendance.vo.TeamWorkVo;
-import com.kh.forworks.attendance.vo.WorkTimeVo;
+import com.kh.forworks.attendance.vo.TodayWorkVo;
 import com.kh.forworks.attendance.vo.WorkVo;
 
 @Service
@@ -27,8 +27,8 @@ public class AttendanceServiceImpl implements AttendanceService {
 	}
 
 	@Override
-	public WorkTimeVo getWorkInfo(String empNo) {
-		WorkTimeVo wvo = dao.selectInOutTime(sst, empNo);
+	public TodayWorkVo getTodayWork(String empNo) {
+		TodayWorkVo wvo = dao.selectInOutTime(sst, empNo);
 		
 		int day = dao.selectDayWork(sst, empNo);
 		int week = dao.selectWeekWork(sst, empNo);
@@ -52,8 +52,13 @@ public class AttendanceServiceImpl implements AttendanceService {
 	}
 	
 	@Override
-	public int goWork(Map map) {
+	public int insertInWork(Map map) {
 		return dao.insertInTime(sst, map);
+	}
+	
+	@Override
+	public int updateInWork(Map map) {
+		return dao.updateInTime(sst, map);
 	}
 
 	@Override
@@ -70,13 +75,17 @@ public class AttendanceServiceImpl implements AttendanceService {
 	}
 
 	@Override
-	public MonthWorkVo getMonthWorkCount(Map<String, Object> map) {
-		MonthWorkVo mw = new MonthWorkVo();
+	public MonthWorkCntVo getMonthWorkCount(Map<String, Object> map) {
+		MonthWorkCntVo mw = new MonthWorkCntVo();
 		
 		mw.setWorkCount(dao.selectWorkCnt(sst, map));
 		mw.setLateCount(dao.selectLateCount(sst, map));
 		mw.setEarlyoutCount(dao.selectEarlyoutCount(sst, map));
-		mw.setOffCount(dao.selectOffCount(sst, map) + dao.selectHalfOffCount(sst, map)/2);
+		double halfOff = (double)dao.selectHalfOffCount(sst, map);
+		if(halfOff != 0) {
+			halfOff = halfOff/2;
+		}
+		mw.setOffCount(dao.selectOffCount(sst, map) + halfOff);
 		
 		return mw;
 	}

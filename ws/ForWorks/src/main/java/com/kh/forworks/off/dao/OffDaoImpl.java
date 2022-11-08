@@ -57,4 +57,19 @@ public class OffDaoImpl implements OffDao {
 		return sst.update("offMapper.updateOffReject", no);
 	}
 
+	@Override
+	public int insertOffWork(SqlSessionTemplate sst, String no) {
+		return sst.insert("attendanceMapper.insertOffWork", no);
+	}
+
+	@Override
+	public String selectOffType(SqlSessionTemplate sst, String no) {
+		return sst.selectOne("offMapper.selectOffType", no);
+	}
+
+	@Override
+	public int insertHalfOffWork(SqlSessionTemplate sst, Map<String, String> map) {
+		return sst.insert("attendanceMapper.insertHalfOffWork", map);
+	}
+
 }

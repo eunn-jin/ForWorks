@@ -26,7 +26,7 @@
 		<typeAlias type="com.kh.forworks.approv.vo.NoElecDocVo" alias="NoElecDocVo"/>
     	
     	<typeAlias type="com.kh.forworks.attendance.vo.WorkVo" alias="WorkVo"/>
-    	<typeAlias type="com.kh.forworks.attendance.vo.WorkTimeVo" alias="WorkTimeVo"/>
+    	<typeAlias type="com.kh.forworks.attendance.vo.TodayWorkVo" alias="TodayWorkVo"/>
     	<typeAlias type="com.kh.forworks.attendance.vo.TeamWorkVo" alias="TeamWorkVo"/>
     	<typeAlias type="com.kh.forworks.off.vo.OffVo" alias="OffVo"/>
     	<typeAlias type="com.kh.forworks.off.vo.OffTypeVo" alias="OffTypeVo"/>

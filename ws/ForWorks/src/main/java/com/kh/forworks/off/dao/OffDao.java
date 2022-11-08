@@ -20,4 +20,7 @@ public interface OffDao {
 	List<OffVo> selectDeptOffList(SqlSessionTemplate sst, Map<String, Object> map);
 	int updateOffAccept(SqlSessionTemplate sst, String no);
 	int updateOffReject(SqlSessionTemplate sst, String no);
+	int insertOffWork(SqlSessionTemplate sst, String no);
+	String selectOffType(SqlSessionTemplate sst, String no);
+	int insertHalfOffWork(SqlSessionTemplate sst, Map<String, String> map);
 }

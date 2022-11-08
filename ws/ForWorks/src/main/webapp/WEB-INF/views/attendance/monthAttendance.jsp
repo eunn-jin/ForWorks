@@ -130,18 +130,26 @@
 				   var events = [];
 		  			
 		  			$.each(res, function(index, data){
-		  				events.push({
-		  					title : data.statusName,
-		  					start : data.workDate
-		  				});
-		  				events.push({
-		  					title : "출근",
-		  					start : data.workDate + "T" + data.inTime
-		  				});
-		  				events.push({
-		  					title : "퇴근",
-		  					start : data.workDate + "T" + data.outTime
-		  				});
+		  				if(data.statusName == "휴가"){
+		  					events.push({
+			  					title : data.statusName,
+			  					start : data.inDate,
+			  					end : data.outDate
+			  				});
+		  				}else {
+		  					events.push({
+			  					title : data.statusName,
+			  					start : data.inDate
+			  				});
+		  					events.push({
+			  					title : "출근",
+			  					start : data.inDate + "T" + data.inTime
+			  				});
+			  				events.push({
+			  					title : "퇴근",
+			  					start : data.inDate + "T" + data.outTime
+			  				});
+		  				}
 		  			});
 		  			successCallback(events);
 		   		}

@@ -1,5 +1,6 @@
 package com.kh.forworks.off.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -63,6 +64,17 @@ public class OffServiceImpl implements OffService {
 		int result = 1;
 		for(int i=0; i<no.length; i++) {
 			result *= dao.updateOffAccept(sst, no[i]);
+			String type = dao.selectOffType(sst, no[i]);
+			if(type == null) {
+				System.out.println("error 발생");
+				return -1;
+			} else if(type.equals("2") || type.equals("3")) {	//반차일때
+				Map<String, String> map = new HashMap<String, String>();
+				map.put("no", no[i]);
+				result *= dao.insertHalfOffWork(sst, map);
+			} else {	//그 외일때
+				result *= dao.insertOffWork(sst, no[i]);				
+			}
 		}
 		return result;
 	}

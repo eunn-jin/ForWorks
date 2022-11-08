@@ -56,4 +56,8 @@
 		UPDATE OFF SET STATUS = 'N' WHERE NO = #{no}
 	</update>
 	
+	<select id="selectOffType" resultType="String">
+		SELECT TYPE_CODE FROM OFF WHERE NO = #{no}
+	</select>
+	
 </mapper>
