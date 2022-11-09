@@ -98,6 +98,17 @@
 	border:1px solid #6F5CFA;
 	background: #FFF;
 	color:#000;
+	}
+	
+	.close{
+	margin:8px 0 0;
+	text-align: right;
+	border-radius:13px;
+	padding:3px 0;
+	width:100px;
+	display:inline-block;
+	text-align:center;
+	margin:4px 2px;	
 	}	
 </style>
 
@@ -123,8 +134,11 @@
 			</div>
 			<div class="pj_submit">
 				<a href="">등록</a>
-				<a href="">취소</a>
+				<button id="close">취소</button>
 			</div>
 		</div>
 	</div>
 </body>
+<script>
+</script>
+</html>
