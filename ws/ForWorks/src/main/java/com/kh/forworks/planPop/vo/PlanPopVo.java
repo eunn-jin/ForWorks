@@ -3,7 +3,7 @@ package com.kh.forworks.planPop.vo;
 import lombok.Data;
 
 @Data
-public class planPopVo {
+public class PlanPopVo {
 	
 	private String pno;
 	private String empNo;

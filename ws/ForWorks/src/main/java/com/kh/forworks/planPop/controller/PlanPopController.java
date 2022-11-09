@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.kh.forworks.planPop.vo.planPopVo;
+import com.kh.forworks.planPop.vo.PlanPopVo;
 
 
 @Controller
@@ -20,7 +20,7 @@ public class PlanPopController {
 	}
 	
 	@PostMapping("planPop")
-	public String planPop(planPopVo vo) {
+	public String planPop(PlanPopVo vo) {
 		
 	}
 }	
