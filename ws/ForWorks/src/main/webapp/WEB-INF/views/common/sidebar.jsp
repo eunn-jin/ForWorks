@@ -55,7 +55,7 @@
                         <li class="submenu-item " id="att-off">
                             <a href="${root}/off/manage">휴가관리</a>
                         </li>
-                        <c:if test="${loginMember.posNo eq 6}">
+                        <c:if test="${loginMember.posNo lt 3}">
                         	<li class="submenu-item " id="att-offCon">
 	                            <a href="${root}/off/confirm">휴가 신청 확인</a>
 	                        </li>
