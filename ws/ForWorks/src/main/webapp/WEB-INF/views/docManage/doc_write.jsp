@@ -40,7 +40,7 @@
                <div class="page-title">
                    <div class="row">
                        <div class="col-12 col-md-6 order-md-1 order-last">
-                           <h3>문서 작성</h3>
+                           <h3>결재문서등록</h3>
                            <p class="text-subtitle text-muted"></p>
                        </div>
                        <div class="col-12 col-md-6 order-md-2 order-first">

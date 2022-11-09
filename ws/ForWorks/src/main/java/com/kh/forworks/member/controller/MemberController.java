@@ -1,6 +1,9 @@
 package com.kh.forworks.member.controller;
 
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.forworks.FileUploader;
+import com.kh.forworks.member.email.EmailSender;
 import com.kh.forworks.member.service.MemberService;
 import com.kh.forworks.member.vo.MemberVo;
 
@@ -22,10 +26,12 @@ import com.kh.forworks.member.vo.MemberVo;
 public class MemberController {
 	
 	private final MemberService memberService;
+	private final EmailSender EmailSender;
 	
 	@Autowired
-	public MemberController(MemberService memberService) {
+	public MemberController(MemberService memberService, EmailSender emailSender) {
 		this.memberService = memberService;
+		this.EmailSender = emailSender;
 	}
 
 	//회원가입
@@ -109,16 +115,26 @@ public class MemberController {
 		return foundId;
 	}
 	
-	//비밀번호 찾기 - 조회 / 변경
-	@PostMapping("findMember")
+	//비밀번호 찾기 - 임시비밀번호(SMTP)
+	@PostMapping("findPwd")
 	@ResponseBody
 	public String findMember(String empId, String empName, String empEmail) {
 		MemberVo vo = new MemberVo();
 		vo.setEmpId(empId);
 		vo.setEmpName(empName);
 		vo.setEmpEmail(empEmail);
+		MemberVo checkMember = memberService.checkMember(vo);
 		
-		return "";
+		int result = -1;
+		if(checkMember != null) {
+			String tempPwd = EmailSender.SendEmail(empEmail, empName);
+			if(tempPwd != null) {
+				vo.setEmpNo(checkMember.getEmpNo());
+				vo.setEmpPwd(tempPwd);
+				result = memberService.updateTempPwd(vo);
+			}
+		}
+		return "" + result;
 	}
 	
 	//로그아웃
@@ -130,7 +146,17 @@ public class MemberController {
 	
 	//마이페이지
 	@GetMapping("mypage")
-	public String mypage() {
+	public String mypage(HttpSession session, Model model) {
+		//가입날짜계산
+		String date = ((MemberVo)session.getAttribute("loginMember")).getEmpEdate();
+		Date today = new Date();
+		try {
+			Date edate = new SimpleDateFormat("yy/MM/dd").parse(date);
+			long myday = (edate.getTime() - today.getTime()) / 1000 / (24*60*60);
+			model.addAttribute("fwDate", myday*-1);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		return "member/mypage-main";
 	}
 	
@@ -140,7 +166,7 @@ public class MemberController {
 		vo.setEmpNo(loginMember.getEmpNo());
 		
 		int result = memberService.memberInfoEdit(vo);
-		
+
 		if(result == 1) {
 			session.setAttribute("toastMsg", "정보를 변경하였습니다.");
 			loginMember.setEmpEmail(vo.getEmpEmail());
@@ -194,6 +220,7 @@ public class MemberController {
 		}
 		return "redirect:/mypage";
 	}
+	
 	@GetMapping("member/profileDelete")
 	public String memberprofileDelete(HttpServletRequest req, HttpSession session) {
 		String savePath = req.getServletContext().getRealPath("/resources/upload/profile/");
@@ -204,7 +231,11 @@ public class MemberController {
 		if(f.exists()) {
 			f.delete();
 		}
+		
+		memberService.updateProfileNull(loginMember);
+		
 		loginMember.setEmpProfile(null);
+		session.setAttribute("loginMember", loginMember);
 		return "redirect:/mypage";
 	}
 	

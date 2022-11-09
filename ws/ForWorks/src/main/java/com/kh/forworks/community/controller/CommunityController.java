@@ -225,7 +225,7 @@ public class CommunityController {
 			CommunityAttachmentsVo cmatVoCheck = cmusv.checkFile(no);
 			//System.out.println("파일 확인(정보수정post)::"+ntatVo);
 			
-			if (cmatVo != null) {
+			if (!(cmuvo.getCmuFileName().isEmpty())) {
 				String fileName = cmatVo.getCmatOrigin();
 				File f =  new File(savePath +  fileName);
 				if(f.exists()) { //파일 존재하는지 확인

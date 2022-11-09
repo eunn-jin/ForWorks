@@ -91,8 +91,8 @@
                <section class="section">
 					<div id="wrap">
 				        <div id="check-cate">
-				           <a href="">일반문서</a>
-				           <a href="">결재문서</a>
+				           <a href="${root}/docmanage/manage/1">일반문서</a>
+				           <a href="${root}/appmanage/manage/1">결재문서</a>
 				        </div>
 				        <div id="check-btn">
 				            <button onclick="location.href='${root}/docmanage/write'">+ 일반문서작성</button>
@@ -111,7 +111,7 @@
                             <div><a href="${root}/docmanage/manDetail/${x.docNo}">${x.title}</a></div>
                             <div>전체공개</div>
                             <div>${x.enrollDate}</div>
-                            <div>${x.status}</div>
+                            <div>${x.contStatus}</div>
                         </c:forEach>
 				      
 				        
@@ -119,15 +119,15 @@
 				        
 				        <div id="page-area">
 				            <c:if test="${pv.startPage ne 1 }">
-								<a href="/app99/board/list/${pv.startPage - 1}" class="btn btn-primary btn-sm">이전</a>	
+								<a href="${root}/docManage/doc_manage/${pv.startPage - 1}" class="btn btn-primary btn-sm">이전</a>	
 							</c:if>
 							
 							<c:forEach begin="${pv.startPage}" end="${pv.endPage}" var="i">
-								<a href="/app99/board/list/${i}" class="btn btn-primary btn-sm">${i}</a>
+								<a href="${root}/docmanage/manage/${i}" class="btn btn-primary btn-sm">${i}</a>
 							</c:forEach>
 							
 							<c:if test="${pv.endPage ne pv.maxPage }">
-								<a href="/app99/board/list/${pv.endPage + 1}" class="btn btn-primary btn-sm">다음</a>	
+								<a href="${root}/docmanage/manage/${pv.endPage + 1}" class="btn btn-primary btn-sm">다음</a>	
 							</c:if>
 				        </div>
 				

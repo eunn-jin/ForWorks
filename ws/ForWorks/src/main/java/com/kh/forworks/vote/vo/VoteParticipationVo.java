@@ -12,4 +12,9 @@ public class VoteParticipationVo {
 	private String vtptDate;
 	private String vtptEdit;
 	private String vtptStatus;
+	
+	//사원이름
+	private String empName;
+	//부서명
+	private String deptName;
 }

@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.kh.forworks.PageVo;
 import com.kh.forworks.approv.vo.ApprovDocumentVo;
 import com.kh.forworks.approv.vo.DocApprovVo;
+import com.kh.forworks.approv.vo.DocFormVo;
 import com.kh.forworks.approv.vo.DocSignVo;
 import com.kh.forworks.member.vo.MemberVo;
 
@@ -82,5 +84,50 @@ public interface ApprovDao {
 
 	//참조문서 확인처리
 	int updateDocReferByEmpNo(SqlSessionTemplate sst, ApprovDocumentVo vo);
+
+	//문서 작성자 호출
+	int selectApprovDocEditEmpNo(SqlSessionTemplate sst, ApprovDocumentVo vo);
+
+	//문서 수정
+	int updateApprovDoc(SqlSessionTemplate sst, DocApprovVo vo);
+
+	//문서 결재 정보 초기화
+	int updateDocApprovEdit(SqlSessionTemplate sst, DocApprovVo vo);
+
+	//문서 삭제
+	int deleteApprovDoc(SqlSessionTemplate sst, DocApprovVo vo);
+
+	//결제 삭제
+	int deleteDocApprov(SqlSessionTemplate sst, DocApprovVo vo);
+
+	//협조 삭제
+	int deleteDocCoop(SqlSessionTemplate sst, DocApprovVo vo);
+
+	//참조 삭제
+	int deleteDocRefer(SqlSessionTemplate sst, DocApprovVo vo);
+
+	//양식 생성
+	int insertForm(SqlSessionTemplate sst, DocFormVo vo);
+
+	//양식 페이지 호출
+	List<DocFormVo> selectFormList(SqlSessionTemplate sst, PageVo pv);
+
+	//양식 선택
+	DocFormVo selectFormOne(SqlSessionTemplate sst, String fno);
+
+	//양식 수정
+	int updateFormOne(SqlSessionTemplate sst, DocFormVo vo);
+
+	//양식 삭제
+	int deleteFormOne(SqlSessionTemplate sst, DocFormVo vo);
+
+	//양식 갯수
+	int selectFormListCount(SqlSessionTemplate sst);
+
+	//양식 리스트 호출
+	List<DocFormVo> selectFormListAll(SqlSessionTemplate sst);
+
+	//미리보기용 양식내용
+	String selectFormContentOne(SqlSessionTemplate sst, String formNo);
 
 }

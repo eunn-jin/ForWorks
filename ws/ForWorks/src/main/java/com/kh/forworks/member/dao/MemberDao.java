@@ -22,4 +22,8 @@ public interface MemberDao {
 
 	int updateMemberProfileByNo(SqlSessionTemplate sst, MemberVo vo);
 
+	MemberVo checkEmailMember(SqlSessionTemplate sst, MemberVo vo);
+
+	int updateProfileNull(SqlSessionTemplate sst, MemberVo loginMember);
+
 }

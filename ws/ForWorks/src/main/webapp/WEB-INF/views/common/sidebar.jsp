@@ -30,7 +30,7 @@
                 <div class="profile">
                     <a href="#">
 	                    <img src="${root}/resources/img/imgTest.jpg">                
-	                	<span class="user-name"> Hong gil dong</span>
+	                	<span class="user-name"> ${loginMember.empName} </span>
                     </a>
                 </div>
             </div>
@@ -55,6 +55,11 @@
                         <li class="submenu-item " id="att-off">
                             <a href="${root}/off/manage">휴가관리</a>
                         </li>
+                        <c:if test="${loginMember.posNo lt 3}">
+                        	<li class="submenu-item " id="att-offCon">
+	                            <a href="${root}/off/confirm">휴가 신청 확인</a>
+	                        </li>
+                        </c:if>
                     </ul>
                 </li>
                 
@@ -81,10 +86,10 @@
                     </a>
                     <ul class="submenu" id="doc-part">
                         <li class="submenu-item" id="doc-list">
-                            <a href="${root}/docmanage/list">일반문서</a>
+                            <a href="${root}/docmanage/list/1">일반문서</a>
                         </li>
                         <li class="submenu-item "id="doc-write">
-                            <a href="component-badge.html">결재문서</a>
+                            <a href="${root}/appmanage/list">결재문서</a>
                         </li>
                         <li class="submenu-item"  id="doc-manage">
                             <a href="${root}/docmanage/manage/1">문서관리</a>

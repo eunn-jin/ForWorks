@@ -106,4 +106,19 @@
 		UPDATE EMPLOYEE SET EMP_PROFILE = #{empProfile}
 		WHERE EMP_NO = #{empNo}
 	</update>
+	
+	<update id="updateProfileNull">
+		UPDATE EMPLOYEE SET EMP_PROFILE = NULL
+		WHERE EMP_NO = #{empNo}
+	</update>
+	
+	<select id="selectOneByEmail" resultType="MemberVo">
+		SELECT 
+			EMP_NO
+			, EMP_NAME
+			, EMP_EMAIL
+		FROM EMPLOYEE
+		WHERE EMP_ID = #{empId} AND EMP_NAME = #{empName} AND EMP_EMAIL = #{empEmail}
+		AND EMP_STATUS = 'Y'
+	</select>
 </mapper>

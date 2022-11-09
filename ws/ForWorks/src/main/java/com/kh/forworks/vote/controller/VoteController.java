@@ -50,6 +50,7 @@ public class VoteController {
 			session.setAttribute("toastMsg", "로그인이 필요합니다.");
 			return "redirect:/login";
 		}else{
+			String no =loginMember.getEmpNo();
 
 			//전체
 			// 전체 투표 갯수
@@ -59,17 +60,17 @@ public class VoteController {
 			//투표 리스트 가져오기
 			List<VoteVo> vtList = vtsv.selectList(pv);
 			
-			//진행중 투표
-			int ingCnt = vtsv.selecting();
+			//진행중 투표(로그인 회원이 대상자인것)
+			int ingCnt = vtsv.selecting(no);
 			PageVo pving = Pagination.getPageVo(ingCnt, pno, 5, 10);
 			//리스트 vtList의 상태값이 i인것만
-			List<VoteVo> vtingList = vtsv.selectListing(pving);
+			List<VoteVo> vtingList = vtsv.selectListing(pving,no);
 			
 			//마감된 투표
-			int endCnt = vtsv.selectEnd();
+			int endCnt = vtsv.selectEnd(no);
 			PageVo pvend = Pagination.getPageVo(endCnt, pno, 5, 10);
 			//리스트 vtList의 상태값이 e인것만
-			List<VoteVo> vtEndList = vtsv.selectListEnd(pvend);
+			List<VoteVo> vtEndList = vtsv.selectListEnd(pvend,no);
 
 			
 			if (vtList != null) {
@@ -122,15 +123,15 @@ public class VoteController {
 		vtvo.setVtEnd(vtvo.getVtEnd().replace('T', ' '));
 		
 		
-		System.out.println(vtvo);
-		System.out.println(vtcg);
-		System.out.println(vtpt);
-		System.out.println(vtatVo);
+//		System.out.println(vtvo);
+//		System.out.println(vtcg);
+//		System.out.println(vtpt);
+//		System.out.println(vtatVo);
 		
-		System.out.println(vtcg.getVtcgName());
+//		System.out.println(vtcg.getVtcgName());
 		//질문 항목 문자열 자르기및 배열에 담기		
 		String[] vtcgArr =vtcg.getVtcgName().split(",");
-		System.out.println(vtcgArr.length);
+//		System.out.println(vtcgArr.length);
 		
 		
 		//회원정보 set
@@ -139,7 +140,7 @@ public class VoteController {
 		
 		//파일 유무 확인
 		//파일 유무 확인
-		if (vtvo.getVtFile() != null && !vtvo.getVtFile().isEmpty()) {
+		if (vtvo.getVtFile() != null) {
 			//파일 있음
 			//파일 업로드 후 저장된 파일명 얻기 
 			String savePath = req.getServletContext().getRealPath("/resources/upload/vote/");
@@ -178,9 +179,9 @@ public class VoteController {
 		//투표 대상자 가져오기(전체대상자:: 투표참여o, x)
 		List<VoteParticipationVo> vtptList = vtsv.selectVtpt(pno);
 		
-		System.out.println(vtvo);
-		System.out.println(vtcgList);
-		System.out.println(vtptList);
+//		System.out.println(vtvo);
+//		System.out.println(vtcgList);
+//		System.out.println(vtptList);
 		
 		
 		model.addAttribute("vtvo", vtvo);
@@ -218,10 +219,10 @@ public class VoteController {
 		//투표 대상자 가져오기(전체대상자:: 투표참여o, x)
 		List<VoteParticipationVo> vtptList = vtsv.selectVtpt(pno);
 		
-		System.out.println(vtvo);
-		System.out.println(vtcgList);
-		System.out.println(vtptList);
-		System.out.println(vtatList);
+//		System.out.println(vtvo);
+//		System.out.println(vtcgList);
+//		System.out.println(vtptList);
+//		System.out.println(vtatList);
 		
 		model.addAttribute("vtvo", vtvo);
 		model.addAttribute("vtcgList", vtcgList);
@@ -239,11 +240,11 @@ public class VoteController {
 		vtvo.setVtNo(pno);
 		vtcg.setVtNo(pno);
 		
-		System.out.println("-------수정페이지 Post값 넘기기-------");
-		System.out.println(vtvo);
-		System.out.println(vtcg);
-		System.out.println(vtat);
-		System.out.println("///////////////////////////////////");
+//		System.out.println("-------수정페이지 Post값 넘기기-------");
+//		System.out.println(vtvo);
+//		System.out.println(vtcg);
+//		System.out.println(vtat);
+//		System.out.println("///////////////////////////////////");
 		
 		
 		//기존 파일 삭제
@@ -252,9 +253,10 @@ public class VoteController {
 		
 		//첨부파일 확인 (투표첨부파일 테이블에 등록된 파일이 있으면 update, 등록된 파일이 없으면 insert)
 		VoteAttachmentsVo vtatCheck = vtsv.checkFile(pno);
-		//System.out.println("파일 확인(정보수정post)::"+ntatVocheck);
+		System.out.println("파일 확인(정보수정post)::"+vtatCheck);
 		
 		//해당 게시글의 첨부파일이있으면 삭제
+		System.out.println("파일공백여부::"+!(vtvo.getVtFile().isEmpty()));
 		if (!(vtvo.getVtFile().isEmpty())) {
 			String fileName = vtat.getVtatOrigin();
 			File f =  new File(savePath +  fileName);
@@ -277,7 +279,7 @@ public class VoteController {
 			vtat.setVtatOrigin(originName);
 			vtat.setVtatPath(savePath);
 			vtat.setVtNo(pno);
-			//System.out.println("공지파일::"+ntatVo);
+			System.out.println("투표파일::"+vtat);
 		}else {vtat=null;}
 		
 		String[] vtcgArr=null ;
@@ -339,9 +341,9 @@ public class VoteController {
 		System.out.println(chvo);
 		
 		
-		System.out.println(vtvo);
-		System.out.println(vtcgList);
-		System.out.println(vtptList);
+//		System.out.println(vtvo);
+//		System.out.println(vtcgList);
+//		System.out.println(vtptList);
 		
 		model.addAttribute("vtvo", vtvo);
 		model.addAttribute("vtcgList", vtcgList);
@@ -354,20 +356,33 @@ public class VoteController {
 	//사원이 투표를 하였을때
 	//필요한값 :: 체트된 항목 번호, 회원번호, 투표 번호
 	@PostMapping("detailUser/{pno}")
-	public String detailUser(@PathVariable String pno, HttpSession session ,VoteParticipationVo vo){
+	public String detailUser(@PathVariable String pno, HttpSession session ,VoteParticipationVo vo, VoteCategoryVo vtcg){
 		
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 		System.out.println(pno);
 		System.out.println(loginMember.getEmpNo());
 		
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("pno", pno);
+		map.put("no",loginMember.getEmpNo());
+		map.put("cgno", vtcg.getVtcgNo());
+		//사원이 투표를 참여 했는지 확인(투표를 하였는데 다시 투표를 하면 이전투표의 득표수 -- , 현재 ++)
+		VoteParticipationVo checkpt = vtsv.checkVote(map);
+		
+		
 		System.out.println(vo);
 		//set 회원 번호, 게시글 번호, 
 		vo.setVtNo(pno);
 		vo.setEmpNo(loginMember.getEmpNo());
-		System.out.println(vo);
 		
+		vtcg.setVtNo(pno);
+//		System.out.println("===========");
+//		System.out.println(vo);
+//		System.out.println(vtcg);
+//		System.out.println(checkpt);
 		//투표 입력내용 넣기
-		int result = vtsv.insertUserVt(vo);
+		int result = vtsv.insertUserVt(vo, vtcg, checkpt, map);
 		
 		if(result ==1) {
 			session.setAttribute("toastMsg", "투표 완료!");

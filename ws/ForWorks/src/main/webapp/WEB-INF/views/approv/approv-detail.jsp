@@ -191,7 +191,6 @@
                                     <div>${approvMember.empName}</div>
                                     </c:forEach>
 									
-									<!-- TODO 기안자 사인 따로받고 foreach문 사인으로 돌리고 반복횟수는 approvMemberList로 -->
 									<c:forEach var="SignList" items="${approvSignList}" begin="0" end="${fn:length(approvMemberList)}" varStatus="status">
 									<c:if test="${status.index eq 0}">
                                     <div class="sign-area"></div>
@@ -226,7 +225,7 @@
                     </div>
 					<form action="" method="post">
                     <div class="btn-area">
-                        <button type="button" class="approv-btn" onclick="location.href='${root}/approv/main">목록보기</button>
+                        <button type="button" class="approv-btn" onclick="location.href='${root}/approv/main'">목록보기</button>
                         <div class="approv-btn-area">
                         	<c:choose>
                         		<c:when test="${loginMember.empNo} eq ${approvDoc.empNo}">

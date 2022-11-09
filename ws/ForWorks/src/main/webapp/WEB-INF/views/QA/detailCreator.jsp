@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="${root}/resources/css/sjy.css">
 <html>
 <head>
-	<title>Home</title>
+	<title>설문-상세보기(작성자)</title>
 </head>
 <body style="display: inline;">
 
@@ -35,7 +35,7 @@
                 <section class="section" >
                     <div class="card" >
                         
-                        <%@include file="/WEB-INF/views/survey/detailCreator-content.jsp" %>
+                        <%@include file="/WEB-INF/views/QA/detailCreator-content.jsp" %>
                     </div>
                             <div style="text-align: right;"> 
                                 <button class="myBtn">종료</button>

@@ -1,7 +1,5 @@
 package com.kh.forworks.attendance.controller;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,10 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.forworks.DateFunction;
 import com.kh.forworks.attendance.service.AttendanceService;
-import com.kh.forworks.attendance.vo.MonthWorkVo;
+import com.kh.forworks.attendance.vo.MonthWorkCntVo;
 import com.kh.forworks.attendance.vo.TeamWorkVo;
-import com.kh.forworks.attendance.vo.WorkTimeVo;
+import com.kh.forworks.attendance.vo.TodayWorkVo;
 import com.kh.forworks.attendance.vo.WorkVo;
 import com.kh.forworks.member.vo.MemberVo;
 
@@ -34,55 +33,19 @@ public class AttendanceController {
 	public AttendanceController(AttendanceService service) {
 		this.service = service;
 	}
-	
-	private String getToday() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date now = new Date();        
-		String day = sdf.format(now);
-		
-		return day;
-	}
-	
-//	private String getThisMonth() {
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
-//		Date now = new Date();        
-//		String day = sdf.format(now);
-//		
-//		return day;
-//	}
-	
-	private String monthForm(String str) {
-		String year = str.substring(0, 4);
-		String month = str.substring(5, 7);
-		String day = str.substring(8, 10);
-		
-		int yearNum = Integer.parseInt(year);
-		int monthNum = Integer.parseInt(month);
-		int dayNum = Integer.parseInt(day);
-		
-		if(dayNum != 1) {
-			monthNum = monthNum + 1 ;
-			if(monthNum == 13) {
-				yearNum++;
-				monthNum = 1;
-			}
-		}
-		
-		return yearNum + "-" + monthNum;
-	}
 
 	@GetMapping("day")
 	public String dayAtt(Model model, HttpSession session) {
 
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 		String empNo = loginMember.getEmpNo();
-		String day = getToday();
+		String day = DateFunction.getToday();
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("empNo", empNo);
 		map.put("day", day);
 				
-		WorkTimeVo workTime = service.getWorkInfo(empNo);
+		TodayWorkVo workTime = service.getTodayWork(empNo);
 		WorkVo work = service.getDayWorkInfo(map);
 		TeamWorkVo team = service.getTeamTime(empNo);
 				
@@ -106,7 +69,7 @@ public class AttendanceController {
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 		String empNo = loginMember.getEmpNo();
 		
-		month = monthForm(month);
+		month = DateFunction.monthForm(month);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("empNo", empNo);
 		map.put("month", month);
@@ -118,33 +81,39 @@ public class AttendanceController {
 	
 	@PostMapping("monthCnt")
 	@ResponseBody
-	public MonthWorkVo MonthCnt(String month, HttpSession session) {
+	public MonthWorkCntVo MonthCnt(String month, HttpSession session) {
 		
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 		String empNo = loginMember.getEmpNo();
-		month = monthForm(month);
+		month = DateFunction.monthForm(month);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("empNo", empNo);
 		map.put("month", month);
 		
-		MonthWorkVo monthCnt = service.getMonthWorkCount(map); 
+		MonthWorkCntVo monthCnt = service.getMonthWorkCount(map); 
 		monthCnt.setMonth(month);
 		
 		return monthCnt;
 	}
 	
-	@GetMapping("goWork")
-	public String goWork(HttpSession session) {
+	@GetMapping("goWork/{no}")
+	public String goWork(@PathVariable int no, HttpSession session) {
 				        
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 		String empNo = loginMember.getEmpNo();
-		String day = getToday();
-		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("empNo", empNo);
-		map.put("day", day);
 		
-		int result = service.goWork(map);
+		int result;		
+		if(no != 0) {
+			//반차 일때
+			map.put("no", no);
+			result = service.updateInWork(map);
+		} else {
+			String day = DateFunction.getToday();
+			map.put("day", day);
+			result = service.insertInWork(map);
+		}
 		
 		if(result == 1) {
 			return "redirect:/att/day";			

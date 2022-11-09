@@ -11,5 +11,4 @@ public interface PlanPopService {
 	
 	//일정 삭제
 	
-	
 }

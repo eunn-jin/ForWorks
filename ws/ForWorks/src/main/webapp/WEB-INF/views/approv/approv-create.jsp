@@ -207,13 +207,12 @@
 
 </style>
     
-
         <%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
-        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"; type="text/javascript"></script>
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		<link rel="stylesheet" href="${root}/resources/css/approv/common.css">
 
-        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
         <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
     
@@ -235,13 +234,15 @@
 
                         <div class="title-area" id="form-area">
                         
-                            <input list="" class="approv-area title-input" placeholder="양식 선택" name="docForm">
-                                <datalist>
-                                	
-                                </datalist>
+                            <input list="formList" class="approv-area title-input" placeholder="양식 선택" name="docForm" id="formNum">
+                               	<datalist id="formList">
+                               		<c:forEach var="x" items="${formList}">
+                               			<option value="${x.formNo}" label="${x.formName}"></option>
+                               		</c:forEach>
+                           		</datalist>
                             </input>
 
-                            <button class="approv-btn form-btn">선택</button>
+                            <button type="button" class="approv-btn form-btn" onclick="formCall(1);">선택</button>
 
                         </div>
                         <div class="title-area">
@@ -265,8 +266,8 @@
 
 
                         <div class="btn-area">
-                        	<button type="button" class="approv-btn" onclick="location.href='${root}/approv/create/noelec'" style="font-size: 20px;">비전자문서 작성</button>
-                            <button type="button" class="approv-btn" onclick="location.href='${root}/approv/main'">뒤로가기</button>
+                        	<button type="button" class="approv-btn" onclick="location.href='${root}/approv/create/noelec';" style="font-size: 20px;">비전자문서 작성</button>
+                            <button type="button" class="approv-btn" onclick="location.href='${root}/approv/main';">뒤로가기</button>
                             <button class="approv-btn">작성하기</button>
                         </div>
                     
@@ -430,6 +431,47 @@
 	}
 
 </script>
+
+<script>
+		
+	function formCall(){
+		
+		const no = document.querySelector("#formNum").value;
+		
+		$.ajax({
+			url : "${root}/approv/form/callContent",
+			type : "get",
+			data : {formNo : no},
+			success : function (val) {
+				$('#summernote').summernote('code', val);
+				$('#summernote').summernote({
+					  height: 420,                 // 에디터 높이
+					  minHeight: 420,             // 최소 높이
+					  maxHeight: 420,             // 최대 높이
+					  focus: false,                  // 에디터 로딩후 포커스를 맞출지 여부
+					  lang: "ko-KR",					// 한글 설정
+					  placeholder: '최대 2048자까지 쓸 수 있습니다',	//placeholder 설정
+					  toolbar: [
+				          ['style', ['style']],
+				          ['font', ['bold', 'underline', 'clear']],
+				          ['color', ['color']],
+				          ['para', ['ul', 'ol', 'paragraph']],
+				          ['table', ['table']],
+				          ['insert', ['link', 'picture', 'video']],
+				        ]
+			          
+				});
+				
+			},
+			error : function () {
+				alert("불러오기 실패");
+			}
+		});
+		
+		
+	}
+</script>
+
 
 </html>
 

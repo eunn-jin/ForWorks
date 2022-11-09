@@ -3,7 +3,7 @@
 
 <html>
 <head>
-	<title>Home</title>
+	<title>설문조사</title>
 </head>
 <body>
 
@@ -33,7 +33,7 @@
                 </div>
                 <section class="section">
                     <div class="card" style="flex-direction: row;">
-                        <%@include file="/WEB-INF/views/survey/list-content.jsp" %>
+                        <%@include file="/WEB-INF/views/QA/list-content.jsp" %>
                         
                     </div>
                 </section>

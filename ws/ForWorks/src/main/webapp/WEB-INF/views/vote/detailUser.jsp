@@ -116,10 +116,14 @@ var alert = function(msg, type) {
 			
 		}, function(isConfirm) {
 			if (isConfirm) {
-				swal($("form[name=vote]").submit());
+                swal($("form[name=vote]").submit())
+
                 
-			}else{
+                
+                }
+            else{
 				swal({
+                    title:'',
                     closeOnClickOutside : false
                 })
 			}
@@ -127,21 +131,20 @@ var alert = function(msg, type) {
 		});
 	}
 
-	function Alert() {
-		alert('gg', 'success');
-	}
+
 	function Confirm() {
 		confirm('', '투표를 다시하시겠습니까?');
     }
 </script>
 <script>
 	
-	$().ready(function() {
-		console.log("test:");
-		$('#ex1').addClass("active");
-	});
+	// $().ready(function() {
+	// 	console.log("test:");
+	// 	$('#ex1').addClass("active");
+	// });
 
 </script>
+
 
 <script>
     var today =new Date();
@@ -150,26 +153,26 @@ var alert = function(msg, type) {
     console.log(today);        
     console.log(stday);
     console.log(edday);
-    console.log(stday >= today);
-    console.log(edday <= today);
+    // console.log(stday >= today);
+    // console.log(edday <= today);
     
     function check() {
-        if (stday >= today) {
-            alert('투표가 시작되지않았습니다.');
-            return false;
-        }else if(edday <= today){
-            alert('투표가 마감되었습니다.');
-            return false;
-        }
-        }
+                    if (stday >= today) {
+                        alert('투표가 시작되지않았습니다.','success'); 
+                        return false;
+                    }else if(edday <= today){
+                            alert('투표가 마감되었습니다.');
+                            return false;
+                        }
+                        
+                    }
 </script>
-
 
 <script>
     //로그인한 회원이 투표를 하였는지 확인
     //투표한경우 투표한 내용 checked
     var x = '${chvo.vtcgNo}';
-    console.log(x);
+    // console.log(x);
     if (x != null) {
         $("input[id='${chvo.vtcgNo}']").prop("checked",true);
 

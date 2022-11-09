@@ -6,12 +6,15 @@
 		INSERT INTO WORK(NO, EMP_NO, IN_TIME) VALUES(SEQ_WORK.NEXTVAL, #{empNo}, SYSDATE)
 	</insert>
 	
+	<update id="updateInTime">
+		UPDATE WORK SET IN_TIME = SYSDATE WHERE EMP_NO = #{empNo} AND NO = #{no}
+	</update>
+	
 	<update id="updateOutTime">
 		UPDATE WORK 
 		SET OUT_TIME = SYSDATE 
 		WHERE EMP_NO = #{empNo} 
-			AND NO = #{no} 
-			AND OUT_TIME IS NULL
+			AND NO = #{no}
 	</update>
 	
 	<update id="updateOverTime">
@@ -31,11 +34,11 @@
 		     FROM WORK
 		     WHERE EMP_NO = #{empNo} AND NO = #{no}
 			)
-		WHERE NO = #{no}
+		WHERE NO = #{no} AND STATUS_CODE = 1
 	</update>
 	
-	<select id="selectInOutTime" resultType="WorkTimeVo">
-		SELECT NO, EMP_NO, NVL(TO_CHAR(IN_TIME, 'HH24:MI'), '미등록') AS IN_TIME, NVL(TO_CHAR(OUT_TIME, 'HH24:MI'), '미등록') AS OUT_TIME 
+	<select id="selectInOutTime" resultType="TodayWorkVo">
+		SELECT NO, EMP_NO, STATUS_CODE, NVL(TO_CHAR(IN_TIME, 'HH24:MI'), '미등록') AS IN_TIME, NVL(TO_CHAR(OUT_TIME, 'HH24:MI'), '미등록') AS OUT_TIME 
 		FROM WORK 
 		WHERE EMP_NO = #{empNo} 
 			AND TO_CHAR(IN_TIME, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
@@ -83,7 +86,7 @@
 	</select>
 	
 	<select id="selectOffCount" resultType="int">
-		SELECT COUNT(*) FROM WORK WHERE EMP_NO = #{empNo} AND TO_CHAR(IN_TIME, 'YYYY-MM') = TO_CHAR(TO_DATE(#{month}, 'YYYY-MM'), 'YYYY-MM') AND STATUS_CODE IN (4)
+		SELECT NVL(SUM(TO_DATE(OUT_TIME, 'YYYY-MM-DD') - TO_DATE(IN_TIME, 'YYYY-MM-DD')+1), 0) FROM WORK WHERE EMP_NO = #{empNo} AND TO_CHAR(IN_TIME, 'YYYY-MM') = TO_CHAR(TO_DATE(#{month}, 'YYYY-MM'), 'YYYY-MM') AND STATUS_CODE IN (4)
 	</select>
 
 	<select id="selectHalfOffCount" resultType="int">
@@ -107,7 +110,8 @@
 		    NO, NAME AS STATUS_NAME,
 		    NVL(TO_CHAR(IN_TIME, 'HH24:MI'), 0) AS IN_TIME, 
 		    NVL(TO_CHAR(OUT_TIME, 'HH24:MI'), 0) AS OUT_TIME,
-		    TO_CHAR(IN_TIME, 'YYYY-MM-DD') AS WORK_DATE
+		    TO_CHAR(IN_TIME, 'YYYY-MM-DD') AS IN_DATE,
+		    TO_CHAR(OUT_TIME + 1, 'YYYY-MM-DD') AS OUT_DATE
 		FROM 
 		    (SELECT * 
 		        FROM (SELECT NO, STATUS_CODE, IN_TIME, OUT_TIME, OVER_TIME FROM WORK WHERE EMP_NO = #{empNo} AND TO_CHAR(IN_TIME, 'YYYY-MM') = TO_CHAR(TO_DATE(#{month}, 'YYYY-MM'), 'YYYY-MM'))
@@ -117,5 +121,15 @@
 	<select id="selectTeamTime" resultType="TeamWorkVo">
 		SELECT IN_TIME, OUT_TIME, NAME FROM WORK_TYPE WHERE END_DAY IS NULL AND DEPT_NO = (SELECT DEPT_NO FROM EMPLOYEE WHERE EMP_NO = #{empNo})
 	</select>
+	
+	<insert id="insertOffWork">
+		INSERT INTO WORK(NO, EMP_NO, IN_TIME, OUT_TIME, STATUS_CODE) 
+		VALUES(SEQ_WORK.NEXTVAL, (SELECT EMP_NO FROM OFF WHERE NO = #{no}), (SELECT START_DAY FROM OFF WHERE NO = #{no}), (SELECT END_DAY FROM OFF WHERE NO = #{no}), 4)
+	</insert>
+	
+	<insert id="insertHalfOffWork">
+		INSERT INTO WORK(NO, EMP_NO, IN_TIME, OUT_TIME, STATUS_CODE) 
+		VALUES(SEQ_WORK.NEXTVAL, (SELECT EMP_NO FROM OFF WHERE NO = #{no}), (SELECT START_DAY FROM OFF WHERE NO = #{no}), (SELECT END_DAY FROM OFF WHERE NO = #{no}), 5)
+	</insert>
 	
 </mapper>

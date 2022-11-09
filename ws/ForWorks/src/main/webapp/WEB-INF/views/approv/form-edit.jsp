@@ -116,7 +116,7 @@
         <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
 		<link rel="stylesheet" href="${root}/resources/css/approv/common.css">
-        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
         <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
@@ -133,28 +133,28 @@
                 <div id="main-header">양식 수정</div>
 
                 <div class="approv-main">
-
+				<form action="" method="post">
 					<div class="approv-title-wrap">
 					
                         <div class="form-title-label approv-area"><div>제목</div></div>
 
-						<input type="text" class="approv-area title-input" placeholder="양식의 이름을 입력해주세요">
+						<input type="text" class="approv-area title-input" placeholder="양식의 이름을 입력해주세요" name="formName" value="${docForm.formName}">
 					
                     </div>
 
                     <div class="approv-detail-div">
-                        <textarea id="summernote" name="editordata"> </textarea>
+                        <textarea id="summernote" name="formContent"> </textarea>
                     </div>
 
                     <div class="btn-area">
-                        <button class="approv-btn">목록보기</button>
+                        <button type="button" class="approv-btn" onclick="location.href='${root}/approv/form/main/1';">목록보기</button>
                         <div class="approv-btn-area">
                             <button class="approv-btn">
                                 <span class="approv-btn-text">수정</span>
                             </button>
                         </div>
                     </div>
-                
+                </form>
                 </div>
             </div>
 
@@ -165,7 +165,9 @@
 
 <script>
 	
+	
 	$(document).ready(function() {
+		
 		$('#summernote').summernote({
 			  height: 420,                 // 에디터 높이
 			  minHeight: 420,             // 최소 높이
@@ -183,7 +185,9 @@
 		        ]
 	          
 		});
+		
+		$('#summernote').summernote('code', '${docForm.formContent}');
 	});
-
+	
 </script>
 </html>

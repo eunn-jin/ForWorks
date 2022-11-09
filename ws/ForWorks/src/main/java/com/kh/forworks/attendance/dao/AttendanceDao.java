@@ -6,17 +6,18 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.kh.forworks.attendance.vo.TeamWorkVo;
-import com.kh.forworks.attendance.vo.WorkTimeVo;
+import com.kh.forworks.attendance.vo.TodayWorkVo;
 import com.kh.forworks.attendance.vo.WorkVo;
 
 public interface AttendanceDao {
 
-	WorkTimeVo selectInOutTime(SqlSessionTemplate sst, String empNo);
+	TodayWorkVo selectInOutTime(SqlSessionTemplate sst, String empNo);
 	int selectDayWork(SqlSessionTemplate sst, String empNo);
 	int selectWeekWork(SqlSessionTemplate sst, String empNo);
 	int selectMonthWork(SqlSessionTemplate sst, String empNo);
 	
 	int insertInTime(SqlSessionTemplate sst, Map map);
+	int updateInTime(SqlSessionTemplate sst, Map map);
 	int updateOutTime(SqlSessionTemplate sst, Map<String, Object> map);
 	int updateOverTime(SqlSessionTemplate sst, Map<String, Object> map);
 	int updateStatus(SqlSessionTemplate sst, Map<String, Object> map);

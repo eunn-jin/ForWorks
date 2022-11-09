@@ -28,6 +28,9 @@ public class VoteVo {
 	
 	//부서별로 선택되었을때 부서번호들
 	private int[] dept;
+	
+	//로그인한 사원의 번호
+	private String uno;
 }
 
 

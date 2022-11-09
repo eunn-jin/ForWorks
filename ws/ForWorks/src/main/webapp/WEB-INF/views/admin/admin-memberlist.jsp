@@ -472,6 +472,7 @@
 	           if (data == 1) {
 		         toastContent.innerText = "일시정지 되었습니다.";
 			     $("#emp"+no).find("td:eq(7)").html("<span style='color:red;'>일시정지</span>");
+			     $("#emp"+no).find("td:eq(6)").html("");
 	           }
 	           $("#memberPauseModal").modal("hide");
 	        },

@@ -11,6 +11,7 @@ public class OffVo {
 	private String endDay;
 	private String status;
 	private String empNo;
+	private String empName;
 	private String period;
 	
 	private String typeCode;

@@ -3,7 +3,7 @@ package com.kh.forworks.attendance.vo;
 import lombok.Data;
 
 @Data
-public class MonthWorkVo {
+public class MonthWorkCntVo {
 	private String empNo;
 	private String month;
 	

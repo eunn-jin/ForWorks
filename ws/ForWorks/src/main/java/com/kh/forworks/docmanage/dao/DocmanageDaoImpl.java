@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.forworks.PageVo;
 import com.kh.forworks.docmanage.vo.DfileVo;
 import com.kh.forworks.docmanage.vo.DocVo;
+import com.kh.forworks.member.vo.MemberVo;
 
 @Repository
 public class DocmanageDaoImpl implements DocmanageDao {
@@ -20,8 +21,8 @@ public class DocmanageDaoImpl implements DocmanageDao {
 	}
 	//일반문서 리스트
 	@Override
-	public List<DocVo> selectDoc(SqlSessionTemplate sst) {
-		return sst.selectList("docMapper.selectDoc");
+	public List<DocVo> selectRangeDoc(SqlSessionTemplate sst , String range) {
+		return sst.selectList("docMapper.selectRangeDoc" , range);
 	}
 	//일반문서>파일업로드
 	@Override
@@ -46,12 +47,43 @@ public class DocmanageDaoImpl implements DocmanageDao {
 	//문서관리 디테일
 	@Override
 	public DocVo selectOneDoc(SqlSessionTemplate sst, String no) {
+		System.out.println("=======================");
 		return sst.selectOne("docMapper.selectOneDoc" , no);
 	}
 	//공개범위 받아오기
 	@Override
-	public HashMap<String, Object> selectRange(SqlSessionTemplate sst) {
-		return (HashMap<String, Object>) sst.selectList("docMapper.selectRange");
+	public List<MemberVo> selectDept(SqlSessionTemplate sst) {
+		return  sst.selectList("docMapper.selectDept");
+	}
+	//문서작성 후 문서관리등록
+	@Override
+	public int insertDocControl(SqlSessionTemplate sst, DocVo dv) {
+		return sst.insert("docMapper.insertControl", dv);
+	}
+	//전체 문서갯수조회(range)
+	@Override
+	public int selectRangeCountAll(SqlSessionTemplate sst , String range) {
+		return sst.selectOne("docMapper.selectRangeCountAll" , range);
+	}
+	//당일기준 업데이트해서 비공개처리
+	@Override
+	public int updateRange(SqlSessionTemplate sst) {
+		return sst.update("docMapper.updateRange");
+	}
+	//문서에 업로드된 파일가져오기
+	@Override
+	public DfileVo selectFileDoc(SqlSessionTemplate sst, String no) {
+		return sst.selectOne("docMapper.selectFile",no);
+	}
+	//문서관리디테일-게시상태수정
+	@Override
+	public int updateStatus(SqlSessionTemplate sst, DocVo vo) {
+		return sst.update("docMapper.updateStatus" , vo);
+	}
+	//검색
+	@Override
+	public List<DocVo> selectSearch(SqlSessionTemplate sst, HashMap map) {
+		return sst.selectList("docMapper.search",map);
 	}
 
 }

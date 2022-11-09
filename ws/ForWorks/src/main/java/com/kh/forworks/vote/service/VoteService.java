@@ -22,15 +22,15 @@ public interface VoteService {
 	
 	//진행중
 	//투표 개수
-	int selecting();
+	int selecting(String no);
 	//리스트
-	List<VoteVo> selectListing(PageVo pving);
+	List<VoteVo> selectListing(PageVo pving,String no);
 
 	//마감
 	//개수
-	int selectEnd();
+	int selectEnd(String no);
 	//리스트
-	List<VoteVo> selectListEnd(PageVo pvend);
+	List<VoteVo> selectListEnd(PageVo pvend,String no);
 
 	//투표생성
 	int insertVote(VoteVo vtvo, String[] vtcgArr, VoteAttachmentsVo vtatVo);
@@ -50,7 +50,7 @@ public interface VoteService {
 	int voteDelete(int pno);
 
 	//투표 대상자 투표
-	int insertUserVt(VoteParticipationVo vo);
+	int insertUserVt(VoteParticipationVo vo, VoteCategoryVo vtcg, VoteParticipationVo checkpt, HashMap<String, String> map);
 	
 	//로그인사원이 대상자 여부 확인
 	int check(HashMap<String, String> map);
@@ -63,6 +63,9 @@ public interface VoteService {
 
 	//투표 내용 수정
 	int edit(VoteVo vtvo, String[] vtcgArr, VoteAttachmentsVo vtat, VoteAttachmentsVo vtatCheck, String pno);
+	
+	//투표 참여했는지 확인
+	VoteParticipationVo checkVote(HashMap<String, String> map);
 	
 
 	

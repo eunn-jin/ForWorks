@@ -17,4 +17,9 @@ public interface OffService {
 
 	int submitOff(Map<String, Object> map);
 
+	List<OffVo> getDeptOffList(Map<String, Object> map);
+
+	int setOffAccept(String[] no);
+
+	int setOffReject(String[] no);
 }

@@ -214,7 +214,7 @@
                         <div class="approv-content-wrap">
                         	<div class="approv-content-slide" id="doc-reject-slide">
                         		<c:forEach var="reject" items="${rejectApprovList}">
-	                            <a href="${root}/approv/detail/${reject.adocNo}" class="approv-content-a">
+	                            <a href="${root}/approv/reject/${reject.adocNo}" class="approv-content-a">
 		                            <div class="approv-check-content doc-reject">
 			                                <div class="content-title">${reject.adocName}</div>
 			                                <div class="content-bot">

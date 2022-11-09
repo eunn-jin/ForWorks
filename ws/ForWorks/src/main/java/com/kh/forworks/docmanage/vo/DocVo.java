@@ -15,4 +15,15 @@ public class DocVo {
 	private String fileName;
 	private String changeFileName;
 	private MultipartFile[] file;
+	private String[] range_;
+	
+	private String contNo;
+	private String contEnrollDate;
+	private String contEndDate;
+	private String contStatus;
+	private String adocNo;
+	private String range;
+	
+	private String fileNo;
+	
 }

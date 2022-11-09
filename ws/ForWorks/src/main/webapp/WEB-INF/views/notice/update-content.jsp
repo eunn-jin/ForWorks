@@ -81,7 +81,7 @@ table {
 
                                     <td style="width:10%;">등록<br>파일</td>
                                     <td style="width:40%; background: white;">
-                                        
+                                        <input type="hidden" name="ntatOrigin" value="${ntatVo.ntatChange}">
                                         <c:choose>
                                             <c:when test="${ntatVo eq null}">
                                                 <div style="height: 10vh;">첨부파일이 없습니다.</div>

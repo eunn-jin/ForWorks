@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.kh.forworks.member.vo.MemberVo;
 import com.kh.forworks.salary.service.SalaryService;
+import com.kh.forworks.salary.vo.AddBenefitVo;
 import com.kh.forworks.salary.vo.SalBonusVo;
 import com.kh.forworks.salary.vo.SalaryVo;
 
@@ -70,7 +70,110 @@ public class SalaryController {
 		String empNo = loginMember.getEmpNo();
 		map.put("empNo", empNo);
 		map.put("no", no);
+		
 		SalaryVo result = ss.selectDetail(map);
+		System.out.println("result출력" + result);
+		
+		result.setStartMonth(result.getStartMonth().substring(0,10));
+		result.setEndMonth(result.getEndMonth().substring(0,10));
+		
+		System.out.println(result.getEndMonth());
+		
+		List<SalaryVo> result1 = null;
+		List<SalBonusVo> result2 = null;
+		if(result.getSalCate().equals("1")) {
+			System.out.println("result1실행");
+			result1 = ss.selectEmpSal(result);
+			int a = 0;
+			int sum = Integer.parseInt(result1.get(0).getEmpMoney());
+			for(int i = 0 ; i < result1.size();i++) {
+				a += Integer.parseInt(result1.get(i).getAmount());
+				sum +=Integer.parseInt(result1.get(i).getAmount());
+			}
+			
+			//추가수당조회
+			List<AddBenefitVo> add= ss.selectAddBenefit(result);
+			int ot = 0;
+			int calc = 0;
+			if(add != null) {
+				for(int i = 0 ; i < add.size();i++) {
+					ot += Integer.parseInt(add.get(i).getOverTime());
+					calc += Integer.parseInt(add.get(i).getCalcAmount());
+				}
+				System.out.println("총 추가시간" + ot + "총 금액" + calc);
+			}
+			sum += calc;
+			a += calc;
+			result1.get(0).setAddOverTime(Integer.toString(ot));
+			result1.get(0).setAddCalc(Integer.toString(calc));
+			result.setAmount(Integer.toString(a));
+			result.setSum(Integer.toString(sum));
+			System.out.println("총"+sum+"총수당"+a );
+			System.out.println(result1);
+			
+			result.setTax1(Integer.toString((int)(sum*0.06)));
+			result.setTax2(Integer.toString((int)(sum*0.05)));
+			result.setTax3(Integer.toString((int)(sum*0.04)));
+			result.setTax4(Integer.toString((int)(sum*0.01)));
+			
+			result.setSumxtax(Integer.toString((int)(sum*0.06)+(int)(sum*0.05)+(int)(sum*0.04)+(int)(sum*0.01)));
+			
+			model.addAttribute("result1",result1);
+		}else if(result.getSalCate().equals("2")) {
+			System.out.println("result2실행");
+			result2 = ss.selectBonus(result);
+			int a = 0;
+			for(int i = 0 ; i < result2.size();i++) {
+				a += Integer.parseInt(result2.get(i).getPayment());
+			}
+			result.setBonusSum(Integer.toString(a));
+			result.setSum(Integer.toString(a));
+			
+			result.setTax1(Integer.toString((int)(a*0.06)));
+			result.setTax2(Integer.toString((int)(a*0.05)));
+			result.setTax3(Integer.toString((int)(a*0.04)));
+			result.setTax4(Integer.toString((int)(a*0.01)));
+			
+			result.setSumxtax(Integer.toString((int)(a*0.06)+(int)(a*0.05)+(int)(a*0.04)+(int)(a*0.01)));
+			
+			model.addAttribute("result2",result2);
+		}else if(result.getSalCate().equals("3")) {
+			System.out.println("result1실행");
+			result1 = ss.selectEmpSal(result);
+			int a = 0;
+			int sum = Integer.parseInt(result1.get(0).getEmpMoney());
+			for(int i = 0 ; i < result1.size();i++) {
+				a += Integer.parseInt(result1.get(i).getAmount());
+				sum +=Integer.parseInt(result1.get(i).getAmount());
+			}
+			result.setAmount(Integer.toString(a));
+			
+			System.out.println(result1);
+			
+			model.addAttribute("result1",result1);
+			
+			System.out.println("result2실행");
+			result2 = ss.selectBonus(result);
+			int x = 0;
+			for(int i = 0 ; i < result2.size();i++) {
+				x += Integer.parseInt(result2.get(i).getPayment());
+				sum +=Integer.parseInt(result2.get(i).getPayment());
+			}
+			result.setBonusSum(Integer.toString(x));
+			result.setSum(Integer.toString(sum));
+			
+			result.setTax1(Integer.toString((int)(sum*0.06)));
+			result.setTax2(Integer.toString((int)(sum*0.05)));
+			result.setTax3(Integer.toString((int)(sum*0.04)));
+			result.setTax4(Integer.toString((int)(sum*0.01)));
+			
+			result.setSumxtax(Integer.toString((int)(sum*0.06)+(int)(sum*0.05)+(int)(sum*0.04)+(int)(sum*0.01)));
+			
+			model.addAttribute("result2",result2);
+		}
+		
+		System.out.println("detail : " +result);
+		
 		model.addAttribute("result" , result);
 		return "salary/payslipDetail";
 	}
@@ -107,23 +210,31 @@ public class SalaryController {
 	@PostMapping(value="empSal",produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public String empSal(SalaryVo sv) {
-			
 		//기본급 + 각종 수당 조회
 		List<SalaryVo> sal = ss.selectEmpSal(sv);
-	
+			
+		//추가수당
+		List<AddBenefitVo> add= ss.selectAddBenefit(sv);
+		System.out.println("추가"+add);
+		
+		int ot = 0;
+		int calc = 0;
+		if(add != null) {
+			for(int i = 0 ; i < add.size();i++) {
+				ot += Integer.parseInt(add.get(i).getOverTime());
+				calc += Integer.parseInt(add.get(i).getCalcAmount());
+			}
+			System.out.println("총 추가시간" + ot + "총 금액" + calc);
+		}
+		sal.get(0).setAddOverTime(Integer.toString(ot));
+		sal.get(0).setAddCalc(Integer.toString(calc));
+		
 		System.out.println("기본급 : " + sal);
 		Gson g = new Gson();
 		return g.toJson(sal);
 	}
 	
-	//급여대장작성 - 초과수당 조회
-	@PostMapping(value="addBenefit",produces = "application/json; charset=utf-8")
-	@ResponseBody
-	public String addBenefit(SalaryVo sv) {
-		List<SalaryVo> result = ss.selectAddBenefit(sv);
-		return "";
-	}
-	
+
 	//급여대장작성
 	@PostMapping("write")
 	public String insertSal(SalaryVo sv, HttpSession session) {
@@ -169,13 +280,10 @@ public class SalaryController {
 		//회원정보 가져오기
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 		String empNo = loginMember.getEmpNo();
-		System.out.println("출1:" + empNo);
-		System.out.println("출1:" + year);
 		HashMap map = new HashMap();
 		map.put("year", year);
 		map.put("empNo", empNo);
 		List<SalaryVo> salList = ss.salList(map);
-		System.out.println("출2:" +salList );
 		Gson g = new Gson();
 		return g.toJson(salList);
 	}

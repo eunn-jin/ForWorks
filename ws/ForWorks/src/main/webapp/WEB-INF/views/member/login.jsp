@@ -84,7 +84,7 @@
     </div>
 
     <!-- 아이디 찾기 모달 -->
-    <div class="modal fade" tabindex="1" id="modalFindId">
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalFindId">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content rounded-4 shadow">
           <div class="modal-header p-5 pb-4 border-bottom-0">
@@ -117,7 +117,7 @@
     </div>
 
     <!-- 비밀번호 찾기(변경) 모달-->
-    <div class="modal fade" tabindex="1" id="modalFindPwd">
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalFindPwd">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content rounded-4 shadow">
           <div class="modal-header p-5 pb-4 border-bottom-0">
@@ -129,24 +129,21 @@
           <div class="modal-body p-5 pt-0">
             <form>
               <div class="form-floating mb-3">
-                <input type="text" class="form-control rounded-4" id="findPwdId" placeholder="name@example.com" />
+                <input type="text" class="form-control rounded-4" id="findPwdId" placeholder="아이디"/>
                 <label for="findIdName">아이디</label>
               </div>
               <div class="form-floating mb-3">
-                <input type="text" class="form-control rounded-4" id="findPwdName" placeholder="name@example.com" />
+                <input type="text" class="form-control rounded-4" id="findPwdName" placeholder="성명"/>
                 <label for="findIdName">성명</label>
               </div>
               <div class="form-floating mb-3">
-                <input type="email" class="form-control rounded-4" id="findPwdEmail" placeholder="Password" />
-                <label for="findIdEmail">이메일</label>
+                <input type="email" class="form-control rounded-4" id="findPwdEmail" placeholder="회원가입시 입력한 이메일"/>
+                <label for="findIdEmail">이메일주소</label>
+                <p style="margin-left: 5px">
+                  <small class="text-muted me-1"> * 회원가입시 입력한 이메일주소</small>
+                </p>
               </div>
-              
-              <button class="w-100 mb-2 btn btn-lg rounded-4 btn-secondary" type="button" onclick="">회원 확인</button>
-              <strong class="text-muted" id="foundId">
-                <div id="findid-spinner" class="spinner-border spinner-border-sm text-primary" style="display: none" role="status">
-                  <span class="visually-hidden">Loading...</span>
-                </div>
-              </strong>
+              <button class="w-100 mb-2 btn btn-lg rounded-4 btn-secondary" type="button" onclick="tempPwd();">임시 비밀번호 발급</button>
             </form>
           </div>
         </div>
@@ -189,11 +186,41 @@
             }
           },
           error: function (e) {
-        	sessionStorage.setItem("toastMsg", "통신에 실패했습니다.");
-            alert("통신에 실패했습니다.");
+        	  console.log("통신실패");
           },
         });
       }
+    </script>
+    
+    <script>
+    	function tempPwd() {
+    		const empPwdId = document.querySelector("#findPwdId").value;
+    		const empPwdName = document.querySelector("#findPwdName").value;
+            const empPwdEmail = document.querySelector("#findPwdEmail").value;
+            
+            $.ajax({
+               url: "${root}/findPwd",
+               type: "post",
+               data: {
+            	 empId: empPwdId,
+                 empName: empPwdName,
+                 empEmail: empPwdEmail,
+               },
+               success: function (data) {
+                 if (data == "1") {
+                	 toastContent.innerText = "이메일로 임시비밀번호가 발급되었습니다.";                	 
+			         $(".modal-backdrop").remove();
+			         $("#modalFindPwd").modal("hide");
+                 } else if (data == "-1") {
+                	 toastContent.innerText = "일치하는 회원이 없습니다.";
+                 }
+               },
+               error: function (e) {
+            	   console.log("통신실패");
+            	   toastContent.innerText = "일치하는 회원이 없습니다.";
+               },
+             });
+    	}
     </script>
   </body>
 </html>
