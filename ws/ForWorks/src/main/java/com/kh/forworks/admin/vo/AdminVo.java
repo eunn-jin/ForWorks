@@ -18,6 +18,4 @@ public class AdminVo {
 	}
 	
 	private List<CorpInfoVo> dept;
-	private List<CorpInfoVo> pos;
-
 }

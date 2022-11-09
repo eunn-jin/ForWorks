@@ -103,5 +103,4 @@ public class AdminDaoImpl implements AdminDao {
 		return sst.update("adminMapper.updateDepartment", list);
 	}
 
-
 }

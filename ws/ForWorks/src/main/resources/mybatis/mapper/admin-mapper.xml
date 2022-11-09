@@ -208,17 +208,4 @@
 		   </if>
 		</foreach>
 	</update>
-	
-	<update id="updatePosition" parameterType="java.util.List">
-		<foreach item="item" index="index" collection="pos" open="DECLARE BEGIN" separator=";" close="; END;">
-		   <if test="item.posNo != null">
-			UPDATE POSITION SET
-			POS_NAME = 
-				#{item.posName}
-			WHERE POS_NO = 
-				#{item.posNo}
-		   </if>
-		</foreach>
-	</update>
-	
 </mapper>

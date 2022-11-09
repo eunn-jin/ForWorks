@@ -20,5 +20,5 @@ public class CorpInfoVo {
 	//검색
 	private String keyword;
 	private String empNo;
-
+	
 }

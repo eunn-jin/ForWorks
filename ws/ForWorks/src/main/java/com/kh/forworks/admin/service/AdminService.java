@@ -44,5 +44,4 @@ public interface AdminService {
 
 	int updateDepartment(AdminVo list);
 
-
 }
