@@ -10,6 +10,7 @@
 		OR QA_STATUS ='E'
 	</select>
 	
+	
 	<select id="selectList" resultType="com.kh.forworks.qa.vo.QAVo">
 		SELECT ROWNUM, X.*
 		FROM(SELECT 
@@ -198,9 +199,14 @@
 	
 	<!-- 설문항목 -->
 	<select id="selectQacg" resultType="com.kh.forworks.qa.vo.QACategoryVo">
-		SELECT *
-		FROM QA_CATEGORY
-		WHERE QA_NO = #{pno}	
+    SELECT ROWNUM, X.*
+    FROM(
+        SELECT
+        QACG_NO
+        ,QA_NO
+        ,QACG_NAME
+    FROM QA_CATEGORY
+    WHERE QA_NO = #{pno})X	
 	</select>
 	
 	<!-- 설문참가자 -->
@@ -233,6 +239,7 @@
 	<select id="selectQaaw" resultType="com.kh.forworks.qa.vo.QAAnswerVo">
 		SELECT 
 		    QW.QAAW_NO
+            ,QW.QA_NO
 		    ,QW.QACG_NO
 		    ,QW.EMP_NO
 		    ,QW.QAAW_CONTENT
@@ -241,6 +248,15 @@
 		FROM QA_ANSWER QW
 		JOIN EMPLOYEE E ON  E.EMP_NO = QW.EMP_NO
 		JOIN DEPARTMENT D ON D.DEPT_NO = E.DEPT_NO
+		WHERE QW.QA_NO=#{pno}
+        ORDER BY QW.QAAW_NO DESC
 	</select>
 	
+	<!-- //설문 참가자수 가져오기 -->
+	<select id="selectNum" resultType="int">
+		SELECT COUNT(*)
+		FROM QA_PARTICIPATION
+		WHERE QAPT_STATUS ='Y'
+		AND QA_NO=#{pno}
+	</select>
 </mapper>

@@ -69,6 +69,9 @@ public interface QAService {
 	//설문 참여자 답변내용
 	List<QAAnswerVo> selectQaaw(String pno);
 	
+	//설문 참가자수 가져오기
+	int selectNum(String pno);
+	
 	
 
 	

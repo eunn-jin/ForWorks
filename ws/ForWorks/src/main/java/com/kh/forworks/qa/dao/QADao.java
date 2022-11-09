@@ -98,6 +98,9 @@ public interface QADao {
 	
 	//설문 참여자 답변내용
 	List<QAAnswerVo> selectQaaw(SqlSessionTemplate sst, String pno);
+	
+	//설문 참가자수 가져오기
+	int selectNum(SqlSessionTemplate sst, String pno);
 
 
 }

@@ -203,6 +203,12 @@ public class QADaoImpl implements QADao{
 		return sst.selectList("qaMapper.selectQaaw",pno);
 	}
 	
+	//설문 참가자수 가져오기
+	@Override
+	public int selectNum(SqlSessionTemplate sst, String pno) {
+		return sst.selectOne("qaMapper.selectNum",pno);
+	}
+	
 
 	
 }
