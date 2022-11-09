@@ -16,7 +16,6 @@
     <div class="dcontent" style="float: left; ">
         <div class="mglt" style="margin-top: 30px;">
             
-                
             <h3><label for="">번호. </label>&nbsp;<label for="">${qavo.qaTitle}</label></h3>
             <label class="text-subtitle text-muted">생성자: ${qavo.empNo}</label>
             <p class="text-subtitle text-muted" style="font-weight: 900;">${qavo.qaSdate}~${qavo.qaEdate}</p>
@@ -29,19 +28,43 @@
             <br>
 
             <div class="md-3"> 
-                <c:forEach items="${qacgList}" var="cg">
-                    <label for="cgName" class="form-label">${cg.qacgName}</label>
-                    <!-- <input type="text" class="form-control" id="title" name="title" value="${cg.qacgCnt}명" disabled> -->
-                    <!-- <div style="background: rgba(128, 128, 128, 0.247); padding: 5px; border-radius: 5px;" ><span id="cgCnt">${cg.qacgCnt}</span><span>명</span></div> -->
-                </c:forEach>
+            <c:forEach items="${qacgList}" var="cg">
+                <input type="hidden" name="num" value="${cg.rownum}">
+                <input  type="radio" id="${cg.rownum}" name="cgName" class="form-label" value="${cg.rownum}"><label for="${cg.rownum}" class="form-label">${cg.qacgName}</label><br>
+            </c:forEach>
             </div>
         </div>
 
         
     </div>
     <div class="chart" style="float: left;">
-        <div class="kk">
+        <div class="kk" style="height: 100%;padding-bottom: 5%;" >
+            <div class="mglt" style="margin-top: 30px;">
+                <h3><label for="">답변내용</label></h3>
+                <label class="text-subtitle text-muted">항목 </label>
+            </div>
+            <div id="list" style="overflow-y:scroll;">
+                <table class="table" id="table-main">
+                    <thead class="table-light">
+                        <tr id="center">
+                            <th scope="col" style="width: 20%;">사원명</th>
+                            <th scope="col">내용</th>
+                        </tr>
+                    </thead>
 
+                        <tbody id="aw-list">
+                            <c:forEach items='${qaawList}' var='aw'>
+                                <tr id="answer">
+                                    <c:if test='${aw.qacgNo eq 1}'>
+                                        <th scope='row' id="aw-name">${aw.empName}</th>
+                                        <td id="aw-content">${aw.qaawContent}</td>
+                                    </c:if>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    <td colspan="2"></td>
+                </table>
+            </div>
         </div>
     </div>
         <!-- Button trigger modal -->
@@ -66,7 +89,6 @@
                         <table class="table" id="table-main">
                             <thead class="table-light">
                                 <tr id="center">
-                                    
                                     <th scope="col" colspan="5">이름</th>
                                     <th scope="col">부서명</th>
                                     <th scope="col">참가여부</th>
@@ -76,8 +98,7 @@
     
                                 <c:forEach items="${qaptList}" var="qa">
                                 <tbody id="tbd">
-                                    <tr id="center">
-                                        
+                                    <tr >
                                         <th scope="col" colspan="5">${qa.empName}</th>
                                         <th scope="col">${qa.deptName}</th>
                                         <th scope="col">${qa.qaptStatus}</th>
@@ -99,21 +120,20 @@
 
 
 <script>
-    var cnt = (document.querySelectorAll('span[id="cgCnt"]'));
-    var c = 0;
-    console.log("cnt"+cnt);
-    
-    for(var i =0; i<cnt.length;i++){
-        console.log(cnt[i].textContent);
-        //console.log(isNaN(Number(cnt[i].textContent)));
-        c= c + Number(cnt[i].textContent);
+    var n =[];
+    var nn = ${fn:length(qacgList) };
+    for(var i =1; i<=nn; i++){
+        n.push(i);
     }
-    console.log("c::"+c);
+    console.log("n::"+n);
+    
     var x =${fn:length(qaptList) };
-    var y = c;
+    console.log("x::"+x);
+    var y = ${checkNum};
+    console.log("y::"+y);
     console.log((y/x)*100);
     var av = ((y/x)*100).toFixed(1);
-    document.getElementById('cg').innerHTML=c;
+    document.getElementById('cg').innerHTML=y;
     document.getElementById('pt').innerHTML=av+"%";
 </script>
 
@@ -125,20 +145,43 @@
     console.log("cg"+cgname);
     
 
-    var myArray = {id1: 100, id2: 200, "tag with spaces": 300};
-    console.log(myArray);
-    // var x = $("label[for='cgName']");
-    // for (let i = 0; i < x.length; i++) {
-    //     console.log("x::"+x[i]);
+
+
+</script>
+
+<script>
+    //라디오 버튼 클릭시 id == aw-list 아래에 추가
+    //c if test="${aw.qacgNo eq 1}" 1은 변동숫자
+    //선택된 라디오 버튼 가져오기
+    // $('#1').prop("checked",true);
+    
+    var x=  document.querySelector('#answer>th');
+    var y=  document.querySelector('#answer>td');
+    console.log("x::"+x);
+    console.log("y::"+y);
+    
+    $('#answer').remove();
+    
+
+    $('input[name=cgName]').change(function () {
+        //라디오 버튼 선택값이 변경되면
+        //현재 답변1이 보여지고있어서  answer 안의 내용 삭제
+
+        //선택한 답변내용 보여주기
+
+        x.remove();y.remove();
         
-    // }
-    // var y = $("span[id='cgCnt']").text();
-    // console.log("y::"+y);
-    // for (var i = 0; i < ${fn:length(qacgList)}; i++) {
-    //     console.log("i::"+i);
-    //     x = ${qacgList[0].qacgName}
-    //     console.log("x::"+x);
-    //     y = ${qacgList[0].qacgCnt}
-    //     console.log("y::"+y);
-    // }
+        $('#aw-list').append("<tr id='answer'>");
+        <c:forEach items='${qaawList}' var='aw'>
+                <c:if test='${aw.qacgNo eq 2}'>
+                $('#aw-list').append("<th scope='row'>${aw.empName}</th>");
+                $('#aw-list').append("<td>${aw.qaawContent}</td>");
+            </c:if>
+        </c:forEach>
+        $('#aw-list').append("</tr>");
+            
+
+
+    })
+    
 </script>
