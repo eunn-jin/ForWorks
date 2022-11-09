@@ -27,17 +27,29 @@ public class AttendanceDaoImpl implements AttendanceDao {
 
 	@Override
 	public int selectDayWork(SqlSessionTemplate sst, String empNo) {	
-		return sst.selectOne("attendanceMapper.selectDayWork", empNo);			
+		if(sst.selectOne("attendanceMapper.selectDayWork", empNo) == null) {
+			return 0;
+		} else {			
+			return sst.selectOne("attendanceMapper.selectDayWork", empNo);			
+		}
 	}
 	
 	@Override
 	public int selectWeekWork(SqlSessionTemplate sst, String empNo) {				
-		return sst.selectOne("attendanceMapper.selectWeekWork", empNo); 
+		if(sst.selectOne("attendanceMapper.selectWeekWork", empNo) == null) {
+			return 0;
+		} else {			
+			return sst.selectOne("attendanceMapper.selectWeekWork", empNo);		
+		}
 	}
 	
 	@Override
-	public int selectMonthWork(SqlSessionTemplate sst, String empNo) {		
-		return sst.selectOne("attendanceMapper.selectMonthWork", empNo);
+	public int selectMonthWork(SqlSessionTemplate sst, String empNo) {	
+		if(sst.selectOne("attendanceMapper.selectMonthWork", empNo) == null) {
+			return 0;
+		} else {			
+			return sst.selectOne("attendanceMapper.selectMonthWork", empNo);		
+		}
 	}
 
 	@Override
