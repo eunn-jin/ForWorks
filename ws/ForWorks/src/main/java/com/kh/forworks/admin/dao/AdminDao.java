@@ -46,5 +46,4 @@ public interface AdminDao {
 
 	int updateDepartment(SqlSessionTemplate sst, AdminVo list);
 
-
 }

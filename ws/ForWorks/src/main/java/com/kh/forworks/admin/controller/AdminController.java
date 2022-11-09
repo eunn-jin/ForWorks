@@ -68,20 +68,12 @@ public class AdminController {
 		return "admin/admin-position";
 	}
 	
+	//직무 수정
 	@PostMapping("deptEdit")
 	public String deptEdit(AdminVo dept) {
 		System.out.println(dept);
 		
 		int result = adminService.updateDepartment(dept);
-		
-		return "redirect:/foradmin/pos";
-	}
-	
-	@PostMapping("posEdit")
-	public String posEdit(AdminVo pos) {
-		System.out.println(pos);
-		
-		//int result = adminService.updateDepartment(pos);
 		
 		return "redirect:/foradmin/pos";
 	}
