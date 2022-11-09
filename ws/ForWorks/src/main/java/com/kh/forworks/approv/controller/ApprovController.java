@@ -55,7 +55,6 @@ public class ApprovController {
 		req.setAttribute("rejectApprovList", rejectApprovList);
 		req.setAttribute("coopList", coopList);
 		req.setAttribute("referList", referList);
-		System.out.println(approvList);
 		
 		return "approv/approv-main";
 	}
@@ -367,7 +366,6 @@ public class ApprovController {
 		
 		int result1 = service.updateDocReferByEmpNo(vo);
 		
-		System.out.println(result1);
 		
 		vo = service.selectApprovDocOneByNo(vo);
 		List<ApprovDocumentVo> approvMemberList = service.selectApprovMemberList(dno);
@@ -483,7 +481,6 @@ public class ApprovController {
 		if(vo.getSignFile()!=null && !vo.getSignFile().isEmpty()) {
 			
 			String savePath = req.getServletContext().getRealPath("/resources/upload/sign/");
-			System.out.println(savePath);
 			vo.setSignOrigin(vo.getSignFile().getOriginalFilename());
 			
 			String changeName = FileUploader.fileUpload(vo.getSignFile(), savePath); 
@@ -519,7 +516,6 @@ public class ApprovController {
 		if(vo.getSignFile()!=null && !vo.getSignFile().isEmpty()) {
 			
 			String savePath = req.getServletContext().getRealPath("/resources/upload/sign/");
-			System.out.println(savePath);
 			vo.setSignOrigin(vo.getSignFile().getOriginalFilename());
 			
 			String changeName = FileUploader.fileUpload(vo.getSignFile(), savePath); 

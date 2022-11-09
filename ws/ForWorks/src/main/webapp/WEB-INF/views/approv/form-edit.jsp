@@ -116,7 +116,7 @@
         <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
 		<link rel="stylesheet" href="${root}/resources/css/approv/common.css">
-        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
         <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
@@ -167,6 +167,7 @@
 	
 	
 	$(document).ready(function() {
+		
 		$('#summernote').summernote({
 			  height: 420,                 // 에디터 높이
 			  minHeight: 420,             // 최소 높이
@@ -184,8 +185,9 @@
 		        ]
 	          
 		});
+		
+		$('#summernote').summernote('code', '${docForm.formContent}');
 	});
 	
-	$('#summernote').summernote('code', '${docForm.formContent}');
 </script>
 </html>
