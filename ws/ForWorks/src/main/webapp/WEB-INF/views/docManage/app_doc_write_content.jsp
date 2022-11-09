@@ -26,6 +26,35 @@
     #sub{
       text-align: center;
     }
+    /*모달 css*/
+    .modal{
+        position:absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: none;
+        background-color: rgba(0,0,0,0.4);
+    }
+
+    .modal .show{
+        display: block;
+    }
+
+    .modal_body{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 800px;
+        height: 800px;
+        padding: 40px;
+        text-align: left;
+        background-color: rgb(255,255,255);
+        border-radius: 10px;
+        box-shadow: 0 2px 3px 0 rgba(34,36,38,0.15);
+        transform: translateX(-50%) translateY(-50%);
+    }
+
    
 </style>
 
@@ -55,14 +84,21 @@
             </tr>
             <tr>
               <th>제목</th>
-              <td><input type="text" name="title"></td>
+              <td><input type="text" name="title" id="title"></td>
+              <td><button type="button" class="btn-open-popup" >결재문서불러오기</button></td>
+            </tr>
+            <tr>
+              <th>기안날짜</th>
+              <td><div id="draftDate"></div><input type="hidden" name="adocNo" id="adocNo"></td>
+              <th>결재인</th>
+              <td><div id="approvMember"></div></td>
             </tr>
             <tr>
               <th>첨부파일</th>
               <td><input type="file" name="file" multiple></td>
             </tr>
             <tr>  
-              <td colspan="3"><textarea class="summernote" id="summernote" name="content"></textarea></td>
+              <td colspan="3"><button type="button">미리보기</button></td>
             </tr>
             
             
@@ -71,6 +107,91 @@
               
         </div>
         </form>
+        <!--조회 버튼 클릭 시 모달창-->
+				        
+				<div class="modal">
+          <div class="modal_body">
+            <table id="set">
+              <tr>
+                <td>날짜</td>
+                <td><input type="month" name="docDate" id="docDate"></td>
+                <td><button type="button" onclick="select()">조회</button></td>
+              </tr>
+              <tr>
+                <td>결재종류</td>
+                <td>제목</td>
+                <td>기안날짜</td>
+              </tr>
+              
+            </table>
+          </div>
+      </div>
+      
+
+
+      <!--모달 js-->
+      <script>
+          const modal = document.querySelector('.modal');
+          const btnOpenPopup = document.querySelector('.btn-open-popup');
+
+          btnOpenPopup.addEventListener('click',()=>{
+              modal.style.display = 'block';
+          })
+          
+          const close = document.querySelector('.modal_close');
+          close.addEventListener('click',()=>{
+              modal.style.display = 'none';
+          })
+      </script>
+<script>
+	function select(){
+		var docDate = document.getElementById("docDate").value;
+
+        $.ajax({
+            url : "/ForWorks/appmanage/select",
+            type: "POST",
+            data : {docDate : docDate},
+            success : function(data){
+				$(".ajax").remove();
+				for(var i = 0 ; i < data.length; i++){
+					if(data[i].noelecStatus = 'Y'){data[i].noelecStatus = '비전자결재'}else{data[i].noelecStatus = '전자결재'};
+					$("#set").append('<tr><td class="ajax">'+data[i].noelecStatus+'</td><td class="ajax"><div onclick="goval('+data[i].adocNo+')">'+ data[i].adocName+'</div></td><td class="ajax">'+data[i].draftDate+'</td></tr>')
+				}
+            },
+            error : function(){
+                alert("실패");
+            }
+        })
+	}
+</script>
+<script>
+  function goval(data){
+    modal.style.display = 'none';
+    var adocNo = data;
+    $.ajax({
+      url : "/ForWorks/appmanage/selectOne",
+      type: "POST",
+      data : {adocNo : adocNo},
+      success : function(data){
+        var no = data.adocNo;
+        document.getElementById("adocNo").value = no;
+        var name = data.adocName;
+        document.getElementById("title").value = name;
+        var draftDate = data.draftDate;
+        console.log(draftDate);
+        $("#draftDate").text(draftDate);
+        //document.getElementById("draftDate").textContent = draftDate;
+        var approveMember = data.approveMember;
+        document.getElementById("draftDate").innerText = approveMember;
+      },
+      error : function(){
+        alert("다시");
+      }
+    })
+  }
+</script>
+
+
 <script>
 $('.summernote').summernote({
 	  height: 350,
@@ -93,6 +214,7 @@ $('.summernote').summernote({
 	});
 });
 </script>
+
 
 </body>
 </html>
