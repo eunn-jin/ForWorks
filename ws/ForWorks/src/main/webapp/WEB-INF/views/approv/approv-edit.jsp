@@ -283,7 +283,7 @@
 </body>
 
 <script>
-	$('#summernote').summernote('code', '${approvDoc.adocContent}');
+	
 	$(document).ready(function() {
 		$('#summernote').summernote({
 			  height: 420,                 // 에디터 높이
@@ -302,6 +302,8 @@
 		        ]
 	          
 		});
+		
+		$('#summernote').summernote('code', '${approvDoc.adocContent}');
 	});
 
 </script>

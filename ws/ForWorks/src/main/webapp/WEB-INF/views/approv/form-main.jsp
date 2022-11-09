@@ -364,12 +364,7 @@
 </body>
 
 <script>
-	function test1(no) {
-		const content = document.querySelector(".detail-content");
-		content.innerHTML = content;
-        
-	}
-	
+		
 	function formPreview(no){
 		$.ajax({
 			url : "${root}/approv/form/callContent",
