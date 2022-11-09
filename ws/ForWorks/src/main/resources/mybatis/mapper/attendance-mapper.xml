@@ -7,7 +7,7 @@
 	</insert>
 	
 	<update id="updateInTime">
-		UPDATE WORK SET IN_TIME = SYSDATE WHERE EMP_NO = #{empNo} AND NO = #{no} 
+		UPDATE WORK SET IN_TIME = SYSDATE WHERE EMP_NO = #{empNo} AND NO = #{no}
 	</update>
 	
 	<update id="updateOutTime">

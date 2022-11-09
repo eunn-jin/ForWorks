@@ -28,7 +28,7 @@ import com.kh.forworks.off.vo.OffVo;
 public class OffController {
 
 	private final OffService service;
-	private final int offConfirmPos = 6;
+	private final int offConfirmPos = 3;
 	
 	@Autowired
 	public OffController(OffService service) {
@@ -58,7 +58,7 @@ public class OffController {
 		String month = DateFunction.getThisMonth();
 		//권한 있는지 없는지 확인
 		String posNo = loginMember.getPosNo();
-		if(Integer.parseInt(posNo) == offConfirmPos) {
+		if(Integer.parseInt(posNo) <= offConfirmPos) {
 			
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("deptNo", loginMember.getDeptNo());
@@ -119,7 +119,7 @@ public class OffController {
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 		//권한 있는지 없는지 확인
 		String posNo = loginMember.getPosNo();
-		if(Integer.parseInt(posNo) == offConfirmPos) {
+		if(Integer.parseInt(posNo) <= offConfirmPos) {
 			
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("deptNo", loginMember.getDeptNo());
