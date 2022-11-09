@@ -187,18 +187,22 @@ public class QAController {
 		//참가자 답변내용 가져오기
 		List<QAAnswerVo> qaawList =qasv.selectQaaw(pno);
 		
-		System.out.println(qavo);
-		System.out.println(qacgList);
-		System.out.println(qaptList);
-		System.out.println(qaatList);
-		System.out.println(qaawList);
+		//참여 인원수 가져오기
+		int checkNum = qasv.selectNum(pno);
+		
+		System.out.println(qavo);		//QAVo   :: 설문
+		System.out.println(qacgList);	//QACategoryVo :: 설문 항목
+		System.out.println(qaptList);	//QAParticipationVo :: 설문 참가자
+		System.out.println(qaatList);	//QAAT :: 설문 첨부파일
+		System.out.println(qaawList);	//QAAW :: 참가자 답변
 		
 		
 		model.addAttribute("qavo", qavo);
 		model.addAttribute("qacgList", qacgList);
 		model.addAttribute("qaptList", qaptList);
-		model.addAttribute("qaptList", qaatList);
-		model.addAttribute("qaptList", qaawList);
+		model.addAttribute("qaatList", qaatList);
+		model.addAttribute("qaawList", qaawList);
+		model.addAttribute("checkNum", checkNum);
 		
 		return "QA/detailCreator";
 	}
@@ -231,6 +235,8 @@ public class QAController {
 		
 		//설문 대상자 가져오기(전체대상자:: 설문참여o, x)
 		List<QAParticipationVo> qaptList = qasv.selectQapt(pno);
+		
+		//참가인원수 가져오기
 		
 		System.out.println(qavo);
 		System.out.println(qacgList);
@@ -334,23 +340,23 @@ public class QAController {
 		
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 		
-		//번호에 맞는 투표 정보 가져오기
+		//번호에 맞는 설문 정보 가져오기
 		QAVo qavo = qasv.selectOneQa(pno);
 		
 		//번호에 맞는 항목들 가져오기
 		List<QACategoryVo> qacgList = qasv.selectQacg(pno);
 		
-		//투표 대상자 가져오기(전체대상자:: 투표참여o, x)
+		//설문 대상자 가져오기(전체대상자:: 설문참여o, x)
 		List<QAParticipationVo> qaptList = qasv.selectQapt(pno);
 		
-		//로그인 사원이 투표 참여 대상자인지 확인(참여x)
+		//로그인 사원이 설문 참여 대상자인지 확인(참여x)
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("pno", pno);
 		map.put("no", loginMember.getEmpNo());
 		int check = qasv.check(map);
 		
-		//투표를 참여 했는지 확인
-		//참여한 인원은 선택한 내용이 체크되어있고 재투표시 알람확인창 나오게하기
+		//설문를 참여 했는지 확인
+		//참여한 인원은 선택한 내용이 체크되어있고 재설문시 알람확인창 나오게하기
 		QAParticipationVo chvo = qasv.checkDo(map);
 		System.out.println(chvo);
 		
@@ -369,7 +375,7 @@ public class QAController {
 	}
 	
 	//사원이 설문에 참가 하였을때
-	//필요한값 :: 설문항목에 대한 답변내용, 회원번호, 투표 번호
+	//필요한값 :: 설문항목에 대한 답변내용, 회원번호, 설문 번호
 	@PostMapping("detailUser/{pno}")
 	public String detailUser(@PathVariable String pno, HttpSession session ,QAParticipationVo vo, QACategoryVo qacg){
 		
@@ -382,7 +388,7 @@ public class QAController {
 		map.put("pno", pno);
 		map.put("no",loginMember.getEmpNo());
 		map.put("cgno", qacg.getQacgNo());
-		//사원이 투표를 참여 했는지 확인(투표를 하였는데 다시 투표를 하면 이전투표의 득표수 -- , 현재 ++)
+
 		QAParticipationVo checkpt = qasv.checkQA(map);
 		
 		
@@ -396,7 +402,7 @@ public class QAController {
 		System.out.println(vo);
 		System.out.println(qacg);
 		System.out.println(checkpt);
-		//투표 입력내용 넣기
+		//설문 입력내용 넣기
 		int result = qasv.insertUserQA(vo, qacg, checkpt, map);
 		
 		if(result ==1) {

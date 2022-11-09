@@ -257,6 +257,12 @@ public class QAServiceImpl implements QAService{
 		return dao.selectQaaw(sst,pno);
 	}
 
+	//설문 참가자수 가져오기
+	@Override
+	public int selectNum(String pno) {
+		return dao.selectNum(sst, pno);
+	}
+
 
 	
 	
