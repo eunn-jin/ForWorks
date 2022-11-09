@@ -47,7 +47,7 @@
                <div class="page-title">
                    <div class="row">
                        <div class="col-12 col-md-6 order-md-1 order-last">
-                           <h3>Layout Default</h3>
+                           <h3>${vo.adocName}</h3>
                            <p class="text-subtitle text-muted">The default layout </p>
                        </div>
                        <div class="col-12 col-md-6 order-md-2 order-first">
@@ -73,22 +73,30 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>${vo.title}</td>
+                            <td>${vo.adocName}</td>
                         </tr>
                         <tr>
-                            <td>보존기간</td>
+                            <th>보존기간</th>
                             <td>${vo.contEnrollDate} ~ ${vo.contEndDate}</td>
                         </tr>
                         <tr>
-                            <td>첨부파일</td>
-                            <td>
+                            <th>기안날짜</th>
+                            <td>${vo.draftDate}</td>
+                            <th>기안자</th>
+                            <td>${vo.empName}</td>
+                            <th>결재인</th>
+                            <td>${vo.approveMember}</td>
+                        </tr>
+                        <tr>
+                            <th>첨부파일</th>
+                            <!--<td>
                                 <c:if test="${fv ne null}">       	
                                         <a download href="${root}/doc-file/upload/${fv.uploadName}">${fv.originName}</a>
                                 </c:if>
-                            </td>
+                            </td>-->
                         </tr>
                         <tr>
-                            <td colspan="3"><div>${vo.content}</div></td>
+                            <td colspan="3"><div>${vo.adocContent}</div></td>
                         </tr>
                         <c:if test="${fv.ext eq '.jpg' || fv.ext eq '.png' }">
                             <c:if test="${fv ne null}">       	

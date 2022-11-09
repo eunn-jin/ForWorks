@@ -89,7 +89,7 @@
                             <a href="${root}/docmanage/list/1">일반문서</a>
                         </li>
                         <li class="submenu-item "id="doc-write">
-                            <a href="${root}/appmanage/list">결재문서</a>
+                            <a href="${root}/appmanage/list/1">결재문서</a>
                         </li>
                         <li class="submenu-item"  id="doc-manage">
                             <a href="${root}/docmanage/manage/1">문서관리</a>

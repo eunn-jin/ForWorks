@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="appMapper">
+	
+	<select id="DocByEmp" resultType="ApprovDocumentVo">
+		SELECT ADOC_NO , ADOC_NAME , ADOC_CONTENT, EMP_NO, TO_CHAR(DRAFT_DATE,'YYYY"년"MM"월"DD"일"')AS DRAFT_DATE 
+		FROM APPROVEDOCUMENT 
+		WHERE EMP_NO = #{empNo} AND TO_CHAR(DRAFT_DATE,'YYYY-MM') LIKE #{docDate}
+	</select>
+	
+	<select id="selectOneDoc" resultType="ApprovDocumentVo">
+		SELECT  
+			A.ADOC_NO, A.ADOC_NAME, A.ADOC_CONTENT, A.EMP_NO, TO_CHAR(A.DRAFT_DATE,'YYYY"년"MM"월"DD"일') AS DRAFT_DATE
+			, A.NOELEC_STATUS,D.APPROVE_NO, D.APPROVE_STATUS,TO_CHAR(D.APPROVE_DATE,'YYYY"년"MM"월"DD"일') AS APPROVE_DATE, D.EMP_NO AS APPROVE_MEMBER 
+		FROM APPROVEDOCUMENT A 
+		JOIN DOCAPPROVE D ON A.ADOC_NO = D.ADOC_NO 
+		WHERE A.ADOC_NO=#{adocNo} AND APPROVE_STATUS = 'Y'
+	</select>
+	
+	<insert id="insertDocCont">
+		INSERT INTO DOC_CONTROL
+  		(NO
+		,ENROLL_DATE
+		,END_DATE
+		,RANGE
+		,STATUS
+		,ADOC_NO)
+		VALUES
+		(
+		SEQ_DOC_CONTROL_NO.NEXTVAL
+		,#{contEnrollDate}
+		,#{contEndDate}
+		,#{range}
+		,'N'
+		,#{adocNo}
+		)
+	</insert>
+	
+	<select id="selectCountAll" resultType="int">
+		SELECT COUNT(A.ADOC_NO) FROM APPROVEDOCUMENT A JOIN DOCAPPROVE D ON A.ADOC_NO = D.ADOC_NO WHERE A.EMP_NO=#{empNo} AND APPROVE_STATUS = 'Y'
+	</select>
+	
+	<select id="selectContDocByEmp" resultType="DocControlVo">
+		SELECT 
+			A.ADOC_NAME,C.NO AS CONT_NO ,TO_CHAR(C.END_DATE,'YYYY"년"MM"월"DD"일"') AS CONT_END_DATE ,C.RANGE,TO_CHAR(C.ENROLL_DATE,'YYYY"년"MM"월"DD"일"') AS CONT_ENROLL_DATE,C.STATUS AS CONT_STATUS, C.ADOC_NO 
+		FROM DOC_CONTROL C JOIN APPROVEDOCUMENT A ON C.ADOC_NO = A.ADOC_NO 
+		WHERE A.EMP_NO =#{map.empNo}
+	</select>
+	
+	<update id="updateStatus">
+		UPDATE DOC_CONTROL SET STATUS = #{contStatus} WHERE ADOC_NO = #{adocNo}
+	</update>
+	
+	<select id="selectContDoc" resultType="DocControlVo">
+		SELECT 
+		    TO_CHAR(D.ENROLL_DATE,'YYYY"년"MM"월"DD"일') AS CONT_ENROLL_DATE
+		    , TO_CHAR(D.END_DATE,'YYYY"년"MM"월"DD"일') AS CONT_END_DATE
+		    , RANGE
+		    , D.STATUS AS CONT_STATUS
+		    , Z.* 
+		FROM DOC_CONTROL D 
+		JOIN 
+		    (SELECT 
+		        D.*,APPROVE_NO, APPROVE_STATUS, APPROVE_DATE,APPROVE_MEMBER 
+		    FROM
+		        (SELECT 
+		            ADOC_NO, A.ADOC_NAME, A.ADOC_CONTENT, A.EMP_NO
+		            ,TO_CHAR(A.DRAFT_DATE,'YYYY"년"MM"월"DD"일') AS DRAFT_DATE, A.NOELEC_STATUS,E.EMP_NAME 
+		            FROM APPROVEDOCUMENT A JOIN EMPLOYEE E ON A.EMP_NO = E.EMP_NO) D 
+		    JOIN 
+		        (SELECT APPROVE_NO,ADOC_NO,APPROVE_STATUS, TO_CHAR(APPROVE_DATE,'YYYY"년"MM"월"DD"일')AS APPROVE_DATE, E.EMP_NAME AS APPROVE_MEMBER, D.EMP_NO 
+		        FROM DOCAPPROVE D 
+		        JOIN EMPLOYEE E ON D.EMP_NO = E.EMP_NO) O 
+		        ON D.ADOC_NO = #{adocNo}) Z 
+		ON D.ADOC_NO = Z.ADOC_NO
+	</select>
+	
+	<select id="selectContDocList" resultType="DocControlVo">
+		SELECT 
+			TO_CHAR(ENROLL_DATE,'YYYY"년"MM"월"DD"일"') AS CONT_ENROLL_DATE
+			,TO_CHAR(END_DATE,'YYYY"년"MM"월"DD"일"') AS CONT_END_DATE
+			, RANGE, STATUS, D.ADOC_NO ,ADOC_NAME
+		FROM DOC_CONTROL D JOIN APPROVEDOCUMENT A ON D.ADOC_NO = A.ADOC_NO WHERE D.STATUS = 'Y'
+	</select>
+	
+	
+	
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

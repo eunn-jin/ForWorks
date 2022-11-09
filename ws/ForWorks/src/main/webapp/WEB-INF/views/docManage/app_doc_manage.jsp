@@ -76,7 +76,7 @@
                    <div class="row">
                        <div class="col-12 col-md-6 order-md-1 order-last">
                            <h3>문서관리</h3>
-                           <p class="text-subtitle text-muted">The default layout </p>
+                           <p class="text-subtitle text-muted">작성한 결재문서를 관리할 수 있습니다. </p>
                        </div>
                        <div class="col-12 col-md-6 order-md-2 order-first">
                            <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
@@ -91,11 +91,11 @@
                <section class="section">
 					<div id="wrap">
 				        <div id="check-cate">
-				           <a href="">일반문서</a>
-				           <a href="">결재문서</a>
+                            <a href="${root}/docmanage/manage/1">일반문서</a>
+                            <a href="${root}/appmanage/manage/1">결재문서</a>
 				        </div>
 				        <div id="check-btn">
-				            <button onclick="location.href='${root}/docmanage/write'">+ 일반문서작성</button>
+				            <button onclick="location.href='${root}/appmanage/write'">+ 결재문서등록</button>
 				        </div>
 				        <div id="center">
 				            <div class="div-top">글번호</div>
@@ -106,11 +106,11 @@
                         <div class="div-top">게시상태</div>
 				        
                         <c:forEach items="${voList}" var="x">
-                            <div>${x.docNo}</div>
-                            <div>2022.12.31</div>
-                            <div><a href="${root}/docmanage/manDetail/${x.docNo}">${x.title}</a></div>
+                            <div>${x.adocNo}</div>
+                            <div>${x.contEndDate}</div>
+                            <div><a href="${root}/appmanage/manDetail/${x.adocNo}">${x.adocName}</a></div>
                             <div>전체공개</div>
-                            <div>${x.enrollDate}</div>
+                            <div>${x.contEnrollDate}</div>
                             <div>${x.contStatus}</div>
                         </c:forEach>
 				      
@@ -119,15 +119,15 @@
 				        
 				        <div id="page-area">
 				            <c:if test="${pv.startPage ne 1 }">
-								<a href="${root}/docManage/doc_manage/${pv.startPage - 1}" class="btn btn-primary btn-sm">이전</a>	
+								<a href="${root}/appmanage/manage/${pv.startPage - 1}" class="btn btn-primary btn-sm">이전</a>	
 							</c:if>
 							
 							<c:forEach begin="${pv.startPage}" end="${pv.endPage}" var="i">
-								<a href="${root}/docmanage/manage/${i}" class="btn btn-primary btn-sm">${i}</a>
+								<a href="${root}/appmanage/manage/${i}" class="btn btn-primary btn-sm">${i}</a>
 							</c:forEach>
 							
 							<c:if test="${pv.endPage ne pv.maxPage }">
-								<a href="${root}/docmanage/manage/${pv.endPage + 1}" class="btn btn-primary btn-sm">다음</a>	
+								<a href="${root}/appmanage/manage/${pv.endPage + 1}" class="btn btn-primary btn-sm">다음</a>	
 							</c:if>
 				        </div>
 				
