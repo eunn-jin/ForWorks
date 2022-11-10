@@ -197,8 +197,8 @@ public class QAServiceImpl implements QAService{
 
 	//대상자중 참여한 설문정보 가져오기
 	@Override
-	public QAParticipationVo checkDo(HashMap<String, String> map) {
-		return dao.checkDo(sst,map);
+	public List<QAAnswerVo> checkAnswer(HashMap<String, String> map) {
+		return dao.checkAnswer(sst,map);
 	}
 	
 	// 설문 첨부파일 확인
