@@ -10,22 +10,29 @@ public class TodayWorkVo {
 	private String inTime;
 	private String outTime;
 	
-	private String monthWork;
-	private String weekWork;
-	private String dayWork;
+	private int monthWork;
+	private int weekWork;
+	private int dayWork;
+	
+	private String monthWorkStr;
+	private String weekWorkStr;
+	private String dayWorkStr;
 	
 	private int statusCode;
 	
 	public void setMonthWork(int t) {
-		this.monthWork = changeFormat(t);
+		this.monthWork = t;
+		this.monthWorkStr = changeFormat(t);
 	}
 	
 	public void setWeekWork(int t) {
-		this.weekWork = changeFormat(t);
+		this.weekWork = t;
+		this.weekWorkStr = changeFormat(t);
 	}
 	
 	public void setDayWork(int t) {
-		this.dayWork = changeFormat(t);
+		this.dayWork = t;
+		this.dayWorkStr = changeFormat(t);
 	}
 	
 	public void setInTime(String t) {

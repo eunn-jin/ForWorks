@@ -95,30 +95,30 @@
 							<div class="work-progress">
 								<div class="text-part">
 									<span>이번 달 근무&ensp;</span>
-									<span> ${workTime.monthWork} </span>
+									<span> ${workTime.monthWorkStr} </span>
 								</div>
 								<div class="progress progress-primary pg-part mt-1 mb-2">
-									<div class="progress-bar" role="progressbar" style="width: 35%" aria-valuenow="0"
+									<div class="progress-bar month-progress" role="progressbar" style="width:0%" aria-valuenow="0"
 										aria-valuemin="0" aria-valuemax="100"></div>
 								</div>
 							</div>
 							<div class="work-progress">
 								<div class="text-part">
 									<span>이번 주 근무&ensp;</span>
-									<span> ${workTime.weekWork} </span>
+									<span> ${workTime.weekWorkStr} </span>
 								</div>
 								<div class="progress progress-primary pg-part mt-1 mb-2">
-									<div class="progress-bar" role="progressbar" style="width: 35%" aria-valuenow="0"
+									<div class="progress-bar week-progress" role="progressbar" style="width: 0%" aria-valuenow="0"
 										aria-valuemin="0" aria-valuemax="100"></div>
 								</div>
 							</div>
 							<div class="work-progress">
 								<div class="text-part">
 									<span>오늘 근무&ensp;</span>
-									<span> ${workTime.dayWork} </span>
+									<span> ${workTime.dayWorkStr} </span>
 								</div>
 								<div class="progress progress-primary pg-part mt-1 mb-2">
-									<div class="progress-bar" role="progressbar" style="width: 35%" aria-valuenow="0"
+									<div class="progress-bar day-progress" role="progressbar" style="width: 0%" aria-valuenow="0"
 										aria-valuemin="0" aria-valuemax="100"></div>
 								</div>
 							</div>
@@ -190,6 +190,10 @@
 		if("${workTime.outTime}" != "미등록") {
 			$("#outWorkBtn").attr("disabled", true);
 		}
+		
+		document.getElementsByClassName("month-progress")[0].style.width="${proBar.monthBar}%";
+		document.getElementsByClassName("week-progress")[0].style.width="${proBar.weekBar}%";
+		document.getElementsByClassName("day-progress")[0].style.width="${proBar.dayBar}%";
 		
 	});
 	
