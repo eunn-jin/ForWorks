@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="${root}/resources/vendors/perfect-scrollbar/perfect-scrollbar.css">
 <!-- <link rel="stylesheet" href="resources/vendors/bootstrap-icons/bootstrap-icons.css"> -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-<link rel="stylesheet" href="${root}/resources/css/common.css">
+<link rel="stylesheet" href="${root}/resources/css/sidebar.css">
 	
 <div id="sidebar" class="active">
     <div class="sidebar-wrapper active">
