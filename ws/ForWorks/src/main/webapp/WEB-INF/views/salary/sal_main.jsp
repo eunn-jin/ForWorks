@@ -11,22 +11,24 @@
     #wrap{
         width: 70vw;
         height: 60vh;
-        /*border: 5px solid black;*/
         display: grid;
         grid-template-columns: 100fr;
         grid-template-rows: 25fr 25fr 25fr 25fr;
         justify-content: center;
         align-content: center;
         background-color: white;
+        border-radius: 18px;
+        box-shadow:  0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+       
     }
     #wrap>div{
         box-sizing: border-box;
-        /*display: inline-block;*/
         text-align: center;
         font-size: 30px;
         display: flex;
         align-items: center;
         background-color: white;
+        border-radius: 18px;
         cursor: pointer;
         color : black;
     }
@@ -50,13 +52,13 @@
                    <div class="row">
                        <div class="col-12 col-md-6 order-md-1 order-last">
                            <h3>급여관리자</h3>
-                           <p class="text-subtitle text-muted">The default layout </p>
+                           <p class="text-subtitle text-muted"> <br></p>
                        </div>
                        <div class="col-12 col-md-6 order-md-2 order-first">
                            <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                                <ol class="breadcrumb">
-                                   <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                                   <li class="breadcrumb-item active" aria-current="page">Layout Default</li>
+                                   <li class="breadcrumb-item"><a href="index.html"></a></li>
+                                   <li class="breadcrumb-item active" aria-current="page"></li>
                                </ol>
                            </nav>
                        </div>

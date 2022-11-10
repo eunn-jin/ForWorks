@@ -33,9 +33,9 @@ public class AppDocmanageServiceImpl implements AppDocmanageService{
 	public List<ApprovDocumentVo> selectDocByEmp(HashMap map) {
 		return dao.selectDocByEmp(sst,map);
 	}
-	//문서하나불러오기
+	//문서하나불러오기--하나만 못불러옴
 	@Override
-	public ApprovDocumentVo selectOneDoc(String adocNo) {
+	public List<ApprovDocumentVo> selectOneDoc(String adocNo) {
 		return dao.selectOneDoc(sst,adocNo);
 	}
 	//결재문서관리등록
@@ -60,12 +60,27 @@ public class AppDocmanageServiceImpl implements AppDocmanageService{
 	}
 	//결재문서관리등록한 문서불러오기
 	@Override
-	public DocControlVo selectContDetail(String no) {
+	public List<DocControlVo> selectContDetail(String no) {
 		return dao.selectContDetail(sst,no);
 	}
 	//결재문서등록 공개리스트
 	@Override
 	public List<DocControlVo> selectContDocList(PageVo pv) {
 		return dao.selectContDocList(sst,pv);
+	}
+	//결재문서리스트디테일(화면)
+	@Override
+	public DocControlVo selectAdocDetail(String no) {
+		return dao.selectAdocDetail(sst,no);
+	}
+	//싸인받아오기
+	@Override
+	public String selectSign(String adocNo) {
+		return dao.selectSign(sst,adocNo);
+	}
+	//부서,직급 받아오기
+	@Override
+	public MemberVo selectMemInfo(String empNo) {
+		return dao.selectMemInfo(sst,empNo);
 	}
 }

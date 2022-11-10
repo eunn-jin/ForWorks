@@ -15,8 +15,8 @@ public interface AppDocmanageDao {
 	List<MemberVo> selectDept(SqlSessionTemplate sst);
 	//해당직원의 전자결재문서 받아오기
 	List<ApprovDocumentVo> selectDocByEmp(SqlSessionTemplate sst, HashMap mapO);
-	//문서하나 불러오기
-	ApprovDocumentVo selectOneDoc(SqlSessionTemplate sst, String adocNo);
+	//문서하나 불러오기-하나만못불러옴
+	List<ApprovDocumentVo> selectOneDoc(SqlSessionTemplate sst, String adocNo);
 	//결재관리문서등록
 	int insertDocCont(SqlSessionTemplate sst, DocControlVo vo);
 	//해당직원이 작성한 총 갯수
@@ -26,9 +26,15 @@ public interface AppDocmanageDao {
 	//게시상태수정
 	int updateStatus(SqlSessionTemplate sst, DocControlVo vo);
 	//결재문서관리등록한 문서불러오기
-	DocControlVo selectContDetail(SqlSessionTemplate sst, String no);
+	List<DocControlVo> selectContDetail(SqlSessionTemplate sst, String no);
 	//결재문서등록 공개리스트
 	List<DocControlVo> selectContDocList(SqlSessionTemplate sst, PageVo pv);
+	//결재문서리스트디테일(화면)
+	DocControlVo selectAdocDetail(SqlSessionTemplate sst, String no);
+	//싸인받아오기
+	String selectSign(SqlSessionTemplate sst, String adocNo);
+	//부서,직급 받아오기
+	MemberVo selectMemInfo(SqlSessionTemplate sst, String empNo);
 	
 	
 	

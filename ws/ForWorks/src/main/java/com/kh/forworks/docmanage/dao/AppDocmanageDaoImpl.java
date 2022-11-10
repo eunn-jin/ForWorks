@@ -26,8 +26,8 @@ public class AppDocmanageDaoImpl implements AppDocmanageDao{
 	}
 	//문서하나 받아오기
 	@Override
-	public ApprovDocumentVo selectOneDoc(SqlSessionTemplate sst, String adocNo) {
-		return sst.selectOne("appMapper.selectOneDoc",adocNo);
+	public List<ApprovDocumentVo> selectOneDoc(SqlSessionTemplate sst, String adocNo) {
+		return sst.selectList("appMapper.selectOneDoc",adocNo);
 	}
 	//결재문서관리등록
 	@Override
@@ -56,8 +56,8 @@ public class AppDocmanageDaoImpl implements AppDocmanageDao{
 	}
 	//결재문서관리등록한 문서불러오기
 	@Override
-	public DocControlVo selectContDetail(SqlSessionTemplate sst, String no) {
-		return sst.selectOne("appMapper.selectContDoc",no);
+	public List<DocControlVo> selectContDetail(SqlSessionTemplate sst, String no) {
+		return sst.selectList("appMapper.selectContDoc",no);
 	}
 	//결재문서등록 공개리스트
 	@Override
@@ -67,5 +67,20 @@ public class AppDocmanageDaoImpl implements AppDocmanageDao{
 		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
 
 		return sst.selectList("appMapper.selectContDocList","",rb);
+	}
+	//결재문서리스트디테일(화면)
+	@Override
+	public DocControlVo selectAdocDetail(SqlSessionTemplate sst, String no) {
+		return sst.selectOne("appMapper.selectAdoc",no);
+	}
+	//싸인받아오기
+	@Override
+	public String selectSign(SqlSessionTemplate sst, String approvNo) {
+		return sst.selectOne("appMapper.selectSign", approvNo);
+	}
+	//부서,직급 받아오기
+	@Override
+	public MemberVo selectMemInfo(SqlSessionTemplate sst, String empNo) {
+		return sst.selectOne("appMapper.selectMemInfo" , empNo);
 	}
 }
