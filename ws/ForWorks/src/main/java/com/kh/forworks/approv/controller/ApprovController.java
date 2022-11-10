@@ -20,7 +20,6 @@ import com.kh.forworks.Pagination;
 import com.kh.forworks.approv.service.ApprovService;
 import com.kh.forworks.approv.vo.ApprovDocumentVo;
 import com.kh.forworks.approv.vo.DocApprovVo;
-import com.kh.forworks.approv.vo.DocFileVo;
 import com.kh.forworks.approv.vo.DocFormVo;
 import com.kh.forworks.approv.vo.DocSignVo;
 import com.kh.forworks.member.vo.MemberVo;
@@ -46,12 +45,6 @@ public class ApprovController {
 		MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
 		String empNo = loginMember.getEmpNo();
 		
-		DocSignVo signVo = service.selectSignOne(loginMember);
-		
-		if(signVo == null) {
-			session.setAttribute("toastMsg", "저장된 서명이 없습니다.");
-			return "redirect:/approv/sign/create";
-		}
 		
 		List<ApprovDocumentVo> approvList = service.selectApprovList(empNo);
 		List<ApprovDocumentVo> rejectApprovList = service.selectRejectApprovList(empNo);
@@ -171,8 +164,6 @@ public class ApprovController {
 		List<ApprovDocumentVo> approvMemberList = service.selectApprovMemberList(dno);
 		List<ApprovDocumentVo> coopMemberList = service.selectCoopMemberList(dno);
 		List<ApprovDocumentVo> approvSignList= service.selectApprovSignList(dno);
-		String adocNo = dno;
-		DocFileVo fileVo = service.selectDocFile(adocNo);
 		
 		for (int i = approvSignList.size(); i < approvMemberList.size(); i++) {
 			approvSignList.add(null);
@@ -182,7 +173,6 @@ public class ApprovController {
 		req.setAttribute("approvMemberList", approvMemberList);
 		req.setAttribute("coopMemberList", coopMemberList);
 		req.setAttribute("approvSignList", approvSignList);
-		req.setAttribute("docfile", fileVo);
 		
 		
 		return "approv/approv-detail";
@@ -228,9 +218,6 @@ public class ApprovController {
 			return "redirect:/approv/main";	
 		}
 		
-		String adocNo = dno;
-		DocFileVo fileVo = service.selectDocFile(adocNo);
-		
 		vo = service.selectApprovDocOneByNo(vo);
 		List<ApprovDocumentVo> approvMemberList = service.selectApprovMemberList(dno);
 		List<ApprovDocumentVo> coopMemberList = service.selectCoopMemberList(dno);
@@ -245,7 +232,6 @@ public class ApprovController {
 		req.setAttribute("approvMemberList", approvMemberList);
 		req.setAttribute("coopMemberList", coopMemberList);
 		req.setAttribute("approvSignList", approvSignList);
-		req.setAttribute("docfile", fileVo);
 		return "approv/reject-detail";
 	}
 	
@@ -339,9 +325,6 @@ public class ApprovController {
 		
 		int result1 = service.updateDocCoopByEmpNo(vo);
 		
-		String adocNo = dno;
-		DocFileVo fileVo = service.selectDocFile(adocNo);
-		
 		vo = service.selectApprovDocOneByNo(vo);
 		List<ApprovDocumentVo> approvMemberList = service.selectApprovMemberList(dno);
 		List<ApprovDocumentVo> coopMemberList = service.selectCoopMemberList(dno);
@@ -355,7 +338,6 @@ public class ApprovController {
 		req.setAttribute("approvMemberList", approvMemberList);
 		req.setAttribute("coopMemberList", coopMemberList);
 		req.setAttribute("approvSignList", approvSignList);
-		req.setAttribute("docfile", fileVo);
 		
 		return "approv/coop-detail";
 	}
@@ -384,9 +366,6 @@ public class ApprovController {
 		
 		int result1 = service.updateDocReferByEmpNo(vo);
 		
-		String adocNo = dno;
-		DocFileVo fileVo = service.selectDocFile(adocNo);
-		
 		
 		vo = service.selectApprovDocOneByNo(vo);
 		List<ApprovDocumentVo> approvMemberList = service.selectApprovMemberList(dno);
@@ -401,13 +380,13 @@ public class ApprovController {
 		req.setAttribute("approvMemberList", approvMemberList);
 		req.setAttribute("coopMemberList", coopMemberList);
 		req.setAttribute("approvSignList", approvSignList);
-		req.setAttribute("docfile", fileVo);
 		
 		return "approv/refer-detail";
 	}
 	
 	@GetMapping("form/create")
 	public String createForm() {
+		//TODO 양식 생성
 		return "approv/form-create";
 	}
 	
@@ -425,6 +404,7 @@ public class ApprovController {
 	
 	@GetMapping("form/main/{pno}")
 	public String mainForm(@PathVariable int pno, HttpServletRequest req) {
+		//TODO 양식 목록
 		int listCount = service.selectFormListCount();
 		PageVo pv = Pagination.getPageVo(listCount, pno, 5, 10);
 		List<DocFormVo> formList = service.selectFormList(pv);
@@ -483,7 +463,7 @@ public class ApprovController {
 		
 		int result = service.deleteFormOne(vo);
 		session.setAttribute("toastMsg", "삭제되었습니다.");	
-		return "redirect:/approv/main";
+		return "approv/form-main";
 	}
 	
 	@GetMapping("sign/create")
@@ -519,7 +499,7 @@ public class ApprovController {
 			session.setAttribute("toastMsg", "서명 저장을 실패했습니다.");
 		}
 		
-		return "redirect:/approv/main";
+		return "redirect:/approv/approv-main";
 	}
 	
 	@GetMapping("sign/edit")
@@ -554,7 +534,7 @@ public class ApprovController {
 			session.setAttribute("toastMsg", "서명 저장을 실패했습니다.");
 		}
 		
-		return "redirect:/approv/main";
+		return "approv/approv-main";
 	}
 	
 	//미리보기용 반환정보

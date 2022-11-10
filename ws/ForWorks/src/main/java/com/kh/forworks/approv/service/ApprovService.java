@@ -5,7 +5,6 @@ import java.util.List;
 import com.kh.forworks.PageVo;
 import com.kh.forworks.approv.vo.ApprovDocumentVo;
 import com.kh.forworks.approv.vo.DocApprovVo;
-import com.kh.forworks.approv.vo.DocFileVo;
 import com.kh.forworks.approv.vo.DocFormVo;
 import com.kh.forworks.approv.vo.DocSignVo;
 import com.kh.forworks.member.vo.MemberVo;
@@ -95,8 +94,5 @@ public interface ApprovService {
 	
 	//미리보기용 반환정보
 	String selectFormContentOne(String formNo);
-	
-	//파일 받아오기
-	DocFileVo selectDocFile(String adocNo);
 
 }
