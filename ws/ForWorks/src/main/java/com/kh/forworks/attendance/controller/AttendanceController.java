@@ -48,11 +48,17 @@ public class AttendanceController {
 		TodayWorkVo workTime = service.getTodayWork(empNo);
 		WorkVo work = service.getDayWorkInfo(map);
 		TeamWorkVo team = service.getTeamTime(empNo);
-				
+		
+		Map<String, Integer> proBar = new HashMap<String, Integer>();
+		proBar.put("monthBar", (int)(workTime.getMonthWork()/team.getDoMonthTime()*100));
+		proBar.put("weekBar", (int)(workTime.getWeekWork()/team.getDoWeekTime()*100));
+		proBar.put("dayBar", (int)(workTime.getDayWork()/team.getDoDayTime()*100));
+		
 		model.addAttribute("workTime", workTime);
 		model.addAttribute("work", work);
 		model.addAttribute("team", team);
 		model.addAttribute("today", day);
+		model.addAttribute("proBar", proBar);
 		
 		return "attendance/dayAttendance";
 	}
