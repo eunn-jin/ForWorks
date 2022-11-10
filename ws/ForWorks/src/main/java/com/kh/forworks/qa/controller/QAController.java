@@ -353,12 +353,12 @@ public class QAController {
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("pno", pno);
 		map.put("no", loginMember.getEmpNo());
-		int check = qasv.check(map);
+		int check = qasv.check(map); //대상자 ::1 // 대상자x :: 0
 		
-		//설문를 참여 했는지 확인
-		//참여한 인원은 선택한 내용이 체크되어있고 재설문시 알람확인창 나오게하기
-		QAParticipationVo chvo = qasv.checkDo(map);
-		System.out.println(chvo);
+		//설문지와 회원번호를 참고해서 해당 설문지에대한 사원의 답변 내용 가져오기
+		//참여여부::'N' == Null
+		List<QAAnswerVo> chaw = qasv.checkAnswer(map);
+		System.out.println(chaw);
 		
 		
 		System.out.println(qavo);
@@ -369,7 +369,7 @@ public class QAController {
 		model.addAttribute("qacgList", qacgList);
 		model.addAttribute("qaptList", qaptList);
 		model.addAttribute("check", check);
-		model.addAttribute("chvo",chvo);
+		model.addAttribute("chaw",chaw);
 		
 		return "QA/detailUser";
 	}
@@ -411,5 +411,5 @@ public class QAController {
 		}else {return"error";}
 	}
 		
-
+	
 }
