@@ -96,6 +96,56 @@
                         </li>
                     </ul>
                 </li>
+                
+                <li class="sidebar-item has-sub">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-cloud-lightning-rain"></i>
+                        <span>결제관리</span>
+                    </a>
+                    <ul class="submenu" id="doc-part">
+                        <li class="submenu-item" id="doc-list">
+                            <a href="${root}/approv/main">결제메인</a>
+                        </li>
+                        <li class="submenu-item" id="doc-list">
+                            <a href="${root}/approv/create">문서작성</a>
+                        </li>
+                        <li class="submenu-item" id="doc-list">
+                            <a href="${root}/approv/create/noelec">비전자문서작성</a>
+                        </li>
+                    </ul>
+                </li>
+                
+                <li class="sidebar-item has-sub">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-cloud-lightning-rain"></i>
+                        <span>문서양식</span>
+                    </a>
+                    <ul class="submenu" id="doc-part">
+                        <li class="submenu-item" id="doc-list">
+                            <a href="${root}/approv/form/main/1">양식메인</a>
+                        </li>
+                        <li class="submenu-item" id="doc-list">
+                            <a href="${root}/approv/form/create">양식생성</a>
+                        </li>
+                    </ul>
+                </li>
+                
+                <li class="sidebar-item has-sub">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-cloud-lightning-rain"></i>
+                        <span>서명관리</span>
+                    </a>
+                    <ul class="submenu" id="doc-part">
+                        <li class="submenu-item" id="doc-list">
+                            <a href="${root}/approv/sign/create">서명생성</a>
+                        </li>
+                        <li class="submenu-item" id="doc-list">
+                            <a href="${root}/approv/sign/edit">서명수정</a>
+                        </li>
+                    </ul>
+                </li>
+                
+                
             </ul>
         </div>
     </div>
