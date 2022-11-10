@@ -72,7 +72,7 @@
 	              <a href="${root}/foradmin/main">회사 정보 설정 ? </a>
 	            </li> --%>
 	            <li class="submenu-item">
-	              <a href="${root}/foradmin/pos">직무/직급 설정</a>
+	              <a href="${root}/foradmin/pos">직무 설정</a>
 	            </li>
 	          </ul>
 	        </li>

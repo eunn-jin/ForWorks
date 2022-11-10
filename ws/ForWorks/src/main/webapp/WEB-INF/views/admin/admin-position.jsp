@@ -63,12 +63,16 @@
                               <td class="text-center"><a style="color: red;">삭제</a></td>
                             </tr>
                          	</c:forEach>
-                         	<tr class="deptEdit" style="display:none; border-bottom: 1px solid white">
-                         		<td style="width: 60vw;" class="text-center h6 text-muted"><a onclick="addTr(this);">추가</a></td>
-                         		<td></td>
+                         	<tr class="deptEdit" style="display:none">
+                         	  <td style="width: 50vw; display:none"><input name="" class="form-control form-control-sm" style="width: 200px;"></td>
+                              <td style="width: 50vw;"><input name="" class="form-control form-control-sm" style="width: 200px;"></td>
+                              <td class="text-center"><a style="color: red;">삭제</a></td>
                          	</tr>
                          </tbody>
                        </table>
+                       <div class="deptEdit" style="display:none; text-align: center; width: 50vw;">
+                       		<button type="button" class="btn btn-sm" onclick="addTr();" style="margin-left:50px; font-weight: 600">추가</button>
+                       </div>
                        </form>
                     </div>
                </div>
@@ -78,7 +82,6 @@
     <%@ include file="/WEB-INF/views/common/footer.jsp" %>
    </div>
   </body>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/TableDnD/0.9.1/jquery.tablednd.js" integrity="sha256-d3rtug+Hg1GZPB7Y/yTcRixO/wlI78+2m08tosoRn7A=" crossorigin="anonymous"></script>
   <script>
   	function deptEdit() {
       const deptView = document.getElementsByClassName("deptView");
@@ -93,6 +96,15 @@
         var deptEditTr = deptEdit.item(i);
         deptEditTr.style.display = "block";
       }
+  	}
+  	
+  	function addTr() {
+  		console.log("adTr");
+  		$("#deptTable>tbody").append('<tr class="deptEdit" style="width: 50vw;"><td style="display:none"></td><td style="width: 50vw;"><input name="" class="form-control form-control-sm m-0" style="width: 200px;"></td><td class="text-center"><a style="color: red;">삭제</a></td></tr>');
+  	}
+  	
+  	function deptDelete() {
+  		
   	}
   </script>
 </html>

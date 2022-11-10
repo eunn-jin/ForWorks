@@ -66,7 +66,8 @@ public class MemberController {
 	
 	//로그인
 	@GetMapping("login")
-	public String login() {
+	public String login(HttpSession session) {
+		session.setAttribute("loginMember", null);
 		return "member/login";
 	}
 	
@@ -92,7 +93,7 @@ public class MemberController {
 				loginMember.setEmpJdate(jdate);
 	
 				session.setAttribute("loginMember", loginMember);
-				return "redirect:/";
+				return "redirect:/att/day";
 			} else {
 				session.setAttribute("toastMsg", "이용할 수 없는 계정입니다.");
 				return "redirect:/login";
