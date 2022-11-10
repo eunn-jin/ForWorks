@@ -73,7 +73,7 @@ public interface QADao {
 	int check(SqlSessionTemplate sst, HashMap<String, String> map);
 
 	//대상자중 참여한 설문 참여 인원 인지
-	QAParticipationVo checkDo(SqlSessionTemplate sst, HashMap<String, String> map);
+	List<QAAnswerVo> checkAnswer(SqlSessionTemplate sst, HashMap<String, String> map);
 	
 	//첨부파일이 있는지 
 	QAAttachmentsVo checkFile(SqlSessionTemplate sst, String pno);

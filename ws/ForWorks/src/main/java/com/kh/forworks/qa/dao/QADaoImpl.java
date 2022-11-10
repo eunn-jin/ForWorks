@@ -147,8 +147,8 @@ public class QADaoImpl implements QADao{
 	
 	//대상자인 사원중 참가여부확인
 	@Override
-	public QAParticipationVo checkDo(SqlSessionTemplate sst, HashMap<String, String> map) {
-		return sst.selectOne("qaMapper.checkDo",map);
+	public List<QAAnswerVo> checkAnswer(SqlSessionTemplate sst, HashMap<String, String> map) {
+		return sst.selectList("qaMapper.checkAnswer",map);
 	}
 	
 	// 설문 첨부파일 확인

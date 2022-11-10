@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>    
 <link rel="stylesheet" href="${root}/resources/css/sjy.css">
 <html>
 <head>
@@ -37,9 +37,17 @@
                         
                         <%@include file="/WEB-INF/views/QA/detailUser-content.jsp" %>
                     </div>
+                </div>
                             <div style="text-align: right;"> 
-                                <button class="myBtn">ㅁㅁ</button>
-                                <button class="myBtn">투표</button>
+                                
+                                
+                                
+                                <c:if test="${check == 1}">
+                                    <button class="myBtn">작성</button>
+                                    <c:if test="${x != 0}">
+                                    <button class="myBtn" id="update-aw">수정</button>
+                                    </c:if>
+                                </c:if>
                             </div>
                 </section>
             </div>
@@ -57,5 +65,50 @@
 	});
 	
 </script>
+<script>
+    //답변 작성자 번호 가져오기
 
+
+</script>
+
+<!-- 수정 -->
+<script>
+	
+    const awBtn = document.querySelector('#update-aw');
+    
+    awBtn.addEventListener('click' ,  function(){
+        //답변내용 가져오기 qaawContent
+        var qaawContent = document.querySelectorAll("input[name='qaawContent']");
+        console.log("qq::"+qaawContent);
+        var xxx = [];
+        for(var i=0;i<${fn:length(chaw)};i++){
+            console.log(qaawContent[i].value);
+            xxx.push(qaawContent[i].value);
+
+        }
+        console.log(xxx);
+        var pno = +${qavo.qaNo};
+        console.log("번호"+pno);
+        $.ajax({
+            url : "${root}/QA/updateAw/"+pno,
+            type : "POST",
+            data : {
+                    "qaawContent" : xxx,
+                    
+            },
+            success : function(result){
+                if (result =='ok') {
+                    alert("수정완료!");
+
+                }
+                else{
+                    alert("수정 실패..");
+                }
+            },
+            error : function(){
+                alert("통신 에러..");	
+            },
+        });
+    });
+</script>
 </html>

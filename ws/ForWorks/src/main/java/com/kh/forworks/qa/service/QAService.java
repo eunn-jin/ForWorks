@@ -55,7 +55,7 @@ public interface QAService {
 	int check(HashMap<String, String> map);
 	
 	//대상자 일경우 설문 작성을 한적이 있는지 확인
-	QAParticipationVo checkDo(HashMap<String, String> map);
+	List<QAAnswerVo> checkAnswer(HashMap<String, String> map);
 	//파일 확인
 	
 	QAAttachmentsVo checkFile(String pno);

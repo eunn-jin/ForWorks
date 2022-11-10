@@ -259,4 +259,36 @@
 		WHERE QAPT_STATUS ='Y'
 		AND QA_NO=#{pno}
 	</select>
+	
+	
+	<!-- 설문 대상자 화면 -->
+	
+	<!-- 로그인사원이 대상자 여부 확인 -->
+	<select id="check" resultType="int">
+		SELECT COUNT(*)
+		FROM QA_PARTICIPATION
+		WHERE EMP_NO = #{no}
+		AND QA_NO = #{pno}
+		
+	</select>
+	
+	<!-- 참여대상의 답변내용 가져오기 -->
+	<select id="checkAnswer" resultType="com.kh.forworks.qa.vo.QAAnswerVo">	
+		SELECT 
+        Q.QAAW_NO
+        ,Q.QA_NO
+        ,Q.QACG_NO
+        ,Q.EMP_NO
+        ,Q.QAAW_CONTENT
+        ,QP.QAPT_STATUS
+		FROM QA_ANSWER Q
+        JOIN QA_PARTICIPATION QP ON Q.QA_NO = QP.QA_NO
+		WHERE Q.EMP_NO =#{no}
+		AND Q.QA_NO = #{pno}
+        AND QP.EMP_NO=#{no}
+        AND QP.QA_NO= #{pno}
+		AND QP.QAPT_STATUS = 'Y'
+        ORDER BY Q.QAAW_NO		
+	</select>
+	
 </mapper>

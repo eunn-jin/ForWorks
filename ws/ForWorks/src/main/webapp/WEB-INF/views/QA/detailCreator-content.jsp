@@ -43,6 +43,16 @@
                 <h3><label for="">답변내용</label></h3>
                 <label class="text-subtitle text-muted">항목 </label>
             </div>
+                
+			<ul class="nav nav-tabs">
+				<li class="nav-item"><a class="nav-link active"
+					data-toggle="tab" href="#all">전체</a></li>
+	
+				<li class="nav-item"><a class="nav-link" data-toggle="tab"
+					href="#ing">진행</a></li>
+				<li class="nav-item"><a class="nav-link" data-toggle="tab"
+					href="#end">마감</a></li>
+			</ul>
             <div id="list" style="overflow-y:scroll;">
                 <table class="table" id="table-main">
                     <thead class="table-light">
@@ -162,6 +172,13 @@
     
     $('#answer').remove();
     
+
+    <tr id="answer">
+        <c:if test='${aw.qacgNo eq 1}'>
+            <th scope='row' id="aw-name">${aw.empName}</th>
+            <td id="aw-content">${aw.qaawContent}</td>
+        </c:if>
+    </tr>
 
     $('input[name=cgName]').change(function () {
         //라디오 버튼 선택값이 변경되면
