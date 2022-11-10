@@ -74,6 +74,47 @@
 	width:95.5%;
 	margin:10px 0;
 	}
+	
+	input[type="date"] { 
+   	position: relative; 
+    padding-right:42px; 
+    width: 230px;
+    height: 48px;
+    padding: 0 42px 0 16px;
+    background: url(img/calendar.svg) no-repeat right 21px center / 16px auto;
+    border:1px solid #6F5CFA;
+
+    }
+    
+    input[type="date"] ::-webkit-clear-button,
+    input[type="date"] ::-webkit-inner-spin-button { display: none;}
+    input[type="date"] ::-webkit-calendar-picker-indicator {
+
+    position:absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    color: transparent;
+    cursor: pointer;
+    }
+
+    input[type="date"]::before {
+    /*attr(속성) : 속성값을 가져옴, input date에 required 입력해야 실행됨.*/
+    content: attr(data-placeholder);
+    width: 100%;
+    }
+    input[type="date"]:valid::before {
+    display: none;
+    }
+    input[type="data-placeholder"]::before {
+    color:gray
+    font: size 14px;
+    padding: left 16px;
+
+    }
+    
 	/*등록 버튼 설정*/
 	.pj_submit{
 	margin:8px 0 0;
@@ -100,7 +141,7 @@
 	color:#000;
 	}
 	
-	.close{
+	.pj_close{
 	margin:8px 0 0;
 	text-align: right;
 	border-radius:13px;
@@ -118,27 +159,57 @@
 		<div class="popup_name">일정등록</div>
 		<div class="pj_c_block">
 			<div class="pj_top">일정 등록</div>
-			<div class="pj_title"><input type="text" placeholder="일정 제목을 입력하세요." style="border: none; background: transparent;"></div>
-				<input type="text" class="pj_name" placeholder="내용 입력">
+			<div class="pj_title"><input type="text" name="pname" placeholder="일정 제목을 입력하세요." style="border: none; background: transparent;"></div>
+				<input type="text" class="pj_name" name="pcontent" placeholder="내용 입력">
 
 			<div class="pj_fday_eday">
 				<div class="pj_fday">
-					시작일 <a href="" class="calendar"><img src="calendar.svg"></a>
-					<input type="text" placeholder="시작일을 선택해주세요.">
+					시작일 <a href="" class="calendar"></a>
+					<input type="date" name="pstart" data-placeholder="시작일을 선택해주세요." required>
 				</div>
 
 				<div class="pj_eday">
-					종료일 <a href="" class="calendar"><img src="calendar.svg"></a>
-					<input type="text" placeholder="종료일을 선택해주세요.">
+					종료일 <a href="" class="calendar"></a>
+					<input type="date" name="pend" data-placeholder="종료일을 선택해주세요." required>
 				</div>
 			</div>
 			<div class="pj_submit">
 				<a href="">등록</a>
-				<button id="close">취소</button>
+			<div class="pj_close">
+				<a href="">취소</a>
 			</div>
 		</div>
 	</div>
+</div>	
 </body>
 <script>
+<script>
+
+$().ready(function() {
+	console.log("test:");
+	$('#ex1').addClass("active");
+});
+
+$(window).load(function() {
+	<%-- // 팝업 창 크기를 HTML 크기에 맞추어 자동으로 크기를 조정하는 함수. --%>
+	var strWidth;
+	var strHeight;
+	//innerWidth / innerHeight / outerWidth / outerHeight 지원 브라우저
+	if ( window.innerWidth && window.innerHeight && window.outerWidth && window.outerHeight ) {
+		strWidth = $('#.pj_popup').outerWidth() + (window.outerWidth - window.innerWidth);
+		strHeight = $('#.pj_popup').outerHeight() + (window.outerHeight - window.innerHeight);
+	}
+	else {
+		var strDocumentWidth = $(document).outerWidth();
+		var strDocumentHeight = $(document).outerHeight();
+		window.resizeTo ( strDocumentWidth, strDocumentHeight );
+		var strMenuWidth = strDocumentWidth - $(window).width();
+		var strMenuHeight = strDocumentHeight - $(window).height();
+		strWidth = $('#.pj_popup').outerWidth() + strMenuWidth;
+		strHeight = $('#.pj_popup').outerHeight() + strMenuHeight;
+	}
+	//resize
+	window.resizeTo( strWidth, strHeight );
+});
 </script>
 </html>

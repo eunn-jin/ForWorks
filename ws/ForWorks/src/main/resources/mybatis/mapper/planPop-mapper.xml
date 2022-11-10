@@ -3,22 +3,24 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="planPopMapper">
-  <insert id="">
-  	INSERT INTO PLAN
-  	(
-  		PNAME
-  		, PCONTENT
-  		, PSTART
-  		, PEND
-  	)
-  	
-  	VALUES
-  	(
-  		#{PNAME}
-  		, #{PCONTENT}
-  		, #{PSTART}
-  		, #{PEND} 	
-  	)
+  <insert id="addPlan">
+  INSERT INTO PLAN 
+  (
+	INSERT INTO PLAN (
+	         PNO
+	        ,PNAME
+	        ,PSTART
+	        ,PEND
+	        ,PCONTENT
+	)
+	VALUES (
+	
+	        SEQ_PLAN_NO.NEXTVAL
+	        ,#{pname}
+	        ,#{pstart}
+	        ,#{pend}
+	        ,#{pcontent}
+)
   
   </insert>
 </mapper>
