@@ -13,8 +13,8 @@ public interface AppDocmanageService {
 	List<MemberVo> selectDept();
 	//해당직원의 전자결재문서 가져오기
 	List<ApprovDocumentVo> selectDocByEmp(HashMap map);
-	//문서하나불러오기
-	ApprovDocumentVo selectOneDoc(String adocNo);
+	//문서하나불러오기--하나만 못불러옴
+	List<ApprovDocumentVo> selectOneDoc(String adocNo);
 	//결재문서관리등록
 	int insertDocCont(DocControlVo vo);
 	//해당직원이 작성한 총갯수
@@ -24,8 +24,14 @@ public interface AppDocmanageService {
 	//게시상태수정
 	int updateStatus(DocControlVo vo);
 	//결재문서관리등록한 문서불러오기
-	DocControlVo selectContDetail(String no);
+	List<DocControlVo> selectContDetail(String no);
 	//결재문서등록 공개 리스트
 	List<DocControlVo> selectContDocList(PageVo pv);
+	//결재문서리스트디테일(화면)
+	DocControlVo selectAdocDetail(String no);
+	//싸인받아오기
+	String selectSign(String adocNo);
+	//부서,직급 받아오기
+	MemberVo selectMemInfo(String empNo);
 
 }

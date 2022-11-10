@@ -94,7 +94,7 @@
 					<div id="wrap">
 				        <div id="check-cate">
                             <a href="${root}/docmanage/list/1">일반문서</a>
-                            <a href="${root}/appmanage/list">결재문서</a>
+                            <a href="${root}/appmanage/list/1">결재문서</a>
 				        </div>
 				        <div id="check-btn">
 				            <button onclick="location.href='write'">+ 결재문서작성</button>
@@ -109,7 +109,7 @@
                         <c:forEach items="${voList}" var="x">
                             <div>${x.adocNo}</div>
                             <div>${x.contEndDate}</div>
-                            <div class="title"><a href="${root}/docmanage/detail/${x.docNo}">${x.adocName}</a></div>
+                            <div class="title"><a href="${root}/appmanage/adocDetail/${x.adocNo}">${x.adocName}</a></div>
                             <div>
                             	<c:choose>
                             		<c:when test="${x.range} eq 'OPEN'">전체공개</c:when>

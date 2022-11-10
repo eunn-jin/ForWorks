@@ -83,6 +83,24 @@
 		FROM DOC_CONTROL D JOIN APPROVEDOCUMENT A ON D.ADOC_NO = A.ADOC_NO WHERE D.STATUS = 'Y'
 	</select>
 	
+	<select id="selectSign" resultType="String">
+		SELECT SIGN_EDIT FROM SIGNFILE S JOIN DOCAPPROVE D ON D.EMP_NO = S.EMP_NO WHERE APPROVE_NO = #{approvNo}
+	</select>
+	
+	<select id="selectMemInfo" resultType="MemberVo">
+		SELECT 
+			A.EMP_NO, EMP_NAME, DEPT_NAME , POS_NAME 
+		FROM
+			(SELECT 
+				EMP_NO, EMP_NAME, E.DEPT_NO,POS_NO ,D.DEPT_NAME
+			FROM EMPLOYEE E JOIN DEPARTMENT D ON E.DEPT_NO = D.DEPT_NO) A  
+		JOIN POSITION P 
+		ON A.POS_NO = P.POS_NO
+		WHERE EMP_NO = #{empNo}
+	</select>
+	
+	
+	
 	
 	
 	

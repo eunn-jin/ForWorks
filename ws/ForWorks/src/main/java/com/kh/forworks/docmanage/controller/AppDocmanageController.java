@@ -18,10 +18,9 @@ import com.google.gson.Gson;
 import com.kh.forworks.PageVo;
 import com.kh.forworks.Pagination;
 import com.kh.forworks.approv.vo.ApprovDocumentVo;
+import com.kh.forworks.approv.vo.DocSignVo;
 import com.kh.forworks.docmanage.service.AppDocmanageService;
-import com.kh.forworks.docmanage.vo.DfileVo;
 import com.kh.forworks.docmanage.vo.DocControlVo;
-import com.kh.forworks.docmanage.vo.DocVo;
 import com.kh.forworks.member.vo.MemberVo;
 
 @Controller
@@ -100,8 +99,8 @@ public class AppDocmanageController {
 	@ResponseBody
 	public String selectOne(String adocNo) {
 		System.out.println(adocNo);
-		ApprovDocumentVo result = ads.selectOneDoc(adocNo);
-		System.out.println(result);
+		List<ApprovDocumentVo> result = ads.selectOneDoc(adocNo);
+		System.out.println(result.get(0).getAdocContent());
 		Gson g = new Gson();
 		return g.toJson(result);
 	}
@@ -134,7 +133,7 @@ public class AppDocmanageController {
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 		if(loginMember != null) {
 			String empNo = loginMember.getEmpNo();
-			System.out.println(empNo);
+			System.out.println("로그인번호확인 : " + empNo);
 			
 			//페이징처리
 			int totalCount = ads.selectTotalCnt(empNo);
@@ -145,7 +144,7 @@ public class AppDocmanageController {
 			map.put("empNo", empNo);
 			List<DocControlVo> voList = ads.selectContDocByEmp(map);
 			
-			System.out.println(voList);
+			System.out.println("게시글가져오기" + voList);
 			
 			model.addAttribute("voList",voList);
 			model.addAttribute("pv",pv);
@@ -160,7 +159,7 @@ public class AppDocmanageController {
 	//결재문서관리디테일-화면
 	@GetMapping("manDetail/{no}")
 	public String manDetail(@PathVariable String no , Model model) {
-		DocControlVo vo = ads.selectContDetail(no);
+		List<DocControlVo> vo = ads.selectContDetail(no);
 
 //		if(vo.getFileNo() != null) {
 //			DfileVo fv = ads.selectFileDoc(no);
@@ -190,8 +189,38 @@ public class AppDocmanageController {
 		}
 
 	}
+	//결재문서리스트디테일(화면)
+	@GetMapping("adocDetail/{no}")
+	public String adocDetail(@PathVariable String no,Model model) {
+		List<DocControlVo> vo = ads.selectContDetail(no);
+		System.out.println(vo);
+		model.addAttribute("vo",vo);
+		return "docManage/app_doc_detail";
+	}
 	
-	
+	//화면테스트
+	@GetMapping("formtest")
+	public String formtest(Model model) {
+		List<DocControlVo> vo = ads.selectContDetail("42");
+		
+		//싸인받아오기
+		List<DocSignVo> sign = null;
+		for(int i = 0; i < vo.size(); i++) {
+			System.out.println(vo.get(i).getApproveNo());
+			System.out.println(ads.selectSign(vo.get(i).getApproveNo()));
+			
+		}
+		//부서,직급 받아오기
+		MemberVo mem = ads.selectMemInfo(vo.get(0).getEmpNo());
+		
+		System.out.println("vo출" + vo);
+		model.addAttribute("vo",vo);
+		System.out.println("sign출" + sign);
+		model.addAttribute("sign",sign);
+		System.out.println("mem출" + mem);
+		model.addAttribute("mem",mem);
+		return "docManage/form_test";
+	}
 	
 	
 	

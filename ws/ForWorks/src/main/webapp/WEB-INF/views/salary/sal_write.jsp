@@ -9,15 +9,23 @@
 <style>
     #wrap{
         background-color: white;
-        width: 60vw;
-        height: 60vh;
+        width: 70vw;
+        height: 90vh;
         font-size: 20px;
+		border-radius: 18px;
+		box-shadow:  0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     }
     table{
+		margin-top: 1px;
         width: 100%;
-        border: 1px solid black;
+		height: 250px;
+        border-bottom: 2px dashed #EEF1FF;
         text-align: left;
     }
+	input , select{
+		border:3px solid  #dae1ff;	
+		border-radius: 10px;
+	}
     #title{
         text-align: center;
         font-size: larger;
@@ -34,10 +42,26 @@
 	
     }
 	.btn-css{
-		background-color: blueviolet;
-		border-color: #25396f;
+		background-color:  #dae1ff;
+		border: 0.5px solid D9E5FF;
 	}
-	
+	.tright{
+		text-align: right;
+		width: 20%;
+		padding-right: 20px;
+		color: black;
+	}
+	.stable{
+		border-bottom: 1px solid  #dae1ff;
+	}
+	#input-zone{
+		float: right;
+		margin-top: 30px;
+		margin-bottom: 10px;
+	}
+	#month{
+		border: none;
+	}
 </style>
 <body>
 
@@ -67,16 +91,16 @@
                </div>
                <section class="section">
                    <div id="wrap">
-				        <div id="title">급여대장 등록</div>
+				        <div id="title"><br> 급여대장 등록</div>
 						<form action="" method="post">
-							<div><input type="month" name="salMonth"></div>
+							<div id="input-zone"><input id="month" type="month" name="salMonth" required><input type="submit" value="등록" class="btn-css"></div>
 							<div id="center">
 
 									<table>
 										<tr>
-											<td>부서명</td>
+											<th class="tright">부서명</th>
 											<td>
-												<select name="dept" id="dept">
+												<select name="dept" id="dept" required>
 													<option value="">부서선택</option>
 													<c:forEach items="${departList}" var="d">
 														<option value="${d}">${d}</option>
@@ -85,25 +109,25 @@
 											</td>
 										</tr>
 										<tr>
-											<td>사원명</td>
+											<th class="tright">사원명</th>
 											<td>
-												<select name="empNo" id="emp">
+												<select name="empNo" id="emp" required>
 													<option value="">직원선택</option>
 												</select>
 											</td>
 										</tr>
 										<tr>
-											<td>정산기간</td>
-											<td><input name="startMonth" id="start-month"> ~ <input name="endMonth" id="end-month"></td>
+											<th class="tright">정산기간</th>
+											<td><input name="startMonth" id="start-month" required> ~ <input name="endMonth" id="end-month" required></td>
 										</tr>
 										<tr>
-											<td>지급날짜</td>
-											<td><input type="date" name="payDate"></td>
+											<th class="tright">지급날짜</th>
+											<td><input type="date" name="payDate" required></td>
 										</tr>
 										<tr>
-											<td>급여구분</td>
+											<th class="tright">급여구분</th>
 											<td>
-												<select name="salCate" id="cate">
+												<select name="salCate" id="cate" required>
 													<option value="">선택</option>
 													<option value="1">월급</option>
 													<option value="2">상여</option>
@@ -114,13 +138,13 @@
 									</table>
 									<div id="zone">
 										<div class="back-color">
-											<div id="s-zone">월급</div>
+											<div id="s-zone">기본급/수당내역</div>
 											<table id="s-table">
 												
 											</table>
 										</div>
 										<div class="back-color2">
-											<div id="bonus-zone">상여</div>
+											<div id="bonus-zone">상여내역</div>
 											<table id="b-table">
 												
 											</table>
@@ -130,10 +154,9 @@
 										총급여 : 
 									</div>
 									
-									<div><input type="submit" value="등록" class="btn-css"></div>
-								</form>
+								</div>
+							</form>
 							</div>
-		    		</div>
                </section>
            </div>
            
@@ -145,7 +168,6 @@
 <script>
 	$("select[name=dept]").change(function(){
         var depart = $(this).val();
-        console.log(depart);
         
         $.ajax({
 			url : "/ForWorks/salary/selectEmp",
@@ -195,20 +217,21 @@
 					var total = 0;
 					$('#s-table').empty;
 					console.log(data);
-					$('#s-table').append('<tr><td>기본급</td><td>'+data[0].empMoney+'</td></tr>')
+					$('#s-table').append('<tr><th class="stable">기본급</th><td class="stable">'+data[0].empMoney+'</td></tr>')
 						total += parseInt(data[0].empMoney);
-						$('#s-table').append('<tr><td>수당명</td><td>수당금</td>')
+						$('#s-table').append('<tr><th class="stable">수당명</th><th class="stable">수당금</th>')
 							for(var i = 0; i < data.length;i++){
 								if(data[i].amount == 0 && data[i].cate == " "){
 									data[i].cate = "해당없음";
 								}
-								$('#s-table').append('<tr><td>'+data[i].cate+'</td><td>'+data[i].amount+'</td></tr>');
+								$('#s-table').append('<tr><td class="stable">'+data[i].cate+'</td><td class="stable">'+data[i].amount+'</td></tr>');
 								total += parseInt(data[i].amount);
 							}
-						$('#s-table').append('<tr><td>초과수당</td><td>'+data[0].addOverTime+"(분)"+data[0].addCalc+'</td></tr>')
+						$('#s-table').append('<tr><td>초과수당</td><td>'+data[0].addOverTime+"(분)"+data[0].addCalc+"(원)"+'</td></tr>')
 						total += parseInt(data[0].addCalc);
 
 						$('#total').append('<input type="number" value="'+total+'">'+"원");
+						$('#submit').append('<input type="submit" value="등록" class="btn-css">');
 				},
 				error : function(){
 					alert("실패");
@@ -232,12 +255,11 @@
 					endMonth : endMonth 
 				},
 				success : function(data){
-					alert("되나");
-					console.log(data[0]);
 					/*$('#b-table').append('<tr><td>상여제목</td><td>상여금</td></tr>')*/
 					for(var i = 0; i < data.length;i++){
 						$('#b-table').append('<tr><td>'+data[i].title+'</td><td>'+data[i].payment+'</td></tr>');
 					}
+					$('#submit').append('<input type="submit" value="등록" class="btn-css">');
 				},
 				error : function(){
 					alert("실패");
@@ -253,7 +275,6 @@
     $(document).ready(function(){
         var now = new Date();
         var com_year = now.getFullYear();
-        console.log("com_year" + com_year);
         $("#year").append("<option value=''>연도</option>");
         for(var i = (com_year); i >= 2000 ; i--){
             $("#year").append("<option value='"+i+"'>"+i+"년"+"</option>");

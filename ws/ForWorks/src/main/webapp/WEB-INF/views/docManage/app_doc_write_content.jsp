@@ -173,15 +173,15 @@
       type: "POST",
       data : {adocNo : adocNo},
       success : function(data){
-        var no = data.adocNo;
+        var no = data[0].adocNo;
         document.getElementById("adocNo").value = no;
-        var name = data.adocName;
+        var name = data[0].adocName;
         document.getElementById("title").value = name;
-        var draftDate = data.draftDate;
+        var draftDate = data[0].draftDate;
         console.log(draftDate);
         $("#draftDate").text(draftDate);
         //document.getElementById("draftDate").textContent = draftDate;
-        var approveMember = data.approveMember;
+        var approveMember = data[0].approveMember;
         document.getElementById("draftDate").innerText = approveMember;
       },
       error : function(){

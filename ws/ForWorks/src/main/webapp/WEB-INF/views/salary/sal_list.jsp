@@ -7,13 +7,14 @@
 </head>
 <style>
    #wrap{
-        width: 60vw;
+        width: 70vw;
         height: 60vh;
+        border-radius: 18px;
+        box-shadow:  0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     }
     #center{
-        width: 60vw;
+        width: 70vw;
         height: 60vh;
-        border: 1px solid black;/*확인용*/
         display: grid;
         grid-template-columns: 2fr 4fr 4fr 4fr 4fr 6fr 2fr;
         grid-template-rows: repeat(11,30px);
@@ -59,6 +60,9 @@
         color: #7D6CFF;
         font-weight: bolder;
     }
+    .app{
+        vertical-align: bottom;
+    }
 </style>
 <body>
 
@@ -87,27 +91,27 @@
                    </div>
                </div>
                <section class="section">
-                   <div id="wrap">
-				        <div id="serarch-zone">
-				                  <input type="month" name="salMonth" id="salMonth">
-                                  <select name="dept" id="dept" >
-                                        <option value="">부서선택</option>
-                                        <c:forEach items="${departList}" var="d">
-                                            <option value="${d}">${d}</option>
-                                        </c:forEach>
-                                  </select>
-                                  <button onclick="search()">조회</button>
-                                  <div id="check-btn">
-                                      <button onclick="status()">+명세서공개</button>
-                                  </div>
-				        </div>
+                   <div id="serarch-zone">
+                       <input type="month" name="salMonth" id="salMonth">
+                       <select name="dept" id="dept" >
+                           <option value="">부서선택</option>
+                           <c:forEach items="${departList}" var="d">
+                               <option value="${d}">${d}</option>
+                            </c:forEach>
+                        </select>
+                        <button onclick="search()">조회</button>
+                        <div id="check-btn">
+                            <button onclick="status()">+명세서공개</button>
+                        </div>
+                    </div>
+                    <div id="wrap">
 				        <div id="center">
-				            <div class="div-top">체크</div>
-				            <div class="div-top">급여구분</div>
+				            <div class="div-top">□</div>
                             <div class="div-top">부서명</div>
                             <div class="div-top">사원명</div>
-                            <div class="div-top">공개여부</div>
+				            <div class="div-top">급여구분</div>
                             <div class="div-top">지급일</div>
+                            <div class="div-top">공개여부</div>
                             <div class="div-top">보기</div>
 				        </div>
 				        
