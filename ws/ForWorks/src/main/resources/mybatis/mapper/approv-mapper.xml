@@ -197,7 +197,7 @@
 		VALUES
 		(
 			SEQ_DOCFILE_NO.nextval,
-			#{adocNo},
+			SEQ_APPROVEDOCUMENT_NO.CURRVAL,
 			#{fileName},
 			#{changeFileName}
 		)	
@@ -533,6 +533,18 @@
 		DOCFORM
 		WHERE
 		FORM_NO = #{formNo}
+	</select>
+	
+	<select id="selectDocFile" resultType="DocFileVo">
+		SELECT
+			DOCFILE_NO,
+			ADOC_NO,
+			DOCFILE_ORIGIN,
+			DOCFILE_EDIT
+		FROM
+		DOCFILE
+		WHERE
+		ADOC_NO = #{adocNo}
 	</select>
 	
 </mapper>

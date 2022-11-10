@@ -10,6 +10,7 @@ import com.kh.forworks.PageVo;
 import com.kh.forworks.approv.dao.ApprovDao;
 import com.kh.forworks.approv.vo.ApprovDocumentVo;
 import com.kh.forworks.approv.vo.DocApprovVo;
+import com.kh.forworks.approv.vo.DocFileVo;
 import com.kh.forworks.approv.vo.DocFormVo;
 import com.kh.forworks.approv.vo.DocSignVo;
 import com.kh.forworks.member.vo.MemberVo;
@@ -67,7 +68,6 @@ public class ApprovServiceImpl implements ApprovService {
 		
 		
 		result = result*result1;
-		System.out.println(vo.getDocFile());
 		if(vo.getDocFile().getSize()!=0) {
 			result = result*dao.insertDocFile(sst, vo);
 		}
@@ -253,6 +253,12 @@ public class ApprovServiceImpl implements ApprovService {
 	@Override
 	public String selectFormContentOne(String formNo) {
 		return dao.selectFormContentOne(sst, formNo);
+	}
+
+	//문서 파일 받기
+	@Override
+	public DocFileVo selectDocFile(String adocNo) {
+		return dao.selectDocFile(sst, adocNo);
 	}
 
 
