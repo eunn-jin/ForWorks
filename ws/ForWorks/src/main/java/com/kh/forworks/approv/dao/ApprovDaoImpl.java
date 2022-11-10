@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.forworks.PageVo;
 import com.kh.forworks.approv.vo.ApprovDocumentVo;
 import com.kh.forworks.approv.vo.DocApprovVo;
+import com.kh.forworks.approv.vo.DocFileVo;
 import com.kh.forworks.approv.vo.DocFormVo;
 import com.kh.forworks.approv.vo.DocSignVo;
 import com.kh.forworks.member.vo.MemberVo;
@@ -250,6 +251,12 @@ public class ApprovDaoImpl implements ApprovDao {
 	@Override
 	public String selectFormContentOne(SqlSessionTemplate sst, String formNo) {
 		return sst.selectOne("approvMapper.selectFormContentOne", formNo);
+	}
+	
+	//문서파일받아오기
+	@Override
+	public DocFileVo selectDocFile(SqlSessionTemplate sst, String adocNo) {
+		return sst.selectOne("approvMapper.selectDocFile", adocNo);
 	}
 	
 }

@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import com.kh.forworks.PageVo;
 import com.kh.forworks.approv.vo.ApprovDocumentVo;
 import com.kh.forworks.approv.vo.DocApprovVo;
+import com.kh.forworks.approv.vo.DocFileVo;
 import com.kh.forworks.approv.vo.DocFormVo;
 import com.kh.forworks.approv.vo.DocSignVo;
 import com.kh.forworks.member.vo.MemberVo;
@@ -129,5 +130,8 @@ public interface ApprovDao {
 
 	//미리보기용 양식내용
 	String selectFormContentOne(SqlSessionTemplate sst, String formNo);
+
+	//문서 파일 받아오기
+	DocFileVo selectDocFile(SqlSessionTemplate sst, String adocNo);
 
 }

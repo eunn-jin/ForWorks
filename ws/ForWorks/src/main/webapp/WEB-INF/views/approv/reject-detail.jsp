@@ -233,6 +233,9 @@
 					<form action="${root}/approv/remove/${approvDoc.adocNo}" method="post">
                     <div class="btn-area">
                         <button type="button" class="approv-btn" onclick="location.href='${root}/approv/main';">목록보기</button>
+                        <c:if test="${docfile !empty}">
+                        <button type="button" class="approv-btn file-btn" onclick="location.href='${root}/download/${approvDoc.adocNo}';">첨부파일받기</button>
+                        </c:if>
                         <div class="approv-btn-area">
                        		<c:if test="${loginMember.empNo eq approvDoc.empNo}">
                        			<button type="button" class="approv-btn" onclick="location.href='${root}/approv/edit/${approvDoc.adocNo}';">
