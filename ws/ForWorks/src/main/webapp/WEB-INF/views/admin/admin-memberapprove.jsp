@@ -101,28 +101,6 @@
                               </td>
                             </tr>
                           </c:forEach>
-                          	
-                            <tr data-bs-toggle="modal" data-bs-target="#modalMemberEdit">
-                              <td>1</td>
-                              <td>Graiden</td>
-                              <td>076 4820 8838</td>
-                              <td>076 4820 8838</td>
-                              <td>
-                                <button class="btn btn-sm btn-success">추가 정보 입력</button>
-                                <button class="btn btn-sm btn-secondary">거절</button>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>2</td>
-                              <td>Graiden</td>
-                              <td>0500 527693</td>
-                              <td>0500 527693</td>
-                              <td>
-                                <button class="btn btn-sm btn-success">추가 정보 입력</button>
-                                <button class="btn btn-sm btn-secondary">거절</button>
-                              </td>
-                            </tr>
-                            
                           </tbody>
                         </table>
                       </div>

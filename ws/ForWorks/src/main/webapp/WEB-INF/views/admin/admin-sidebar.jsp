@@ -61,22 +61,6 @@
     </div>
     <div class="sidebar-menu">
       <ul class="menu" style="margin-top: 0; padding-left: 20px">
-      	<c:if test="${chiefAdmin != null}">
-	        <li class="sidebar-item has-sub">
-	          <a href="#" class="sidebar-link">
-	            <i class="bi bi-house-door-fill"></i>
-	            <span>기본 설정</span>
-	          </a>
-	          <ul class="submenu active pl-15">
-	            <%-- <li class="submenu-item">
-	              <a href="${root}/foradmin/main">회사 정보 설정 ? </a>
-	            </li> --%>
-	            <li class="submenu-item">
-	              <a href="${root}/foradmin/pos">직무 설정</a>
-	            </li>
-	          </ul>
-	        </li>
-      	</c:if>
         <li class="sidebar-item has-sub">
           <a href="#" class="sidebar-link">
             <i class="bi bi-person-lines-fill"></i>
