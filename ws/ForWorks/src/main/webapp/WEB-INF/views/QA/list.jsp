@@ -6,7 +6,7 @@
 	<title>설문조사</title>
 </head>
 <body>
-
+    <%@ include file="/WEB-INF/views/common/toastify.jsp" %>
 <div id="app">
 
 	<%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
