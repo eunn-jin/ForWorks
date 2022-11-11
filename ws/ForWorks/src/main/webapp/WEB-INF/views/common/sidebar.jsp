@@ -100,11 +100,11 @@
                 <li class="sidebar-item has-sub">
                     <a href="#" class='sidebar-link'>
                         <i class="bi bi-cloud-lightning-rain"></i>
-                        <span>결제관리</span>
+                        <span>결재관리</span>
                     </a>
                     <ul class="submenu" id="doc-part">
                         <li class="submenu-item" id="doc-list">
-                            <a href="${root}/approv/main">결제메인</a>
+                            <a href="${root}/approv/main">결재메인</a>
                         </li>
                         <li class="submenu-item" id="doc-list">
                             <a href="${root}/approv/create">문서작성</a>
