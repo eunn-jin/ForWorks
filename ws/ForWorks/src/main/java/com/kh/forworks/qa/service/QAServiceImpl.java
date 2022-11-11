@@ -1,5 +1,6 @@
 package com.kh.forworks.qa.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -161,32 +162,33 @@ public class QAServiceImpl implements QAService{
 
 	//설문 작성하기
 	@Override
-	public int insertUserQA(QAParticipationVo vo, QACategoryVo qacg, QAParticipationVo checkpt, HashMap<String, String> map) {
-	int[] result = new int[4];
+	public int insertUserQA(QAAnswerVo awvo, QAParticipationVo checkpt, HashMap<String, String> map) {
+		int[] result = new int[2];
 		
-		//설문 득표수 ++ 필요한것 :: 설문번호 설문항목번호 == qacg
-		//설문 득표수 -- 필요한것 :: 설문번호 설문항목번호 == 
 		
-		//설문를 참가하지 않은 인원이면
-		if (checkpt.getQacgNo() == null) {
-			//설문내용 저장 
-			result[1]= dao.insertQA(sst,qacg);
-			//설문 참여 등록(참가자 테이블)
-			result[2] =dao.insertUserQa(sst,vo);
+		//설문 항목에대한 답변 등록
+		
+		String[] awgArr =awvo.getQaawContent().split(",");
+		HashMap<String, String> map2 = new HashMap<String, String>();
+		map2.put("pno", checkpt.getQaNo());
+		map2.put("no", checkpt.getEmpNo());
+		int[] num = new int[awgArr.length];
+		
+		for (int i = 0; i < awgArr.length; i++) {
+			num[i]= i+1;
+			System.out.println(awgArr[i]);
+			System.out.println(num[i]);
+			String n = String.valueOf(num[i]);
+			map.put("num",n);
+			map.put("answer",awgArr[i]);
 			
-			result[0] = result[1]*result[2];
-		}else {
-			//설문를 참여한 경우
-			
-			//설문내용 수정
-			result[1]=dao.updateQA(sst,qacg);
-			
-			//설문 내용 변경 (데이터:: )
-			
-			result[0] = result[1]*result[2]*result[3];
+			result[0] = dao.insertUserQA(sst, map);
 		}
+		result[1] = dao.updateSt(sst,map2);
+		System.out.println(result[0]);
+		System.out.println(result[1]);
 		
-		return result[0];
+		return result[0]*result[1];
 	}
 	
 	//로그인 사원이 대상자 인지 확인
@@ -261,6 +263,32 @@ public class QAServiceImpl implements QAService{
 	@Override
 	public int selectNum(String pno) {
 		return dao.selectNum(sst, pno);
+	}
+
+	//답변수정
+	@Override
+	public int editAw(QAAnswerVo awvo, String no) {
+		
+		int[] result = new int[2];
+		HashMap<String, String> map = new HashMap<String, String>();
+		
+		String[] awgArr =awvo.getQaawContent().split(",");
+		int[] num = new int[awgArr.length];
+		List<QAAnswerVo> awlist =  new ArrayList<QAAnswerVo>();
+		for (int i = 0; i < awgArr.length; i++) {
+			num[i]= i+1;
+			System.out.println(awgArr[i]);
+			System.out.println(num[i]);
+			String n = String.valueOf(num[i]);
+			map.put("num",n);
+			map.put("answer",awgArr[i]);
+			map.put("pno", awvo.getQaNo());
+			map.put("no", no);
+			result[0] = dao.editAw(sst, map );
+			result[1] = dao.updateSt2(sst,map);
+		}
+		
+		return result[0]*result[1];
 	}
 
 

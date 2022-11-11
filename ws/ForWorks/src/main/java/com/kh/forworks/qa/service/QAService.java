@@ -49,8 +49,8 @@ public interface QAService {
 	int qaDelete(int pno);
 	
 	//설문지 작성
-	int insertUserQA(QAParticipationVo vo, QACategoryVo qacg, QAParticipationVo checkpt, HashMap<String, String> map);
-		
+	//int insertUserQA(QAParticipationVo vo, QACategoryVo qacg, QAParticipationVo checkpt, HashMap<String, String> map);
+	int insertUserQA(QAAnswerVo awvo, QAParticipationVo checkpt, HashMap<String, String> map);		
 	//로그인 사원 대상자인지 확인
 	int check(HashMap<String, String> map);
 	
@@ -71,6 +71,11 @@ public interface QAService {
 	
 	//설문 참가자수 가져오기
 	int selectNum(String pno);
+	
+	//답변 수정
+	int editAw(QAAnswerVo awvo, String no);
+
+	
 	
 	
 
