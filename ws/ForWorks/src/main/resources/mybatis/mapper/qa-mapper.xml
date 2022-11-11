@@ -249,7 +249,7 @@
 		JOIN EMPLOYEE E ON  E.EMP_NO = QW.EMP_NO
 		JOIN DEPARTMENT D ON D.DEPT_NO = E.DEPT_NO
 		WHERE QW.QA_NO=#{pno}
-        ORDER BY QW.QAAW_NO DESC
+        ORDER BY QW.QACG_NO, QW.EMP_NO
 	</select>
 	
 	<!-- //설문 참가자수 가져오기 -->
@@ -272,6 +272,13 @@
 		
 	</select>
 	
+	<!-- 설문 참여하였는지 확인 -->
+	<select id="checkVote" resultType="com.kh.forworks.qa.vo.QAParticipationVo">
+		SELECT *
+		FROM QA_PARTICIPATION
+		WHERE EMP_NO = #{no}
+		AND QA_NO = #{pno}		
+	</select>
 	<!-- 참여대상의 답변내용 가져오기 -->
 	<select id="checkAnswer" resultType="com.kh.forworks.qa.vo.QAAnswerVo">	
 		SELECT 
@@ -288,7 +295,58 @@
         AND QP.EMP_NO=#{no}
         AND QP.QA_NO= #{pno}
 		AND QP.QAPT_STATUS = 'Y'
-        ORDER BY Q.QAAW_NO		
+        ORDER BY Q.QACG_NO		
 	</select>
+	
+	<!-- 답변내용 등록 -->
+	<insert id="insertUserQa">
+	INSERT INTO QA_ANSWER
+	VALUES (SEQ_QA_ANSWER_QAAWNO.NEXTVAL, #{pno}, #{num}, #{no},#{answer})
+	</insert>
+	
+	<!-- 참가자 명단 상태변경 -->
+	<update id="updateSt">
+		UPDATE QA_PARTICIPATION SET
+		
+		QAPT_DATE = SYSDATE
+		,QAPT_EDIT = SYSDATE
+		,QAPT_STATUS = 'Y'
+		WHERE QAPT_STATUS = 'N'
+		AND QA_NO = #{pno}
+		AND EMP_NO =#{no}
+	</update>
+	
+	<!-- 답변내용 수정 -->
+	<update id="editAw">
+		UPDATE QA_ANSWER SET 
+		QAAW_CONTENT = #{answer}
+		WHERE QA_NO = #{pno}
+		AND QACG_NO = #{num}
+		AND EMP_NO = #{no}
+	</update>
+	
+	<update id="updateSt2">
+		UPDATE QA_PARTICIPATION SET
+		QAPT_EDIT = SYSDATE
+		WHERE QAPT_STATUS = 'Y'
+		AND QA_NO = #{pno}
+		AND EMP_NO =#{no}		
+	</update>
+	
+	<!-- 설문 종료 -->
+	<update id="end">
+		UPDATE QA SET 
+		QA_STATUS = 'E'
+		WHERE QA_NO = #{pno}
+		AND QA_STATUS = 'I'		
+	</update>
+	
+	<!-- 설문 삭제 -->
+	<update id="delete">
+		UPDATE QA SET 
+		QA_STATUS = 'D'
+		WHERE QA_NO = #{pno}
+		AND QA_STATUS = 'I'		
+	</update>
 	
 </mapper>
