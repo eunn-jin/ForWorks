@@ -50,34 +50,6 @@ public class AdminController {
 		}
 	}
 	
-	//회사정보 설정
-	@GetMapping("main")
-	public String main() {
-		return "admin/admin-main";
-	}
-	
-	//직무,직급 설정
-	@GetMapping("pos")
-	public String pos(Model model) {
-		List<CorpInfoVo> deptList = adminService.selectDeptList();
-		List<CorpInfoVo> posList = adminService.selectPosList();
-		
-		model.addAttribute("posList", posList);
-		model.addAttribute("deptList", deptList);
-		
-		return "admin/admin-position";
-	}
-	
-	//직무 수정
-	@PostMapping("deptEdit")
-	public String deptEdit(AdminVo dept) {
-		System.out.println(dept);
-		
-		int result = adminService.updateDepartment(dept);
-		
-		return "redirect:/foradmin/pos";
-	}
-	
 	//구성원 승인
 	@GetMapping("approval")
 	public String memberApply(Model model) {

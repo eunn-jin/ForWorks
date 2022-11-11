@@ -98,9 +98,4 @@ public class AdminDaoImpl implements AdminDao {
 		return sst.update("adminMapper.updateMemberStatus", vo);
 	}
 
-	@Override
-	public int updateDepartment(SqlSessionTemplate sst, AdminVo list) {
-		return sst.update("adminMapper.updateDepartment", list);
-	}
-
 }

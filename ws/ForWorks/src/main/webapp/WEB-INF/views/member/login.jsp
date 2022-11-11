@@ -75,7 +75,7 @@
         <div class="panel">
           <div class="content">
             <h3 style="color: #7d6cff">그룹에 참여해보세요!</h3>
-            <p>관리자 승인 필요!! Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            <p>올인원 업무플랫폼 FOR-WORKS와 함께 새로운 회사 생활을 경험해 보세요.</p>
             <a href="/ForWorks/join" class="btn login-btn transparent" id="signup-btn">회원가입</a>
           </div>
           <img src="${root}/resources/img/member-imgs/undraw_remotely_-2-j6y.svg" class="image" alt="" />
@@ -104,7 +104,7 @@
                 <label for="findIdEmail">이메일</label>
               </div>
               <button class="w-100 mb-2 btn btn-lg rounded-4 btn-secondary" type="button" onclick="findId();">아이디 찾기</button>
-              <hr class="my-4" />
+	          <hr id="findid-hr" class="my-4" style="display:none"/>
               <strong class="text-muted" id="foundId">
                 <div id="findid-spinner" class="spinner-border spinner-border-sm text-primary" style="display: none" role="status">
                   <span class="visually-hidden">Loading...</span>
@@ -130,15 +130,15 @@
             <form>
               <div class="form-floating mb-3">
                 <input type="text" class="form-control rounded-4" id="findPwdId" placeholder="아이디"/>
-                <label for="findIdName">아이디</label>
+                <label for="findPwdName">아이디</label>
               </div>
               <div class="form-floating mb-3">
                 <input type="text" class="form-control rounded-4" id="findPwdName" placeholder="성명"/>
-                <label for="findIdName">성명</label>
+                <label for="findPwdName">성명</label>
               </div>
               <div class="form-floating mb-3">
                 <input type="email" class="form-control rounded-4" id="findPwdEmail" placeholder="회원가입시 입력한 이메일"/>
-                <label for="findIdEmail">이메일주소</label>
+                <label for="findPwdEmail">이메일주소</label>
                 <p style="margin-left: 5px">
                   <small class="text-muted me-1"> * 회원가입시 입력한 이메일주소</small>
                 </p>
@@ -166,7 +166,8 @@
         const empName = document.querySelector("#findIdName").value;
         const empEmail = document.querySelector("#findIdEmail").value;
         const foundId = document.querySelector("#foundId");
-
+	
+        $("#findid-hr").css("display", "block");
         $("#findid-spinner").show();
 
         $.ajax({

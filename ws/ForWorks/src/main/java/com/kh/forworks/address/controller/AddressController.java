@@ -144,7 +144,7 @@ public class AddressController {
 		String empNo = ((MemberVo)session.getAttribute("loginMember")).getEmpNo();
 		vo.setEmpNo(empNo);
 		
-		int result = addressService.ExMemberInsert(vo);
+		addressService.ExMemberInsert(vo);
 		
 		return "redirect:/address/external/1";
 	}
@@ -154,7 +154,7 @@ public class AddressController {
 		String empNo = ((MemberVo)session.getAttribute("loginMember")).getEmpNo();
 		vo.setEmpNo(empNo);
 		
-		int result = addressService.ExMemberEdit(vo);
+		addressService.ExMemberEdit(vo);
 		
 		return "redirect:/address/external/1";
 	}
