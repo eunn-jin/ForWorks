@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page session="false" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+   
 <!DOCTYPE html>
 <html>
 <head>
@@ -81,7 +82,7 @@
     width: 230px;
     height: 48px;
     padding: 0 42px 0 16px;
-    background: url(img/calendar.svg) no-repeat right 21px center / 16px auto;
+    background: <img src="/resources/img/calendar.svg">  no-repeat right 21px center / 16px auto;
     border:1px solid #6F5CFA;
 
     }
@@ -155,11 +156,12 @@
 
 
 <body>
+	<form action=/WEB-INF/views/plan/testing.jsp method="post">
 	<div class="pj_popup">
 		<div class="popup_name">일정등록</div>
 		<div class="pj_c_block">
 			<div class="pj_top">일정 등록</div>
-			<div class="pj_title"><input type="text" name="pname" placeholder="일정 제목을 입력하세요." style="border: none; background: transparent;"></div>
+			<div class="pj_title"><input type="text" name="pname" placeholder="일정 제목을 입력하세요." style="border: none; background: transparent;" autofocus></div>
 				<input type="text" class="pj_name" name="pcontent" placeholder="내용 입력">
 
 			<div class="pj_fday_eday">
@@ -173,16 +175,16 @@
 					<input type="date" name="pend" data-placeholder="종료일을 선택해주세요." required>
 				</div>
 			</div>
-			<div class="pj_submit">
+			<div class="pj_submit" onclick="click_ok();">
 				<a href="">등록</a>
 			<div class="pj_close">
 				<a href="">취소</a>
 			</div>
 		</div>
 	</div>
-</div>	
+</div>
+</form>	
 </body>
-<script>
 <script>
 
 $().ready(function() {
@@ -211,5 +213,41 @@ $(window).load(function() {
 	//resize
 	window.resizeTo( strWidth, strHeight );
 });
+
+	
+	$.fn.serializeObject = function(){
+	    var o = {};
+	    var a = this.serializeArray();
+	    $.each(a, function() {
+	    	var name = $.trim(this.name),
+	    		value = $.trim(this.value);
+	    	
+	        if (o[name]) {
+	            if (!o[name].push) {
+	                o[name] = [o[name]];
+	            }
+	            o[name].push(value || '');
+	        } else {
+	            o[name] = value || '';
+	        }
+	    });
+	    return o;
+	};
+	function click_ok(){
+
+		var scheduleData = JSON.stringify($('form#scheduleData').serializeObject());
+		
+		$.ajax({
+			data : scheduleData,
+			url : "addSchedule",
+			type : "POST",
+			dataType : "json",
+			contentType : "application/json; charset=UTF-8",
+			success : function(data) {
+				opener.parent.location.reload();
+				window.close();
+			}
+		});
+	};	
 </script>
 </html>
