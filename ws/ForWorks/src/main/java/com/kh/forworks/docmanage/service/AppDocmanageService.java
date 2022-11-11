@@ -6,6 +6,7 @@ import java.util.List;
 import com.kh.forworks.PageVo;
 import com.kh.forworks.approv.vo.ApprovDocumentVo;
 import com.kh.forworks.docmanage.vo.DocControlVo;
+import com.kh.forworks.docmanage.vo.SignVo;
 import com.kh.forworks.member.vo.MemberVo;
 
 public interface AppDocmanageService {
@@ -14,7 +15,7 @@ public interface AppDocmanageService {
 	//해당직원의 전자결재문서 가져오기
 	List<ApprovDocumentVo> selectDocByEmp(HashMap map);
 	//문서하나불러오기--하나만 못불러옴
-	List<ApprovDocumentVo> selectOneDoc(String adocNo);
+	List<DocControlVo> selectOneDoc(String adocNo);
 	//결재문서관리등록
 	int insertDocCont(DocControlVo vo);
 	//해당직원이 작성한 총갯수
@@ -30,8 +31,14 @@ public interface AppDocmanageService {
 	//결재문서리스트디테일(화면)
 	DocControlVo selectAdocDetail(String no);
 	//싸인받아오기
-	String selectSign(String adocNo);
-	//부서,직급 받아오기
-	MemberVo selectMemInfo(String empNo);
+	List<SignVo> selectSign(String adocNo);
+	//부서,직급,싸인 받아오기
+	SignVo selectMemInfo(String empNo);
+	//협조자 이름받기
+	List<SignVo> selectCooList(String string);
+	//파일받기
+	List<ApprovDocumentVo> selectFile(String adocNo);
+	//contdoc받기
+	List<DocControlVo> selectOneContDoc(String no);
 
 }

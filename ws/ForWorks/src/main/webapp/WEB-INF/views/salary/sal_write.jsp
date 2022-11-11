@@ -100,7 +100,7 @@
 										<tr>
 											<th class="tright">부서명</th>
 											<td>
-												<select name="dept" id="dept" required>
+												<select name="dept" id="dept" required >
 													<option value="">부서선택</option>
 													<c:forEach items="${departList}" var="d">
 														<option value="${d}">${d}</option>
@@ -112,7 +112,7 @@
 											<th class="tright">사원명</th>
 											<td>
 												<select name="empNo" id="emp" required>
-													<option value="">직원선택</option>
+													<option value="" disabled selected>직원선택</option>
 												</select>
 											</td>
 										</tr>
@@ -151,7 +151,7 @@
 										</div>
 									</div>	
 									<div style="float:right;" id="total">
-										총급여 : 
+										총급여 : <span id="totalspan"></span>원
 									</div>
 									
 								</div>
@@ -168,7 +168,8 @@
 <script>
 	$("select[name=dept]").change(function(){
         var depart = $(this).val();
-        
+        $('select#emp option').remove();
+		$("select#emp").append("<option value='option'>직원선택</option>");
         $.ajax({
 			url : "/ForWorks/salary/selectEmp",
 			type : "POST",
@@ -190,6 +191,9 @@
 </script>
 <!--급여구분 선택 시 div-->
 <script>
+
+	let isCate01Empty = true;
+	let isCate02Empty  = true;
 	$("#cate").change(function(){
 		var cate = $(this).val();
 		var szone = document.querySelector(".back-color");
@@ -201,42 +205,49 @@
 		var startMonth = document.getElementById("start-month").value;
 		var endMonth = document.getElementById("end-month").value;
 
-		if(cate == 1){
+		if(cate == 1 ){
 			bzone.style.display = 'none';
 			szone.style.display = 'block';
-
-			$.ajax({
-				url : "/ForWorks/salary/empSal",
-				type : "POST",
-				data :{ 
-					empNo : empNo,
-					startMonth : startMonth,
-					endMonth : endMonth
-				},
-				success : function(data){
-					var total = 0;
-					$('#s-table').empty;
-					console.log(data);
-					$('#s-table').append('<tr><th class="stable">기본급</th><td class="stable">'+data[0].empMoney+'</td></tr>')
-						total += parseInt(data[0].empMoney);
-						$('#s-table').append('<tr><th class="stable">수당명</th><th class="stable">수당금</th>')
-							for(var i = 0; i < data.length;i++){
-								if(data[i].amount == 0 && data[i].cate == " "){
-									data[i].cate = "해당없음";
-								}
-								$('#s-table').append('<tr><td class="stable">'+data[i].cate+'</td><td class="stable">'+data[i].amount+'</td></tr>');
-								total += parseInt(data[i].amount);
-							}
-						$('#s-table').append('<tr><td>초과수당</td><td>'+data[0].addOverTime+"(분)"+data[0].addCalc+"(원)"+'</td></tr>')
-						total += parseInt(data[0].addCalc);
-
-						$('#total').append('<input type="number" value="'+total+'">'+"원");
-						$('#submit').append('<input type="submit" value="등록" class="btn-css">');
-				},
-				error : function(){
-					alert("실패");
-				}
-			})
+			a();
+			function a(){
+				if(isCate01Empty){
+					$.ajax({
+						url : "/ForWorks/salary/empSal",
+						type : "POST",
+						data :{ 
+							empNo : empNo,
+							startMonth : startMonth,
+							endMonth : endMonth
+						},
+						success : function(data){
+							var total = 0;
+							$('#s-table').empty;
+							console.log(data);
+							$('#s-table').append('<tr><th class="stable">기본급</th><td class="stable">'+data[0].empMoney+'</td></tr>')
+								total += parseInt(data[0].empMoney);
+								$('#s-table').append('<tr><th class="stable">수당명</th><th class="stable">수당금</th>')
+									for(var i = 0; i < data.length;i++){
+										if(data[i].amount == 0 && data[i].cate == " "){
+											data[i].cate = "해당없음";
+										}
+										$('#s-table').append('<tr><td class="stable">'+data[i].cate+'</td><td class="stable">'+data[i].amount+'</td></tr>');
+										total += parseInt(data[i].amount);
+									}
+								$('#s-table').append('<tr><td>초과수당</td><td>'+data[0].addOverTime+"(분)"+data[0].addCalc+"(원)"+'</td></tr>')
+								total += parseInt(data[0].addCalc);
+								$('#totalspan').text(total);
+								//$('#totalspan').append('<input type="number" value="'+total+'">'+"원");
+								$('#submit').append('<input type="submit" value="등록" class="btn-css">');
+							
+						},
+						error : function(){
+							alert("실패");
+						}
+					});
+					isCate01Empty = false;
+				};
+			}
+			
 			
 		}
 
@@ -245,29 +256,45 @@
 		if(cate == 2){
 			szone.style.display = 'none';
 			bzone.style.display = 'block';
-
-			$.ajax({
-				url : "/ForWorks/salary/empBonus",
-				type : "POST",
-				data :{ 
-					empNo : empNo,
-					startMonth : startMonth,
-					endMonth : endMonth 
-				},
-				success : function(data){
-					/*$('#b-table').append('<tr><td>상여제목</td><td>상여금</td></tr>')*/
-					for(var i = 0; i < data.length;i++){
-						$('#b-table').append('<tr><td>'+data[i].title+'</td><td>'+data[i].payment+'</td></tr>');
-					}
-					$('#submit').append('<input type="submit" value="등록" class="btn-css">');
-				},
-				error : function(){
-					alert("실패");
+			b();
+			function b(){
+				if(isCate02Empty){		
+					$.ajax({
+						url : "/ForWorks/salary/empBonus",
+						type : "POST",
+						data :{ 
+							empNo : empNo,
+							startMonth : startMonth,
+							endMonth : endMonth 
+						},
+						success : function(data){
+							var total2 = 0;
+							$('#total').remove();
+							for(var i = 0; i < data.length;i++){
+								$('#b-table').append('<tr><td>'+data[i].title+'</td><td>'+data[i].payment+'</td></tr>');
+								total2 += parseInt(data[i].payment);
+							}
+							$('#totalspan').text(total2);
+							$('#submit').append('<input type="submit" value="등록" class="btn-css">');
+						},
+						error : function(){
+							alert("실패");
+						}
+					});
+					isCate02Empty = false;
 				}
-			})
+			}
 		}
 
-		
+		if(cate == 3){
+			szone.style.display = 'block';
+			bzone.style.display = 'block';
+			a();
+			b();
+		}
+
+
+
 	})
 </script>
 <!--연도 selectbox-->

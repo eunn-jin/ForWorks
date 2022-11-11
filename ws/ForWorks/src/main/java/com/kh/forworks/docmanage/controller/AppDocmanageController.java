@@ -3,6 +3,7 @@ package com.kh.forworks.docmanage.controller;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,9 @@ import com.google.gson.Gson;
 import com.kh.forworks.PageVo;
 import com.kh.forworks.Pagination;
 import com.kh.forworks.approv.vo.ApprovDocumentVo;
-import com.kh.forworks.approv.vo.DocSignVo;
 import com.kh.forworks.docmanage.service.AppDocmanageService;
 import com.kh.forworks.docmanage.vo.DocControlVo;
+import com.kh.forworks.docmanage.vo.SignVo;
 import com.kh.forworks.member.vo.MemberVo;
 
 @Controller
@@ -38,54 +39,50 @@ public class AppDocmanageController {
 	
 	@GetMapping("list/{pno}")
 	public String list(@PathVariable int pno,HttpSession session, Model model) {
-//		if((MemberVo)session.getAttribute("loginMember")!=null) {
-//			return "docManage/app_doc_list";			
-//		}else {
-//			session.setAttribute("toastMsg", "로그인이 필요합니다.");
-//			return "redirect:/login";
-//		}
-		String empNo = "1";
-		//페이징처리
-		int totalCount = ads.selectTotalCnt(empNo);
-		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
-		//게시글 가져오기
-		List<DocControlVo> voList = ads.selectContDocList(pv);
+		if((MemberVo)session.getAttribute("loginMember")!=null) {
+			MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
+			//페이징처리
+			int totalCount = ads.selectTotalCnt(loginMember.getEmpNo());
+			PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
+			//게시글 가져오기
+			List<DocControlVo> voList = ads.selectContDocList(pv);
+			
+			System.out.println(voList);
+			
+			model.addAttribute("voList",voList);
+			model.addAttribute("pv",pv);
+			
+			return "docManage/app_doc_list";			
+		}else {
+			session.setAttribute("toastMsg", "로그인이 필요합니다.");
+			return "redirect:/login";
+		}
 		
-		System.out.println(voList);
-		
-		model.addAttribute("voList",voList);
-		model.addAttribute("pv",pv);
-		
-		return "docManage/app_doc_list";
 	}
 	
 	//결재문서등록(화면)
 	@GetMapping("write")
 	public String write(Model model, HttpSession session) {
-//		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
-//		if(loginMember != null) {
-//		//부서 가져오기
-//		List<MemberVo> dept = ads.selectDept();
-//		model.addAttribute("dept",dept);
-//
-//		return "docManage/app_doc_write";
-//		}else {
-//			session.setAttribute("toastMsg", "로그인이 필요합니다.");
-//			return "redirect:/login";
-//		}
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		if(loginMember != null) {
+		//부서 가져오기
 		List<MemberVo> dept = ads.selectDept();
 		model.addAttribute("dept",dept);
 
 		return "docManage/app_doc_write";
+		}else {
+			session.setAttribute("toastMsg", "로그인이 필요합니다.");
+			return "redirect:/login";
+		}
 		
 	}
 	//결재문서 불러오기
 	@PostMapping(value="select",produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public String selectDocByEmp(HttpSession session, String docDate) {
-//		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
-//		String empNo = loginMember.getEmpNo();
-		String empNo  = "1";
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		String empNo = loginMember.getEmpNo();
+		
 		HashMap map = new HashMap();
 		map.put("empNo", empNo);
 		map.put("docDate", docDate);
@@ -99,7 +96,16 @@ public class AppDocmanageController {
 	@ResponseBody
 	public String selectOne(String adocNo) {
 		System.out.println(adocNo);
-		List<ApprovDocumentVo> result = ads.selectOneDoc(adocNo);
+		List<DocControlVo> result = ads.selectOneDoc(adocNo);
+		List<ApprovDocumentVo> file = ads.selectFile(adocNo);
+		if(file != null ) {
+			for( int i = 0 ; i < file.size(); i++) {
+				result.get(i).setFileName(file.get(i).getFileName());
+				result.get(i).setChangeFileName(file.get(i).getChangeFileName());
+				System.out.println(result.get(i).getFileName() + result.get(i).getChangeFileName());
+			}
+		}
+		System.out.println(result.get(0).getApproveMember());
 		System.out.println(result.get(0).getAdocContent());
 		Gson g = new Gson();
 		return g.toJson(result);
@@ -159,16 +165,22 @@ public class AppDocmanageController {
 	//결재문서관리디테일-화면
 	@GetMapping("manDetail/{no}")
 	public String manDetail(@PathVariable String no , Model model) {
-		List<DocControlVo> vo = ads.selectContDetail(no);
-
-//		if(vo.getFileNo() != null) {
-//			DfileVo fv = ads.selectFileDoc(no);
-//			fv.setExt(fv.getOriginName().substring(fv.getOriginName().lastIndexOf('.')));
-//			model.addAttribute("fv",fv);
-//			System.out.println("디테일조회fv " + fv);
-//		}
-		System.out.println(vo);
-		model.addAttribute("vo",vo);
+		System.out.println(no);
+		List<DocControlVo> result = ads.selectOneContDoc(no);
+		List<ApprovDocumentVo> file = ads.selectFile(no);
+		List<DocControlVo> cont = ads.selectContDetail(no);
+		if(file != null ) {
+			for( int i = 0 ; i < file.size(); i++) {
+				result.get(i).setFileName(file.get(i).getFileName());
+				result.get(i).setChangeFileName(file.get(i).getChangeFileName());
+				System.out.println(result.get(i).getFileName() + result.get(i).getChangeFileName());
+			}
+		}
+		System.out.println(result);
+		System.out.println(cont);
+		model.addAttribute("adoc",result);
+		model.addAttribute("cont",cont);
+		
 		return "docManage/app_doc_man_detail";
 	}		
 	//결재문서관리디테일-게시상태수정
@@ -180,12 +192,13 @@ public class AppDocmanageController {
 		int result = ads.updateStatus(vo);
 		System.out.println(result);
 		
-		if(result == 1) {
+		if(result == 0) {
+			session.setAttribute("toastMsg", "다시 시도해주세요.");
+			return "docManage/app_doc_man_detail";
+			
+		}else {
 			session.setAttribute("toastMsg", "게시상태 변경 완료!");
 			return "docManage/app_doc_manage";
-		}else {
-			session.setAttribute("toastMsg", "보존기간을 확인해주세요.");
-			return "docManage/app_doc_man_detail";
 		}
 
 	}
@@ -193,32 +206,44 @@ public class AppDocmanageController {
 	@GetMapping("adocDetail/{no}")
 	public String adocDetail(@PathVariable String no,Model model) {
 		List<DocControlVo> vo = ads.selectContDetail(no);
-		System.out.println(vo);
+		List<DocControlVo> vo2 = ads.selectOneDoc(no);
+		System.out.println("이건가" + vo2);
 		model.addAttribute("vo",vo);
+		model.addAttribute("vo2",vo2);
 		return "docManage/app_doc_detail";
 	}
 	
 	//화면테스트
-	@GetMapping("formtest")
-	public String formtest(Model model) {
-		List<DocControlVo> vo = ads.selectContDetail("42");
-		
-		//싸인받아오기
-		List<DocSignVo> sign = null;
-		for(int i = 0; i < vo.size(); i++) {
-			System.out.println(vo.get(i).getApproveNo());
-			System.out.println(ads.selectSign(vo.get(i).getApproveNo()));
-			
-		}
-		//부서,직급 받아오기
-		MemberVo mem = ads.selectMemInfo(vo.get(0).getEmpNo());
+	@GetMapping("formtest/{no}")
+	public String formtest(Model model, HttpServletRequest req,@PathVariable String no, HttpSession session) {
+		List<DocControlVo> vo = ads.selectContDetail(no);
+		MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
+		String empNo = loginMember.getEmpNo();
+		//문서내용 받아오기
+		List<DocControlVo> one = ads.selectOneDoc(no);
+		System.out.println("이건되나" + one);
+		//싸인+부서+직급받아오기
+		List<SignVo> sign = ads.selectSign(no);
+		System.out.println("싸인,부서,직급" + sign.get(0));
+		//작성자 부서,직급,싸인 받아오기
+		System.out.println(vo.get(0).getEmpNo());
+		SignVo mem = ads.selectMemInfo(empNo);
+		System.out.println("작성자정보" + mem);
+		//협조자 이름받기
+		List<SignVo> coo = ads.selectCooList(no);
+		System.out.println("협조"+coo);
 		
 		System.out.println("vo출" + vo);
-		model.addAttribute("vo",vo);
 		System.out.println("sign출" + sign);
-		model.addAttribute("sign",sign);
-		System.out.println("mem출" + mem);
-		model.addAttribute("mem",mem);
+		System.out.println(mem);
+		
+		req.setAttribute("one", one);
+		req.setAttribute("coo", coo);
+		req.setAttribute("vo", vo);
+		req.setAttribute("mem", mem);
+		req.setAttribute("sign", sign);
+		
+	
 		return "docManage/form_test";
 	}
 	

@@ -20,6 +20,7 @@
         grid-template-rows: repeat(11,30px);
         text-align: center;
         background-color: white;
+      
     }
     .div-top{
         font-size: larger;
@@ -34,6 +35,7 @@
         justify-content: space-around;
     }
     #search-area{
+        width: 70vw;
         margin: 0 auto;
         display: flex;
         justify-content: space-around;
@@ -51,17 +53,20 @@
         float: right;
         height: 30px;
     }
-    #check-btn>button{
+    .bbutton{
         cursor: pointer;
         height: 100%;
-        font-size: large;
-        background-color: white;
-        border: none;
-        color: #7D6CFF;
+        font-size: 20px;
+        background-color:  #dae1ff;
+		border: 0.5px solid #D9E5FF;
         font-weight: bolder;
     }
     .app{
         vertical-align: bottom;
+    }
+    #search-zone{
+        width: 70vw;
+        margin-bottom: 5px;
     }
 </style>
 <body>
@@ -78,7 +83,7 @@
                    <div class="row">
                        <div class="col-12 col-md-6 order-md-1 order-last">
                            <h3>급여대장목록</h3>
-                           <p class="text-subtitle text-muted">The default layout </p>
+                           <p class="text-subtitle text-muted"><br> </p>
                        </div>
                        <div class="col-12 col-md-6 order-md-2 order-first">
                            <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
@@ -91,7 +96,7 @@
                    </div>
                </div>
                <section class="section">
-                   <div id="serarch-zone">
+                   <div id="search-zone">
                        <input type="month" name="salMonth" id="salMonth">
                        <select name="dept" id="dept" >
                            <option value="">부서선택</option>
@@ -99,9 +104,9 @@
                                <option value="${d}">${d}</option>
                             </c:forEach>
                         </select>
-                        <button onclick="search()">조회</button>
+                        <button onclick="search()" >조회</button>
                         <div id="check-btn">
-                            <button onclick="status()">+명세서공개</button>
+                            <button onclick="status()" class="bbutton"><i class="bi bi-check2-square"></i>명세서공개</button>
                         </div>
                     </div>
                     <div id="wrap">
@@ -172,7 +177,7 @@
                     }
                     
                     $("#center").append(
-                        '<div class="app"><input type="checkbox" name="status" value="'+data[i].no+'"></div><div class="app">'+data[i].salCate+'</div><div class="app">'+dept+'</div><div class="app">'+data[i].empName+'</div><div class="app">'+data[i].status+'</div><div class="app">'+data[i].payDate+'</div><div><button onclick="detail('+data[i].no+')">보기</button></div>'
+                        '<div class="app"><input type="checkbox" name="status" value="'+data[i].no+'"></div><div class="app">'+dept+'</div><div class="app">'+data[i].empName+'</div><div class="app">'+data[i].salCate+'</div><div class="app">'+data[i].payDate+'</div><div class="app">'+data[i].status+'</div><div class="app"><button onclick="detail('+data[i].no+')">보기</button></div>'
                     );
                 }
                 

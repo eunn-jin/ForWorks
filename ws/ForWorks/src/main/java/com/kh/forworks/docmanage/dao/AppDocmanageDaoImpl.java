@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.forworks.PageVo;
 import com.kh.forworks.approv.vo.ApprovDocumentVo;
 import com.kh.forworks.docmanage.vo.DocControlVo;
+import com.kh.forworks.docmanage.vo.SignVo;
 import com.kh.forworks.member.vo.MemberVo;
 
 @Repository
@@ -26,7 +27,7 @@ public class AppDocmanageDaoImpl implements AppDocmanageDao{
 	}
 	//문서하나 받아오기
 	@Override
-	public List<ApprovDocumentVo> selectOneDoc(SqlSessionTemplate sst, String adocNo) {
+	public List<DocControlVo> selectOneDoc(SqlSessionTemplate sst, String adocNo) {
 		return sst.selectList("appMapper.selectOneDoc",adocNo);
 	}
 	//결재문서관리등록
@@ -73,14 +74,29 @@ public class AppDocmanageDaoImpl implements AppDocmanageDao{
 	public DocControlVo selectAdocDetail(SqlSessionTemplate sst, String no) {
 		return sst.selectOne("appMapper.selectAdoc",no);
 	}
-	//싸인받아오기
+	//싸인+부서+직급받아오기
 	@Override
-	public String selectSign(SqlSessionTemplate sst, String approvNo) {
-		return sst.selectOne("appMapper.selectSign", approvNo);
+	public List<SignVo> selectSign(SqlSessionTemplate sst, String adocNo) {
+		return sst.selectList("appMapper.selectSign", adocNo);
 	}
-	//부서,직급 받아오기
+	//작성자 부서,직급,싸인 받아오기
 	@Override
-	public MemberVo selectMemInfo(SqlSessionTemplate sst, String empNo) {
+	public SignVo selectMemInfo(SqlSessionTemplate sst, String empNo) {
 		return sst.selectOne("appMapper.selectMemInfo" , empNo);
+	}
+	//협조자 이름받기
+	@Override
+	public List<SignVo> selectCoo(SqlSessionTemplate sst, String adocNo) {
+		return sst.selectList("appMapper.selectCoo", adocNo);
+	}
+	//파일받기
+	@Override
+	public List<ApprovDocumentVo> selectFile(SqlSessionTemplate sst, String adocNo) {
+		return sst.selectList("appMapper.selectFile" , adocNo);
+	}
+	//contdoc받기
+	@Override
+	public List<DocControlVo> selectOneContDoc(SqlSessionTemplate sst, String no) {
+		return sst.selectList("appMapper.selectOneContDoc" , no);
 	}
 }
