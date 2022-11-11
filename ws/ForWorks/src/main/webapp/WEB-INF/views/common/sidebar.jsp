@@ -20,7 +20,7 @@
         <div class="sidebar-header">
             <div class="d-flex justify-content-between">
                 <div class="logo">
-                    <a href="${root}"><span>FOR WORKS</span></a>
+                    <a href="#"><span>FOR WORKS</span></a>
                 </div>
                 <div class="toggler">
                     <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
@@ -102,14 +102,14 @@
                         <i class="bi bi-cloud-lightning-rain"></i>
                         <span>결재관리</span>
                     </a>
-                    <ul class="submenu" id="doc-part">
-                        <li class="submenu-item" id="doc-list">
+                    <ul class="submenu" id="approv-part">
+                        <li class="submenu-item" id="approv-main">
                             <a href="${root}/approv/main">결재메인</a>
                         </li>
-                        <li class="submenu-item" id="doc-list">
+                        <li class="submenu-item" id="approv-write">
                             <a href="${root}/approv/create">문서작성</a>
                         </li>
-                        <li class="submenu-item" id="doc-list">
+                        <li class="submenu-item" id="approv-noelecwrte">
                             <a href="${root}/approv/create/noelec">비전자문서작성</a>
                         </li>
                     </ul>
@@ -120,11 +120,11 @@
                         <i class="bi bi-cloud-lightning-rain"></i>
                         <span>문서양식</span>
                     </a>
-                    <ul class="submenu" id="doc-part">
-                        <li class="submenu-item" id="doc-list">
+                    <ul class="submenu" id="form-part">
+                        <li class="submenu-item" id="form-main">
                             <a href="${root}/approv/form/main/1">양식메인</a>
                         </li>
-                        <li class="submenu-item" id="doc-list">
+                        <li class="submenu-item" id="form-create">
                             <a href="${root}/approv/form/create">양식생성</a>
                         </li>
                     </ul>
@@ -135,11 +135,11 @@
                         <i class="bi bi-cloud-lightning-rain"></i>
                         <span>서명관리</span>
                     </a>
-                    <ul class="submenu" id="doc-part">
-                        <li class="submenu-item" id="doc-list">
+                    <ul class="submenu" id="sign-part">
+                        <li class="submenu-item" id="sign-create">
                             <a href="${root}/approv/sign/create">서명생성</a>
                         </li>
-                        <li class="submenu-item" id="doc-list">
+                        <li class="submenu-item" id="sign-edit">
                             <a href="${root}/approv/sign/edit">서명수정</a>
                         </li>
                     </ul>
