@@ -124,7 +124,7 @@ public class AttendanceController {
 		if(result == 1) {
 			return "redirect:/att/day";			
 		} else {
-			return "errorPage";
+			return "error/errorPage";
 		}
 	}
 	
@@ -142,7 +142,7 @@ public class AttendanceController {
 		if(result == 1) {
 			return "redirect:/att/day";			
 		} else {
-			return "errorPage";
+			return "error/errorPage";
 		}
 	}
 	
