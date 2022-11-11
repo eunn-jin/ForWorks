@@ -14,35 +14,61 @@
 <!-- <link rel="stylesheet" href="resources/vendors/bootstrap-icons/bootstrap-icons.css"> -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 <link rel="stylesheet" href="${root}/resources/css/sidebar.css">
-	
+
+<style>
+    @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Passion+One:wght@400;700&display=swap");
+	.logo h3 {
+	    font-family: "Passion One", sans-serif;
+	    color: #7d6cff;
+	    font-size: 2.2rem;
+  	}
+</style>
+
 <div id="sidebar" class="active">
     <div class="sidebar-wrapper active">
-        <div class="sidebar-header">
+         <div class="sidebar-header">
             <div class="d-flex justify-content-between">
                 <div class="logo">
-                    <a href="${root}"><span>FOR WORKS</span></a>
+                    <h3>FOR-WORKS</h3>
                 </div>
-                <div class="toggler">
-                    <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
-                </div>
-            </div>
-            <div class="d-flex justify-content-between">
-                <div class="profile">
-                    <a href="#">
-	                    <img src="${root}/resources/img/imgTest.jpg">                
-	                	<span class="user-name"> ${loginMember.empName} </span>
-                    </a>
+                <div class="toggler pt-1">
+                    <a href="#" class="sidebar-hide" style="color: #7d6cff;"><i class="bi bi-x"></i></a>
                 </div>
             </div>
+	            <div class="profile d-flex p-1">
+	                <div class="avatar avatar-xl" style="border-radius: 10%">
+	               <c:choose>
+	                <c:when test="${not empty loginMember.empProfile}">
+	                    <img style="border-radius: 30%; width: 65px; height: 65px; object-fit: cover" src="${root}/resources/upload/profile/${loginMember.empProfile}" alt="이미지" />
+	                </c:when>
+	                <c:otherwise>
+	              		<img style="width: 60px; height: 60px;" src="${root}/resources/img/member-imgs/user.png" alt="profile" />
+	                </c:otherwise>
+	               </c:choose>
+	             </div>
+	             <div class="d-flex" style="flex-direction: column; padding-left: 10px; padding-top: 8px">
+		            <a href="${root}/mypage">
+		              <span class="user-name" style="color:#7D6CFF">${loginMember.empName}</span>
+		            </a>
+	              <p class="mb-0 text-sm text-gray-600" style="padding-left: 1px;">${loginMember.deptName} ${loginMember.posName}</p>
+	             </div>          
+	            </div>
         </div>
         <div class="sidebar-menu">
-            <ul class="menu">
+            <ul class="menu mt-1" style="padding-left: 25px">
 
-                <li class="sidebar-title">Menu</li>
+                <li class="sidebar-title mt-0">Menu</li>
+                
+                <li class="sidebar-item" id="address">
+                    <a href="${root}/address/1" class='sidebar-link'>
+                        <i class="bi bi-person-square"></i>
+                        <span>주소록</span>
+                    </a>
+                </li>
 
                 <li class="sidebar-item has-sub">
                     <a href="#" class='sidebar-link'>
-                        <i class="bi bi-cloud-lightning-rain"></i>
+                        <i class="bi bi-calendar-check"></i>
                         <span>근태관리</span>
                     </a>
                     <ul class="submenu" id="att-part">
@@ -65,7 +91,7 @@
                 
                 <li class="sidebar-item has-sub">
                     <a href="#" class='sidebar-link'>
-                        <i class="bi bi-cloud-lightning-rain"></i>
+                        <i class="bi bi-wallet"></i>
                         <span>급여관리</span>
                     </a>
                     <ul class="submenu" id="salary-part">
@@ -81,7 +107,7 @@
 
 				<li class="sidebar-item has-sub">
                     <a href="#" class='sidebar-link'>
-                        <i class="bi bi-cloud-lightning-rain"></i>
+                        <i class="bi bi-folder"></i>
                         <span>문서관리</span>
                     </a>
                     <ul class="submenu" id="doc-part">
@@ -99,12 +125,12 @@
                 
                 <li class="sidebar-item has-sub">
                     <a href="#" class='sidebar-link'>
-                        <i class="bi bi-cloud-lightning-rain"></i>
-                        <span>결제관리</span>
+                        <i class="bi bi-archive"></i>
+                        <span>결재관리</span>
                     </a>
                     <ul class="submenu" id="doc-part">
                         <li class="submenu-item" id="doc-list">
-                            <a href="${root}/approv/main">결제메인</a>
+                            <a href="${root}/approv/main">결재메인</a>
                         </li>
                         <li class="submenu-item" id="doc-list">
                             <a href="${root}/approv/create">문서작성</a>
@@ -117,7 +143,7 @@
                 
                 <li class="sidebar-item has-sub">
                     <a href="#" class='sidebar-link'>
-                        <i class="bi bi-cloud-lightning-rain"></i>
+                        <i class="bi bi-card-text"></i>
                         <span>문서양식</span>
                     </a>
                     <ul class="submenu" id="doc-part">
@@ -132,7 +158,7 @@
                 
                 <li class="sidebar-item has-sub">
                     <a href="#" class='sidebar-link'>
-                        <i class="bi bi-cloud-lightning-rain"></i>
+                        <i class="bi bi-card-checklist"></i>
                         <span>서명관리</span>
                     </a>
                     <ul class="submenu" id="doc-part">
