@@ -11,70 +11,108 @@
         border-left: 1px dashed rgba(121, 121, 121, 0.555);
         
     }
+    .ps{
+        position: absolute;
+        left: 15%;
+        top: 30px;
+    }
 </style>
+<link rel="stylesheet" href="${root}/resources/css/sjy.css"/>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
 <div id="container">
     <div class="dcontent" style="float: left; ">
         <div class="mglt" style="margin-top: 30px;">
-            
+            <a href="${root}/QA/list/1">
+                <button type="button" class=" myBtn ps">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door-fill"viewBox="0 0 16 16">
+                        <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"></path>
+                    </svg>
+                </button>
+            </a>
             <h3><label for="">번호. </label>&nbsp;<label for="">${qavo.qaTitle}</label></h3>
             <label class="text-subtitle text-muted">생성자: ${qavo.empNo}</label>
             <p class="text-subtitle text-muted" style="font-weight: 900;">${qavo.qaSdate}~${qavo.qaEdate}</p>
             
             
             <div class="md-3"> 
-                <label for="title" class="form-label">내용</label>
-                <div>${qavo.qaContent}</div>
+                
+                <div class="form-control" style="width: 50%; border: none; font-size: px;">내용 :: ${qavo.qaContent}</div>
             </div>
             <br>
 
             <div class="md-3"> 
             <c:forEach items="${qacgList}" var="cg">
                 <input type="hidden" name="num" value="${cg.rownum}">
-                <input  type="radio" id="${cg.rownum}" name="cgName" class="form-label" value="${cg.rownum}"><label for="${cg.rownum}" class="form-label">${cg.qacgName}</label><br>
+                <div class="form-control" style="width: 50%;">${cg.rownum}번 항목 :: <label for="${cg.rownum}" class="form-label">${cg.qacgName}</label></div><br>
             </c:forEach>
+            </div>
+
+            <div>
+                <div class="form-control" style="width: 25%;">첨부파일</div>
+            </div>
+
+            <div>
+                <img src="" alt="" width="300px" height="200px">
             </div>
         </div>
 
         
     </div>
     <div class="chart" style="float: left;">
-        <div class="kk" style="height: 100%;padding-bottom: 5%;" >
+        <div class="kk tab-content" style="height: 100%;padding-bottom: 5%; color: none;  background-color: rgba(201, 201, 201, 0.26);" >
             <div class="mglt" style="margin-top: 30px;">
                 <h3><label for="">답변내용</label></h3>
                 <label class="text-subtitle text-muted">항목 </label>
             </div>
                 
-			<ul class="nav nav-tabs">
-				<li class="nav-item"><a class="nav-link active"
-					data-toggle="tab" href="#all">전체</a></li>
-	
-				<li class="nav-item"><a class="nav-link" data-toggle="tab"
-					href="#ing">진행</a></li>
-				<li class="nav-item"><a class="nav-link" data-toggle="tab"
-					href="#end">마감</a></li>
-			</ul>
-            <div id="list" style="overflow-y:scroll;">
-                <table class="table" id="table-main">
-                    <thead class="table-light">
-                        <tr id="center">
-                            <th scope="col" style="width: 20%;">사원명</th>
-                            <th scope="col">내용</th>
-                        </tr>
-                    </thead>
 
-                        <tbody id="aw-list">
-                            <c:forEach items='${qaawList}' var='aw'>
-                                <tr id="answer">
-                                    <c:if test='${aw.qacgNo eq 1}'>
-                                        <th scope='row' id="aw-name">${aw.empName}</th>
-                                        <td id="aw-content">${aw.qaawContent}</td>
-                                    </c:if>
+			<ul class="nav nav-tabs">
+                <li class="nav-item"><a class="nav-link active"data-toggle="tab" href="#a">●</a></li>
+                <c:forEach items="${qacgList}" var="cg">
+                    <li class="nav-item"><a class="nav-link "data-toggle="tab" href="#cg${cg.rownum}">${cg.rownum}번항목</a></li>
+                </c:forEach>  
+			</ul>
+
+            <!-- 답변내용 -->
+            
+                <div class="tab-pane fade show active" id="a">
+                    <div id="list">
+                        <img src="${root}/resources/img/choice.jpg"  width="100%" height="100%" style="opacity: 0.3;"/>
+                    </div>
+                </div>
+                <c:forEach items="${qacgList}" var="cg" varStatus="status">
+                <div class="tab-pane fade" id="cg${cg.rownum}">
+                    <div id="list" style="overflow-y:scroll;">
+                        <table class="table" id="table-main">
+                            <thead class="table-light">
+                                <tr id="center">
+                                    <th scope="col" style="width: 20%;">사원명</th>
+                                    <th scope="col">내용</th>
                                 </tr>
-                            </c:forEach>
-                        </tbody>
-                    <td colspan="2"></td>
-                </table>
-            </div>
+                            </thead>
+
+                            <tbody id="tbd">
+                                    <c:forEach items='${qaawList}' var='aw' >
+                                        
+                                        <c:set var="x" value="${status.count}"/>
+                                        <c:if test="${aw.qacgNo eq x}">
+                                            <tr>
+                                                <th scope='row' id="aw-name">${aw.empName}</th>
+                                                <th id="aw-content">${aw.qaawContent}</th>
+                                            </tr>
+                                        </c:if>
+                                    </c:forEach>
+                            </tbody>
+                            <td colspan="2"></td>
+                        </table>
+                    </div>
+                </div>
+            </c:forEach>
+                
+            <!-- /답변내용 -->
         </div>
     </div>
         <!-- Button trigger modal -->
@@ -159,46 +197,3 @@
 
 </script>
 
-<script>
-    //라디오 버튼 클릭시 id == aw-list 아래에 추가
-    //c if test="${aw.qacgNo eq 1}" 1은 변동숫자
-    //선택된 라디오 버튼 가져오기
-    // $('#1').prop("checked",true);
-    
-    var x=  document.querySelector('#answer>th');
-    var y=  document.querySelector('#answer>td');
-    console.log("x::"+x);
-    console.log("y::"+y);
-    
-    $('#answer').remove();
-    
-
-    <tr id="answer">
-        <c:if test='${aw.qacgNo eq 1}'>
-            <th scope='row' id="aw-name">${aw.empName}</th>
-            <td id="aw-content">${aw.qaawContent}</td>
-        </c:if>
-    </tr>
-
-    $('input[name=cgName]').change(function () {
-        //라디오 버튼 선택값이 변경되면
-        //현재 답변1이 보여지고있어서  answer 안의 내용 삭제
-
-        //선택한 답변내용 보여주기
-
-        x.remove();y.remove();
-        
-        $('#aw-list').append("<tr id='answer'>");
-        <c:forEach items='${qaawList}' var='aw'>
-                <c:if test='${aw.qacgNo eq 2}'>
-                $('#aw-list').append("<th scope='row'>${aw.empName}</th>");
-                $('#aw-list').append("<td>${aw.qaawContent}</td>");
-            </c:if>
-        </c:forEach>
-        $('#aw-list').append("</tr>");
-            
-
-
-    })
-    
-</script>
