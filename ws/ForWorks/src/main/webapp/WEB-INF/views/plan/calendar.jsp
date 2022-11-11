@@ -1,5 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@page import = "java.util.List" %>
+<%@page import = "java.util.ArrayList" %>
+<%@page import= "com.kh.forworks.plan.dto.PlanDto" %>
+
+<%
+	//List<PlanDto> list = (ArrayList<PlanDto>)request.getAttribute("showSchedule");
+	System.out.println("@@@###################################");
+	System.out.println("@@@###################################");
+	System.out.println("@@@###################################");
+	System.out.println("@@@###################################");
+	System.out.println("@@@###################################");
+	//System.out.println(list);
+%>
+    
 <html>
 <head>
 	<title>일정 캘린더</title>
@@ -17,10 +32,10 @@
 <body>
 
 <div id="app">
-	<%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
+	<%-- <%@ include file="/WEB-INF/views/common/sidebar.jsp" %> --%>
 
 	<div id="main">
-        <%@ include file="/WEB-INF/views/common/header.jsp" %>
+        <%-- <%@ include file="/WEB-INF/views/common/header.jsp" %> --%>
         
            
                             <h3>일정</h3>
@@ -30,7 +45,7 @@
                             		var calendarEl = document.getElementById('calendar');
                             		var calendar = new FullCalendar.Calendar(calendarEl, {
                             			//날짜 클릭 시, 팝업창 화면 출력
-                            			dateClick: function() {
+                            			dateClick: function click_add() {
                             				var url = "planPop";
                                     		var name = "일정 추가";
                                     		var option = "width = 867, height = 489";
@@ -51,14 +66,37 @@
                             			editable : true,
                             			nowIndicator: true, // 현재 시간 마크
                             			locale: 'ko' // 한국어 설정
-                            		});
-                            		calendar.render();
+                            			events: [
+                            				<% 
+                            			  	  for (int i = 0; i < list.size(); i++) {
+                            			  	  	PlanDto dto = (PlanDto)list.get(i);
+                            			  	  System.out.println("===================================");
+                            			  	  	System.out.println(dto);
+                            			     %>	
+                            			  	  {
+                            			  	   Name : '<%= dto.getName() %>',
+                            			  	   Content : <%= dto.getContent() %>',
+                            			  	   StartDate : '<%= dto.getStartDate() %>',
+                            			  	   EndDate : '<%= dto.getEndDate() %>'
+                            			  	   },
+                            			<%
+                            				}
+                            			%>
+                            					{
+                            					   title : 'default',
+                            					   content : 'default',
+                            					   start : "2019-01-01",
+                            					   end : "2019-01-01"
+                            					  }
+                            			      ]
+                            			    });
+                                            calendar.render();
                             	});
                              </script>  
                     </div>
                 </div>
           
-<%@ include file="/WEB-INF/views/common/footer.jsp" %>
+<%-- <%@ include file="/WEB-INF/views/common/footer.jsp" %> --%>
 </body>
 </html>
 

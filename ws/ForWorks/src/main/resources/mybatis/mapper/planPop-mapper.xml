@@ -3,9 +3,17 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="planPopMapper">
-  <insert id="addPlan">
-  INSERT INTO PLAN 
-  (
+  <select id="showSchedule" resultType = "PlanDto">
+  		SELECT
+    			name,content,startDate,endDate
+    		FROM
+    			plan
+    		ORDER BY
+    			num
+    		DESC
+  </select>
+  <insert id="addSchedule" parameterType = "PlanDto">
+	    	
 	INSERT INTO PLAN (
 	         PNO
 	        ,PNAME
@@ -21,6 +29,5 @@
 	        ,#{pend}
 	        ,#{pcontent}
 )
-  
   </insert>
 </mapper>
