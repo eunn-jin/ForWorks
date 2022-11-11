@@ -80,10 +80,10 @@ table {
                                 <tr>
                                     <td class="danger">첨부파일</td>
                                     <c:choose>
-                                    	<c:when test="${ntatVo eq null}">
-                                        	<td colspan="3"><div style="height: 10vh;">첨부파일이 없습니다.</div></td>
-                                    	</c:when>
-                                    	
+                                        <c:when test="${ntatVo eq null}">
+                                            <td colspan="3"><div style="height: 10vh;">첨부파일이 없습니다.</div></td>
+                                        </c:when>
+                                        
                                         <c:when test="${ext eq '.jpg' || ext eq '.png'}">
                                         <td colspan="3"><div >
                                             <a href="${root}/resources/upload/notice/${ntatVo.ntatChange}" download=""><img src="${root}/resources/upload/notice/${ntatVo.ntatChange}" width="128px" height="128px"></a>
