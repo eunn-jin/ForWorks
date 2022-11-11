@@ -11,6 +11,7 @@ import com.kh.forworks.PageVo;
 import com.kh.forworks.approv.vo.ApprovDocumentVo;
 import com.kh.forworks.docmanage.dao.AppDocmanageDao;
 import com.kh.forworks.docmanage.vo.DocControlVo;
+import com.kh.forworks.docmanage.vo.SignVo;
 import com.kh.forworks.member.vo.MemberVo;
 
 @Service
@@ -35,7 +36,7 @@ public class AppDocmanageServiceImpl implements AppDocmanageService{
 	}
 	//문서하나불러오기--하나만 못불러옴
 	@Override
-	public List<ApprovDocumentVo> selectOneDoc(String adocNo) {
+	public List<DocControlVo> selectOneDoc(String adocNo) {
 		return dao.selectOneDoc(sst,adocNo);
 	}
 	//결재문서관리등록
@@ -73,14 +74,29 @@ public class AppDocmanageServiceImpl implements AppDocmanageService{
 	public DocControlVo selectAdocDetail(String no) {
 		return dao.selectAdocDetail(sst,no);
 	}
-	//싸인받아오기
+	//싸인+부서+직급받아오기
 	@Override
-	public String selectSign(String adocNo) {
+	public List<SignVo> selectSign(String adocNo) {
 		return dao.selectSign(sst,adocNo);
 	}
-	//부서,직급 받아오기
+	//작성자 부서,직급+싸인 받아오기
 	@Override
-	public MemberVo selectMemInfo(String empNo) {
+	public SignVo selectMemInfo(String empNo) {
 		return dao.selectMemInfo(sst,empNo);
+	}
+	//협조자 이름받기
+	@Override
+	public List<SignVo> selectCooList(String adocNo) {
+		return dao.selectCoo(sst, adocNo);
+	}
+	//파일받기
+	@Override
+	public List<ApprovDocumentVo> selectFile(String adocNo) {
+		return dao.selectFile(sst,adocNo);
+	}
+	//contdoc받기
+	@Override
+	public List<DocControlVo> selectOneContDoc(String no) {
+		return dao.selectOneContDoc(sst,no);
 	}
 }

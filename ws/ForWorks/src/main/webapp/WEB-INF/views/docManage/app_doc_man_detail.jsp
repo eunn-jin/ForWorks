@@ -68,41 +68,42 @@
                     <table>
                         <tr>
                             <td> 
-                                <label><input type="checkbox" name="contStatus" id="Y" value="Y"  <c:if test="${vo.contStatus eq 'Y'}">checked</c:if>>게시중</label>
-                                <label><input type="checkbox" name="contStatus" id="N" value="N" <c:if test="${vo.contStatus eq 'N'}">checked</c:if>>비공개</label>
+                                <label><input type="checkbox" name="contStatus" id="Y" value="Y"  <c:if test="${cont[0].contStatus eq 'Y'}">checked</c:if>>게시중</label>
+                                <label><input type="checkbox" name="contStatus" id="N" value="N" <c:if test="${cont[0].contStatus eq 'N'}">checked</c:if>>비공개</label>
                             </td>
                         </tr>
                         <tr>
-                            <td>${vo.adocName}</td>
+                            <td>${adoc[0].adocName}</td>
                         </tr>
                         <tr>
                             <th>보존기간</th>
-                            <td>${vo.contEnrollDate} ~ ${vo.contEndDate}</td>
+                            <td>${cont[0].contEnrollDate} ~ ${cont[0].contEndDate}</td>
                         </tr>
                         <tr>
                             <th>기안날짜</th>
-                            <td>${vo.draftDate}</td>
+                            <td>${adoc[0].draftDate}</td>
+                        </tr>
+                        <tr>
+
                             <th>기안자</th>
-                            <td>${vo.empName}</td>
+                            <td>${adoc[0].empName}</td>
+                        </tr>
+                        <tr>
                             <th>결재인</th>
-                            <td>${vo.approveMember}</td>
+                            <td>${adoc[0].approveMember}</td>
                         </tr>
                         <tr>
                             <th>첨부파일</th>
-                            <!--<td>
-                                <c:if test="${fv ne null}">       	
-                                        <a download href="${root}/doc-file/upload/${fv.uploadName}">${fv.originName}</a>
-                                </c:if>
-                            </td>-->
+                            <td>
+                            	<c:forEach items="adoc" var="x">
+                               		<a download href="${root}/resources/upload/doc/${adoc[0].changeFileName}">${adoc[0].fileName}</a>
+                            	</c:forEach>
+                            </td>
                         </tr>
                         <tr>
-                            <td colspan="3"><div>${vo.adocContent}</div></td>
+                            <td colspan="3"><div>${adoc[0].adocContent}</div></td>
                         </tr>
-                        <c:if test="${fv.ext eq '.jpg' || fv.ext eq '.png' }">
-                            <c:if test="${fv ne null}">       	
-                                   <img src="${root}/doc-file/upload/${fv.uploadName}"/>
-                            </c:if>
-                        </c:if>
+                        
                     </table>
                     <input type="submit" value="게시상태수정">
                     </form>

@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import com.kh.forworks.PageVo;
 import com.kh.forworks.approv.vo.ApprovDocumentVo;
 import com.kh.forworks.docmanage.vo.DocControlVo;
+import com.kh.forworks.docmanage.vo.SignVo;
 import com.kh.forworks.member.vo.MemberVo;
 
 public interface AppDocmanageDao {
@@ -16,7 +17,7 @@ public interface AppDocmanageDao {
 	//해당직원의 전자결재문서 받아오기
 	List<ApprovDocumentVo> selectDocByEmp(SqlSessionTemplate sst, HashMap mapO);
 	//문서하나 불러오기-하나만못불러옴
-	List<ApprovDocumentVo> selectOneDoc(SqlSessionTemplate sst, String adocNo);
+	List<DocControlVo> selectOneDoc(SqlSessionTemplate sst, String adocNo);
 	//결재관리문서등록
 	int insertDocCont(SqlSessionTemplate sst, DocControlVo vo);
 	//해당직원이 작성한 총 갯수
@@ -31,10 +32,16 @@ public interface AppDocmanageDao {
 	List<DocControlVo> selectContDocList(SqlSessionTemplate sst, PageVo pv);
 	//결재문서리스트디테일(화면)
 	DocControlVo selectAdocDetail(SqlSessionTemplate sst, String no);
-	//싸인받아오기
-	String selectSign(SqlSessionTemplate sst, String adocNo);
+	//싸인+부서+직급받아오기
+	List<SignVo> selectSign(SqlSessionTemplate sst, String adocNo);
 	//부서,직급 받아오기
-	MemberVo selectMemInfo(SqlSessionTemplate sst, String empNo);
+	SignVo selectMemInfo(SqlSessionTemplate sst, String empNo);
+	//협조자 이름받기
+	List<SignVo> selectCoo(SqlSessionTemplate sst, String adocNo);
+	//파일받기
+	List<ApprovDocumentVo> selectFile(SqlSessionTemplate sst, String adocNo);
+	//contdoc받기
+	List<DocControlVo> selectOneContDoc(SqlSessionTemplate sst, String no);
 	
 	
 	

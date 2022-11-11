@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    
+<c:set var="root" value="${pageContext.request.contextPath}" />
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -202,27 +208,26 @@
     }
 
     #approv-member{
-        grid-column: 2/5; /*jstl로 유동적으로 늘림*/
+        grid-column: 2/5; /*jstl로 유동적으로 늘림*/ 
     }
 
     #creater-sign{
         grid-row: 2/4;
     }
-
+   
     #coop-member{
-        grid-column: 2/5; /*jstl로 유동적으로 늘림*/
+        grid-column: 2/5;  /*jstl로 유동적으로 늘림*/
     }
+
 
 </style>
 
   
-		<link rel="stylesheet" href="${root}/resources/css/approv/common.css">
 </head>
 <body>
 
     <div id="app">
-
-       
+        
     
         <div id="main">
       
@@ -233,39 +238,54 @@
                   
                             
                             <div class="approv-detail-div">
-                                <div class="detail-title default-text">${vo[0].adocName}</div>
+                                <div class="detail-title default-text">${one[0].adocName}</div>
                                 <div class="detail-approve default-text">
                                     <div class="approv-table">
-        
-                                            <div>기안자</div>
-                                            <div id="approv-member">결재자</div>
-        
-                                            <div id="creater-sign"></div>
-                                            <div>직위</div>
-                                            <div>직위</div>
-                                            <div>직위</div>
-        
-                                            <div class="sign-area"></div>
-                                            <div class="sign-area"></div>
-                                            <div class="sign-area"></div>
-        
-                                            <div>협조자</div>
-                                            <div id="coop-member"></div>
-        
+
+
+
+
+                                        <div>기안자</div>
+                                        <div id="approv-member">결재자</div>
+
+                                        <div id="creater-sign">
+                                            <c:forEach var="SignList" items="${sign}" begin="0" end="0">
+                                            <img alt="" style="width: 100%; height: 100%;" src="${root}/resources/upload/sign/${mem.signEdit}">
+                                            </c:forEach>
+                                        </div> <!-- 사인넣기 -->
+                                        <c:forEach var="s" items="${sign}">
+                                            <div>${s.empName}</div>
+                                        </c:forEach>
+                                        <div class="sign-area"></div>
+                                        <c:forEach var="SignList" items="${sign}" >
+ 
+                                                <div class="sign-area"><img alt="" style="width: 100%; height: 100%;"src="${root}/resources/upload/sign/${SignList.signEdit}"></div>
+                                            
+                                        </c:forEach>
+                                        
+
+                                        <div >협조자</div>
+                                        <div id="coop-member">
+                                            <c:forEach var="coo" items="${coo}">
+                                            ${coo.empName} &nbsp;
+                                            </c:forEach>
+                                        </div>    
+
+                                            
                                     </div>
                                 </div>
                                 <div class="detail-content">
-                                    ${vo[0].adocContent}
+                                    ${one[0].adocContent}
                                 </div>
                                 <div class="detail-etc default-text">
-                                    <div class="etc-item">문서번호 : ${vo[0].adocNo}</div>
-                                    <div class="etc-item">문서생성일자 : ${vo[0].draftDate}</div>
+                                    <div class="etc-item">문서번호 : ${one[0].adocNo}</div>
+                                    <div class="etc-item">문서생성일자 : ${one[0].draftDate}</div>
                                 </div>
                                 <div class="detail-part default-text">처부 : ${mem.deptName}</div>
                                 <div class="detail-position default-text">직위 : ${mem.posName}</div>
                             </div>
         
-                                    
+                       
                   
                    
                    </section>
@@ -274,7 +294,7 @@
            </div>
     
     </div>
-  
+
     </body>
 
 </html>

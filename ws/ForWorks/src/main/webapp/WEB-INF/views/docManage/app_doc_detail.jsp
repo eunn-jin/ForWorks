@@ -68,7 +68,7 @@
                         
 				            <table>
                                 <tr>
-                                    <td>${vo[0].adocName}</td>
+                                    <td>${vo2[0].adocName}</td>
                                 </tr>
                                 <tr>
                                     <td>보존기간</td>
@@ -76,11 +76,11 @@
                                 </tr>
                                 <tr>
                                     <th>기안날짜</th>
-                                    <td>${vo[0].draftDate}</td>
+                                    <td>${vo2[0].draftDate}</td>
                                     <th>기안자</th>
-                                    <td>${vo[0].empName}</td>
+                                    <td>${vo2[0].empName}</td>
                                     <th>결재인</th>
-                                    <td>${vo[0].approveMember}</td>
+                                    <td>${vo2[0].approveMember}</td>
                                 </tr>
                                 <tr>
                                     <td>첨부파일</td>
@@ -90,8 +90,12 @@
 	                                    </c:if>
                                     </td>-->
                                 </tr>
+                                <tr> 
+                                    <td>
+                                    <a href="${root}/appmanage/formtest/${vo2[0].adocNo}">ddd</a> </tr>
+                                    </td>
                                 <tr>
-                                    <td colspan="3"><div>${vo[0].adocContent}</div></td>
+                                    <td colspan="3"><div>${vo2[0].adocContent}</div></td>
                                 </tr>
                                  <!--<c:if test="${fv ne null}">       	
                                     <c:if test="${fv.ext eq '.jpg' || fv.ext eq '.png' }">

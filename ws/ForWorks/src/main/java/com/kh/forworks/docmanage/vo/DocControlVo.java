@@ -23,4 +23,9 @@ public class DocControlVo {
 	public String approveMember;
 	public String empNo;
 	public String empName;
+	
+	public String fileName;
+	public String changeFileName;
+	
+	public String signFile;
 }

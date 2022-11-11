@@ -95,10 +95,10 @@
             </tr>
             <tr>
               <th>첨부파일</th>
-              <td><input type="file" name="file" multiple></td>
+              <td id="addfile"></td>
             </tr>
             <tr>  
-              <td colspan="3"><button type="button">미리보기</button></td>
+              <td colspan="3" id="miri"> <div id="content"></div></td>
             </tr>
             
             
@@ -122,7 +122,6 @@
                 <td>제목</td>
                 <td>기안날짜</td>
               </tr>
-              
             </table>
           </div>
       </div>
@@ -180,15 +179,32 @@
         var draftDate = data[0].draftDate;
         console.log(draftDate);
         $("#draftDate").text(draftDate);
-        //document.getElementById("draftDate").textContent = draftDate;
         var approveMember = data[0].approveMember;
-        document.getElementById("draftDate").innerText = approveMember;
+        console.log(approveMember);
+        $("#approvMember").text(approveMember);
+        if(data[0].changeFileName != null){
+
+          for(var i = 0 ; i < data.length ; i++){
+            console.log(data[i].changeFileName);
+            $("#addfile").append('<a href="{root}/resources/upload/doc/'+data[i].changeFileName+'">'+data[i].fileName+'</a>');
+          }
+        }
+        var content = data[0].adocContent;
+        $("#content").html(content);
+       
       },
       error : function(){
         alert("다시");
       }
     })
   }
+</script>
+
+<script>
+  function fmiri(no){
+    window.location.href="${root}/appmanage/formtest/"+no;
+  }
+
 </script>
 
 
