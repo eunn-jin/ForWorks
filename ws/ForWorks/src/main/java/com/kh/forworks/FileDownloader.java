@@ -33,24 +33,23 @@ public class FileDownloader {
         	
         	DocFileVo fileVo = service.selectDocFile(adocNo);
         	
+        	if(fileVo!=null) {
+        		
+        	
         	String savePath = req.getServletContext().getRealPath("/resources/upload/doc/");
         	String path = savePath+fileVo.getDocfileEdit();
         	
-        	System.out.println(1);
         	byte[] fileByte = FileUtils.readFileToByteArray(new File(path));
         	
-        	System.out.println(path);
 
             response.setContentType("application/octet-stream");
             response.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode(fileVo.getDocfileOrigin(), "UTF-8")+"\";");
             response.setHeader("Content-Transfer-Encoding", "binary");
 
-            System.out.println(2);
             response.getOutputStream().write(fileByte);
             response.getOutputStream().flush();
             response.getOutputStream().close();
-            System.out.println(3);
-                
+        	}
         
     }
 
