@@ -67,7 +67,7 @@ public interface QADao {
 	int delete(SqlSessionTemplate sst, int pno);
 	
 	//설문지 대상자 테이블에 insert
-	int insertUserQa(SqlSessionTemplate sst, QAParticipationVo vo);
+	int insertUserQA(SqlSessionTemplate sst, HashMap<String, String> map);
 	
 	//로그인 사원이 대상자인지 체크
 	int check(SqlSessionTemplate sst, HashMap<String, String> map);
@@ -89,7 +89,8 @@ public interface QADao {
 
 	//사원 설문 내용 저장
 	int insertQA(SqlSessionTemplate sst, QACategoryVo qacg);
-
+	//상태값 변경
+	int updateSt(SqlSessionTemplate sst, HashMap<String, String> map);
 	//이미 답변 작성한 경우 수정
 	int updateQA(SqlSessionTemplate sst, QACategoryVo qacg);
 	
@@ -101,6 +102,13 @@ public interface QADao {
 	
 	//설문 참가자수 가져오기
 	int selectNum(SqlSessionTemplate sst, String pno);
+	
+	//답변 내용 수정
+	int editAw(SqlSessionTemplate sst, HashMap<String, String> map);
+	//참가자 명단 수정일 변경
+	int updateSt2(SqlSessionTemplate sst, HashMap<String, String> map);
+
+	
 
 
 }

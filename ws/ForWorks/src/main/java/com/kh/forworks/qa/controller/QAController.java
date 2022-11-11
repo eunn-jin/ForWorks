@@ -1,6 +1,7 @@
 package com.kh.forworks.qa.controller;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.forworks.FileUploader;
 import com.kh.forworks.PageVo;
@@ -184,7 +186,7 @@ public class QAController {
 		//첨부파일 가져오기
 		QAAttachmentsVo qaatList = qasv.seleQaat(pno);
 		
-		//참가자 답변내용 가져오기
+		//참가자 답변내용 가져오기		
 		List<QAAnswerVo> qaawList =qasv.selectQaaw(pno);
 		
 		//참여 인원수 가져오기
@@ -374,20 +376,23 @@ public class QAController {
 		return "QA/detailUser";
 	}
 	
-	//사원이 설문에 참가 하였을때
-	//필요한값 :: 설문항목에 대한 답변내용, 회원번호, 설문 번호
-	@PostMapping("detailUser/{pno}")
-	public String detailUser(@PathVariable String pno, HttpSession session ,QAParticipationVo vo, QACategoryVo qacg){
+	//설문 답변 등록
+	@PostMapping("insert/{pno}")
+	@ResponseBody
+	public String detailUser(@PathVariable String pno, HttpSession session ,QAParticipationVo vo, QAAnswerVo awvo){
+		
+		//답변 저장시 필요한것 :: 
+		// 설문번호, 회원번호, 답변번호 ,답변 내용
 		
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
-		System.out.println(pno);
-		System.out.println(loginMember.getEmpNo());
+		System.out.println(pno);					//설문 번호
+		System.out.println(loginMember.getEmpNo());	//회원 번호
 		
 		
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("pno", pno);
 		map.put("no",loginMember.getEmpNo());
-		map.put("cgno", qacg.getQacgNo());
+		
 
 		QAParticipationVo checkpt = qasv.checkQA(map);
 		
@@ -397,18 +402,37 @@ public class QAController {
 		vo.setQaNo(pno);
 		vo.setEmpNo(loginMember.getEmpNo());
 		
-		qacg.setQaNo(pno);
+		
 		System.out.println("===========");
 		System.out.println(vo);
-		System.out.println(qacg);
 		System.out.println(checkpt);
+		System.out.println(awvo);
 		//설문 입력내용 넣기
-		int result = qasv.insertUserQA(vo, qacg, checkpt, map);
+		int result = qasv.insertUserQA(awvo, checkpt, map);
 		
 		if(result ==1) {
 			session.setAttribute("toastMsg", "설문 작성 완료!");
-			return "redirect:/QA/list/1";
+			return "ok";
 		}else {return"error";}
+	}
+	
+	//답변 내용 수정
+	@PostMapping("updateAw/{pno}")
+	@ResponseBody
+	public String updateAw(@PathVariable String pno,QAAnswerVo awvo, HttpSession session, Model model) {
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		awvo.setQaNo(pno);
+		System.out.println(pno);
+		System.out.println(awvo);
+		
+		int result = qasv.editAw(awvo, loginMember.getEmpNo());
+		
+		if (result == 1) {
+			return "ok";
+		}else {
+			return "fail";			
+		}
+		
 	}
 		
 	

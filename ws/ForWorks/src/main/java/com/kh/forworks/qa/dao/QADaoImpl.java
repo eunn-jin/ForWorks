@@ -133,12 +133,16 @@ public class QADaoImpl implements QADao{
 		return sst.update("qaMapper.delete",pno);
 	}
 	
-	//설문지 대상자 테이블에 insert
+	//설문 답변내용 등록
 	@Override
-	public int insertUserQa(SqlSessionTemplate sst, QAParticipationVo vo) {
-		return sst.insert("qaMapper.insertUserQa",vo);
+	public int insertUserQA(SqlSessionTemplate sst, HashMap<String, String> map) {
+		return sst.insert("qaMapper.insertUserQa",map);
 	}
-	
+	//참여여부 상태 변경
+	@Override
+	public int updateSt(SqlSessionTemplate sst, HashMap<String, String> map) {
+		return sst.update("qaMapper.updateSt", map);
+	}
 	//설문 참여대상자 확인
 	@Override
 	public int check(SqlSessionTemplate sst, HashMap<String, String> map) {
@@ -208,6 +212,20 @@ public class QADaoImpl implements QADao{
 	public int selectNum(SqlSessionTemplate sst, String pno) {
 		return sst.selectOne("qaMapper.selectNum",pno);
 	}
+	
+	
+	//답변내용 수정
+	@Override
+	public int editAw(SqlSessionTemplate sst, HashMap<String, String> map) {
+		return sst.update("qaMapper.editAw",map);
+	}
+	//참가자 명단 수정일변경
+	@Override
+	public int updateSt2(SqlSessionTemplate sst, HashMap<String, String> map) {
+		return sst.update("qaMapper.updateSt2", map);
+	}
+
+
 	
 
 	
