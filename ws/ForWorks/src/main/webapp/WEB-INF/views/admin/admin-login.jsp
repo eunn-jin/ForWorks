@@ -7,7 +7,7 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>For-Works</title>
+    <title>ForWorks</title>
     <script src="https://kit.fontawesome.com/3a92c85ff9.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <link

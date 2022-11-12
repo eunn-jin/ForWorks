@@ -33,7 +33,10 @@ public class AdminController {
 	
 	//관리자 로그인
 	@GetMapping("")
-	public String login() {
+	public String login(HttpSession session) {
+		session.setAttribute("loginMember", null);
+		session.setAttribute("cheifAdmin", null);
+		
 		return "admin/admin-login";
 	}
 	
