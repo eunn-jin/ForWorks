@@ -47,7 +47,7 @@
                <div class="page-title">
                    <div class="row">
                        <div class="col-12 col-md-6 order-md-1 order-last">
-                           <h3>Layout Default</h3>
+                           <h3>비전자결재문서관리등록</h3>
                            <p class="text-subtitle text-muted">The default layout </p>
                        </div>
                        <div class="col-12 col-md-6 order-md-2 order-first">
@@ -77,15 +77,20 @@
                         </tr>
                         <tr>
                             <td>보존기간</td>
-                            <td><input type="date" name="contEnrollDate"> ~ <input type="date" name="contEndDate"></td>
+                            <td>${vo.contEnrollDate}~ ${vo.contEndDate}</td>
                         </tr>
-                        <th>공개범위</th>
-                        <td>
-                              <label><input type="checkbox" name="range_" id="all" value="OPEN">전체공개</label>
-                            <c:forEach items="${dept}" var="d">
-                              <label> <input type="checkbox" name="range_" value="${d.deptNo}${d.deptName}">${d.deptName}</label>
-                            </c:forEach>               
-                        </td>
+                        <tr>
+                            <td>작성자</td>
+                            <td>${result[0].empName}</td>
+                        </tr>
+                        <tr>
+                            <td>부서</td>
+                            <td>${result[0].deptName}</td>
+                        </tr>
+                        <tr>
+                            <td>기안날짜</td>
+                            <td>${result[0].draftDate}</td>
+                        </tr>
                         <tr>
                             <td colspan="3"><div>${vo.adocContent}</div></td>
                         </tr>

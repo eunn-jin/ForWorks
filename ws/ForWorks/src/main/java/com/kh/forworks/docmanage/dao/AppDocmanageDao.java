@@ -48,7 +48,7 @@ public interface AppDocmanageDao {
 	List<DocControlVo> selectNoelectEmp(SqlSessionTemplate sst, HashMap map);
 	//비전자결재문서 하나 불러오기
 	DocControlVo selectOneNo(SqlSessionTemplate sst, String no);
-	//비전자결재문서 문서관리등록
+	//비전자결재문서 문서관리상태변경
 	int updateNoStatus(SqlSessionTemplate sst, DocControlVo vo);
 	//비전자결재문서 게시중
 	int selectNoToTalCnt(SqlSessionTemplate sst);

@@ -213,7 +213,7 @@ public class AppDocmanageController {
 		return "docManage/app_doc_detail";
 	}
 	
-	//화면테스트
+	//결재문서그대로 보여주기
 	@GetMapping("formtest/{no}")
 	public String formtest(Model model, HttpServletRequest req,@PathVariable String no, HttpSession session) {
 		List<DocControlVo> vo = ads.selectContDetail(no);
@@ -236,6 +236,10 @@ public class AppDocmanageController {
 		System.out.println("vo출" + vo);
 		System.out.println("sign출" + sign);
 		System.out.println(mem);
+		
+		for (int i = sign.size(); i < sign.size(); i++) {
+			sign.add(null);
+		}
 		
 		req.setAttribute("one", one);
 		req.setAttribute("coo", coo);
@@ -447,11 +451,32 @@ public class AppDocmanageController {
 	public String noelectCont(@PathVariable String no , Model model) {
 		//번호로 문서 불러오기
 		DocControlVo vo = (DocControlVo)ads.selectOneNo(no);
+		//자세한정보
+		List<DocControlVo> result = ads.selectOneDoc2(no);
+		System.out.println("테스트" + vo);
 		model.addAttribute("vo",vo);
+		model.addAttribute("result",result);
 		return "docManage/noelect_man_detail";
 	}
 	//nodocman 리스트 디테일 (게시상태 수정 진행)--해야함
-	
+	@PostMapping("noelctCont/{no}")
+	public String noelctCont(@PathVariable String no, DocControlVo vo , HttpSession session) {
+
+		System.out.println(vo.getContStatus());
+		vo.setAdocNo(no);
+		
+		int result = ads.updateNoStatus(vo);
+		System.out.println(result);		
+		if(result == 0) {
+			session.setAttribute("toastMsg", "다시 시도해주세요.");
+			return "docManage/noelect_man_detail";
+			
+		}else {
+			session.setAttribute("toastMsg", "게시상태 변경 완료!");
+			return "redirect:/appmanage/noelectman/1";
+		}
+
+	}
 	
 	
 	

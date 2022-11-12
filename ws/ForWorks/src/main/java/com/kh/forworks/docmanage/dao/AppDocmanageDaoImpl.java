@@ -119,10 +119,10 @@ public class AppDocmanageDaoImpl implements AppDocmanageDao{
 	public DocControlVo selectOneNo(SqlSessionTemplate sst, String no) {
 		return sst.selectOne("appMapper.selectOneNo",no);
 	}
-	//비전자결재문서 문서관리등록
+	//비전자결재문서 문서관리상태변경
 	@Override
 	public int updateNoStatus(SqlSessionTemplate sst, DocControlVo vo) {
-		return sst.insert("appMapper.insertNo",vo);
+		return sst.update("appMapper.updateNo",vo);
 	}
 	//비전자결재문서 게시중갯수
 	@Override

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+    <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
 <c:set var="root" value="${pageContext.request.contextPath}" />
@@ -192,7 +192,7 @@
 
     .approv-table{
         display: grid;
-        grid-template-columns: repeat(4, 85px); /*jstl로 유동적으로 늘림*/
+        grid-template-columns: repeat(${fn:length(signList)+1}, 85px); /*jstl로 유동적으로 늘림*/
         grid-template-rows: 24px 24px 76px 24px;
         
     }
@@ -208,17 +208,16 @@
     }
 
     #approv-member{
-        grid-column: 2/5; /*jstl로 유동적으로 늘림*/ 
+        grid-column: 2/${fn:length(sign)+2}; /*jstl로 유동적으로 늘림*/ 
     }
 
     #creater-sign{
         grid-row: 2/4;
     }
-   
-    #coop-member{
-        grid-column: 2/5;  /*jstl로 유동적으로 늘림*/
-    }
 
+    #coop-member{
+        grid-column: 2/${fn:length(sign)+2}; /*jstl로 유동적으로 늘림*/
+    }
 
 </style>
 
@@ -242,34 +241,31 @@
                                 <div class="detail-approve default-text">
                                     <div class="approv-table">
 
-
-
-
                                         <div>기안자</div>
                                         <div id="approv-member">결재자</div>
 
                                         <div id="creater-sign">
-                                            <c:forEach var="SignList" items="${sign}" begin="0" end="0">
                                             <img alt="" style="width: 100%; height: 100%;" src="${root}/resources/upload/sign/${mem.signEdit}">
-                                            </c:forEach>
-                                        </div> <!-- 사인넣기 -->
-                                        <c:forEach var="s" items="${sign}">
-                                            <div>${s.empName}</div>
-                                        </c:forEach>
-                                        <div class="sign-area"></div>
-                                        <c:forEach var="SignList" items="${sign}" >
- 
-                                                <div class="sign-area"><img alt="" style="width: 100%; height: 100%;"src="${root}/resources/upload/sign/${SignList.signEdit}"></div>
-                                            
+                                        </div> 
+                                        <c:forEach var="approvMember" items="${sign}">
+                                        <div>${approvMember.empName}</div>
                                         </c:forEach>
                                         
-
-                                        <div >협조자</div>
+                                        <c:forEach var="s" items="${sign}" begin="0" end="${fn:length(sign)}" varStatus="status">
+                                            <c:if test="${status.index eq 0}">
+                                                <div class="sign-area"><img alt="" style="width: 100%; height: 100%;" src="${root}/resources/upload/sign/${s.signEdit}"></div>
+                                            </c:if>
+                                            <c:if test="${status.index ne 0}">
+                                                <div class="sign-area"><img alt="" style="width: 100%; height: 100%;" src="${root}/resources/upload/sign/${s.signEdit}"></div>
+                                            </c:if>
+                                        </c:forEach>
+                                        
+                                        <div>협조자</div>
                                         <div id="coop-member">
-                                            <c:forEach var="coo" items="${coo}">
-                                            ${coo.empName} &nbsp;
-                                            </c:forEach>
-                                        </div>    
+                                        <c:forEach var="coopMember" items="${coo}">
+                                        ${coopMember.empName} &nbsp;
+                                        </c:forEach>
+                                        </div>
 
                                             
                                     </div>
