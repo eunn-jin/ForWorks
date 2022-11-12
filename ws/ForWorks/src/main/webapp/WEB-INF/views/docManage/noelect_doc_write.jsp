@@ -40,7 +40,7 @@
                <div class="page-title">
                    <div class="row">
                        <div class="col-12 col-md-6 order-md-1 order-last">
-                           <h3>문서등록</h3>
+                           <h3>비결재 문서 등록</h3>
                            <p class="text-subtitle text-muted"></p>
                        </div>
                        <div class="col-12 col-md-6 order-md-2 order-first">
@@ -56,7 +56,7 @@
                <section class="section">
                 <div id="wrap">
 
-                    <%@ include file="/WEB-INF/views/docManage/doc_write_content.jsp" %>
+                    <%@ include file="/WEB-INF/views/docManage/noelect_write_content.jsp" %>
                 </div>
                </section>
            </div>

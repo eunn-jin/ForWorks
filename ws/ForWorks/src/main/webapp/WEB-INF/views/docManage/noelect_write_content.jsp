@@ -85,13 +85,19 @@
             <tr>
               <th>제목</th>
               <td><input type="text" name="title" id="title"></td>
-              <td><button type="button" class="btn-open-popup" >결재문서불러오기</button></td>
+              <td><button type="button" class="btn-open-popup" >비전자문서불러오기</button></td>
             </tr>
             <tr>
               <th>기안날짜</th>
               <td><div id="draftDate"></div><input type="hidden" name="adocNo" id="adocNo"></td>
-              <th>결재인</th>
-              <td><div id="approvMember"></div></td>
+            </tr>
+            <tr>
+              <th>작성자</th>
+              <td><div id="empName"></div></td>
+            </tr>
+            <tr>
+              <th>부서</th>
+              <td><div id="deptName"></div></td>
             </tr>
             <tr>
               <th>첨부파일</th>
@@ -103,6 +109,7 @@
             
             
           </table>
+          <div id="imgzone"></div>
           <div id="sub"><input type="button" value="취소"><input type="submit" value="등록"></div>
               
         </div>
@@ -115,7 +122,7 @@
               <tr>
                 <td>날짜</td>
                 <td><input type="month" name="docDate" id="docDate"></td>
-                <td><button type="button" onclick="select()">결재문서조회</button></td>
+                <td><button type="button" onclick="select()">비전자조회</button></td>
               </tr>
               <tr>
                 <td>결재종류</td>
@@ -123,11 +130,13 @@
                 <td>기안날짜</td>
               </tr>
             </table>
+
+            </div>
             <button class="modal_close">닫기</button>
           </div>
       </div>
       
-
+<img src="" alt="">
 
       <!--모달 js-->
       <script>
@@ -146,9 +155,8 @@
 <script>
 	function select(){
 		var docDate = document.getElementById("docDate").value;
-alert(docDate);
         $.ajax({
-            url : "/ForWorks/appmanage/select",
+            url : "/ForWorks/appmanage/noselect",
             type: "POST",
             data : {docDate : docDate},
             success : function(data){
@@ -169,7 +177,7 @@ alert(docDate);
     modal.style.display = 'none';
     var adocNo = data;
     $.ajax({
-      url : "/ForWorks/appmanage/selectOne",
+      url : "/ForWorks/appmanage/selectOne2",
       type: "POST",
       data : {adocNo : adocNo},
       success : function(data){
@@ -178,18 +186,15 @@ alert(docDate);
         var name = data[0].adocName;
         document.getElementById("title").value = name;
         var draftDate = data[0].draftDate;
-        console.log(draftDate);
         $("#draftDate").text(draftDate);
-        var approveMember = data[0].approveMember;
-        console.log(approveMember);
-        $("#approvMember").text(approveMember);
-        if(data[0].changeFileName != null){
-
-          for(var i = 0 ; i < data.length ; i++){
-            console.log(data[i].changeFileName);
-            $("#addfile").append('<a href="{root}/resources/upload/doc/'+data[i].changeFileName+'">'+data[i].fileName+'</a>');
-          }
-        }
+        var empName = data[0].empName;
+        $("#empName").text(empName);
+        var dept = data[0].deptName;
+        $("#deptName").text(dept);
+        $("#addfile").append('<a href="{root}/resources/doc-file/upload/'+data[0].noelecChangeName+'">'+data[0].noelecOriginName+'</a>');
+        $("#imgzone").append('<img src="{root}/resources/doc-file/upload/'+data[0].noelecChangeName+'" alt="비전자결재문서">');
+   
+      
         var content = data[0].adocContent;
         $("#content").html(content);
        

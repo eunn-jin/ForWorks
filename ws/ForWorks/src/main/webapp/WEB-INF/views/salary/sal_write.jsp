@@ -10,13 +10,15 @@
     #wrap{
         background-color: white;
         width: 70vw;
-        height: 90vh;
+        height: auto;
         font-size: 20px;
 		border-radius: 18px;
 		box-shadow:  0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+		padding-bottom: 10px;
     }
     table{
 		margin-top: 1px;
+		margin-bottom: 5px;
         width: 100%;
 		height: 250px;
         border-bottom: 2px dashed #EEF1FF;
@@ -61,6 +63,9 @@
 	}
 	#month{
 		border: none;
+	}
+	#zone{
+		height: auto;
 	}
 </style>
 <body>
@@ -135,6 +140,10 @@
 												</select>
 											</td>
 										</tr>
+										<!--<tr>
+											<th class="tright">총급여</th>
+											<td><input type="number" name="total" id="tt">원</td>
+										</tr>-->
 									</table>
 									<div id="zone">
 										<div class="back-color">
@@ -150,11 +159,11 @@
 											</table>
 										</div>
 									</div>	
-									<div style="float:right;" id="total">
-										총급여 : <span id="totalspan"></span>원
-									</div>
-									
 								</div>
+									<!--<div style="float:right;" id="total">
+										총급여 : <input type="number" name="total" id="tt">원
+									</div>-->
+									
 							</form>
 							</div>
                </section>
@@ -204,7 +213,8 @@
 
 		var startMonth = document.getElementById("start-month").value;
 		var endMonth = document.getElementById("end-month").value;
-
+		//var tt = document.getElementById("tt").value;
+		var a = 0;
 		if(cate == 1 ){
 			bzone.style.display = 'none';
 			szone.style.display = 'block';
@@ -235,9 +245,9 @@
 									}
 								$('#s-table').append('<tr><td>초과수당</td><td>'+data[0].addOverTime+"(분)"+data[0].addCalc+"(원)"+'</td></tr>')
 								total += parseInt(data[0].addCalc);
-								$('#totalspan').text(total);
+								//$('input[name=total]').attr('value',total);
 								//$('#totalspan').append('<input type="number" value="'+total+'">'+"원");
-								$('#submit').append('<input type="submit" value="등록" class="btn-css">');
+								//$('#submit').append('<input type="submit" value="등록" class="btn-css">');
 							
 						},
 						error : function(){
@@ -273,9 +283,9 @@
 							for(var i = 0; i < data.length;i++){
 								$('#b-table').append('<tr><td>'+data[i].title+'</td><td>'+data[i].payment+'</td></tr>');
 								total2 += parseInt(data[i].payment);
+			
 							}
-							$('#totalspan').text(total2);
-							$('#submit').append('<input type="submit" value="등록" class="btn-css">');
+							//$('input[name=total]').attr('value',total2);
 						},
 						error : function(){
 							alert("실패");
@@ -291,6 +301,8 @@
 			bzone.style.display = 'block';
 			a();
 			b();
+			
+			//$('input[name=total]').attr('value',a);
 		}
 
 

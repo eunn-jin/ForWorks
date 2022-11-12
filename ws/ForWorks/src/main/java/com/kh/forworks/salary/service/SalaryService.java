@@ -33,6 +33,6 @@ public interface SalaryService {
 	//회원별 급여명세서
 	List<SalaryVo> salList(HashMap map);
 	//급여명세서 디테일조회
-	SalaryVo selectDetail(HashMap map);
+	SalaryVo selectDetail(String no);
 
 }

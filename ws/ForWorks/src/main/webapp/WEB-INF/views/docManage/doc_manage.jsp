@@ -93,6 +93,7 @@
 				        <div id="check-cate">
 				           <a href="${root}/docmanage/manage/1">일반문서</a>
 				           <a href="${root}/appmanage/manage/1">결재문서</a>
+                           <a href="${root}/appmanage/noelectman/1">비결재문서</a>
 				        </div>
 				        <div id="check-btn">
 				            <button onclick="location.href='${root}/docmanage/write'">+ 일반문서작성</button>
@@ -107,7 +108,7 @@
 				        
                         <c:forEach items="${voList}" var="x">
                             <div>${x.docNo}</div>
-                            <div>2022.12.31</div>
+                            <div>${x.contEndDate}</div>
                             <div><a href="${root}/docmanage/manDetail/${x.docNo}">${x.title}</a></div>
                             <div>전체공개</div>
                             <div>${x.enrollDate}</div>

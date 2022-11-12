@@ -11,21 +11,28 @@ public class DocControlVo {
 	private String adocNo;
 	private String docNo;
 	private String range;
-	public String[] range_;
+	private String[] range_;
 	
-	public String adocName;
-	public String adocContent;
-	public String draftDate;
-	public String noelecStatus;
-	public String approveNo;
-	public String approveStatus;
-	public String approveDate;
-	public String approveMember;
-	public String empNo;
-	public String empName;
+	private String adocName;
+	private String adocContent;
+	private String draftDate;
+	private String noelecStatus;
+	private String approveNo;
+	private String approveStatus;
+	private String approveDate;
+	private String approveMember;
+	private String empNo;
+	private String empName;
+	private String deptName;
+	private String deptNo;
 	
-	public String fileName;
-	public String changeFileName;
+	private String fileName;
+	private String changeFileName;
 	
-	public String signFile;
+	private String signFile;
+	
+	
+	private String noelecNo;
+	private String noelecOriginName;
+	private String noelecChangeName;
 }

@@ -65,13 +65,8 @@ public class SalaryController {
 	//급여명세서디테일(화면)
 	@GetMapping("payslipDetail/{no}")
 	public String payslipDetail(HttpSession session , @PathVariable String no , Model model) {
-		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
-		HashMap map = new HashMap();
-		String empNo = loginMember.getEmpNo();
-		map.put("empNo", empNo);
-		map.put("no", no);
 		
-		SalaryVo result = ss.selectDetail(map);
+		SalaryVo result = ss.selectDetail(no);
 		System.out.println("result출력" + result);
 		
 		result.setStartMonth(result.getStartMonth().substring(0,10));

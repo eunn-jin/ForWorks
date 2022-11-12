@@ -41,7 +41,7 @@
 					<table>
 						<tr>
 							<td>성명</td>
-							<td>${loginMember.empName}</td>
+							<td>${result.empName}</td>
 						</tr>
 						<tr>
 							<td>지급일</td>

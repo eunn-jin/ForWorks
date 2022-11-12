@@ -14,6 +14,7 @@
         width: 60vw;
         height: 60vh;
         font-size: 20px;
+        overflow-y: scroll;
     }
     
     .center-top{
@@ -50,8 +51,8 @@
                <div class="page-title">
                    <div class="row">
                        <div class="col-12 col-md-6 order-md-1 order-last">
-                           <h3>Layout Default</h3>
-                           <p class="text-subtitle text-muted">The default layout </p>
+                           <h3>[비전자]${vo.adocName}</h3>
+                           <p class="text-subtitle text-muted"><br> </p>
                        </div>
                        <div class="col-12 col-md-6 order-md-2 order-first">
                            <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
@@ -68,30 +69,32 @@
                         
 				            <table>
                                 <tr>
-                                    <td>${vo.title}</td>
+                                    <td>${vo.adocName}</td>
                                 </tr>
                                 <tr>
                                     <td>보존기간</td>
                                     <td>${vo.contEnrollDate} ~ ${vo.contEndDate}</td>
                                 </tr>
                                 <tr>
+                                    <td>기안자</td>
+                                    <td>${vo.empName}</td>
+                                </tr>
+                                <tr>
+                                    <td>부서</td>
+                                    <td>${vo.deptName}</td>
+                                </tr>
+                                <tr>
                                     <td>첨부파일</td>
-                                    <td>
-	                                    <c:if test="${fv ne null}">       	
-	                                    		<a download href="${root}/resources/doc-file/upload/${fv.uploadName}">${fv.originName}</a>
-	                                    </c:if>
+                                    <td>    	
+	                                    <a download href="${root}/resources/upload/noelecdoc/${vo.noelecChangeName}">${vo.noelecOriginName}</a>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="3"><div>${vo.content}</div></td>
+                                    <td colspan="3"><div>${vo.adocContent}</div></td>
                                 </tr>
                             </table>
-                                <c:if test="${fv ne null}">       	
-                                    <c:if test="${fv.ext eq '.jpg' || fv.ext eq '.png' }">
-                                   	<img style="width: 100px; height:100px;"src="${root}/resources/doc-file/upload/${fv.uploadName}"/>
+                                   	<img src="${root}/resources/upload/noelecdoc/${vo.noelecChangeName}"/>
                                     	
-                                    </c:if>
-                                </c:if>
                             
 
 

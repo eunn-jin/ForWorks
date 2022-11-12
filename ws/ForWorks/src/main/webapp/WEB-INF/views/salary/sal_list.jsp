@@ -20,7 +20,7 @@
         grid-template-rows: repeat(11,30px);
         text-align: center;
         background-color: white;
-      
+        overflow-y: scroll;
     }
     .div-top{
         font-size: larger;
@@ -39,6 +39,7 @@
         margin: 0 auto;
         display: flex;
         justify-content: space-around;
+        margin-top: 10px;
     }
     #check-date{
         display: inline-block;
@@ -120,15 +121,7 @@
                             <div class="div-top">보기</div>
 				        </div>
 				        
-				        <div id="page-area">
-				            <a href=""><</a>
-				            <a href="">1</a>
-				            <a href="">2</a>
-				            <a href="">3</a>
-				            <a href="">4</a>
-				            <a href="">5</a>
-				            <a href="">></a>
-				        </div>
+				        
 				
 				        <div id="search-area">
 				            

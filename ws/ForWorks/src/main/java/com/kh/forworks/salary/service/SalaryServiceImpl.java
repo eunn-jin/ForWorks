@@ -76,8 +76,8 @@ public class SalaryServiceImpl implements SalaryService{
 	}
 	//급여명세서 디테일조회
 	@Override
-	public SalaryVo selectDetail(HashMap map) {
-		return dao.selectDetail(sst,map);
+	public SalaryVo selectDetail(String no) {
+		return dao.selectDetail(sst,no);
 	}
 		
 	

@@ -247,7 +247,210 @@ public class AppDocmanageController {
 		return "docManage/form_test";
 	}
 	
-	
+	//비전자결재관리목록
+	/*
+	 * @GetMapping("noelectman/{pno}") public String noelectman(Model model
+	 * , @PathVariable int pno , HttpSession session) { //로그인 데이터 가져오기 MemberVo
+	 * loginMember = (MemberVo)session.getAttribute("loginMember"); if(loginMember
+	 * != null) { String empNo = loginMember.getEmpNo();
+	 * System.out.println("로그인번호확인 : " + empNo);
+	 * 
+	 * //페이징처리 int totalCount = ads.selectNoelctTotalCnt(empNo); PageVo pv =
+	 * Pagination.getPageVo(totalCount, pno, 5, 10); //게시글 가져오기 HashMap map = new
+	 * HashMap(); map.put("pv", pv); map.put("empNo", empNo); List<DocControlVo>
+	 * voList = ads.selectNoelectEmp(map);
+	 * 
+	 * System.out.println("게시글가져오기222" + voList);
+	 * 
+	 * model.addAttribute("voList",voList); model.addAttribute("pv",pv);
+	 * 
+	 * return "docManage/noelect_doc_manage"; }else {
+	 * session.setAttribute("toastMsg", "로그인 정보가 필요합니다."); return "redirect:/login";
+	 * }
+	 * 
+	 * }
+	 */
+	//비전자결재관리등록
+//	@GetMapping("noelctCont/{no}")
+//	public String noelectCont(@PathVariable String no , Model model) {
+//		//부서 가져오기
+//		List<MemberVo> dept = ads.selectDept();
+//		model.addAttribute("dept",dept);
+//		//번호로 문서 불러오기
+//		DocControlVo vo = (DocControlVo)ads.selectOneNo(no);
+//		model.addAttribute("vo",vo);
+//		
+//		return "docManage/noelect_man_detail";
+//	}
+	//비전자결재문서관리등록-게시상태수정
+//	@PostMapping("noelctCont/{no}")
+//	public String noelctCont(@PathVariable String no, DocControlVo vo , HttpSession session) {
+//
+//		String range3="";
+//		String[] range2 = vo.getRange_();
+//		if(range2 != null) {
+//			for(int i = 0 ; i < range2.length;i++) {
+//				range3+=range2[i]+",";
+//				vo.setRange(range3);
+//			}
+//		}
+//		
+//		System.out.println(vo.getContStatus());
+//		vo.setAdocNo(no);
+//		int result = ads.updateNoStatus(vo);
+//		System.out.println(result);
+//		
+//		if(result == 0) {
+//			session.setAttribute("toastMsg", "다시 시도해주세요.");
+//			return "docManage/noelect_man_detail";
+//			
+//		}else {
+//			session.setAttribute("toastMsg", "게시상태 변경 완료!");
+//			return "docManage/app_doc_manage";
+//		}
+//
+//	}
+	//게시중인 노일렉 보여주기@@
+	@GetMapping("noelect/{pno}")
+	public String noelect(Model model , @PathVariable int pno , HttpSession session) {
+		//로그인 데이터 가져오기
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		if(loginMember != null) {
+			String empNo = loginMember.getEmpNo();
+			System.out.println("로그인번호확인 : " + empNo);
+			
+			//페이징처리
+			int totalCount = ads.selectNoTotalCnt();
+			PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
+			//게시글 가져오기
+			List<DocControlVo> voList = ads.selectNoCnt(pv);
+			
+			System.out.println("게시글가져오기" + voList);
+			
+			model.addAttribute("voList",voList);
+			model.addAttribute("pv",pv);
+			
+			return "docManage/noelect_doc_list";		
+		}else {
+			session.setAttribute("toastMsg", "로그인 정보가 필요합니다.");
+			return "redirect:/login";
+		}
+		
+	}
+	//비전자결재 게시중 디테일@@
+	@GetMapping("nodetail/{no}")
+	public String noDetail(@PathVariable int no, Model model ) {
+		
+		DocControlVo vo = ads.selectNoDetail(no);
+		
+		System.out.println("디테일출력 : " + vo);
+		model.addAttribute("vo",vo);
+		return "docManage/noelect_detail";
+	}
+	//비전자결재문서등록(화면)@@
+	@GetMapping("nowrite")
+	public String nowrite(Model model, HttpSession session) {
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		if(loginMember != null) {
+		//부서 가져오기
+		List<MemberVo> dept = ads.selectDept();
+		model.addAttribute("dept",dept);
+
+		return "docManage/noelect_doc_write";
+		}else {
+			session.setAttribute("toastMsg", "로그인이 필요합니다.");
+			return "redirect:/login";
+		}
+		
+	}
+	//write에서 불러오기ajax@@
+	@PostMapping(value="noselect",produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String noselect(HttpSession session, String docDate) {
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		String empNo = loginMember.getEmpNo();
+		System.out.println("docDate" + docDate);
+		
+		HashMap map = new HashMap();
+		map.put("empNo", empNo);
+		map.put("docDate", docDate);
+		
+		List<DocControlVo> vo = ads.selectNoSelectListEmp(map);
+		System.out.println("cc"+vo);
+		Gson g = new Gson();
+		return g.toJson(vo);
+	}
+	//write에서 하나 선택@@
+	@PostMapping(value="selectOne2",produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String selectOne2(String adocNo) {
+		System.out.println("이거니 " + adocNo);
+		List<DocControlVo> result = ads.selectOneDoc2(adocNo);
+		System.out.println("하나꺼내옴 vo" + result);
+		Gson g = new Gson();
+		return g.toJson(result);
+	}
+	//wirte에서 폼으로 control등록@@
+	@PostMapping("nowrite")
+	public String nowrite(DocControlVo vo , HttpSession session) {
+		String range3="";
+		String[] range2 = vo.getRange_();
+		if(range2 != null) {
+			for(int i = 0 ; i < range2.length;i++) {
+				range3+=range2[i]+",";
+				vo.setRange(range3);
+			}
+		}
+		int result = ads.insertDocCont(vo);
+		if(result == 1) {
+			session.setAttribute("toastMsg", "등록성공");
+			return "docManage/noelect_doc_manage";
+		}else {
+			session.setAttribute("toastMsg", "다시시고");
+			return "docManage/noelect_doc_write";
+		}
+		
+	}
+	//nodocman 리스트 (등록된것만 가져오기)
+	@GetMapping("noelectman/{pno}")
+	public String noelectman(Model model , @PathVariable int pno , HttpSession session) {
+		//로그인 데이터 가져오기
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		if(loginMember != null) {
+			String empNo = loginMember.getEmpNo();
+			System.out.println("로그인번호확인 : " + empNo);
+			
+			//페이징처리
+			int totalCount = ads.selectNoelctTotalCnt(empNo);
+			PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
+			//게시글 가져오기
+			HashMap map = new HashMap();
+			map.put("pv", pv);
+			map.put("empNo", empNo);
+			List<DocControlVo> voList = ads.selectNoelectEmp(map);
+			
+			System.out.println("게시글가져오기222" + voList);
+			
+			model.addAttribute("voList",voList);
+			model.addAttribute("pv",pv);
+			
+			return "docManage/noelect_doc_manage";		
+		}else {
+			session.setAttribute("toastMsg", "로그인 정보가 필요합니다.");
+			return "redirect:/login";
+		}
+		
+	}
+
+	//nodocman 리스트 디테일 (게시상태 수정 화면)--해야함
+	@GetMapping("noelctCont/{no}")
+	public String noelectCont(@PathVariable String no , Model model) {
+		//번호로 문서 불러오기
+		DocControlVo vo = (DocControlVo)ads.selectOneNo(no);
+		model.addAttribute("vo",vo);
+		return "docManage/noelect_man_detail";
+	}
+	//nodocman 리스트 디테일 (게시상태 수정 진행)--해야함
 	
 	
 	
