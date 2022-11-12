@@ -98,5 +98,11 @@ public interface ApprovService {
 	
 	//파일 받아오기
 	DocFileVo selectDocFile(String adocNo);
+	
+	//협조 관련자 확인
+	int selectCoopDocEmpNo(ApprovDocumentVo vo);
+	
+	//참조 관련자 확인
+	int selectReferDocEmpNo(ApprovDocumentVo vo);
 
 }

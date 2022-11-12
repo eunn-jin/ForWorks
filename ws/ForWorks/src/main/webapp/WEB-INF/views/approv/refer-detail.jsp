@@ -229,7 +229,7 @@
 
                     <div class="btn-area">
                         <button class="approv-btn" onclick="location.href='${root}/approv/main'">목록보기</button>
-                        <c:if test="${docfile !empty}">
+                        <c:if test="${!empty docfile}">
                         <button type="button" class="approv-btn file-btn" onclick="location.href='${root}/download/${approvDoc.adocNo}';">첨부파일받기</button>
                         </c:if>
                     </div>

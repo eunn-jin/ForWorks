@@ -134,4 +134,10 @@ public interface ApprovDao {
 	//문서 파일 받아오기
 	DocFileVo selectDocFile(SqlSessionTemplate sst, String adocNo);
 
+	//협조 관련자 확인
+	int selectCoopDocEmpNo(SqlSessionTemplate sst, ApprovDocumentVo vo);
+	
+	//참조 관련자 확인
+	int selectReferDocEmpNo(SqlSessionTemplate sst, ApprovDocumentVo vo);
+
 }
