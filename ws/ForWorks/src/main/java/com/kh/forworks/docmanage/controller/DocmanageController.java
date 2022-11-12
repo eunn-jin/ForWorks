@@ -96,7 +96,7 @@ public class DocmanageController {
 			map.put("empNo", empNo);
 			List<DocVo> voList = ds.selectDocByEmp(map);
 			
-			System.out.println(voList);
+			System.out.println("voList출력" + voList);
 			
 			model.addAttribute("voList",voList);
 			model.addAttribute("pv",pv);
@@ -155,14 +155,12 @@ public class DocmanageController {
 		String empNo = loginMember.getEmpNo();
 		dv.setEmpNo(empNo);
 		//범위
-//		DocControlVo dcv = new DocControlVo();
 		String range3="";
 		String[] range2 = dv.getRange_();
 		if(range2 != null) {
 			for(int i = 0 ; i < range2.length;i++) {
 				range3+=range2[i]+",";
 				dv.setRange(range3);
-//				dcv.setRange(range3);
 			}
 		}
 		
@@ -204,7 +202,7 @@ public class DocmanageController {
 		int result = ds.write(dv,df);
 		if(result == 1) {
 			session.setAttribute("toastMsg", "문서 등록 완료");
-			return "docManage/doc_manage";
+			return "redirect:/docmanage/manage/1";
 		}else {
 			session.setAttribute("toastMsg", "다시 시도해주세요");
 			return "docManage/doc_write";
@@ -215,7 +213,7 @@ public class DocmanageController {
 	@GetMapping("manDetail/{no}")
 	public String manDetail(@PathVariable String no , Model model) {
 		DocVo vo = ds.selectOneDoc(no);
-
+		System.out.println("문서관리디테일1" + vo);
 		if(vo.getFileNo() != null) {
 			DfileVo fv = ds.selectFileDoc(no);
 			fv.setExt(fv.getOriginName().substring(fv.getOriginName().lastIndexOf('.')));
@@ -236,7 +234,7 @@ public class DocmanageController {
 		
 		if(result == 1) {
 			session.setAttribute("toastMsg", "게시상태 변경 완료!");
-			return "docManage/manage/1";
+			return "redirect:/docmanage/manage/1";
 		}else {
 			session.setAttribute("toastMsg", "보존기간을 확인해주세요.");
 			return "docManage/doc_man_detail";
@@ -255,7 +253,6 @@ public class DocmanageController {
 		HashMap map = new HashMap();
 		map.put("range", range);
 		map.put("sContent", sContent);
-		
 		System.out.println("출력문" + range +sContent);
 		
 		List<DocVo> result = ds.selectSearch(map);

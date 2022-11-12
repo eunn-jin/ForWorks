@@ -42,6 +42,24 @@ public interface AppDocmanageDao {
 	List<ApprovDocumentVo> selectFile(SqlSessionTemplate sst, String adocNo);
 	//contdoc받기
 	List<DocControlVo> selectOneContDoc(SqlSessionTemplate sst, String no);
+	//비전자결재문서 총갯수(직원별)
+	int selectNoelectTotalCnt(SqlSessionTemplate sst, String empNo);
+	//비전자결재문서리스트(직원별)
+	List<DocControlVo> selectNoelectEmp(SqlSessionTemplate sst, HashMap map);
+	//비전자결재문서 하나 불러오기
+	DocControlVo selectOneNo(SqlSessionTemplate sst, String no);
+	//비전자결재문서 문서관리등록
+	int updateNoStatus(SqlSessionTemplate sst, DocControlVo vo);
+	//비전자결재문서 게시중
+	int selectNoToTalCnt(SqlSessionTemplate sst);
+	//공개중 비전자결재리스트가져오기
+	List<DocControlVo> selectNoList(SqlSessionTemplate sst, PageVo pv);
+	//비전자결재 디테일
+	DocControlVo selectNoDetail(SqlSessionTemplate sst, int no);
+	//write에서 문서가져오기
+	List<DocControlVo> selectNoSelectListEmp(SqlSessionTemplate sst, HashMap map);
+	//write에서 문서하나선택
+	List<DocControlVo> selectOneDoc2(SqlSessionTemplate sst, String adocNo);
 	
 	
 	

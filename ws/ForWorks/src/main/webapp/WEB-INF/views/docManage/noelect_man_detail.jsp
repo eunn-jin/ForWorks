@@ -33,9 +33,6 @@
         text-align: center;
         margin-top: 50px;
     }
-    table>tr{
-        border-bottom: 1px solid gray;
-    }
 </style>
 <body>
 
@@ -64,44 +61,46 @@
                    </div>
                </div>
                <section class="section">
-					<div id="wrap">
+                <div id="wrap">
+                    <form action="" method="post">
+
+                    
+                    <table>
+                        <tr>
+                            <td> 
+                                <label><input type="checkbox" name="contStatus" id="Y" value="Y"  <c:if test="${vo.contStatus eq 'Y'}">checked</c:if>>게시중</label>
+                                <label><input type="checkbox" name="contStatus" id="N" value="N" <c:if test="${vo.contStatus eq 'N'}">checked</c:if>>비공개</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>${vo.adocName}</td>
+                        </tr>
+                        <tr>
+                            <td>보존기간</td>
+                            <td><input type="date" name="contEnrollDate"> ~ <input type="date" name="contEndDate"></td>
+                        </tr>
+                        <th>공개범위</th>
+                        <td>
+                              <label><input type="checkbox" name="range_" id="all" value="OPEN">전체공개</label>
+                            <c:forEach items="${dept}" var="d">
+                              <label> <input type="checkbox" name="range_" value="${d.deptNo}${d.deptName}">${d.deptName}</label>
+                            </c:forEach>               
+                        </td>
+                        <tr>
+                            <td colspan="3"><div>${vo.adocContent}</div></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img src="${root}/resources/doc-file/upload/${vo.noelecChangeName}"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <input type="submit" value="게시상태수정">
+                    </form>
+
+                    <div id="back-btn"><button  onclick="window.history.back()">목록</button></div>
                         
-				            <table>
-                                <tr>
-                                    <td>${vo.title}</td>
-                                </tr>
-                                <tr>
-                                    <td>보존기간</td>
-                                    <td>${vo.contEnrollDate} ~ ${vo.contEndDate}</td>
-                                </tr>
-                                <tr>
-                                    <td>첨부파일</td>
-                                    <td>
-	                                    <c:if test="${fv ne null}">       	
-	                                    		<a download href="${root}/resources/doc-file/upload/${fv.uploadName}">${fv.originName}</a>
-	                                    </c:if>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3"><div>${vo.content}</div></td>
-                                </tr>
-                            </table>
-                                <c:if test="${fv ne null}">       	
-                                    <c:if test="${fv.ext eq '.jpg' || fv.ext eq '.png' }">
-                                   	<img style="width: 100px; height:100px;"src="${root}/resources/doc-file/upload/${fv.uploadName}"/>
-                                    	
-                                    </c:if>
-                                </c:if>
-                            
-
-
-				            <div id="center">
-				                
-				            </div>
-				            
-				            <div id="back-btn"><button  onclick="window.history.back()">목록</button></div>
-				                
-				    </div>
+            </div>
                </section>
            </div>
            
@@ -110,6 +109,8 @@
 </div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
+
+
 <script>
 	
 	$().ready(function() {

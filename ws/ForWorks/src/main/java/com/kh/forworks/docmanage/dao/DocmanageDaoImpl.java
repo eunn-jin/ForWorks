@@ -47,7 +47,7 @@ public class DocmanageDaoImpl implements DocmanageDao {
 	//문서관리 디테일
 	@Override
 	public DocVo selectOneDoc(SqlSessionTemplate sst, String no) {
-		System.out.println("=======================");
+		System.out.println("======================="+no);
 		return sst.selectOne("docMapper.selectOneDoc" , no);
 	}
 	//공개범위 받아오기

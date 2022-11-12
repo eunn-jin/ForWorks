@@ -31,6 +31,6 @@ public interface SalaryDao {
 	//회원별 급여명세서 조회
 	List<SalaryVo> selectSalList(SqlSessionTemplate sst, HashMap map);
 	//급여명세서 디테일조회
-	SalaryVo selectDetail(SqlSessionTemplate sst, HashMap map);
+	SalaryVo selectDetail(SqlSessionTemplate sst, String no);
 
 }

@@ -99,4 +99,50 @@ public class AppDocmanageServiceImpl implements AppDocmanageService{
 	public List<DocControlVo> selectOneContDoc(String no) {
 		return dao.selectOneContDoc(sst,no);
 	}
+	//비전자결재문서 총갯수 직원별
+	@Override
+	public int selectNoelctTotalCnt(String empNo) {
+		return dao.selectNoelectTotalCnt(sst,empNo);
+	}
+	//비전자결재문서불러오기(직원별)
+	@Override
+	public List<DocControlVo> selectNoelectEmp(HashMap map) {
+		return dao.selectNoelectEmp(sst,map);
+	}
+	//비전자결재문서 하나불러오기
+	@Override
+	public DocControlVo selectOneNo(String no) {
+		return dao.selectOneNo(sst,no);
+	}
+	//비전자결재문서 문서관리등록
+	@Override
+	public int updateNoStatus(DocControlVo vo) {
+		return dao.updateNoStatus(sst,vo);
+	}
+	//비전자결재게시중 전체갯수
+	@Override
+	public int selectNoTotalCnt() {
+		return dao.selectNoToTalCnt(sst);
+	}
+	//공개중 비전자결재 가져오기
+	@Override
+	public List<DocControlVo> selectNoCnt(PageVo pv) {
+		return dao.selectNoList(sst,pv);
+	}
+	//비전자결재 디테일
+	@Override
+	public DocControlVo selectNoDetail(int no) {
+		return dao.selectNoDetail(sst,no);
+	}
+	//write에서 문서목록가져오기
+	@Override
+	public List<DocControlVo> selectNoSelectListEmp(HashMap map) {
+		return dao.selectNoSelectListEmp(sst,map);
+	}
+	//write에서 비전자선택
+	@Override
+	public List<DocControlVo> selectOneDoc2(String adocNo) {
+		return dao.selectOneDoc2(sst,adocNo);
+	}
+
 }
