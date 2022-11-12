@@ -290,11 +290,7 @@
 	
 	<select id="selectApprovDocEmpNo" resultType="int">
 		SELECT
-			APPROVE_NO,
-			ADOC_NO,
-			APPROVE_STATUS,
-			APPROVE_DATE,
-			EMP_NO
+			COUNT(EMP_NO)
 		FROM
 		DOCAPPROVE
 		WHERE
@@ -302,6 +298,29 @@
 		AND
 		ADOC_NO = #{adocNo}
 	</select>
+	
+	<select id="selectReferDocEmpNo" resultType="int">
+		SELECT
+			COUNT(EMP_NO)
+		FROM
+		DOCREFER
+		WHERE
+		EMP_NO = #{empNo}
+		AND
+		ADOC_NO = #{adocNo}
+	</select>
+	
+	<select id="selectCoopDocEmpNo" resultType="int">
+		SELECT
+			COUNT(EMP_NO)
+		FROM
+		DOCCOOP
+		WHERE
+		EMP_NO = #{empNo}
+		AND
+		ADOC_NO = #{adocNo}
+	</select>
+	
 	
 	<select id="selectApprovDocOneByNo" resultType="ApprovDocumentVo">
 		SELECT
@@ -335,7 +354,7 @@
         ON D.DEPT_NO = E.DEPT_NO
         WHERE
         DA.ADOC_NO = #{dno}
-        ORDER BY E.POS_NO
+        ORDER BY E.POS_NO DESC
 	</select>
 	
 	<select id="selectCoopMemberListByAdocNo" resultType="ApprovDocumentVo">
@@ -350,7 +369,7 @@
         ON D.DEPT_NO = E.DEPT_NO
         WHERE
         DR.ADOC_NO = #{dno}
-        ORDER BY E.POS_NO
+        ORDER BY E.POS_NO DESC
         
 	</select>
 	
@@ -365,7 +384,7 @@
          	ON S.EMP_NO = E.EMP_NO
         WHERE
         D.ADOC_NO = #{dno}
-        ORDER BY E.POS_NO	
+        ORDER BY E.POS_NO DESC
 	</select>
 	
 	<select id="selectSignListByAdocNo" resultType="ApprovDocumentVo">
@@ -381,7 +400,7 @@
         D.ADOC_NO = #{dno} 
         AND
         D.APPROVE_STATUS = 'Y'
-        ORDER BY E.POS_NO
+        ORDER BY E.POS_NO DESC
 	</select>
 	
 	<update id="updateDocCoopByEmpNo">
@@ -406,8 +425,7 @@
 	
 	<select id="selectApprovDocEditEmpNo" resultType="int">
 		SELECT
-			ADOC_NO,
-			EMP_NO
+			COUNT(EMP_NO)
 		FROM
 		APPROVEDOCUMENT
 		WHERE

@@ -261,7 +261,17 @@ public class ApprovServiceImpl implements ApprovService {
 		return dao.selectDocFile(sst, adocNo);
 	}
 
+	//협조 관련자 확인
+	@Override
+	public int selectCoopDocEmpNo(ApprovDocumentVo vo) {
+		return dao.selectCoopDocEmpNo(sst, vo);
+	}
 
+	//참조 관련자 확인
+	@Override
+	public int selectReferDocEmpNo(ApprovDocumentVo vo) {
+		return dao.selectReferDocEmpNo(sst, vo);
+	}
 
 	
 	
