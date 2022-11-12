@@ -6,13 +6,8 @@
 <%@page import= "com.kh.forworks.plan.dto.PlanDto" %>
 
 <%
-	//List<PlanDto> list = (ArrayList<PlanDto>)request.getAttribute("showSchedule");
-	System.out.println("@@@###################################");
-	System.out.println("@@@###################################");
-	System.out.println("@@@###################################");
-	System.out.println("@@@###################################");
-	System.out.println("@@@###################################");
-	//System.out.println(list);
+	List<PlanDto> list = (ArrayList<PlanDto>)request.getAttribute("showSchedule");
+
 %>
     
 <html>
@@ -65,7 +60,7 @@
                             			droppable : true,
                             			editable : true,
                             			nowIndicator: true, // 현재 시간 마크
-                            			locale: 'ko' // 한국어 설정
+                            			locale: 'ko', // 한국어 설정
                             			events: [
                             				<% 
                             			  	  for (int i = 0; i < list.size(); i++) {
