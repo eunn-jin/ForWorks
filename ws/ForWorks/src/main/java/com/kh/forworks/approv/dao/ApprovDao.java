@@ -90,10 +90,10 @@ public interface ApprovDao {
 	int selectApprovDocEditEmpNo(SqlSessionTemplate sst, ApprovDocumentVo vo);
 
 	//문서 수정
-	int updateApprovDoc(SqlSessionTemplate sst, DocApprovVo vo);
+	int updateApprovDoc(SqlSessionTemplate sst, ApprovDocumentVo vo);
 
 	//문서 결재 정보 초기화
-	int updateDocApprovEdit(SqlSessionTemplate sst, DocApprovVo vo);
+	int updateDocApprovEdit(SqlSessionTemplate sst, ApprovDocumentVo vo);
 
 	//문서 삭제
 	int deleteApprovDoc(SqlSessionTemplate sst, DocApprovVo vo);

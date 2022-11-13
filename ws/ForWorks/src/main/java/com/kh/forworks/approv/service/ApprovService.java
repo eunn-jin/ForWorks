@@ -70,7 +70,7 @@ public interface ApprovService {
 	int selectApprovDocEditEmpNo(ApprovDocumentVo vo);
 	
 	//문서 수정
-	int updateApprovDoc(DocApprovVo vo);
+	int updateApprovDoc(ApprovDocumentVo vo);
 	
 	//문서 삭제
 	int deleteApprovDoc(DocApprovVo vo);

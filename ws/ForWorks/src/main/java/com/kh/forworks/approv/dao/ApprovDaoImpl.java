@@ -167,13 +167,13 @@ public class ApprovDaoImpl implements ApprovDao {
 	}
 	//문서 수정
 	@Override
-	public int updateApprovDoc(SqlSessionTemplate sst, DocApprovVo vo) {
+	public int updateApprovDoc(SqlSessionTemplate sst, ApprovDocumentVo vo) {
 		return sst.update("approvMapper.updateApprovDoc", vo);
 	}
 	
 	//문서 결제 초기화
 	@Override
-	public int updateDocApprovEdit(SqlSessionTemplate sst, DocApprovVo vo) {
+	public int updateDocApprovEdit(SqlSessionTemplate sst, ApprovDocumentVo vo) {
 		return sst.update("approvMapper.updateDocApprovEdit", vo);
 	}
 	
