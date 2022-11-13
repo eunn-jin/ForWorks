@@ -83,17 +83,26 @@
         console.log("qq::"+awInsert);
         var xinsert = [];
         const lt = ${fn:length(qacgList)};
-        console.log(lt);
+        console.log("항목 길이::"+lt);
         var ct =0;
         for(var i=0;i<lt; i++){
             console.log(""+awInsert[i].value);
-            xinsert.push(awInsert[i].value.trim());
+            console.log(awInsert[i].length != 0);
+            if (awInsert[i] != '') {
+                xinsert.push(awInsert[i].value.trim());
+            }
         }
 
         
         console.log(xinsert);
         var pno = +${qavo.qaNo};
-        console.log("번호"+pno);
+        console.log("번호::"+pno);
+        console.log((awInsert.length));
+
+        if (0==0) {
+            return;
+        }
+
         $.ajax({
             url : "${root}/QA/insert/"+pno,
             type : "POST",
@@ -157,6 +166,16 @@
             }
             
         }
+
+        // 만약 마감일 <= 오늘 리턴
+        var ed = new Date('${qavo.qaEdate}');
+        var today = new Date();
+        if(ed<= today){
+            alert('마감일이 지났습니다.');
+            return false;
+        }
+        
+
         console.log("ct::"+ct);
         if (ct==0) {
             alert('변경내용이 없습니다');
@@ -166,6 +185,8 @@
         console.log(xxx);
         var pno = +${qavo.qaNo};
         console.log("번호"+pno);
+
+
         $.ajax({
             url : "${root}/QA/updateAw/"+pno,
             type : "POST",
