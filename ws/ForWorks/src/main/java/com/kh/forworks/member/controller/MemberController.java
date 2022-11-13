@@ -156,7 +156,7 @@ public class MemberController {
 		try {
 			Date edate = new SimpleDateFormat("yy/MM/dd").parse(date);
 			long myday = (edate.getTime() - today.getTime()) / 1000 / (24*60*60);
-			model.addAttribute("fwDate", myday*-1);
+			session.setAttribute("fwDate", myday*-1);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

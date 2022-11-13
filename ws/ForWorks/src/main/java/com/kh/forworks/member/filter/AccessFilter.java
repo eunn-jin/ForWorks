@@ -38,7 +38,7 @@ public class AccessFilter implements Filter {
 	    		rootPath + "/findPwd", 
 	    		rootPath + "/foradmin", 
 	    		rootPath + "/foradmin/login",
-	    		rootPath + "/resources/css/**"};
+	    		rootPath + "/resources/**"};
 	    String adminPage = rootPath + "/foradmin/**";
 	    
 	    HttpServletResponse httpResponse = (HttpServletResponse) response;
