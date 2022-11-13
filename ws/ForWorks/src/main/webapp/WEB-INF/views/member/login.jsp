@@ -67,7 +67,7 @@
             <input type="submit" value="로그인" class="login-btn solid" />
           </form>
           <div class="media-panel">
-            <span>지금 그룹에 참여해보세요! &nbsp; <a href="/ForWorks/join">회원가입</a></span>
+            <span>지금 그룹에 참여해보세요! &nbsp; <a href="${root}/join">회원가입</a></span>
           </div>
         </div>
       </div>
@@ -76,7 +76,7 @@
           <div class="content">
             <h3 style="color: #7d6cff">그룹에 참여해보세요!</h3>
             <p>올인원 업무플랫폼 FOR-WORKS와 함께 새로운 회사 생활을 경험해 보세요.</p>
-            <a href="/ForWorks/join" class="btn login-btn transparent" id="signup-btn">회원가입</a>
+            <a href="${root}/join" class="btn login-btn transparent" id="signup-btn">회원가입</a>
           </div>
           <img src="${root}/resources/img/member-imgs/undraw_remotely_-2-j6y.svg" class="image" alt="" />
         </div>
