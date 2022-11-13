@@ -99,9 +99,7 @@
         console.log("번호::"+pno);
         console.log((awInsert.length));
 
-        if (0==0) {
-            return;
-        }
+
 
         $.ajax({
             url : "${root}/QA/insert/"+pno,
