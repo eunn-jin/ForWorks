@@ -51,9 +51,7 @@
                                         <!-- <button type="button" class="myBtn" id="confirmStart">투표</button> -->
                                         <button type="button" class="myBtn" onclick="Confirm();">투표</button>
                                     </c:when>
-                                    <c:otherwise>
-                                        대상자가 아닙니다.
-                                    </c:otherwise>
+ 
                                 </c:choose>
                                 <a href="${root}/vote/list/1"><button type="button" class="myBtn">Back</button></a>
                                 

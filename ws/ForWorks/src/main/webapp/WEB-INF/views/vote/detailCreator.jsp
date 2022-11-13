@@ -42,6 +42,9 @@
                                 <button type="button" class="myBtn" id="e">종료</button>
                                 <button type="button" class="myBtn" id="u">수정</button>
                                 <button type="button" class="myBtn" id="d">삭제</button>
+                                <c:if test="${loginMember.opLevel eq 3}">
+                                    <a href="${root}/vote/detailUser/${vtvo.vtNo}"><button class="btn btn-primary">투표참여하기</button></a>
+                                </c:if>
                             </div>
                         
                 </section>
@@ -90,22 +93,23 @@
     var e = document.getElementById('e');
     e.addEventListener('click',function () {
         //마감일 현재 날짜 확인
-        if (edday<=today) {
-            alert('마감일이 지났습니다.');
-            return;
-        }else if(stday >= today){
+        if(stday >= today){
             alert('시작되지 않은 투표입니다.');
             return;
         }else if(st == 'E'){
             alert('이미 종료된 투표입니다.');
             return;
         }
-       location.href = "${root}/vote/end/"+${vtvo.vtNo};
+        location.href = "${root}/vote/end/"+${vtvo.vtNo};
     });
 
     var u = document.getElementById('u');
     u.addEventListener('click',function () {
-        if (edday<=today) {
+        if(stday <= today && edday >= today){
+            alert('설문이 진행중 입니다.');
+            return;
+        }
+        else if (edday<=today) {
             alert('마감일이 지났습니다.');
             return;
         }else if(st == 'E'){
@@ -117,7 +121,7 @@
 
     var d = document.getElementById('d');
     d.addEventListener('click',function () {
-       location.href = "${root}/vote/delete/"+${vtvo.vtNo};
+        location.href = "${root}/vote/delete/"+${vtvo.vtNo};
     });
 
 </script>
