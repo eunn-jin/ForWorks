@@ -11,4 +11,5 @@ public class VoteAttachmentsVo {
 	private String vtatUpload;
 	private String vtNo;
 	
+	private String pno;
 }

@@ -31,8 +31,7 @@ public class CommentsController {
 		
         vo.setEmpNo(loginMember.getEmpNo());
         
-        //db 다녀오기
-        System.out.println(vo);
+       // System.out.println(vo);
         int result =  cmsv.write(vo);
         //System.out.println("db갔다옴");
         //결과응답

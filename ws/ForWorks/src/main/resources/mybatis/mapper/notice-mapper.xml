@@ -11,7 +11,8 @@
 	</select>
 
 	<select id="selectList" resultType="com.kh.forworks.notice.vo.NoticeVo">
-		SELECT 
+		SELECT ROWNUM, X.*
+		FROM(SELECT 
 			N.NTNO
 			,N.NT_TITLE
 			,N.NT_CONTENT
@@ -33,7 +34,9 @@
 		
 			WHERE NT_STATUS ='N'
 			AND NT_TITLE LIKE'%${keyword}%'
-			ORDER BY NTNO DESC
+            ORDER BY NTNO
+		    )X
+		 ORDER BY ROWNUM DESC
 	</select>
 	
 	<update id="increaseCnt">

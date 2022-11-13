@@ -129,15 +129,15 @@ public class QAController {
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 		qavo.setEmpNo(loginMember.getEmpNo()); //설문 vo에 로그인회원 번호 대입
 		
-		System.out.println(qavo);
-		System.out.println(qacg);
-		System.out.println(qapt);
-		System.out.println(qaatVo);
+		//System.out.println(qavo);
+		//System.out.println(qacg);
+		//System.out.println(qapt);
+		//System.out.println(qaatVo);
 		
-		System.out.println(qacg.getQacgName());
+		//System.out.println(qacg.getQacgName());
 		//질문 항목 문자열 자르기및 배열에 담기		
 		String[] qacgArr =qacg.getQacgName().split(",");
-		System.out.println(qacgArr.length);
+		//System.out.println(qacgArr.length);
 		
 		
 		
@@ -192,11 +192,11 @@ public class QAController {
 		//참여 인원수 가져오기
 		int checkNum = qasv.selectNum(pno);
 		
-		System.out.println(qavo);		//QAVo   :: 설문
-		System.out.println(qacgList);	//QACategoryVo :: 설문 항목
-		System.out.println(qaptList);	//QAParticipationVo :: 설문 참가자
-		System.out.println(qaatList);	//QAAT :: 설문 첨부파일
-		System.out.println(qaawList);	//QAAW :: 참가자 답변
+		//System.out.println(qavo);		//QAVo   :: 설문
+		//System.out.println(qacgList);	//QACategoryVo :: 설문 항목
+		//System.out.println(qaptList);	//QAParticipationVo :: 설문 참가자
+		//System.out.println(qaatList);	//QAAT :: 설문 첨부파일
+		//System.out.println(qaawList);	//QAAW :: 참가자 답변
 		
 		
 		model.addAttribute("qavo", qavo);
@@ -240,10 +240,10 @@ public class QAController {
 		
 		//참가인원수 가져오기
 		
-		System.out.println(qavo);
-		System.out.println(qacgList);
-		System.out.println(qaptList);
-		System.out.println(qaatList);
+//		System.out.println(qavo);
+//		System.out.println(qacgList);
+//		System.out.println(qaptList);
+//		System.out.println(qaatList);
 		
 		model.addAttribute("qavo", qavo);
 		model.addAttribute("qacgList", qacgList);
@@ -262,11 +262,11 @@ public class QAController {
 		qavo.setQaNo(pno);
 		qacg.setQaNo(pno);
 		
-		System.out.println("-------수정페이지 Post값 넘기기-------");
-		System.out.println(qavo);
-		System.out.println(qacg);
-		System.out.println(qaat);
-		System.out.println("///////////////////////////////////");
+//		System.out.println("-------수정페이지 Post값 넘기기-------");
+//		System.out.println(qavo);
+//		System.out.println(qacg);
+//		System.out.println(qaat);
+//		System.out.println("///////////////////////////////////");
 		
 		
 		//기존 파일 삭제
@@ -275,17 +275,17 @@ public class QAController {
 		
 		//첨부파일 확인 (설문첨부파일 테이블에 등록된 파일이 있으면 update, 등록된 파일이 없으면 insert)
 		QAAttachmentsVo qaatCheck = qasv.checkFile(pno);
-		System.out.println("파일 확인(정보수정post)::"+qaatCheck);
+		//System.out.println("파일 확인(정보수정post)::"+qaatCheck);
 		
 		//해당 게시글의 첨부파일이있으면 삭제
-		System.out.println("파일공백여부::"+!(qavo.getQaFile().isEmpty()));
+		//System.out.println("파일공백여부::"+!(qavo.getQaFile().isEmpty()));
 		if (!(qavo.getQaFile().isEmpty())) {
 			String fileName = qaat.getQaatOrigin();
 			File f =  new File(savePath +  fileName);
-			System.out.println(f);
+			//System.out.println(f);
 			if(f.exists()) { //파일 존재하는지 확인
 				f.delete();
-				System.out.println("첨부파일(공지) 삭제완료");
+				//System.out.println("첨부파일(공지) 삭제완료");
 			}
 		}
 		
@@ -301,7 +301,7 @@ public class QAController {
 			qaat.setQaatOrigin(originName);
 			qaat.setQaatPath(savePath);
 			qaat.setQaNo(pno);
-			System.out.println("설문파일::"+qaat);
+			//System.out.println("설문파일::"+qaat);
 		}else {qaat=null;}
 		
 		String[] qacgArr=null ;
@@ -360,16 +360,21 @@ public class QAController {
 		//설문지와 회원번호를 참고해서 해당 설문지에대한 사원의 답변 내용 가져오기
 		//참여여부::'N' == Null
 		List<QAAnswerVo> chaw = qasv.checkAnswer(map);
-		System.out.println(chaw);
+		//System.out.println(chaw);
 		
 		
-		System.out.println(qavo);
-		System.out.println(qacgList);
-		System.out.println(qaptList);
+		//첨부파일 가져오기
+		QAAttachmentsVo qaatList = qasv.seleQaat(pno);
+		
+//		System.out.println(qavo);
+//		System.out.println(qacgList);
+//		System.out.println(qaptList);
+//		System.out.println(qaatList);
 		
 		model.addAttribute("qavo", qavo);
 		model.addAttribute("qacgList", qacgList);
 		model.addAttribute("qaptList", qaptList);
+		model.addAttribute("qaatList", qaatList);
 		model.addAttribute("check", check);
 		model.addAttribute("chaw",chaw);
 		
@@ -385,8 +390,8 @@ public class QAController {
 		// 설문번호, 회원번호, 답변번호 ,답변 내용
 		
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
-		System.out.println(pno);					//설문 번호
-		System.out.println(loginMember.getEmpNo());	//회원 번호
+//		System.out.println(pno);					//설문 번호
+//		System.out.println(loginMember.getEmpNo());	//회원 번호
 		
 		
 		HashMap<String, String> map = new HashMap<String, String>();
@@ -397,16 +402,16 @@ public class QAController {
 		QAParticipationVo checkpt = qasv.checkQA(map);
 		
 		
-		System.out.println(vo);
+		//System.out.println(vo);
 		//set 회원 번호, 게시글 번호, 
 		vo.setQaNo(pno);
 		vo.setEmpNo(loginMember.getEmpNo());
 		
 		
-		System.out.println("===========");
-		System.out.println(vo);
-		System.out.println(checkpt);
-		System.out.println(awvo);
+//		System.out.println("===========");
+//		System.out.println(vo);
+//		System.out.println(checkpt);
+//		System.out.println(awvo);
 		//설문 입력내용 넣기
 		int result = qasv.insertUserQA(awvo, checkpt, map);
 		
@@ -422,8 +427,8 @@ public class QAController {
 	public String updateAw(@PathVariable String pno,QAAnswerVo awvo, HttpSession session, Model model) {
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 		awvo.setQaNo(pno);
-		System.out.println(pno);
-		System.out.println(awvo);
+//		System.out.println(pno);
+//		System.out.println(awvo);
 		
 		int result = qasv.editAw(awvo, loginMember.getEmpNo());
 		
@@ -434,6 +439,6 @@ public class QAController {
 		}
 		
 	}
-		
+	
 	
 }

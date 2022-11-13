@@ -232,6 +232,7 @@
 		JOIN DEPARTMENT D
 		ON D.DEPT_NO = E.DEPT_NO
 		WHERE VT_NO = #{pno}
+		ORDER BY DEPT_NAME
 	</select>
 	
 	<select id="selectVtat" resultType="com.kh.forworks.vote.vo.VoteAttachmentsVo">

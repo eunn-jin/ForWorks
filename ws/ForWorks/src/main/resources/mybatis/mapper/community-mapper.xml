@@ -60,13 +60,13 @@
 		WHERE C.CMU_STATUS = 'N'
 		<choose>
 			<when test="condition == 'title'">
-				AND C.CMU_TITLE LIKE 
+				AND lower(C.CMU_TITLE) LIKE 
 			</when>
 			<otherwise><!-- == else -->
-				AND C.CMU_CONTENT LIKE 
+				AND lower(E.EMP_NAME) LIKE 
 			</otherwise>
 		</choose>
-		'%${keyword}%'		
+		lower('%${keyword}%')		
 		
 		ORDER BY C.CMU_NO DESC
 	</select>
@@ -98,13 +98,13 @@
 		
 		<choose>
 			<when test="condition == 'title'">
-				AND C.CMU_TITLE LIKE 
+				AND lower(C.CMU_TITLE) LIKE 
 			</when>
 			<otherwise><!-- == else -->
-				AND C.CMU_CONTENT LIKE 
+				AND lower(E.EMP_NAME) LIKE 
 			</otherwise>
 		</choose>
-		'%${keyword}%'			
+		lower('%${keyword}%')			
 		
 		AND C.CMU_READ = #{cmuRead}
 		ORDER BY ROWNUM
