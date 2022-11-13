@@ -483,7 +483,7 @@ public class ApprovController {
 		
 		int result = service.deleteFormOne(vo);
 		session.setAttribute("toastMsg", "삭제되었습니다.");	
-		return "redirect:/approv/main";
+		return "redirect:/approv/form/main/1";
 	}
 	
 	@GetMapping("sign/create")
