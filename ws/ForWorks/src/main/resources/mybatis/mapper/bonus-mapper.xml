@@ -51,6 +51,10 @@
 		AND NO = #{no}
 	</update>
 	
+	<select id="selectMemOne" resultType="MemberVo">
+		SELECT EMP_NAME, DEPT_NAME , TO_CHAR(EMP_JDATE,'YYYY-MM-DD') AS EMP_JDATE FROM EMPLOYEE E JOIN DEPARTMENT D ON E.DEPT_NO = D.DEPT_NO WHERE EMP_NO = #{no}
+	</select>
+	
 	<!-- 상여금파트 -->
 	
 	<select id="bonusList" resultType="BonusVo">

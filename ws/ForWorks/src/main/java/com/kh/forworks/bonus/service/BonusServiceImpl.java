@@ -10,6 +10,7 @@ import com.kh.forworks.bonus.dao.BonusDao;
 import com.kh.forworks.bonus.vo.BenefitVo;
 import com.kh.forworks.bonus.vo.BonusMemVo;
 import com.kh.forworks.bonus.vo.BonusVo;
+import com.kh.forworks.member.vo.MemberVo;
 
 @Service
 public class BonusServiceImpl implements BonusService {
@@ -103,6 +104,11 @@ public class BonusServiceImpl implements BonusService {
 	public int calc(BonusMemVo bmv) {
 		System.out.println("처음 들어온 데이터 중 지급율" + bmv.getRate());
 		return dao.selectCalc(sst, bmv);
+	}
+	//멤버한명조회
+	@Override
+	public MemberVo selectMem(String no) {
+		return dao.selectMemOne(sst, no);
 	}
 	
 

@@ -9,15 +9,16 @@
 <style>
     #wrap{
         background-color: white;
-        width: 60vw;
-        height: 60vh;
+        width: 70vw;
+        height: 70vh;
         font-size: 20px;
-		overflow: scroll;
+        border-radius: 18px;
+		box-shadow:  0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+		margin-top: 10px;
     }
     table{
         width: 100%;
-        border: 1px solid black;
-        text-align: left;
+        text-align: center;
     }
     #title{
         text-align: center;
@@ -26,6 +27,27 @@
     }
     .back-color{
         background-color: #EEF1FF;
+    }
+    select{
+        border:3px solid  lightgray;	
+		border-radius: 10px;
+        font-size: 30px;
+        width: 120px;
+        height: 40px;
+    }
+    #top{
+        border-bottom: 2px double gray;
+        height: 20px;
+        font-size: 20px;
+    }
+    #test>tbody{
+        font-size: 18px;
+    }
+    .bo{
+        border-radius: 15px;
+        background-color: #EEF1FF;
+        border-color:#dae1ff;
+        width: 80px;
     }
 
 </style>
@@ -43,7 +65,7 @@
                    <div class="row">
                        <div class="col-12 col-md-6 order-md-1 order-last">
                            <h3>급여명세서</h3>
-                           <p class="text-subtitle text-muted">The default layout </p>
+                           <p class="text-subtitle text-muted"><br> </p>
                        </div>
                        <div class="col-12 col-md-6 order-md-2 order-first">
                            <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
@@ -59,7 +81,7 @@
 				<select name="year" id="year" title="년도" ></select> 
                 <div id="wrap">
                     <table id="test">
-                        <thead><tr><td>지급월</td><td>지급종류</td><td>지급일</td><td>상세보기</td></tr></thead>
+                        <thead><tr id="top"><th>지급월</th><th>지급종류</th><th>지급일</th><th>상세보기</th></tr></thead>
                         <tbody>
                             
                         </tbody>
@@ -94,7 +116,6 @@
 <script>
     $("select[name=year]").change(function(){
         var year = $(this).val();
-        console.log(year);
         $.ajax({
             url : "/ForWorks/salary/slipList",
             type : "POST",
@@ -112,12 +133,12 @@
                     }else{
                         data[i].salCate = "월급+상여";
                     }
-                    $('#test>tbody').append('<tr><td>'+data[i].salMonth+'</td><td>'+data[i].salCate+'</td><td>'+data[i].payDate+'</td><td><button onclick="detail('+data[i].no+')">보기</button></td></tr>')
+                    $('#test>tbody').append('<tr><td>'+data[i].salMonth+'</td><td>'+data[i].salCate+'</td><td>'+data[i].payDate+'</td><td><button class="bo" onclick="detail('+data[i].no+')">보기</button></td></tr>')
                 };
                
             }
             ,error : function(){
-                alert("다시 시도해주세요");
+                toastContent.innerText = "다시 시도해주세요";
             }
             
         })
@@ -126,7 +147,7 @@
 
 <script>
     function detail(no){
-        window.open("${root}/salary/payslipDetail/"+no, "_blank", "width=500, height=500")
+        window.open("${root}/salary/payslipDetail/"+no, "_blank", "width=650, height=750")
     }
     
 </script>

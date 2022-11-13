@@ -125,9 +125,9 @@ public class AppDocmanageController {
 		int result = ads.insertDocCont(vo);
 		if(result == 1) {
 			session.setAttribute("toastMsg", "등록성공");
-			return "docManage/app_doc_list";
+			return "docManage/app_doc_manage";
 		}else {
-			session.setAttribute("toastMsg", "다시시고");
+			session.setAttribute("toastMsg", "다시시도");
 			return "docManage/app_doc_write";
 		}
 		

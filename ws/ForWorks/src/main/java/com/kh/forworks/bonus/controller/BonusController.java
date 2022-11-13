@@ -122,10 +122,12 @@ public class BonusController {
 		//수당카테고리 조회
 		List benefitList = bs.selectList();
 		model.addAttribute("benefitList",benefitList);
+		MemberVo mem = bs.selectMem(no);
 		
 		List<BenefitVo> bv = bs.selectOne(no);
 		model.addAttribute("benefitVo",bv);
 		model.addAttribute("empNo",no);
+		model.addAttribute("mem",mem);
 		System.out.println("출력"+bv);
 		return "bonus/benefit_list_detail";
 	}

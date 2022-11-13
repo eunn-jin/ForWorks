@@ -14,12 +14,14 @@
     #center{
         width: 60vw;
         height: 60vh;
-        border: 1px solid black;/*확인용*/
+  
         display: grid;
         grid-template-columns: 4fr 4fr 4fr 4fr;
         grid-template-rows: repeat(11,35px);
         text-align: center;
         background-color: white;
+        border-radius: 18px;
+        box-shadow:  0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     }
     .div-top{
         font-size: larger;
@@ -51,16 +53,7 @@
         float: right;
         height: 30px;
     }
-    #check-btn>button{
-        cursor: pointer;
-        height: 100%;
-        font-size: large;
-        background-color: white;
-        border: none;
-        color: #7D6CFF;
-        font-weight: bolder;
-    }
-
+  
     /*모달 css*/
     .modal{
         position:absolute;
@@ -80,7 +73,7 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        width: 400px;
+        width: 500px;
         height: 600px;
         padding: 40px;
         text-align: left;
@@ -89,6 +82,26 @@
         box-shadow: 0 2px 3px 0 rgba(34,36,38,0.15);
 
         transform: translateX(-50%) translateY(-50%);
+    }
+    table.type01 {
+    border-collapse: collapse;
+    text-align: left;
+    line-height: 1.5;
+    margin : 20px 10px;
+    color: #25396f;
+    }
+    table.type01 th {
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border: 1px solid #ccc;
+    }
+    table.type01 td {
+    width: 400px;
+    padding: 10px;
+    vertical-align: top;
+    border: 1px solid #ccc;
     }
 </style>
 <body>
@@ -104,8 +117,8 @@
                <div class="page-title">
                    <div class="row">
                        <div class="col-12 col-md-6 order-md-1 order-last">
-                           <h3>Layout Default</h3>
-                           <p class="text-subtitle text-muted">The default layout </p>
+                           <h3>상여금 해당 사원 목록</h3>
+                           <p class="text-subtitle text-muted"> </p>
                        </div>
                        <div class="col-12 col-md-6 order-md-2 order-first">
                            <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
@@ -119,11 +132,10 @@
                </div>
                <section class="section">
 				<div id="wrap">
-			        <div id="check-date">
-			            해당사원목록
-			        </div>
+			    
+
 			        <div id="check-btn">
-			            <button class="btn-open-popup">사원 추가</button>
+			            <button class="btn btn-primary btn-sm btn-open-popup">사원 추가</button>
 			        </div>
 			        <div id="center">
 			        <div class="div-top">부서명</div>
@@ -140,53 +152,40 @@
 			
 			        </div>
 			        
-			        <div id="page-area">
-			            <a href=""><</a>
-			            <a href="">1</a>
-			            <a href="">2</a>
-			            <a href="">3</a>
-			            <a href="">4</a>
-			            <a href="">5</a>
-			            <a href="">></a>
-			        </div>
-			
-			        <div id="search-area">
-			            
-			            <form action="">
-			                <select name="" id="">
-			                    <option value="">사원명</option>
-			                </select>
-			                <input type="text">
-			                <input type="submit" value="검색">
-			            </form>
-			
-			        </div>
-				</div>
+			        
 
                 <!--사원 등록 버튼 클릭 시 모달창-->
 				        
 				<div class="modal">
                     <div class="modal_body">
-                        <div><h1>사원 등록</h1></div>
-                        부서
-                        <select name="dept" id="dept">
-                            <option value="">부서선택</option>
-                            <c:forEach items="${departList}" var="d">
-                                <option value="${d}">${d}</option>
-                            </c:forEach>
-                        </select>
-                        <br>
-                        사원명
-                        <select name="emp" id="emp">
-                            <option value="">사원선택</option>
-                        </select>
-                        <br>
-                        지급율
-                        <input type="number" name="rate" id="rate" value="0"> <br>
-                        지급액
-                        <input type="number" name="payment" id="payment" value="0">
-                        <div><button id="addEmp" onclick="addEmp()">등록</button></div>
-                        <div><button class="modal_close">close</button></div>
+                        <table class="type01">
+                            <tr>
+                                <th scope="row" colspan="2" style="font-size: 25px; text-align: center;">사원등록</th>
+                            </tr>
+                            <tr>
+                                <td scope="row" >부서</td><td><select name="dept" id="dept">
+                                    <option value="">부서선택</option>
+                                    <c:forEach items="${departList}" var="d">
+                                        <option value="${d}">${d}</option>
+                                    </c:forEach>
+                                </select></td>
+                            </tr>
+                            <tr>
+                                <td scope="row">사원명</td><td><select name="emp" id="emp">
+                                    <option value="">사원선택</option>
+                                </select></td>
+                            </tr>
+                            <tr>
+                                <td scope="row">지급율</td><td><input type="number" name="rate" id="rate" value="0"></td>
+                            </tr>
+                            <tr>
+                                <td scope="row">지급액</td><td><input type="number" name="payment" id="payment" value="0"></td>
+                            </tr>
+                        </table>
+                        <div><button class="modal_close btn btn-primary btn-sm">close</button><button style="float: right;" id="addEmp" class="btn btn-primary btn-sm" onclick="addEmp()">등록</button></div>
+
+
+                      
                     </div>
                 </div>
                 
@@ -233,7 +232,7 @@
 
                 },
                 error:function(){
-                    alert("통신실패");
+                    toastContent.innerText = "다시 시도해주세요";
                 }
 
             })
@@ -243,16 +242,14 @@
 
     <script>
         function addEmp(){
-        alert('되나');
         var binfoNo = ${infoNo};
-        console.log(binfoNo);
+      
         var x = document.getElementById("emp");
 	    var empNo = x.options[x.selectedIndex].value; 
-        console.log(empNo);
+      
         var rate = document.getElementById("rate").value;
         var payment = document.getElementById("payment").value;
 
-        console.log(empNo , rate , payment);
 
         $.ajax({
             url : "/ForWorks/bonus/addEmp",
@@ -265,12 +262,12 @@
             },
             success : function(data){
                 if(data == 1){
-                    alert("등록성공");
+                    toastContent.innerText = "등록완료되었습니다.";
                     modal.style.display = 'none';
                 }
                 },
             error : function(){
-                alert("통신실패");
+                toastContent.innerText = "다시 시도해주세요";
             }
             })
         }

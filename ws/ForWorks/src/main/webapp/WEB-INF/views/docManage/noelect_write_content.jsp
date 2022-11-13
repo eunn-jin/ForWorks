@@ -130,7 +130,7 @@
                 <td>기안날짜</td>
               </tr>
             </table>
-
+           
             </div>
             <button class="modal_close">닫기</button>
           </div>
@@ -191,9 +191,9 @@
         $("#empName").text(empName);
         var dept = data[0].deptName;
         $("#deptName").text(dept);
-        $("#addfile").append('<a href="{root}/resources/doc-file/upload/'+data[0].noelecChangeName+'">'+data[0].noelecOriginName+'</a>');
-        $("#imgzone").append('<img src="{root}/resources/doc-file/upload/'+data[0].noelecChangeName+'" alt="비전자결재문서">');
-   
+        $("#addfile").append('<a href="${root}/resources/upload/noelecdoc/'+data[0].noelecChangeName+'">'+data[0].noelecOriginName+'</a>');
+        $("#imgzone").append('<img src="${root}/resources/upload/noelecdoc/'+data[0].noelecChangeName+'" alt="비전자결재문서">');
+
       
         var content = data[0].adocContent;
         $("#content").html(content);

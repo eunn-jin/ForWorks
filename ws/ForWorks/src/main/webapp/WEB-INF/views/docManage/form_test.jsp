@@ -11,7 +11,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>양식 상세</title>
+<title>결재확인</title>
 
 <style>
 
@@ -50,7 +50,7 @@
         background-color: white;
         border-radius: 20px;
         padding: 20px;
-        border: 1px solid #7D6CFF;
+        border: 3px solid black;
         display: flex;
         flex-direction: column;
         align-items: center;

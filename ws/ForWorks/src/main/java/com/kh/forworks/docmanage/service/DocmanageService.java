@@ -11,7 +11,7 @@ public interface DocmanageService {
 	//일반문서 작성
 	int write(DocVo dv, DfileVo df);
 	//일반문서 리스트
-	List<DocVo> selectRangeDoc(String range);
+	List<DocVo> selectRangeDoc(HashMap map);
 	//전체 문서갯수조회
 	int selectTotalCnt(String empNo);
 	//문서관리 리스트
@@ -28,4 +28,6 @@ public interface DocmanageService {
 	int updateStatus(DocVo vo);
 	//검색
 	List<DocVo> selectSearch(HashMap map);
+	//작성자조회(일반문서)
+	MemberVo selectMem(String no);
 }

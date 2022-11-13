@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import com.kh.forworks.bonus.vo.BenefitVo;
 import com.kh.forworks.bonus.vo.BonusMemVo;
 import com.kh.forworks.bonus.vo.BonusVo;
+import com.kh.forworks.member.vo.MemberVo;
 
 public interface BonusService {
 	
@@ -35,5 +36,7 @@ public interface BonusService {
 	int addEmp(BonusMemVo bmv);
 	//지급율 입력시 지급액계산
 	int calc(BonusMemVo bmv);
+	//멤버한명조회
+	MemberVo selectMem(String no);
 	
 }

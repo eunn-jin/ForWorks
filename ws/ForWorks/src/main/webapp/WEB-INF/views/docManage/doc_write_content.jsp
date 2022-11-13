@@ -67,7 +67,7 @@
             
             
           </table>
-          <div id="sub"><input type="button" value="취소"><input type="submit" value="등록"></div>
+          <div id="sub"><input class="btn btn-primary btn-sm" type="button" value="취소"><input class="btn btn-primary btn-sm" type="submit" value="등록"></div>
               
         </div>
         </form>

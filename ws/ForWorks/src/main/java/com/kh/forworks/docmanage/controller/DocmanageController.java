@@ -48,8 +48,13 @@ public class DocmanageController {
 		int totalCount = ds.selectRangeTotalCnt(range);
 		PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
 		
-		List<DocVo> result = ds.selectRangeDoc(range);
+		HashMap map = new HashMap();
+		map.put("range", range);
+		map.put("pv", pv);
+		
+		List<DocVo> result = ds.selectRangeDoc(map);
 		System.out.println("출" + result);
+		System.out.println("잘되는 pv" + pv);
 		model.addAttribute("result",result);
 		model.addAttribute("pv",pv);
 		return "docManage/doc_list";
@@ -74,6 +79,9 @@ public class DocmanageController {
 			model.addAttribute("fv",fv);
 			System.out.println("디테일조회fv " + fv);
 		}
+		//작성자 조회
+		MemberVo mem = ds.selectMem(no);
+		model.addAttribute("mem",mem);
 		model.addAttribute("vo",vo);
 		return "docManage/doc_detail";
 	}
@@ -90,17 +98,20 @@ public class DocmanageController {
 			//페이징처리
 			int totalCount = ds.selectTotalCnt(empNo);
 			PageVo pv = Pagination.getPageVo(totalCount, pno, 5, 10);
+			
 			//게시글 가져오기
 			HashMap map = new HashMap();
 			map.put("pv", pv);
 			map.put("empNo", empNo);
 			List<DocVo> voList = ds.selectDocByEmp(map);
 			
-			System.out.println("voList출력" + voList);
 			
+			System.out.println("gk"+(int)Math.ceil((double)1 / 10));
+			
+			System.out.println("voList출력" + voList);
+			System.out.println("pv출력" + pv);
 			model.addAttribute("voList",voList);
 			model.addAttribute("pv",pv);
-			
 			return "docManage/doc_manage";		
 		}else {
 			session.setAttribute("toastMsg", "로그인 정보가 필요합니다.");
@@ -231,7 +242,6 @@ public class DocmanageController {
 		vo.setDocNo(no);
 		int result = ds.updateStatus(vo);
 		
-		
 		if(result == 1) {
 			session.setAttribute("toastMsg", "게시상태 변경 완료!");
 			return "redirect:/docmanage/manage/1";
@@ -239,7 +249,6 @@ public class DocmanageController {
 			session.setAttribute("toastMsg", "보존기간을 확인해주세요.");
 			return "docManage/doc_man_detail";
 		}
-
 	}
 	//검색
 	@PostMapping(value="search",produces = "application/json; charset=utf-8")

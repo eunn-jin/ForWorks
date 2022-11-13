@@ -13,7 +13,7 @@ public interface DocmanageDao {
 	//일반문서작성
 	int insertDoc(SqlSessionTemplate sst, DocVo dv);
 	//일반문서리스트
-	List<DocVo> selectRangeDoc(SqlSessionTemplate sst, String range);
+	List<DocVo> selectRangeDoc(SqlSessionTemplate sst, HashMap map);
 	//일반문서>파일업로드
 	int insertDocFile(SqlSessionTemplate sst, DfileVo fv);
 	//전체 문서갯수조회
@@ -36,5 +36,7 @@ public interface DocmanageDao {
 	int updateStatus(SqlSessionTemplate sst, DocVo vo);
 	//검색
 	List<DocVo> selectSearch(SqlSessionTemplate sst, HashMap map);
+	//일반문서 작성자조회
+	MemberVo selectMem(SqlSessionTemplate sst, String no);
 
 }

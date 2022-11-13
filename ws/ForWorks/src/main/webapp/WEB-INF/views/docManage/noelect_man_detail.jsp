@@ -14,6 +14,7 @@
         width: 60vw;
         height: 60vh;
         font-size: 20px;
+        height: auto;
     }
     
     .center-top{
@@ -33,6 +34,41 @@
         text-align: center;
         margin-top: 50px;
     }
+    table.type08 {
+    border-collapse: collapse;
+    text-align: left;
+    line-height: 1.5;
+    border-left: 1px solid #ccc;
+    margin: 10px 0px;
+    width: 100%;
+    }
+
+    table.type08 thead th {
+    padding: 10px;
+    font-weight: bold;
+    border-top: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-bottom: 2px solid #c00;
+    background: #dcdcd1;
+    text-align: center;
+    }
+    table.type08 tbody th {
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    background: #ececec;
+    }
+    table.type08 td {
+    width: 350px;
+    padding: 10px;
+    vertical-align: top;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    }
+ 
 </style>
 <body>
 
@@ -63,47 +99,57 @@
                <section class="section">
                 <div id="wrap">
                     <form action="" method="post">
-
-                    
-                    <table>
-                        <tr>
-                            <td> 
-                                <label><input type="checkbox" name="contStatus" id="Y" value="Y"  <c:if test="${vo.contStatus eq 'Y'}">checked</c:if>>게시중</label>
+                    <label><input type="checkbox" name="contStatus" id="Y" value="Y"  <c:if test="${vo.contStatus eq 'Y'}">checked</c:if>>게시중</label>
                                 <label><input type="checkbox" name="contStatus" id="N" value="N" <c:if test="${vo.contStatus eq 'N'}">checked</c:if>>비공개</label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>${vo.adocName}</td>
-                        </tr>
-                        <tr>
-                            <td>보존기간</td>
-                            <td>${vo.contEnrollDate}~ ${vo.contEndDate}</td>
-                        </tr>
-                        <tr>
-                            <td>작성자</td>
-                            <td>${result[0].empName}</td>
-                        </tr>
-                        <tr>
-                            <td>부서</td>
-                            <td>${result[0].deptName}</td>
-                        </tr>
-                        <tr>
-                            <td>기안날짜</td>
-                            <td>${result[0].draftDate}</td>
-                        </tr>
-                        <tr>
-                            <td colspan="3"><div>${vo.adocContent}</div></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img src="${root}/resources/doc-file/upload/${vo.noelecChangeName}"/>
-                            </td>
-                        </tr>
-                    </table>
-                    <input type="submit" value="게시상태수정">
-                    </form>
-
-                    <div id="back-btn"><button  onclick="window.history.back()">목록</button></div>
+                        <table class="type08">
+                            <thead>
+                            <tr>
+                              <th scope="cols" colspan="2">${vo.adocName}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th scope="row">보존기간</th>
+                                <td>${vo.contEnrollDate}~ ${vo.contEndDate}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">작성자</th>
+                                <td>${result[0].empName}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">부서</th>
+                                <td>${result[0].deptName}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">기안날짜</th>
+                                <td>${result[0].draftDate}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">첨부파일</th>
+                                <td>
+                                <c:if test="${fv ne null}">       	
+                                    <a download href="${root}/resources/doc-file/upload/${fv.uploadName}">${fv.originName}</a>
+                                </c:if>
+                                <c:if test="${fv eq null}">       	
+                                    *첨부파일없음
+                                </c:if>
+                                </td>
+                            </tr>
+                            <tr>
+                              <th scope="row">내용</th>
+                              <td><div>${vo.adocContent}</div></td>
+                            </tr>
+                            <tr>
+                                <td scope="row" colspan="2">
+                                    <img src="${root}/resources/upload/noelecdoc/${vo.noelecChangeName}"/>
+                                </td>
+                            </tr>
+                            </tbody>
+                          </table>
+             
+                    
+                    <button class="btn btn-primary btn-sm" onclick="window.history.back()">목록</button><input type="submit" style="float: right;" class="btn btn-primary btn-sm" value="게시상태수정">
+                </form>
                         
             </div>
                </section>

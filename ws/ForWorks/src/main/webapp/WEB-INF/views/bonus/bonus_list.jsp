@@ -8,25 +8,25 @@
 <style>
  	#wrap{
         width: 60vw;
-        height: 60vh;
+        height: auto;
     }
     #center{
-        width: 60vw;
+        width: 70vw;
         height: 60vh;
-        border: 1px solid black;/*확인용*/
         display: grid;
-        grid-template-columns: 2fr 4fr 4fr 4fr ;
-        grid-template-rows: repeat(0,4fr);
+        grid-template-columns: 1fr 4fr 4fr 4fr ;
+        grid-template-rows: repeat(0,5px);
         text-align: center;
         background-color: white;
-        overflow: scroll;
+        overflow-y: scroll;
     }
     
     .div-top{
         font-size: larger;
         color: black;
         font-weight: bolder;
-        border-bottom: 1px solid #7D6CFF;
+        padding-top: 10px;
+        margin-bottom: 10px;
     }
     #page-area{
         width: 30%;
@@ -41,18 +41,14 @@
     }
     #check-date{
         display: inline-block;
-        background-color:white;
+       
         height: 30px;
         font-size: large;
         color: #7D6CFF;
         font-weight: bolder;
     }
-    #check-btn{
-        position: relative;
-        float: right;
-        height: 30px;
-    }
-    #check-btn>button{
+    
+    /*#check-btn>button{
         cursor: pointer;
         height: 100%;
         font-size: large;
@@ -60,7 +56,7 @@
         border: none;
         color: #7D6CFF;
         font-weight: bolder;
-    }
+    }*/
 
     /*모달 css*/
     .modal{
@@ -81,7 +77,7 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        width: 400px;
+        width: 600px;
         height: 600px;
         padding: 40px;
         text-align: left;
@@ -91,7 +87,26 @@
 
         transform: translateX(-50%) translateY(-50%);
     }
-
+    table.type01 {
+    border-collapse: collapse;
+    text-align: left;
+    line-height: 1.5;
+    margin : 20px 10px;
+    color: #25396f;
+    }
+    table.type01 th {
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border: 1px solid #ccc;
+    }
+    table.type01 td {
+    width: 350px;
+    padding: 10px;
+    vertical-align: top;
+    border: 1px solid #ccc;
+    }
 
 </style>
 <body>
@@ -124,17 +139,14 @@
 				<div id="wrap">
 
 				        <div id="check-date">
-				            
-				                상여금 목록 
 				                <select name="year" id="year" title="년도" >
 				                    
 				                </select> 
-				            
 				        </div>
 
-				        <div id="check-btn">
-				            <button class="btn-open-popup">상여금 추가</button>
-				        </div>
+				      
+				            <button  class="btn btn-primary btn-sm btn-open-popup">상여금 추가</button>
+				        
 				        <div id="center">
 				            <div class="div-top">번호</div>
 				            <div class="div-top">상여제목</div>
@@ -160,16 +172,24 @@
 				        
 				<div class="modal">
                     <div class="modal_body">
-                        <div><h1>상여금 등록</h1></div>
-                        상여제목
-                        <input type="text" id="bt" > <br>
-                        발생월
-                        <input type="date" id="date" value="2022-02-02"> <br>
-                        상여내용
-                        <textarea name="" id="content" cols="30" rows="10"></textarea>
-                        <input type="button" onclick="addBonus()" value="등록">
-                        
-                        <div><button class="modal_close">close</button></div>
+
+                        <table class="type01">
+                            <tr>
+                                <th scope="row" colspan="2" style="font-size: 25px; text-align: center;">상여금 등록</th>
+                            </tr>
+                            <tr>
+                                <td scope="row" >상여제목</td><td><input type="text" id="bt" ></td>
+                            </tr>
+                            <tr>
+                                <td scope="row">발생월</td><td><input type="date" id="date" value="2022-02-02"></td>
+                            </tr>
+                            <tr>
+                                <td scope="row">상여내용</td><td><textarea name="" id="content" cols="30" rows="10"></textarea></td>
+                            </tr>
+                        </table>
+                        <div><button class="modal_close btn btn-primary btn-sm">close</button><input type="button" class="btn btn-primary btn-sm" style="float:right" onclick="addBonus()" value="등록"></div>
+
+                       
                     </div>
                 </div>
                 
@@ -217,15 +237,15 @@
             },
             success : function(data){
                 if(data == 1){
-                    alert("등록되었습니다");
+                    toastContent.innerText = "등록완료되었습니다.";
                     modal.style.display="none";
                     location.reload();
                 }else{
-                    alert("다시 시도해주세요");
+                    toastContent.innerText = "다시 시도해주세요";
                 }
             },
             error : function(){
-                alert("통신실패")
+                toastContent.innerText = "다시 시도해주세요";
             }
             
         })
@@ -237,7 +257,6 @@
         var now = new Date();
         var year = "";
         var com_year = now.getFullYear();
-        console.log("com_year" + com_year);
         $("#year").append("<option value=''>연도</option>");
         for(var i = (com_year); i >= 2000 ; i--){
             $("#year").append("<option value='"+i+"'>"+i+"년"+"</option>");
@@ -271,7 +290,7 @@
                 
             }
             ,error : function(){
-                alert("다시 시도해주세요");
+                toastContent.innerText = "다시 시도해주세요";
             }
             
         })

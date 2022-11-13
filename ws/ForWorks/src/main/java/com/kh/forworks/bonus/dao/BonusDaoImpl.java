@@ -88,5 +88,10 @@ public class BonusDaoImpl implements BonusDao {
 		System.out.println("계산된 값" + result);
 		return result;
 	}
+	//멤버한명조회
+	@Override
+	public MemberVo selectMemOne(SqlSessionTemplate sst, String no) {
+		return sst.selectOne("bonusMapper.selectMemOne" , no);
+	}
 
 }
