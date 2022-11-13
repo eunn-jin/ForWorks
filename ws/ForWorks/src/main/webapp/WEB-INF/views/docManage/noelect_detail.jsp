@@ -12,9 +12,9 @@
     #wrap{
         background-color: white;
         width: 60vw;
-        height: 60vh;
+        height: auto;
         font-size: 20px;
-        overflow-y: scroll;
+      
     }
     
     .center-top{
@@ -36,6 +36,40 @@
     }
     table>tr{
         border-bottom: 1px solid gray;
+    }
+    table.type08 {
+    border-collapse: collapse;
+    text-align: left;
+    line-height: 1.5;
+    border-left: 1px solid #ccc;
+    margin: 10px 0px;
+    width: 100%;
+    }
+
+    table.type08 thead th {
+    padding: 10px;
+    font-weight: bold;
+    border-top: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-bottom: 2px solid #c00;
+    background: #dcdcd1;
+    text-align: center;
+    }
+    table.type08 tbody th {
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    background: #ececec;
+    }
+    table.type08 td {
+    width: 350px;
+    padding: 10px;
+    vertical-align: top;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
     }
 </style>
 <body>
@@ -67,42 +101,54 @@
                <section class="section">
 					<div id="wrap">
                         
-				            <table>
-                                <tr>
-                                    <td>${vo.adocName}</td>
-                                </tr>
-                                <tr>
-                                    <td>보존기간</td>
-                                    <td>${vo.contEnrollDate} ~ ${vo.contEndDate}</td>
-                                </tr>
-                                <tr>
-                                    <td>기안자</td>
-                                    <td>${vo.empName}</td>
-                                </tr>
-                                <tr>
-                                    <td>부서</td>
-                                    <td>${vo.deptName}</td>
-                                </tr>
-                                <tr>
-                                    <td>첨부파일</td>
-                                    <td>    	
-	                                    <a download href="${root}/resources/upload/noelecdoc/${vo.noelecChangeName}">${vo.noelecOriginName}</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3"><div>${vo.adocContent}</div></td>
-                                </tr>
-                            </table>
-                                   	<img src="${root}/resources/upload/noelecdoc/${vo.noelecChangeName}"/>
-                                    	
-                            
+                        <table class="type08">
+                            <thead>
+                            <tr>
+                              <th scope="cols" colspan="2">${vo.adocName}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th scope="row">보존기간</th>
+                                <td>${vo.contEnrollDate} ~ ${vo.contEndDate}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">작성자</th>
+                                <td>${vo.empName}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">부서</th>
+                                <td>${vo.deptName}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">기안날짜</th>
+                                <td>${vo.draftDate}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">첨부파일</th>
+                                <td>
+                                    <a download href="${root}/resources/upload/noelecdoc/${vo.noelecChangeName}">${vo.noelecOriginName}</a>
+                                </td>
+                            </tr>
+                            <tr>
+                              <th scope="row">내용</th>
+                              <td><div>${vo.adocContent}</div></td>
+                            </tr>
+                            <tr>
+                                <td scope="row" colspan="2">
+                                    <img src="${root}/resources/upload/noelecdoc/${vo.noelecChangeName}"/>
+                                </td>
+                            </tr>
+                            </tbody>
+                          </table>
+
 
 
 				            <div id="center">
 				                
 				            </div>
 				            
-				            <div id="back-btn"><button  onclick="window.history.back()">목록</button></div>
+				            <div id="back-btn"><button class="btn btn-primary btn-sm" onclick="window.history.back()">목록</button></div>
 				                
 				    </div>
                </section>

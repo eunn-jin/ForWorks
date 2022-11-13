@@ -140,10 +140,7 @@
 												</select>
 											</td>
 										</tr>
-										<!--<tr>
-											<th class="tright">총급여</th>
-											<td><input type="number" name="total" id="tt">원</td>
-										</tr>-->
+										
 									</table>
 									<div id="zone">
 										<div class="back-color">
@@ -160,9 +157,7 @@
 										</div>
 									</div>	
 								</div>
-									<!--<div style="float:right;" id="total">
-										총급여 : <input type="number" name="total" id="tt">원
-									</div>-->
+								
 									
 							</form>
 							</div>
@@ -192,7 +187,7 @@
                 }
             },
             error:function(){
-                    alert("통신실패");
+				toastContent.innerText = "다시 시도해주세요";
             }
 
         })
@@ -213,7 +208,7 @@
 
 		var startMonth = document.getElementById("start-month").value;
 		var endMonth = document.getElementById("end-month").value;
-		//var tt = document.getElementById("tt").value;
+		
 		var a = 0;
 		if(cate == 1 ){
 			bzone.style.display = 'none';
@@ -232,7 +227,7 @@
 						success : function(data){
 							var total = 0;
 							$('#s-table').empty;
-							console.log(data);
+							
 							$('#s-table').append('<tr><th class="stable">기본급</th><td class="stable">'+data[0].empMoney+'</td></tr>')
 								total += parseInt(data[0].empMoney);
 								$('#s-table').append('<tr><th class="stable">수당명</th><th class="stable">수당금</th>')
@@ -245,13 +240,11 @@
 									}
 								$('#s-table').append('<tr><td>초과수당</td><td>'+data[0].addOverTime+"(분)"+data[0].addCalc+"(원)"+'</td></tr>')
 								total += parseInt(data[0].addCalc);
-								//$('input[name=total]').attr('value',total);
-								//$('#totalspan').append('<input type="number" value="'+total+'">'+"원");
-								//$('#submit').append('<input type="submit" value="등록" class="btn-css">');
+							
 							
 						},
 						error : function(){
-							alert("실패");
+							toastContent.innerText = "다시 시도해주세요";
 						}
 					});
 					isCate01Empty = false;
@@ -285,10 +278,10 @@
 								total2 += parseInt(data[i].payment);
 			
 							}
-							//$('input[name=total]').attr('value',total2);
+							
 						},
 						error : function(){
-							alert("실패");
+							toastContent.innerText = "다시 시도해주세요";
 						}
 					});
 					isCate02Empty = false;
@@ -302,7 +295,7 @@
 			a();
 			b();
 			
-			//$('input[name=total]').attr('value',a);
+			
 		}
 
 

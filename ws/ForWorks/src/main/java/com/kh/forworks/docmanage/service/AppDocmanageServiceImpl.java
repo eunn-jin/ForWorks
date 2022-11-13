@@ -114,7 +114,7 @@ public class AppDocmanageServiceImpl implements AppDocmanageService{
 	public DocControlVo selectOneNo(String no) {
 		return dao.selectOneNo(sst,no);
 	}
-	//비전자결재문서 문서관리등록
+	//비전자결재문서 문서관리상태변경
 	@Override
 	public int updateNoStatus(DocControlVo vo) {
 		return dao.updateNoStatus(sst,vo);

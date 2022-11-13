@@ -16,7 +16,7 @@
     #wrap{
         background-color: white;
         width: 70vw;
-        height: 80vh;
+        height: auto;
         font-size: 20px;
     }
     

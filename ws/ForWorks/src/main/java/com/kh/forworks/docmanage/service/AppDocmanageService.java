@@ -46,7 +46,7 @@ public interface AppDocmanageService {
 	List<DocControlVo> selectNoelectEmp(HashMap map);
 	//비전자결재문서 하나 불러오기
 	DocControlVo selectOneNo(String no);
-	//비전자결재문서 문서관리등록
+	//비전자결재문서 문서관리상태변경
 	int updateNoStatus(DocControlVo vo);
 	//비전자결재 게시중 전체갯수
 	int selectNoTotalCnt();

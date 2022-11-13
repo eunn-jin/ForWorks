@@ -105,9 +105,9 @@
                                <option value="${d}">${d}</option>
                             </c:forEach>
                         </select>
-                        <button onclick="search()" >조회</button>
+                        <button onclick="search()" class="btn btn-primary btn-sm">조회</button>
                         <div id="check-btn">
-                            <button onclick="status()" class="bbutton"><i class="bi bi-check2-square"></i>명세서공개</button>
+                            <button onclick="status()" class="bbutton" ><i class="bi bi-check2-square"></i>명세서공개</button>
                         </div>
                     </div>
                     <div id="wrap">
@@ -147,9 +147,9 @@
 <script>
     function search(){
         var salMonth = document.getElementById("salMonth").value;
-        console.log(salMonth);
+       
         var dept = document.getElementById("dept").value;
-        console.log(dept);
+      
 
         $.ajax({
             url : "/ForWorks/salary/list",
@@ -176,7 +176,7 @@
                 
             },
             error:function(){
-                alert("실패");
+                toastContent.innerText = "다시 시도해주세요";
             }
         })
 
@@ -203,11 +203,11 @@
             data : {status : status},
             success : function(data){
                 if(data == 1){
-                    alert("성공");
+                    toastContent.innerText = "변경 완료되었습니다.";
                 }
             },
             error : function(){
-                alert("실패");
+                toastContent.innerText = "다시 시도해주세요";
             }
         })
 

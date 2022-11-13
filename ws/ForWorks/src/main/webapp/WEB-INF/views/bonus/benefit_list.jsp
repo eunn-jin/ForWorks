@@ -11,23 +11,25 @@
         width: 60vw;
         height: 60vh;
         font-size: 20px;
+        
     }
  	#center{
         width: 60vw;
         height: 60vh;
-        border: 1px solid black;/*확인용*/
         display: grid;
         grid-template-columns: 4fr 4fr 4fr 4fr;
         grid-template-rows: repeat(11,40px);
         text-align: center;
         background-color: white;
-        overflow: scroll;
+        overflow-y: scroll;
+        border-radius: 18px;
+        box-shadow:  0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     }
     .div-top{
         font-size: larger;
-        color: black;
+        color: #25396f;
         font-weight: bolder;
-        border-bottom: 1px solid #7D6CFF;
+        border-bottom: 1px solid gray;
     }
   
     #search{
@@ -46,16 +48,7 @@
         float: right;
         height: 30px;
     }
-    #check-btn>button{
-        cursor: pointer;
-        height: 100%;
-        font-size: large;
-        background-color: white;
-        border: none;
-        color: #7D6CFF;
-        font-weight: bolder;
-    }
-   
+
     .input_css{
         width: 80px;
         font-size: 20px;
@@ -81,8 +74,8 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        width: 400px;
-        height: 600px;
+        width: 500px;
+        height: 400px;
         padding: 40px;
         text-align: left;
         background-color: rgb(255,255,255);
@@ -91,6 +84,27 @@
 
         transform: translateX(-50%) translateY(-50%);
     }
+    table.type01 {
+    border-collapse: collapse;
+    text-align: left;
+    line-height: 1.5;
+    margin : 20px 10px;
+    color: #25396f;
+    }
+    table.type01 th {
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border: 1px solid #ccc;
+    }
+    table.type01 td {
+    width: 450px;
+    padding: 10px;
+    vertical-align: top;
+    border: 1px solid #ccc;
+    }
+
 </style>
 <body>
 
@@ -128,11 +142,11 @@
 				            	</c:forEach>
 				            </select>
 				            
-				            <!--<button onclick="changeDepart()">직원조회</button>-->
+				           
                             
 				        </div>
 				        <div id="check-btn">
-				            <button class="btn-open-popup">수당종류 추가</button>
+				            <button class="btn btn-primary btn-sm  btn-open-popup">수당종류 추가</button>
 				        </div>
 				        <div id="center">
                         
@@ -163,12 +177,18 @@
                                             
                     <div class="modal">
                         <div class="modal_body">
-                            <div><h1>수당 종류 등록</h1></div>
-                            수당명
-                            <input type="text" id="title" name="title"> <br>
-                            <input type="button" value="등록하기" id="add-btn" onclick="addBenefit()">
-              
-                            <div><button class="modal_close">close</button></div>
+
+                            <table class="type01">
+                                <tr>
+                                    <th scope="row" colspan="2" style="font-size: 25px; text-align: center;">수당 종류 등록</th>
+                                </tr>
+                                <tr>
+                                    <td scope="row" >수당명</td><td><input type="text" id="title" name="title"></td>
+                                </tr>
+                            </table>
+                            <button class="modal_close btn btn-primary btn-sm">close</button><input type="button"  style="float:right" class="btn btn-primary btn-sm"value="등록하기" id="add-btn" onclick="addBenefit()">
+
+
                         </div>
                     </div>
 
@@ -208,13 +228,12 @@ function changeDepart(){
 	
 	$.ajax({
 		url : "/ForWorks/bonus/selectEmp",
-		//dataType :'json',
 		type : 'POST',
 		data : {depart : depart},
 		success : function(result){
             $('#center').empty();
             $('#center').append(
-                '<div class="div-top">부서</div><div class="div-top">직원명</div><div class="div-top">직급</div><div class="div-top">입사일</div>'
+                '<div class="div-top">부서명</div><div class="div-top">직원명</div><div class="div-top">직급</div><div class="div-top">입사일</div>'
             );
             console.log(result[0]);
             for(var i = 0 ; i < result.length ; i++){
@@ -238,7 +257,6 @@ function changeDepart(){
 <script>
 
 function addBenefit(){
-	console.log('되니');
 	const bonusTitle = document.querySelector('input[name=title]').value;
 	$.ajax({
 		url : "/ForWorks/bonus/addBenefit",
@@ -246,14 +264,14 @@ function addBenefit(){
 		data : {title : bonusTitle},
 		success : function(data){
 			if(data == 1){
-				alert("등록되었습니다.");
+				toastContent.innerText = "등록 완료되었습니다.";
 				modal.style.display = 'none';
 			}else{
-				alert("입력값을 확인해주세요");	
+				toastContent.innerText = "다시 시도해주세요";	
 			}
 		},
 		error : function(){
-			alert("ajax통신 실패");
+			toastContent.innerText = "다시 시도해주세요";
 		}
 	});
 }

@@ -39,10 +39,10 @@ public class DocmanageServiceImpl implements DocmanageService{
 	}
 	//일반문서 리스트
 	@Override
-	public List<DocVo> selectRangeDoc(String range) {
+	public List<DocVo> selectRangeDoc(HashMap map) {
 		int a = dao.updateRange(sst);
 		System.out.println(a);
-		List<DocVo> vo = dao.selectRangeDoc(sst,range);
+		List<DocVo> vo = dao.selectRangeDoc(sst,map);
 		System.out.println(vo);
 		return vo;
 	}
@@ -85,6 +85,11 @@ public class DocmanageServiceImpl implements DocmanageService{
 	@Override
 	public List<DocVo> selectSearch(HashMap map) {
 		return dao.selectSearch(sst,map);
+	}
+	//일반문서 작성자조회
+	@Override
+	public MemberVo selectMem(String no) {
+		return dao.selectMem(sst,no);
 	}
 	
 	

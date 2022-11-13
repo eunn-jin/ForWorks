@@ -54,7 +54,7 @@
         box-shadow: 0 2px 3px 0 rgba(34,36,38,0.15);
         transform: translateX(-50%) translateY(-50%);
     }
-
+   
    
 </style>
 
@@ -77,7 +77,7 @@
               <td>
                     <label><input type="checkbox" name="range_" id="all" value="OPEN">전체공개</label>
                   <c:forEach items="${dept}" var="d">
-                    <label> <input type="checkbox" name="range_" value="${d.deptNo}${d.deptName}">${d.deptName}</label>
+                    <label> <input type="checkbox" name="range_"  value="${d.deptNo}${d.deptName}">${d.deptName}</label>
                   </c:forEach>
                 
               </td>
@@ -85,11 +85,13 @@
             <tr>
               <th>제목</th>
               <td><input type="text" name="title" id="title"></td>
-              <td><button type="button" class="btn-open-popup" >결재문서불러오기</button></td>
+              <td><button type="button" class="btn-open-popup btn btn-primary btn-sm" >결재문서불러오기</button></td>
             </tr>
             <tr>
               <th>기안날짜</th>
               <td><div id="draftDate"></div><input type="hidden" name="adocNo" id="adocNo"></td>
+            </tr>
+            <tr>
               <th>결재인</th>
               <td><div id="approvMember"></div></td>
             </tr>
@@ -103,7 +105,7 @@
             
             
           </table>
-          <div id="sub"><input type="button" value="취소"><input type="submit" value="등록"></div>
+          <div id="sub"><input type="button" onclick="window.history.back()" class="btn btn-primary btn-sm" value="취소"><input type="submit" value="등록"  class="btn btn-primary btn-sm"></div>
               
         </div>
         </form>
@@ -115,7 +117,7 @@
               <tr>
                 <td>날짜</td>
                 <td><input type="month" name="docDate" id="docDate"></td>
-                <td><button type="button" onclick="select()">결재문서조회</button></td>
+                <td><button type="button" class="btn btn-primary btn-sm" onclick="select()">결재문서조회</button></td>
               </tr>
               <tr>
                 <td>결재종류</td>
@@ -123,7 +125,7 @@
                 <td>기안날짜</td>
               </tr>
             </table>
-            <button class="modal_close">닫기</button>
+            <button class="modal_close btn btn-primary btn-sm" style="float: right;">닫기</button>
           </div>
       </div>
       
@@ -146,7 +148,6 @@
 <script>
 	function select(){
 		var docDate = document.getElementById("docDate").value;
-alert(docDate);
         $.ajax({
             url : "/ForWorks/appmanage/select",
             type: "POST",
@@ -154,12 +155,12 @@ alert(docDate);
             success : function(data){
 				$(".ajax").remove();
 				for(var i = 0 ; i < data.length; i++){
-					if(data[i].noelecStatus = 'Y'){data[i].noelecStatus = '비전자결재'}else{data[i].noelecStatus = '전자결재'};
-					$("#set").append('<tr><td class="ajax">'+data[i].noelecStatus+'</td><td class="ajax"><div onclick="goval('+data[i].adocNo+')">'+ data[i].adocName+'</div></td><td class="ajax">'+data[i].draftDate+'</td></tr>')
+					
+					$("#set").append('<tr><td class="ajax">전자결재</td><td class="ajax"><div onclick="goval('+data[i].adocNo+')">'+ data[i].adocName+'</div></td><td class="ajax">'+data[i].draftDate+'</td></tr>')
 				}
             },
             error : function(){
-                alert("실패");
+              toastContent.innerText = "다시 시도해주세요";
             }
         })
 	}
@@ -178,24 +179,26 @@ alert(docDate);
         var name = data[0].adocName;
         document.getElementById("title").value = name;
         var draftDate = data[0].draftDate;
-        console.log(draftDate);
+        
         $("#draftDate").text(draftDate);
         var approveMember = data[0].approveMember;
-        console.log(approveMember);
+       
         $("#approvMember").text(approveMember);
         if(data[0].changeFileName != null){
 
           for(var i = 0 ; i < data.length ; i++){
-            console.log(data[i].changeFileName);
+           
             $("#addfile").append('<a href="{root}/resources/upload/doc/'+data[i].changeFileName+'">'+data[i].fileName+'</a>');
           }
+        }else{
+          $("#addfile").append('<span>*첨부파일없음</span>');
         }
         var content = data[0].adocContent;
         $("#content").html(content);
        
       },
       error : function(){
-        alert("다시");
+        toastContent.innerText = "다시 시도해주세요";
       }
     })
   }

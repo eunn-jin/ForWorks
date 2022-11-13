@@ -33,15 +33,18 @@ public class SalaryController {
 	public SalaryController(SalaryService ss) {
 		this.ss = ss;
 	}
-	@GetMapping("test")
-	//급여관리자 메인(화면)
-	public String test() {
-		return "salary/test";
-	}
 	
 	@GetMapping("main")
-	public String main() {
-		return "salary/sal_main";
+	public String main(HttpSession session) {
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		String dept = loginMember.getDeptNo();
+		if(dept.equals("2")) {
+			session.setAttribute("toastMsg", "접근가능");
+			return "salary/sal_main";
+		}
+		session.setAttribute("toastMsg", "접근권한이 없습니다.");
+		return "salary/payslip";
+		
 	}
 	//급여대장목록 (화면)
 	@GetMapping("list")
@@ -57,7 +60,7 @@ public class SalaryController {
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 		if(loginMember == null) {
 			System.out.println("로그인정보없음");
-			return "salary/main";
+			return "redirect:/login";
 		}else {
 			return "salary/payslip";			
 		}
@@ -254,7 +257,7 @@ public class SalaryController {
 	//공개여부 바꾸기
 	@PostMapping("status")
 	@ResponseBody
-	public String status(@RequestParam(value="status[]") List<Integer> status) {
+	public String status(@RequestParam(value="status[]") List<Integer> status,HttpSession session) {
 		System.out.println("출력 : " + status);
 		int result = 0;
 		for(int i = 0 ; i < status.size(); i++) {
@@ -264,6 +267,7 @@ public class SalaryController {
 		}
 		if(result == status.size()) {
 			result = 1;
+			session.setAttribute("toastMsg", "공개되었습니다.");
 		}else {result = 0 ; }
 		return "" + result;
 	}

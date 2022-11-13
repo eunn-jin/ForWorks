@@ -11,17 +11,19 @@
         width: 60vw;
         height: 60vh;
         font-size: 20px;
+        border-radius: 18px;
+        box-shadow:  0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     }
  	#center{
         width: 60vw;
         height: 60vh;
-        border: 1px solid black;/*확인용*/
+       
         display: grid;
         grid-template-columns: 4fr 4fr 4fr 4fr;
         grid-template-rows: repeat(11,40px);
         text-align: center;
         background-color: white;
-        overflow: scroll;
+        overflow-y: scroll;
     }
     .div-top{
         font-size: larger;
@@ -85,7 +87,7 @@
                    <div class="row">
                        <div class="col-12 col-md-6 order-md-1 order-last">
                            <h3>수당관리</h3>
-                           <p class="text-subtitle text-muted">The default layout </p>
+                           <p class="text-subtitle text-muted"><br> </p>
                        </div>
                        <div class="col-12 col-md-6 order-md-2 order-first">
                            <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
@@ -98,15 +100,16 @@
                    </div>
                </div>
                <section class="section">
+                   <div id="search">
+                        <span>${mem.deptName}</span>
+                        <span>|</span>
+                        <span>${mem.empName}</span>
+                        <span>|</span>
+                        <span>입사일 : </span><span>${mem.empJdate}</span>
+                        <div style="display: none;"><input type="hidden" name="empNo" id="empNo" value="${empNo}"></div>
+                        
+                    </div>
 					<div id="wrap">
-				        <div id="search">
-                            <span>개발팀</span>
-				            <span>|</span>
-                            <span>홍길동</span>
-                            <span>|</span>
-                            <span>생년월일 : </span><span>1990.01.01</span>
-                            <div style="display: none;"><input type="hidden" name="empNo" id="empNo" value="${empNo}"></div>
-				        </div>
                         
 				        <div id="center">
 				        <div class="div-top">수당명</div>
@@ -114,27 +117,18 @@
                         <div class="div-top">등록일자</div>
 				        <div class="div-top">저장</div>
 
-                            
-                          <!--<c:forEach items="${benefitVo}" var="bv" varStatus="st">
-                                    <div style="display: none;"><input type="hidden" name="no" id="no" value="${bv.no}"></div>
-                                    <div id="cate">"${bv.cate}"</div>
-                                    <div><input type="text" id="money-${st.index}" name="money" value="${bv.amount}" class="input_css" placeholder="0">원</div>
-                                    <div>2022-10-10</div>
-                                    <div><input type="button" value="저장" onclick="editBenefit($[st.index])"></div>
-					        </c:forEach>-->
-                            
                             <c:forEach items="${benefitVo}" var="bv" varStatus = "st">
                                 <div style="display: none;"><input type="hidden" name="no" id="no-${st.index}" value="${bv.no}"></div>
                                 <div id="cate-${st.index}">${bv.cate}</div>
                                 <div><input type="text" id="money-${st.index}" name="money" value="${bv.amount}" class="input_css" placeholder="0">원</div>
                                 <div>${bv.upDate}</div>
-                                <div><input type="button" value="저장" onclick="editBenefit(${st.index})"></div>
+                                <div><input type="button" value="저장" class="btn btn-primary btn-sm" onclick="editBenefit(${st.index})"></div>
                             </c:forEach>
                            
 
 					      
 				        </div>
-				    
+                        <div style="float: right;"><button class="btn btn-primary btn-sm" onclick="window.history.back()">뒤로가기</button></div>
 					</div>
 
 
@@ -159,15 +153,15 @@ function editBenefit(num){
 		type : "POST",
 		data : {
 			no : no,
-            empNo : empNo,/*test위한 값. empNo 받아오기!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+            empNo : empNo,
 			cate : cate,
 			amount : money
 		},
 		success : function(data){
-			alert("통신성공");
+			toastContent.innerText = "저장 완료";
 		},
         error : function(data){
-			alert("통신실패");
+			toastContent.innerText = "다시 시도해주세요";
 		}
 	})
 }
@@ -189,7 +183,7 @@ function empBenefit(){
 				emp : et
 				},
 		success : function(){
-			alert('통신성공');
+			toastContent.innerText = "조회완료";
 		}
 				
 	})

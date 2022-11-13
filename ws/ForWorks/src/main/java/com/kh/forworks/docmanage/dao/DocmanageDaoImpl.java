@@ -21,8 +21,13 @@ public class DocmanageDaoImpl implements DocmanageDao {
 	}
 	//일반문서 리스트
 	@Override
-	public List<DocVo> selectRangeDoc(SqlSessionTemplate sst , String range) {
-		return sst.selectList("docMapper.selectRangeDoc" , range);
+	public List<DocVo> selectRangeDoc(SqlSessionTemplate sst , HashMap map) {
+		PageVo pv =	(PageVo) map.get("pv");
+		int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
+		
+		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
+		String range = (String) map.get("range");
+		return sst.selectList("docMapper.selectRangeDoc" , range , rb);
 	}
 	//일반문서>파일업로드
 	@Override
@@ -84,6 +89,11 @@ public class DocmanageDaoImpl implements DocmanageDao {
 	@Override
 	public List<DocVo> selectSearch(SqlSessionTemplate sst, HashMap map) {
 		return sst.selectList("docMapper.search",map);
+	}
+	//일반문서 작성자조회
+	@Override
+	public MemberVo selectMem(SqlSessionTemplate sst, String no) {
+		return sst.selectOne("docMapper.oneMem",no);
 	}
 
 }

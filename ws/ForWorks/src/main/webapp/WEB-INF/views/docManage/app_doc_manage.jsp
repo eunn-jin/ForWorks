@@ -12,12 +12,13 @@
     #center{
         width: 60vw;
         height: 60vh;
-        border: 1px solid black;/*확인용*/
         display: grid;
-        grid-template-columns: 2fr 3fr 4fr 3fr 4fr 2fr;
+        grid-template-columns: 1fr 5fr 3fr 3fr 2fr;
         grid-template-rows: repeat(11,50px);
         text-align: center;
         background-color: white;
+        border-radius: 18px;
+        box-shadow:  0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     }
     .div-top{
         font-size: larger;
@@ -49,18 +50,7 @@
         float: right;
         height: 30px;
     }
-    #check-btn>button{
-        cursor: pointer;
-        height: 100%;
-        font-size: large;
-        border: none;
-        /*background-color: white;
-        border: none;
-        border-radius: 30px;
-        border: 1px solid #7D6CFF;*/
-        color: #7D6CFF;
-        font-weight: bolder;
-    }
+    
 </style>
 <body>
 
@@ -91,27 +81,26 @@
                <section class="section">
 					<div id="wrap">
 				        <div id="check-cate">
-                            <a href="${root}/docmanage/manage/1">일반문서</a>
-				           <a href="${root}/appmanage/manage/1">결재문서</a>
-                           <a href="${root}/appmanage/noelectman/1">비결재문서</a>
+                            <a href="${root}/docmanage/manage/1">일반문서 |</a>
+                           <a href="${root}/appmanage/noelectman/1">서면결재문서</a>
 				        </div>
 				        <div id="check-btn">
-				            <button onclick="location.href='${root}/appmanage/write'">+ 결재문서등록</button>
+				            <button class="btn btn-primary btn-sm" onclick="location.href='${root}/appmanage/write'">+ 결재문서등록</button>
 				        </div>
 				        <div id="center">
 				            <div class="div-top">글번호</div>
+                            <div class="div-top">제목</div>
+                            
+                            <div class="div-top">등록일</div>
 				            <div class="div-top">보존마감일</div>
-				        <div class="div-top">제목</div>
-				        <div class="div-top">공개범위</div>
-				        <div class="div-top">등록일</div>
                         <div class="div-top">게시상태</div>
 				        
                         <c:forEach items="${voList}" var="x">
                             <div>${x.adocNo}</div>
-                            <div>${x.contEndDate}</div>
                             <div><a href="${root}/appmanage/manDetail/${x.adocNo}">${x.adocName}</a></div>
-                            <div>전체공개</div>
+                            
                             <div>${x.contEnrollDate}</div>
+                            <div>${x.contEndDate}</div>
                             <div>${x.contStatus}</div>
                         </c:forEach>
 				      
@@ -132,17 +121,7 @@
 							</c:if>
 				        </div>
 				
-				        <div id="search-area">
-				            
-				            <form action="">
-				                <select name="" id="">
-				                    <option value="">제목</option>
-				                </select>
-				                <input type="text">
-				                <input type="submit" value="검색">
-				            </form>
-				
-				        </div>
+				        
 					</div>
                </section>
            </div>

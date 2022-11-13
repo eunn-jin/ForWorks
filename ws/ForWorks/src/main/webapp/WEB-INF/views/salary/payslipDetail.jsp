@@ -16,6 +16,7 @@
         width: 100%;
         border: 1px solid black;
         text-align: left;
+		border-collapse : collapse;
     }
     #title{
         text-align: center;
@@ -25,6 +26,12 @@
     .back-color{
         background-color: #EEF1FF;
     }
+	th,td{
+		border-bottom: 1px solid #444444;
+		padding-bottom: 10px;
+		padding-top: 10px;
+	}
+
 
 </style>
 <body>
@@ -40,64 +47,64 @@
 				
 					<table>
 						<tr>
-							<td>성명</td>
+							<th>성명</th>
 							<td>${result.empName}</td>
 						</tr>
 						<tr>
-							<td>지급일</td>
+							<th>지급일</th>
 							<td>${result.payDate}</td>
 						</tr>
 					</table>
 					<br>
 					<table>
 						<tr>
-							<td colspan="2">임금지급내역</td>
-							<td colspan="2">공제내역</td>
+							<th colspan="2">임금지급내역</th>
+							<th colspan="2">공제내역</th>
 						</tr>
 						<tr>
-							<td>임금항목</td>
-							<td>지급금액(원)</td>
-							<td>공제항목</td>
-							<td>공제금액(원)</td>
+							<th>임금항목</th>
+							<th>지급금액(원)</th>
+							<th>공제항목</th>
+							<th>공제금액(원)</th>
 						</tr>
 
 						<tr>
-							<td>기본급</td>
+							<th>기본급</th>
 							<td>${result1[0].empMoney}</td>
-							<td>소득세</td>
+							<th>소득세</th>
 							<td>${result.tax1}</td>
 						</tr>
 
 						<tr>
-							<td>수당</td>
+							<th>수당</th>
 							<td>${result.amount}</td>
-							<td>국민연금</td>
+							<th>국민연금</th>
 							<td>${result.tax2}</td>
 						</tr>
 
 						<tr>
-							<td>상여금</td>
+							<th>상여금</th>
 							<td>${result.bonusSum}</td>
-							<td>건강보험</td>
+							<th>건강보험</th>
 							<td>${result.tax3}</td>
 						</tr>
 
 						<tr>
 							<td></td>
 							<td></td>
-							<td>고용보험</td>
+							<th>고용보험</th>
 							<td>${result.tax4}</td>
 						</tr>
 
 						<tr>
-							<td>지급액 계</td>
+							<th>지급액 계</th>
 							<td>${result.sum}</td>
-							<td>공제액 계</td>
+							<th>공제액 계</th>
 							<td>${result.sumxtax}</td>
 						</tr>
 
 						<tr>
-							<td>실지급액</td>
+							<th>실지급액</th>
 							<td></td>
 							<td colspan="3">
 								${result.sum - result.sumxtax}(원)
