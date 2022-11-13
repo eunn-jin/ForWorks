@@ -5,10 +5,10 @@ import lombok.Data;
 @Data
 public class PlanDto {
 	
-		private String name;
-		private String content;
-		private String startDate;
-		private String endDate;
+		private String pname;
+		private String pcontent;
+		private String pstart;
+		private String pend;
 		
 
 		

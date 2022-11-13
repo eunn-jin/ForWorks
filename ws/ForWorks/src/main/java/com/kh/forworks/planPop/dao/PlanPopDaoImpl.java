@@ -11,7 +11,7 @@ public class PlanPopDaoImpl implements PlanPopDao {
 	@Override
 	public int insertOne(SqlSessionTemplate sst, PlanPopVo vo) {
 		return sst.insert("planPop.addPlan", vo);
-		
-	}
+		}
 
+	
 }

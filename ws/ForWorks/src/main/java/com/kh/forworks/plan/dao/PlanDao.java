@@ -7,8 +7,9 @@ import com.kh.forworks.plan.dto.PlanDto;
 public interface PlanDao {
 	
 	
-	public List<PlanDto> showSchedule(String id) throws Exception;
+	public List<PlanDto> showSchedule() throws Exception;
 	
-	public void addSchedule(PlanDto dto) throws Exception;
-
+	public int addSchedule(PlanDto dto) throws Exception;
+	
+	public void deleteSchedule(PlanDto dto)throws Exception;
 }
