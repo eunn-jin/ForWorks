@@ -251,69 +251,7 @@ public class AppDocmanageController {
 		return "docManage/form_test";
 	}
 	
-	//비전자결재관리목록
-	/*
-	 * @GetMapping("noelectman/{pno}") public String noelectman(Model model
-	 * , @PathVariable int pno , HttpSession session) { //로그인 데이터 가져오기 MemberVo
-	 * loginMember = (MemberVo)session.getAttribute("loginMember"); if(loginMember
-	 * != null) { String empNo = loginMember.getEmpNo();
-	 * System.out.println("로그인번호확인 : " + empNo);
-	 * 
-	 * //페이징처리 int totalCount = ads.selectNoelctTotalCnt(empNo); PageVo pv =
-	 * Pagination.getPageVo(totalCount, pno, 5, 10); //게시글 가져오기 HashMap map = new
-	 * HashMap(); map.put("pv", pv); map.put("empNo", empNo); List<DocControlVo>
-	 * voList = ads.selectNoelectEmp(map);
-	 * 
-	 * System.out.println("게시글가져오기222" + voList);
-	 * 
-	 * model.addAttribute("voList",voList); model.addAttribute("pv",pv);
-	 * 
-	 * return "docManage/noelect_doc_manage"; }else {
-	 * session.setAttribute("toastMsg", "로그인 정보가 필요합니다."); return "redirect:/login";
-	 * }
-	 * 
-	 * }
-	 */
-	//비전자결재관리등록
-//	@GetMapping("noelctCont/{no}")
-//	public String noelectCont(@PathVariable String no , Model model) {
-//		//부서 가져오기
-//		List<MemberVo> dept = ads.selectDept();
-//		model.addAttribute("dept",dept);
-//		//번호로 문서 불러오기
-//		DocControlVo vo = (DocControlVo)ads.selectOneNo(no);
-//		model.addAttribute("vo",vo);
-//		
-//		return "docManage/noelect_man_detail";
-//	}
-	//비전자결재문서관리등록-게시상태수정
-//	@PostMapping("noelctCont/{no}")
-//	public String noelctCont(@PathVariable String no, DocControlVo vo , HttpSession session) {
-//
-//		String range3="";
-//		String[] range2 = vo.getRange_();
-//		if(range2 != null) {
-//			for(int i = 0 ; i < range2.length;i++) {
-//				range3+=range2[i]+",";
-//				vo.setRange(range3);
-//			}
-//		}
-//		
-//		System.out.println(vo.getContStatus());
-//		vo.setAdocNo(no);
-//		int result = ads.updateNoStatus(vo);
-//		System.out.println(result);
-//		
-//		if(result == 0) {
-//			session.setAttribute("toastMsg", "다시 시도해주세요.");
-//			return "docManage/noelect_man_detail";
-//			
-//		}else {
-//			session.setAttribute("toastMsg", "게시상태 변경 완료!");
-//			return "docManage/app_doc_manage";
-//		}
-//
-//	}
+
 	//게시중인 노일렉 보여주기@@
 	@GetMapping("noelect/{pno}")
 	public String noelect(Model model , @PathVariable int pno , HttpSession session) {

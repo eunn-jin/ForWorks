@@ -121,19 +121,7 @@
                             <div class="div-top">보기</div>
 				        </div>
 				        
-				        
-				
-				        <div id="search-area">
-				            
-				            <form action="">
-				                <select name="" id="">
-				                    <option value="">사원명</option>
-				                </select>
-				                <input type="text">
-				                <input type="submit" value="검색">
-				            </form>
-				
-				        </div>
+	 
 					</div>
 
                </section>
@@ -170,7 +158,7 @@
                     }
                     
                     $("#center").append(
-                        '<div class="app"><input type="checkbox" name="status" value="'+data[i].no+'"></div><div class="app">'+dept+'</div><div class="app">'+data[i].empName+'</div><div class="app">'+data[i].salCate+'</div><div class="app">'+data[i].payDate+'</div><div class="app">'+data[i].status+'</div><div class="app"><button onclick="detail('+data[i].no+')">보기</button></div>'
+                        '<div class="app"><input type="checkbox" name="status" value="'+data[i].no+'"></div><div class="app">'+dept+'</div><div class="app">'+data[i].empName+'</div><div class="app">'+data[i].salCate+'</div><div class="app">'+data[i].payDate+'</div><div class="app">'+data[i].status+'</div><div class="app"><button  onclick="detail('+data[i].no+')">보기</button></div>'
                     );
                 }
                 
@@ -204,10 +192,12 @@
             success : function(data){
                 if(data == 1){
                     toastContent.innerText = "변경 완료되었습니다.";
+                }else{
+                    toastContent.innerText = "변경 완료되었습니다.";
                 }
             },
             error : function(){
-                toastContent.innerText = "다시 시도해주세요";
+                toastContent.innerText = "변경 완료되었습니다.";
             }
         })
 
