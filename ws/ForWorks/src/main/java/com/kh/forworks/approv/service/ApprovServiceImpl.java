@@ -68,23 +68,21 @@ public class ApprovServiceImpl implements ApprovService {
 		
 		
 		result = result*result1;
+		
 		if(vo.getDocFile().getSize()!=0) {
 			result = result*dao.insertDocFile(sst, vo);
 		}
 		
 		if(vo.getApprovMember()!=null) {
 		int result2 = dao.insertDocApprove(sst, vo);
-		result = result*result2;
 		}
 		
 		if(vo.getCoopMember()!=null) {
 		int result3 = dao.insertDocCoop(sst, vo);
-		result = result*result3;
 		}
 		
 		if(vo.getReferMember()!=null) {
 		int result4 = dao.insertDocRefer(sst, vo);
-		result = result*result4;
 		}
 		
 		
