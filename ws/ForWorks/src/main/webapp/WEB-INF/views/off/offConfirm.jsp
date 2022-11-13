@@ -123,7 +123,6 @@
 	
 	function monthBtn(){
 		var month = $("input[type=month]").val();
-		console.log(month);
 		$.ajax({
 			url: '${root}/off/deptOffList',
 			type: 'POST',
