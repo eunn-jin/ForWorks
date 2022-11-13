@@ -85,7 +85,7 @@
             <tr>
               <th>제목</th>
               <td><input type="text" name="title" id="title"></td>
-              <td><button type="button" class="btn-open-popup" >비전자문서불러오기</button></td>
+              <td><button type="button" class="btn-open-popup btn btn-primary btn-sm">비전자문서불러오기</button></td>
             </tr>
             <tr>
               <th>기안날짜</th>
@@ -110,7 +110,7 @@
             
           </table>
           <div id="imgzone"></div>
-          <div id="sub"><input type="button" value="취소"><input type="submit" value="등록"></div>
+          <div id="sub"><input class="btn btn-primary btn-sm"  onclick="window.history.back()" type="button" value="취소"><input class="btn btn-primary btn-sm" type="submit" value="등록"></div>
               
         </div>
         </form>
@@ -122,7 +122,7 @@
               <tr>
                 <td>날짜</td>
                 <td><input type="month" name="docDate" id="docDate"></td>
-                <td><button type="button" onclick="select()">비전자조회</button></td>
+                <td><button type="button" class="btn btn-primary btn-sm" onclick="select()">비전자조회</button></td>
               </tr>
               <tr>
                 <td>결재종류</td>
@@ -130,9 +130,9 @@
                 <td>기안날짜</td>
               </tr>
             </table>
+            <button style="float: right;" class="modal_close btn btn-primary btn-sm">닫기</button>
            
             </div>
-            <button class="modal_close">닫기</button>
           </div>
       </div>
       
