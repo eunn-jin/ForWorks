@@ -12,11 +12,11 @@
 	<link href="stylesheet" href="https://unicons.iconscout.com/release/v4.0./css/line.css">
 </head>
 <style>
-*{
+main *{
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	font-family: 'Noto Serif KR', serif;
+ 	font-family: 'Noto Serif KR', serif; 
 }
 
 body{
