@@ -187,7 +187,8 @@ html {
 }
 .kk{
     background-color: rgba(201, 201, 201, 0.281);
-    width: 80%;
+    margin-top:30px;
+    width: 75%;
     height: 100%;
     
 }
@@ -199,3 +200,4 @@ html {
     /* border: 1px solid gray; */
     margin-left: 50%;
 }
+

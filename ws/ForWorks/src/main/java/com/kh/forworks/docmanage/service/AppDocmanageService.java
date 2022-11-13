@@ -40,5 +40,23 @@ public interface AppDocmanageService {
 	List<ApprovDocumentVo> selectFile(String adocNo);
 	//contdoc받기
 	List<DocControlVo> selectOneContDoc(String no);
+	//비전자결재 총갯수(직원별)
+	int selectNoelctTotalCnt(String empNo);
+	//비전자결재문서불러오기(직원별)
+	List<DocControlVo> selectNoelectEmp(HashMap map);
+	//비전자결재문서 하나 불러오기
+	DocControlVo selectOneNo(String no);
+	//비전자결재문서 문서관리등록
+	int updateNoStatus(DocControlVo vo);
+	//비전자결재 게시중 전체갯수
+	int selectNoTotalCnt();
+	//공개중 비전자결재 가져오기
+	List<DocControlVo> selectNoCnt(PageVo pv);
+	//비전자결재 디테일
+	DocControlVo selectNoDetail(int no);
+	//write에서 문서목록가져오기
+	List<DocControlVo> selectNoSelectListEmp(HashMap map);
+	//write에서 비전자선택
+	List<DocControlVo> selectOneDoc2(String adocNo);
 
 }

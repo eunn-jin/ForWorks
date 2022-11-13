@@ -93,11 +93,11 @@
                <section class="section">
 					<div id="wrap">
 				        <div id="check-cate">
-                            <a href="${root}/docmanage/list/1">일반문서</a>
                             <a href="${root}/appmanage/list/1">결재문서</a>
+                            <a href="${root}/appmanage/noelect/1">비전자결재문서</a>
 				        </div>
 				        <div id="check-btn">
-				            <button onclick="location.href='write'">+ 결재문서작성</button>
+				            <button onclick="location.href='${root}/appmanage/write'">+ 결재문서작성</button>
 				        </div>
 				        <div id="center">
 				            <div class="div-top">NO</div>
@@ -159,7 +159,7 @@
 <script>
 	
 	$().ready(function() {
-		$('#doc-list').addClass("active");
+		$('#doc-write').addClass("active");
 		$('#doc-part').css("display", "block");
 	});
 	

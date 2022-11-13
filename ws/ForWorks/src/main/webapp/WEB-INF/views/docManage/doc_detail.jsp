@@ -85,12 +85,14 @@
                                 <tr>
                                     <td colspan="3"><div>${vo.content}</div></td>
                                 </tr>
+                            </table>
                                 <c:if test="${fv ne null}">       	
                                     <c:if test="${fv.ext eq '.jpg' || fv.ext eq '.png' }">
-                                   		<img src="${root}/resources/doc-file/upload/${fv.uploadName}"/>
+                                   	<img style="width: 100px; height:100px;"src="${root}/resources/doc-file/upload/${fv.uploadName}"/>
+                                    	
                                     </c:if>
                                 </c:if>
-                            </table>
+                            
 
 
 				            <div id="center">

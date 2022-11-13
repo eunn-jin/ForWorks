@@ -25,8 +25,8 @@
                         <div class="col-12 col-md-6 order-md-2 order-first">
                             <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Layout Default</li>
+                                    <!-- <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Layout Default</li> -->
                                 </ol>
                             </nav>
                         </div>
@@ -41,6 +41,9 @@
                                 <button class="myBtn" id="e">종료</button>
                                 <button class="myBtn" id="u">수정</button>
                                 <button class="myBtn" id="d">삭제</button>
+                                <c:if test="${loginMember.opLevel eq 3}">
+                                    <a href="${root}/QA/detailUser/${qavo.qaNo}"><button class="btn btn-primary">설문작성하기</button></a>
+                                </c:if>
                             </div>
                         
                 </section>
@@ -78,10 +81,7 @@
     e.addEventListener('click',function () {
         //마감일 현재 날짜 확인
         console.log("ch");
-        if (edday<=today) {
-            alert('마감일이 지났습니다.');
-            return;
-        }else if(stday >= today){
+        if(stday >= today){
             alert('시작되지 않은 투표입니다.');
             return;
         }else if(st == 'E'){
@@ -94,16 +94,20 @@
 
     //수정
     var u = document.getElementById('u');
-    // u.addEventListener('click',function () {
-    //     if (edday<=today) {
-    //         alert('마감일이 지났습니다.');
-    //         return;
-    //     }else if(st == 'E'){
-    //         alert('설문이 종료 되었습니다.');
-    //         return;
-    //     }
-    //     location.href = "${root}/QA/update/"+${vtvo.vtNo};
-    // });
+    u.addEventListener('click',function () {
+        if(stday <= today && edday >= today){
+            alert('설문이 진행중 입니다.');
+            return;
+        }
+        else if (edday<=today) {
+            alert('마감일이 지났습니다.');
+            return;
+        }else if(st == 'E'){
+            alert('설문이 종료 되었습니다.');
+            return;
+        }
+        location.href = "${root}/QA/update/${qavo.qaNo}";
+    });
 
     //삭제
     var d = document.getElementById('d');

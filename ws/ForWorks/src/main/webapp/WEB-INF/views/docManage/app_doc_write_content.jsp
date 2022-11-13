@@ -115,7 +115,7 @@
               <tr>
                 <td>날짜</td>
                 <td><input type="month" name="docDate" id="docDate"></td>
-                <td><button type="button" onclick="select()">조회</button></td>
+                <td><button type="button" onclick="select()">결재문서조회</button></td>
               </tr>
               <tr>
                 <td>결재종류</td>
@@ -123,6 +123,7 @@
                 <td>기안날짜</td>
               </tr>
             </table>
+            <button class="modal_close">닫기</button>
           </div>
       </div>
       
@@ -145,7 +146,7 @@
 <script>
 	function select(){
 		var docDate = document.getElementById("docDate").value;
-
+alert(docDate);
         $.ajax({
             url : "/ForWorks/appmanage/select",
             type: "POST",

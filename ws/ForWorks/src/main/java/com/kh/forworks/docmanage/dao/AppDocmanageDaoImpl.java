@@ -99,4 +99,59 @@ public class AppDocmanageDaoImpl implements AppDocmanageDao{
 	public List<DocControlVo> selectOneContDoc(SqlSessionTemplate sst, String no) {
 		return sst.selectList("appMapper.selectOneContDoc" , no);
 	}
+	//직원별 비전자결재문서 총갯수
+	@Override
+	public int selectNoelectTotalCnt(SqlSessionTemplate sst, String empNo) {
+		return sst.selectOne("appMapper.selectNoelectCountAll" , empNo);
+	}
+	//직원별 비전자결재문서 받아오기
+	@Override
+	public List<DocControlVo> selectNoelectEmp(SqlSessionTemplate sst, HashMap map) {
+		PageVo pv =	(PageVo) map.get("pv");
+		int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
+		
+		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
+		String empNo = (String) map.get("empNo");
+		return sst.selectList("appMapper.selectNoelectEmp" , empNo , rb);
+	}
+	//비전자결재문서 하나 불러오기
+	@Override
+	public DocControlVo selectOneNo(SqlSessionTemplate sst, String no) {
+		return sst.selectOne("appMapper.selectOneNo",no);
+	}
+	//비전자결재문서 문서관리등록
+	@Override
+	public int updateNoStatus(SqlSessionTemplate sst, DocControlVo vo) {
+		return sst.insert("appMapper.insertNo",vo);
+	}
+	//비전자결재문서 게시중갯수
+	@Override
+	public int selectNoToTalCnt(SqlSessionTemplate sst) {
+		return sst.selectOne("appMapper.selectNo");
+	}
+	//공개중 비전자결재가져오기
+	@Override
+	public List<DocControlVo> selectNoList(SqlSessionTemplate sst, PageVo pv) {
+		int offset = (pv.getCurrentPage()-1) * pv.getBoardLimit();
+		
+		RowBounds rb = new RowBounds(offset, pv.getBoardLimit());
+		return sst.selectList("appMapper.selectNoList","",rb);
+	}
+	//비전자결재 디테일
+	@Override
+	public DocControlVo selectNoDetail(SqlSessionTemplate sst, int no) {
+		return sst.selectOne("appMapper.selectNoDetail",no);
+	}
+	//write에서 문서가져오기
+	@Override
+	public List<DocControlVo> selectNoSelectListEmp(SqlSessionTemplate sst, HashMap map) {
+		return sst.selectList("appMapper.selectNoSelectList" ,map);
+	}
+	//write에서 문서하나선택
+	@Override
+	public List<DocControlVo> selectOneDoc2(SqlSessionTemplate sst, String adocNo) {
+		return sst.selectList("appMapper.selectOneDoc2",adocNo);
+	}
+	//wirte에서 폼으로 control등록
+	
 }

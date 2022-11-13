@@ -81,7 +81,7 @@ public class VoteServiceImpl implements VoteService{
 		
 		//항목 
 		for (int i = 0; i < vtcgArr.length; i++) {
-			System.out.println(vtcgArr[i]);
+			//System.out.println(vtcgArr[i]);
 			//항목개수 만큼 insert작업
 			result[2]=dao.insertVtcg(sst,vtcgArr[i]);
 		}
@@ -107,7 +107,7 @@ public class VoteServiceImpl implements VoteService{
 			//dp이면 vtvo.getDept()배열안에 있는 부서정보만 
 			for (int i = 0; i < vtvo.getDept().length; i++) {
 				//부서 정보 리스트 가져오기
-				System.out.println(vtvo.getDept()[i]);
+				//System.out.println(vtvo.getDept()[i]);
 				List<MemberVo> memberListDp = dao.mListDp(sst,vtvo.getDept()[i]);
 				//가져온 정보 
 				for(int j=0; j < memberListDp.size(); j++) {
@@ -221,22 +221,22 @@ public class VoteServiceImpl implements VoteService{
 		
 		//투표 첨부파일 확인후 update||insert 선택
 		//파일을 수정하는지 확인
-		System.out.println("공백여부::"+!(vtvo.getVtFile().isEmpty()));
+		//System.out.println("공백여부::"+!(vtvo.getVtFile().isEmpty()));
 		if (!(vtvo.getVtFile().isEmpty())) {
 			if (vtatCheck !=null) {
-				System.out.println("파일있음");
+				//System.out.println("파일있음");
 				result[1] = dao.editVtat(sst,vtat);
-				System.out.println("파일수정완료");
+				//System.out.println("파일수정완료");
 			}else if(vtatCheck ==null) {
-				System.out.println("파일없음");
+				//System.out.println("파일없음");
 				result[1] = dao.editVtatInsert(sst, vtat);
-				System.out.println("파일등록완료");
+				//System.out.println("파일등록완료");
 			}
 		}else {result[1]=1;}
 		//추가된 항목이 있는지 확인후 insert
 		if(vtcgArr != null) {
 			for (int i = 0; i < vtcgArr.length; i++) {
-				System.out.println(vtcgArr[i]);
+				//System.out.println(vtcgArr[i]);
 				//항목개수 만큼 insert작업
 				HashMap<String, String> map = new HashMap<String, String>();
 				map.put("vtcg", vtcgArr[i]);
@@ -245,9 +245,9 @@ public class VoteServiceImpl implements VoteService{
 			}
 			
 		}else {result[2]=1;}
-		System.out.println(result[0]);
-		System.out.println(result[1]);
-		System.out.println(result[2]);
+//		System.out.println(result[0]);
+//		System.out.println(result[1]);
+//		System.out.println(result[2]);
 		return result[0]*result[1]*result[2];
 	}
 	

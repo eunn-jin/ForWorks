@@ -50,9 +50,11 @@ public class AttendanceController {
 		TeamWorkVo team = service.getTeamTime(empNo);
 		
 		Map<String, Integer> proBar = new HashMap<String, Integer>();
-		proBar.put("monthBar", (int)(workTime.getMonthWork()/team.getDoMonthTime()*100));
-		proBar.put("weekBar", (int)(workTime.getWeekWork()/team.getDoWeekTime()*100));
-		proBar.put("dayBar", (int)(workTime.getDayWork()/team.getDoDayTime()*100));
+		if(team.getDoDayTime() != 0) {
+			proBar.put("monthBar", (int)(workTime.getMonthWork()/team.getDoMonthTime()*100));
+			proBar.put("weekBar", (int)(workTime.getWeekWork()/team.getDoWeekTime()*100));
+			proBar.put("dayBar", (int)(workTime.getDayWork()/team.getDoDayTime()*100));			
+		}
 		
 		model.addAttribute("workTime", workTime);
 		model.addAttribute("work", work);

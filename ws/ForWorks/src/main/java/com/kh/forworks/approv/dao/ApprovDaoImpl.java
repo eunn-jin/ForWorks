@@ -259,4 +259,15 @@ public class ApprovDaoImpl implements ApprovDao {
 		return sst.selectOne("approvMapper.selectDocFile", adocNo);
 	}
 	
+	//협조 관련자 확인
+	@Override
+	public int selectCoopDocEmpNo(SqlSessionTemplate sst, ApprovDocumentVo vo) {
+		return sst.selectOne("approvMapper.selectCoopDocEmpNo", vo);
+	}
+	
+	//참조 관련자 확인
+	@Override
+	public int selectReferDocEmpNo(SqlSessionTemplate sst, ApprovDocumentVo vo) {
+		return sst.selectOne("approvMapper.selectReferDocEmpNo", vo);
+	}
 }

@@ -330,7 +330,7 @@ public class ApprovController {
 		vo.setAdocNo(dno);
 		
 		
-		int result = service.selectApprovDocEmpNo(vo);
+		int result = service.selectCoopDocEmpNo(vo);
 		
 		if(result == 0) {
 			session.setAttribute("toastMsg", "접근 권한이 없습니다.");
@@ -375,7 +375,7 @@ public class ApprovController {
 		vo.setAdocNo(dno);
 		
 		
-		int result = service.selectApprovDocEmpNo(vo);
+		int result = service.selectReferDocEmpNo(vo);
 		
 		if(result == 0) {
 			session.setAttribute("toastMsg", "접근 권한이 없습니다.");
@@ -492,6 +492,16 @@ public class ApprovController {
 			session.setAttribute("toastMsg", "로그인이 필요합니다.");
 			return "redirect:/login";
 		}
+		
+		MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
+		
+		DocSignVo signVo = service.selectSignOne(loginMember);
+		
+		if(signVo != null) {
+			session.setAttribute("toastMsg", "이미 서명이 있습니다.");
+			return "redirect:/approv/main";
+		}
+		
 		return "approv/sign-create";
 	}
 	
@@ -525,6 +535,16 @@ public class ApprovController {
 	@GetMapping("sign/edit")
 	public String editSign(HttpSession session, HttpServletRequest req) {
 		MemberVo memberVo = (MemberVo) session.getAttribute("loginMember");
+		
+		MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
+		
+		DocSignVo signVo = service.selectSignOne(loginMember);
+		
+		if(signVo == null) {
+			session.setAttribute("toastMsg", "저장된 서명이 없습니다.");
+			return "redirect:/approv/sign/create";
+		}
+		
 		DocSignVo vo = service.selectSignOne(memberVo);
 		req.setAttribute("docSignVo", vo);
 		return "approv/sign-edit";

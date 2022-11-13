@@ -76,8 +76,8 @@ public class NoticeServiceImpl implements NoticeService{
 	//공지사항 정보수정
 	@Override
 	public int edit(NoticeVo ntvo, NoticeAttachmentsVo ntatVo, NoticeAttachmentsVo ntatVocheck, String no) {
-		System.out.println(ntatVo);
-		System.out.println(ntatVocheck);
+		//System.out.println(ntatVo);
+		//System.out.println(ntatVocheck);
 		//공지사항 수정
 		int result = dao.editNt(sst, ntvo);
 		

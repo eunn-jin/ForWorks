@@ -75,7 +75,7 @@
                <div class="page-title">
                    <div class="row">
                        <div class="col-12 col-md-6 order-md-1 order-last">
-                           <h3>문서관리</h3>
+                           <h3>결재문서 등록 관리</h3>
                            <p class="text-subtitle text-muted">작성한 결재문서를 관리할 수 있습니다. </p>
                        </div>
                        <div class="col-12 col-md-6 order-md-2 order-first">
@@ -92,7 +92,8 @@
 					<div id="wrap">
 				        <div id="check-cate">
                             <a href="${root}/docmanage/manage/1">일반문서</a>
-                            <a href="${root}/appmanage/manage/1">결재문서</a>
+				           <a href="${root}/appmanage/manage/1">결재문서</a>
+                           <a href="${root}/appmanage/noelectman/1">비결재문서</a>
 				        </div>
 				        <div id="check-btn">
 				            <button onclick="location.href='${root}/appmanage/write'">+ 결재문서등록</button>

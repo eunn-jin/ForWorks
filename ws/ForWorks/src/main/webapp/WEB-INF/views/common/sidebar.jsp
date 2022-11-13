@@ -11,7 +11,6 @@
 <link rel="stylesheet" href="${root}/resources/css/common/bootstrap.css">
 
 <link rel="stylesheet" href="${root}/resources/vendors/perfect-scrollbar/perfect-scrollbar.css">
-<!-- <link rel="stylesheet" href="resources/vendors/bootstrap-icons/bootstrap-icons.css"> -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 <link rel="stylesheet" href="${root}/resources/css/sidebar.css">
 
@@ -169,9 +168,52 @@
                             <a href="${root}/approv/sign/edit">서명수정</a>
                         </li>
                     </ul>
+                    
                 </li>
+                      <li class="sidebar-item has-sub">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-card-checklist"></i>
+                        <span>일정관리</span>
+                    </a>
+                    <ul class="submenu" id="calendar">
+                        <li class="submenu-item" id="calendar">
+                            <a href="${root}/plan/calendar">일정</a>
+                        </li>
+                        <li class="submenu-item" id="todo">
+                            <a href="${root}/todo/newTodo">해야할일</a>
+                        </li>
+                    </ul>
+                </li> 
                 
-                
+               <li class="sidebar-item has-sub">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-pencil-square"></i>
+                        <span>게시판관리</span>
+                    </a>
+                    <ul class="submenu" id="doc-part">
+                        <li class="submenu-item" id="doc-list">
+                            <a href="${root}/notice/list/1">공지사항</a>
+                        </li>
+                        <li class="submenu-item" id="doc-list">
+                            <a href="${root}/community/list/1">커뮤니티</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="sidebar-item has-sub">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-inbox"></i>
+                        <span>투표/설문관리</span>
+                    </a>
+                    <ul class="submenu" id="doc-part">
+                        <li class="submenu-item" id="doc-list">
+                            <a href="${root}/vote/list/1">투표</a>
+                        </li>
+                        <li class="submenu-item" id="doc-list">
+                            <a href="${root}/QA/list/1">설문조사</a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>

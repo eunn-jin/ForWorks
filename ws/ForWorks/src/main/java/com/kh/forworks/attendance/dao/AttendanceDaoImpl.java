@@ -118,7 +118,11 @@ public class AttendanceDaoImpl implements AttendanceDao {
 
 	@Override
 	public TeamWorkVo selectTeamTime(SqlSessionTemplate sst, String empNo) {
-		return sst.selectOne("attendanceMapper.selectTeamTime", empNo);
+		if(sst.selectOne("attendanceMapper.selectTeamTime", empNo) == null) {
+			return new TeamWorkVo(); 
+		} else {			
+			return sst.selectOne("attendanceMapper.selectTeamTime", empNo);
+		}
 	}
 
 }

@@ -78,7 +78,7 @@ public class QAServiceImpl implements QAService{
 		result[0]=dao.insertQa(sst, qavo);
 		
 		//파일 유무 확인후 첨부파일 테이블에 저장
-		System.out.println(qaatVo==null);
+		//System.out.println(qaatVo==null);
 		
 		if (qaatVo != null) {
 			result[1]=dao.insertQaAt(sst, qaatVo);
@@ -86,7 +86,7 @@ public class QAServiceImpl implements QAService{
 		
 		//항목 
 		for (int i = 0; i < qacgArr.length; i++) {
-			System.out.println(qacgArr[i]);
+			//System.out.println(qacgArr[i]);
 			//항목개수 만큼 insert작업
 			result[2]=dao.insertQacg(sst,qacgArr[i]);
 		}
@@ -112,7 +112,7 @@ public class QAServiceImpl implements QAService{
 			//dp이면 qavo.getDept()배열안에 있는 부서정보만 
 			for (int i = 0; i < qavo.getDept().length; i++) {
 				//부서 정보 리스트 가져오기
-				System.out.println(qavo.getDept()[i]);
+			//	System.out.println(qavo.getDept()[i]);
 				List<MemberVo> memberListDp = dao.mListDp(sst,qavo.getDept()[i]);
 				//가져온 정보 
 				for(int j=0; j < memberListDp.size(); j++) {
@@ -176,8 +176,8 @@ public class QAServiceImpl implements QAService{
 		
 		for (int i = 0; i < awgArr.length; i++) {
 			num[i]= i+1;
-			System.out.println(awgArr[i]);
-			System.out.println(num[i]);
+//			System.out.println(awgArr[i]);
+//			System.out.println(num[i]);
 			String n = String.valueOf(num[i]);
 			map.put("num",n);
 			map.put("answer",awgArr[i]);
@@ -185,8 +185,8 @@ public class QAServiceImpl implements QAService{
 			result[0] = dao.insertUserQA(sst, map);
 		}
 		result[1] = dao.updateSt(sst,map2);
-		System.out.println(result[0]);
-		System.out.println(result[1]);
+//		System.out.println(result[0]);
+//		System.out.println(result[1]);
 		
 		return result[0]*result[1];
 	}
@@ -219,22 +219,22 @@ public class QAServiceImpl implements QAService{
 		
 		//설문 첨부파일 확인후 update||insert 선택
 		//파일을 수정하는지 확인
-		System.out.println("공백여부::"+!(qavo.getQaFile().isEmpty()));
+		//System.out.println("공백여부::"+!(qavo.getQaFile().isEmpty()));
 		if (!(qavo.getQaFile().isEmpty())) {
 			if (qaatCheck !=null) {
-				System.out.println("파일있음");
+				//System.out.println("파일있음");
 				result[1] = dao.editQaat(sst,qaat);
-				System.out.println("파일수정완료");
+				//System.out.println("파일수정완료");
 			}else if(qaatCheck ==null) {
-				System.out.println("파일없음");
+				//System.out.println("파일없음");
 				result[1] = dao.editQaatInsert(sst, qaat);
-				System.out.println("파일등록완료");
+				//System.out.println("파일등록완료");
 			}
 		}else {result[1]=1;}
 		//추가된 항목이 있는지 확인후 insert
 		if(qacgArr != null) {
 			for (int i = 0; i < qacgArr.length; i++) {
-				System.out.println(qacgArr[i]);
+				//System.out.println(qacgArr[i]);
 				//항목개수 만큼 insert작업
 				HashMap<String, String> map = new HashMap<String, String>();
 				map.put("qacg", qacgArr[i]);
@@ -243,9 +243,9 @@ public class QAServiceImpl implements QAService{
 			}
 			
 		}else {result[2]=1;}
-		System.out.println(result[0]);
-		System.out.println(result[1]);
-		System.out.println(result[2]);
+//		System.out.println(result[0]);
+//		System.out.println(result[1]);
+//		System.out.println(result[2]);
 		return result[0]*result[1]*result[2];	}
 
 	@Override
@@ -277,8 +277,8 @@ public class QAServiceImpl implements QAService{
 		List<QAAnswerVo> awlist =  new ArrayList<QAAnswerVo>();
 		for (int i = 0; i < awgArr.length; i++) {
 			num[i]= i+1;
-			System.out.println(awgArr[i]);
-			System.out.println(num[i]);
+//			System.out.println(awgArr[i]);
+//			System.out.println(num[i]);
 			String n = String.valueOf(num[i]);
 			map.put("num",n);
 			map.put("answer",awgArr[i]);

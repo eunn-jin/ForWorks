@@ -15,8 +15,6 @@ public class ToDoController {
 	public String newTodo() {
 			return "todo/newTodo";
 		}
-		
-	}		
-	
-	
+
+}		
 

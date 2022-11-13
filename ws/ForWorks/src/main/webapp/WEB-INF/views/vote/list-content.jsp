@@ -51,7 +51,12 @@ tr>th:hover{
 									</tr>
 								</thead>
 
-								
+								<c:if test="${empty vtList}">
+									<thead style="pointer-events: none;">
+										<tr id="center">
+											<th scope="col" colspan="60">현재 생성된 투표가 없습니다.</th>
+									</thead>
+								</c:if>	
 								<c:forEach items="${vtList }" var="vt">
 									
 									<tbody id="tbd">
@@ -104,11 +109,12 @@ tr>th:hover{
 							</table>
 						</div>
 						<!-- 생성권한이 있는 사람만 -->
-						<div style="text-align: right;">
-							<a href="/forworks/vote/create"><button class="myBtn"
-									style="margin-right: 5%;">설문지생성</button></a>
-						</div>
-
+						<c:if test="${loginMember.opLevel eq 3}">
+							<div style="text-align: right;">
+								<a href="/forworks/vote/create"><button class="myBtn"
+										style="margin-right: 5%;">투표생성</button></a>
+							</div>
+						</c:if>
 					</div>
 				</div>
 

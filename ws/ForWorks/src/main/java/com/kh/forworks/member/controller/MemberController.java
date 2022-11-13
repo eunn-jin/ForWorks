@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.forworks.FileUploader;
@@ -68,6 +69,7 @@ public class MemberController {
 	@GetMapping("login")
 	public String login(HttpSession session) {
 		session.setAttribute("loginMember", null);
+		session.setAttribute("cheifAdmin", null);
 		return "member/login";
 	}
 	
@@ -91,7 +93,7 @@ public class MemberController {
 				String exJdate = loginMember.getEmpJdate();
 				String jdate = exJdate.substring(0, 10);
 				loginMember.setEmpJdate(jdate);
-	
+				
 				session.setAttribute("loginMember", loginMember);
 				return "redirect:/att/day";
 			} else {
@@ -154,7 +156,7 @@ public class MemberController {
 		try {
 			Date edate = new SimpleDateFormat("yy/MM/dd").parse(date);
 			long myday = (edate.getTime() - today.getTime()) / 1000 / (24*60*60);
-			model.addAttribute("fwDate", myday*-1);
+			session.setAttribute("fwDate", myday*-1);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

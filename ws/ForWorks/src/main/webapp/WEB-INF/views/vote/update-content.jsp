@@ -106,52 +106,54 @@
 <!-- 투표기간 체크 -->
 <script>
     //투표 시작일 가져오기
-    var start;
-    var today =new Date();
-    var end;
-    var stday;
-    var edday;
-    console.log(today);
     
+    var start;
+    var end; 
+    
+    var today =new Date();
+    var stday =new Date($('#vtCreate').val());  //시작일
+    var edday =new Date($('#vtEnd').val());  //마감일
+    console.log(today);
+
     $('#vtCreate').change(function () {
         start = $(this).val();
-
         stday = new Date(start);
-        console.log(stday);
-        console.log((stday<=today));
+
         
 
     })
 
     $('#vtEnd').change(function () {
         end = $(this).val();
-
         edday = new Date(end);
-        console.log(edday);
-        console.log((edday<=today));
-        console.log(stday);
-        console.log(stday>=edday);
+
     })
 
-
     function check() {
+        console.log(stday);
+        console.log(edday);
+        console.log("시작<오늘"+(stday<=today));
+        console.log("시작>마감"+(stday>=edday));
+        console.log("시작>마감"+(stday>=edday));
+        console.log("마감<오늘"+(edday<=today));
         
-        if (stday <= today) {
+        if ((stday<=today) || (stday>=edday)) {
             alert('시작일 오류');
             return false;
         }
 
-        else if ( (stday>=edday) && (edday<=today)) {
+        else if ( (stday>=edday) || (edday<=today)) {
             alert('마감일 오류');
             return false;
         }
-        else if($('input[id=target2]').is(":checked") && !($('input[name=dept]').is(":checked"))){
-            alert('대상자 선택 오류(부서를 선택부탁드립니다.)');
-            return false;
-        } 
+        
     }
+    
+    // else if($('input[id=target2]').is(":checked") && !($('input[name=dept]').is(":checked"))){
+    //     alert('대상자 선택 오류(부서를 선택부탁드립니다.)');
+    //     return false;
+    // } 
 </script>
-
 
 
 

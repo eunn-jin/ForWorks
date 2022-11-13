@@ -52,6 +52,7 @@ public class CommunityController {
 			}else{
 				//System.out.println("condition/key :: "+condition+"/" +keyword);
 				//데이터 뭉치기
+				
 				Map<String, String> map =  new HashMap<String, String>();
 				map.put("keyword", keyword);
 				map.put("condition", condition);
@@ -170,11 +171,11 @@ public class CommunityController {
 			//댓글정보가져오기
 			//System.out.println("댓글시작");
 			List<CommentsVo> cmtList = cmsv.selectList(no);
-			System.out.println(cmtList);
+			//System.out.println(cmtList);
 			
 			if (cmatVo!=null) {
 				String ext = cmatVo.getCmatChange().substring(cmatVo.getCmatChange().lastIndexOf("."));
-				System.out.println(ext);
+				//System.out.println(ext);
 				model.addAttribute("ext",ext);
 			}
 			
@@ -198,7 +199,7 @@ public class CommunityController {
 			
 			if (cmatVo!=null) {
 				String ext = cmatVo.getCmatChange().substring(cmatVo.getCmatChange().lastIndexOf("."));
-				System.out.println(ext);
+				//System.out.println(ext);
 				model.addAttribute("ext",ext);
 			}
 			

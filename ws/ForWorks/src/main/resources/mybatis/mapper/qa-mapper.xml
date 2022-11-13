@@ -273,7 +273,7 @@
 	</select>
 	
 	<!-- 설문 참여하였는지 확인 -->
-	<select id="checkVote" resultType="com.kh.forworks.qa.vo.QAParticipationVo">
+	<select id="checkQa" resultType="com.kh.forworks.qa.vo.QAParticipationVo">
 		SELECT *
 		FROM QA_PARTICIPATION
 		WHERE EMP_NO = #{no}
@@ -348,5 +348,47 @@
 		WHERE QA_NO = #{pno}
 		AND QA_STATUS = 'I'		
 	</update>
+		
+	<!-- 수정 -->
+	<!-- 수정 파일 체크 -->
+		<!--파일 존재여부 확인 -->
+	<select id="checkFile" resultType="com.kh.forworks.qa.vo.QAAttachmentsVo">
+		SELECT *
+		FROM QA_ATTACHMENTS
+		WHERE QA_NO = #{pno}
+	</select>
 	
+	<!-- 설문 정보수정 -->
+	<update id="editQa">
+		UPDATE QA SET
+		QA_SDATE	=	#{qaSdate},
+		QA_EDATE	=	#{qaEdate},
+		QA_UDATE	=	SYSDATE,
+		QA_TITLE	=	#{qaTitle},
+		QA_CONTENT	=	#{qaContent}
+		
+		WHERE QA_STATUS = 'I'
+		AND QA_NO = ${qaNo}
+	</update>
+	
+		<update id="editQaat">
+		UPDATE QA_ATTACHMENTS SET
+		QAAT_CHANGE	=	#{qaatChange},
+		QAAT_ORIGIN	=	#{qaatOrigin},
+		QAAT_PATH	=	#{qaatPath},
+		QAAT_UPLOAD = SYSDATE
+		WHERE QA_NO = #{qaNo}
+	</update>
+	
+	<insert id="editQaatInsert">
+		INSERT INTO QA_ATTACHMENTS
+		(QAAT_NO, QAAT_CHANGE, QAAT_ORIGIN, QAAT_PATH, QA_NO)
+		VALUES
+		(SEQ_QA_ATTACHMENTS_QAATNO.NEXTVAL, #{qaatChange}, #{qaatOrigin}, #{qaatPath}, #{pno})		
+	</insert>
+	
+	<insert id="editInsertQAcg">
+		INSERT INTO QA_CATEGORY(QACG_NO, QA_NO, QACG_NAME)
+		VALUES(SEQ_QA_CATEGORY_QACGNO.NEXTVAL, #{pno}, #{qacg})	
+	</insert>
 </mapper>
