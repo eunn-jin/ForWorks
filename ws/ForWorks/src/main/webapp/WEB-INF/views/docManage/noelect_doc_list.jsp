@@ -159,7 +159,7 @@
 <script>
 	
 	$().ready(function() {
-		$('#doc-list').addClass("active");
+		$('#doc-write').addClass("active");
 		$('#doc-part').css("display", "block");
 	});
 	

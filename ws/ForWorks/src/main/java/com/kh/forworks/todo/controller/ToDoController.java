@@ -74,8 +74,6 @@ public class ToDoController {
 			return "todo/newTodo";
 		}
 		
-		public static 
-		
 	}
 
 }

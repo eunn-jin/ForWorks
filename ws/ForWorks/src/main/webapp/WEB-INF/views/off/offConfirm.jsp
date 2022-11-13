@@ -49,7 +49,7 @@
 								<button class="btn btn-primary btn-sm" onclick="monthBtn();">검색</button>
 							</div>
 							<div>
-								<button class="btn btn-outline-primary btn-sm" onclick="okBtn();">휴가 승락</button>
+								<button class="btn btn-outline-primary btn-sm" onclick="okBtn();">휴가 승인</button>
 								<button class="btn btn-outline-primary btn-sm" onclick="noBtn();">휴가 거절</button>
 							</div>
 						</div>
