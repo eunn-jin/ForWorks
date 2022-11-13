@@ -76,12 +76,13 @@ tr>th:hover{
                             </tr>
                         </thead>
 
-
+                        
                         <c:forEach items="${ntList }" var="nt">
                             <tbody id="tbd">
                                 <tr id="center">
-
-                                    <th scope="row">${nt.ntno }</th>
+                                    
+                                    <input type="hidden" value="${nt.ntno}">
+                                    <th scope="row">${nt.rownum }</th>
                                     <td colspan="5">${nt.ntTitle }</td>
 
                                     <td>${nt.empNo }</td>
@@ -136,7 +137,7 @@ tr>th:hover{
             //행 클릭 되었을때, 동작할 내용
 
             //글번호 가져오기
-            const num = $(this).children().eq(0).text();
+            const num = $(this).children().eq(0).val();
             
             //해당 번호로 요청 보내기
             location.href='${root}/notice/detail/'+num;
