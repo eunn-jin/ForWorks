@@ -59,9 +59,10 @@
         </table>
     </div>
     <!-- 생성권한이 있는 사람만 -->
+    <c:if test="${loginMember.opLevel eq 3}">
     <div style="text-align: right;">
         <a href="/forworks/QA/create"><button class="myBtn"
                 style="margin-right: 5%;">설문지생성</button></a>
     </div>
-
+    </c:if>
 </div>

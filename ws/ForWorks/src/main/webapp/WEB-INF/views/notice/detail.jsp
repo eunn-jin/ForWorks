@@ -8,31 +8,31 @@
 </head>
 
 <body>
-<%@ include file="/WEB-INF/views/common/toastify.jsp" %>
+
 <div id="app">
     <%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
 
 	<div id="main">
         <%@ include file="/WEB-INF/views/common/header.jsp" %>
         
-            <div class="page-heading">
-                <div class="page-title">
-                    <div class="row">
-                        <div class="col-12 col-md-6 order-md-1 order-last">
-                            <h3>전자게시판</h3>
-                            <p class="text-subtitle text-muted">공지사항 상세정보</p>
-                        </div>
-                        <div class="col-12 col-md-6 order-md-2 order-first">
-                            <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Layout Default</li>
-                                </ol>
-                            </nav>
-                        </div>
+        <div class="page-heading">
+            <div class="page-title">
+                <div class="row">
+                    <div class="col-12 col-md-6 order-md-1 order-last">
+                        <h3>전자게시판</h3>
+                        <p class="text-subtitle text-muted">공지사항-상세정보</p>
+                    </div>
+                    <div class="col-12 col-md-6 order-md-2 order-first">
+                        <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                            <ol class="breadcrumb">
+                                <!-- <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Layout Default</li> -->
+                            </ol>
+                        </nav>
                     </div>
                 </div>
-                <section class="section">
+            </div>
+            <section class="section">
                     <div class="card">
                         <%@include file="/WEB-INF/views/notice/detail-content.jsp" %>
                     </div>

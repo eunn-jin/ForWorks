@@ -11,11 +11,7 @@
         border-left: 1px dashed rgba(121, 121, 121, 0.555);
         
     }
-    .ps{
-        position: absolute;
-        left: 15%;
-        top: 30px;
-    }
+
 </style>
 <link rel="stylesheet" href="${root}/resources/css/sjy.css"/>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
@@ -25,37 +21,51 @@
 <div id="container">
     <div class="dcontent" style="float: left; ">
         <div class="mglt" style="margin-top: 30px;">
-            <a href="${root}/QA/list/1">
-                <button type="button" class=" myBtn ps">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door-fill"viewBox="0 0 16 16">
-                        <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"></path>
-                    </svg>
-                </button>
-            </a>
-            <h3><label for="">번호. </label>&nbsp;<label for="">${qavo.qaTitle}</label></h3>
+
+            <h3>
+                <a href="${root}/QA/list/1">
+                    <button type="button" class=" myBtn ps">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door-fill"viewBox="0 0 16 16">
+                            <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"></path>
+                        </svg>
+                    </button>
+                </a>
+                <label for="">${qavo.qaTitle}</label>
+            </h3>
             <label class="text-subtitle text-muted">생성자: ${qavo.empNo}</label>
             <p class="text-subtitle text-muted" style="font-weight: 900;">${qavo.qaSdate}~${qavo.qaEdate}</p>
             
             
             <div class="md-3"> 
                 
-                <div class="form-control" style="width: 50%; border: none; font-size: px;">내용 :: ${qavo.qaContent}</div>
+                <div class="form-control" style="width: 80%; border: none; font-size: px;">내용 :: ${qavo.qaContent}</div>
             </div>
             <br>
 
             <div class="md-3"> 
             <c:forEach items="${qacgList}" var="cg">
                 <input type="hidden" name="num" value="${cg.rownum}">
-                <div class="form-control" style="width: 50%;">${cg.rownum}번 항목 :: <label for="${cg.rownum}" class="form-label">${cg.qacgName}</label></div><br>
+                <div class="form-control" style="width: 80%;">${cg.rownum}번 항목 :: <label for="${cg.rownum}" class="form-label">${cg.qacgName}</label></div><br>
             </c:forEach>
             </div>
 
+            
             <div>
-                <div class="form-control" style="width: 25%;">첨부파일</div>
-            </div>
+                <label for="" style="font-weight: 800; color: rgba(90, 90, 90, 0.644);">파일여부::</label>
+                <c:if test="${qaatList eq null}">
+                    
+                        <div class="form-control" style="width: 50%; display: inline;">첨부파일이 없습니다.</div>
+                    
+                </c:if>
+                <c:if test="${qaatList ne null}">
+                    <div class="form-control" style="width: 50%; display: inline;"><a href="${root}/resources/upload/QA/${qaatList.qaatChange}"download>${qaatList.qaatChange}</a></div> <br><br>
+                    <button class="btn btn-primary" onclick="ig()" >이미지미리보기</button>
+                    <br>
+                    <div id="fimg">
 
-            <div>
-                <img src="" alt="" width="300px" height="200px">
+                    </div>
+                    
+                </c:if>
             </div>
         </div>
 
@@ -65,12 +75,12 @@
         <div class="kk tab-content" style="height: 100%;padding-bottom: 5%; color: none;  background-color: rgba(201, 201, 201, 0.26);" >
             <div class="mglt" style="margin-top: 30px;">
                 <h3><label for="">답변내용</label></h3>
-                <label class="text-subtitle text-muted">항목 </label>
+                
             </div>
                 
 
 			<ul class="nav nav-tabs">
-                <li class="nav-item"><a class="nav-link active"data-toggle="tab" href="#a">●</a></li>
+                <li class="nav-item"><a class="nav-link active"data-toggle="tab" href="#a">▷</a></li>
                 <c:forEach items="${qacgList}" var="cg">
                     <li class="nav-item"><a class="nav-link "data-toggle="tab" href="#cg${cg.rownum}">${cg.rownum}번항목</a></li>
                 </c:forEach>  
@@ -78,9 +88,9 @@
 
             <!-- 답변내용 -->
             
-                <div class="tab-pane fade show active" id="a">
-                    <div id="list">
-                        <img src="${root}/resources/img/choice.jpg"  width="100%" height="100%" style="opacity: 0.3;"/>
+                <div class="tab-pane fade show active" id="a" >
+                    <div id="list" style="border: none;">
+                        <img src="${root}/resources/img/Checklist.png"  width="100%" height="100%" style="opacity: 0.7; border: none;"/>
                     </div>
                 </div>
                 <c:forEach items="${qacgList}" var="cg" varStatus="status">
@@ -197,3 +207,21 @@
 
 </script>
 
+<script>
+    // String ext = ntatVo.getNtatChange().substring(ntatVo.getNtatChange().lastIndexOf("."));
+    var x = '${qaatList.qaatChange}';
+    var ext = x.substring(x.lastIndexOf("."));
+    console.log("E"+ext); 
+    
+    function ig() {
+
+        if(ext === '.jpg' || ext === '.png'){
+            $('#fimg').append("<img src='${root}/resources/upload/QA/${qaatList.qaatChange}' id='p' alt='' width='200px' height='150px'>");
+            ext="";
+        }
+        $('#p').toggle();
+
+    }
+
+    // <img src="${root}/resources/upload/QA/${qaatList.qaatChange}" alt="" width="300px" height="150px">
+</script>

@@ -140,7 +140,7 @@ public class VoteController {
 		
 		//파일 유무 확인
 		//파일 유무 확인
-		if (vtvo.getVtFile() != null) {
+		if (vtvo.getVtFile() != null && !vtvo.getVtFile().isEmpty()) {
 			//파일 있음
 			//파일 업로드 후 저장된 파일명 얻기 
 			String savePath = req.getServletContext().getRealPath("/resources/upload/vote/");
@@ -179,6 +179,10 @@ public class VoteController {
 		//투표 대상자 가져오기(전체대상자:: 투표참여o, x)
 		List<VoteParticipationVo> vtptList = vtsv.selectVtpt(pno);
 		
+		//첨부파일 가져오기
+		VoteAttachmentsVo vtatList = vtsv.seleVtat(pno);
+				
+		
 //		System.out.println(vtvo);
 //		System.out.println(vtcgList);
 //		System.out.println(vtptList);
@@ -187,6 +191,7 @@ public class VoteController {
 		model.addAttribute("vtvo", vtvo);
 		model.addAttribute("vtcgList", vtcgList);
 		model.addAttribute("vtptList", vtptList);
+		model.addAttribute("vtatList",vtatList);
 		
 		return "vote/detailCreator";
 	}
@@ -253,17 +258,17 @@ public class VoteController {
 		
 		//첨부파일 확인 (투표첨부파일 테이블에 등록된 파일이 있으면 update, 등록된 파일이 없으면 insert)
 		VoteAttachmentsVo vtatCheck = vtsv.checkFile(pno);
-		System.out.println("파일 확인(정보수정post)::"+vtatCheck);
+		//System.out.println("파일 확인(정보수정post)::"+vtatCheck);
 		
 		//해당 게시글의 첨부파일이있으면 삭제
-		System.out.println("파일공백여부::"+!(vtvo.getVtFile().isEmpty()));
+		//System.out.println("파일공백여부::"+!(vtvo.getVtFile().isEmpty()));
 		if (!(vtvo.getVtFile().isEmpty())) {
 			String fileName = vtat.getVtatOrigin();
 			File f =  new File(savePath +  fileName);
-			System.out.println(f);
+			//System.out.println(f);
 			if(f.exists()) { //파일 존재하는지 확인
 				f.delete();
-				System.out.println("첨부파일(공지) 삭제완료");
+				//System.out.println("첨부파일(공지) 삭제완료");
 			}
 		}
 		
@@ -279,7 +284,7 @@ public class VoteController {
 			vtat.setVtatOrigin(originName);
 			vtat.setVtatPath(savePath);
 			vtat.setVtNo(pno);
-			System.out.println("투표파일::"+vtat);
+			//System.out.println("투표파일::"+vtat);
 		}else {vtat=null;}
 		
 		String[] vtcgArr=null ;
@@ -338,8 +343,10 @@ public class VoteController {
 		//투표를 참여 했는지 확인
 		//참여한 인원은 선택한 내용이 체크되어있고 재투표시 알람확인창 나오게하기
 		VoteParticipationVo chvo = vtsv.checkDo(map);
-		System.out.println(chvo);
+		//System.out.println(chvo);
 		
+		//첨부파일 가져오기
+		VoteAttachmentsVo vtatList = vtsv.seleVtat(pno);
 		
 //		System.out.println(vtvo);
 //		System.out.println(vtcgList);
@@ -348,6 +355,7 @@ public class VoteController {
 		model.addAttribute("vtvo", vtvo);
 		model.addAttribute("vtcgList", vtcgList);
 		model.addAttribute("vtptList", vtptList);
+		model.addAttribute("vtatList", vtatList);
 		model.addAttribute("check", check);
 		model.addAttribute("chvo",chvo);
 		
@@ -359,8 +367,8 @@ public class VoteController {
 	public String detailUser(@PathVariable String pno, HttpSession session ,VoteParticipationVo vo, VoteCategoryVo vtcg){
 		
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
-		System.out.println(pno);
-		System.out.println(loginMember.getEmpNo());
+		//System.out.println(pno);
+		//System.out.println(loginMember.getEmpNo());
 		
 		
 		HashMap<String, String> map = new HashMap<String, String>();
@@ -371,7 +379,7 @@ public class VoteController {
 		VoteParticipationVo checkpt = vtsv.checkVote(map);
 		
 		
-		System.out.println(vo);
+		//System.out.println(vo);
 		//set 회원 번호, 게시글 번호, 
 		vo.setVtNo(pno);
 		vo.setEmpNo(loginMember.getEmpNo());

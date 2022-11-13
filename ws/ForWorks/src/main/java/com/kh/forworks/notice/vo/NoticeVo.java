@@ -6,6 +6,8 @@ import lombok.Data;
 
 @Data
 public class NoticeVo {
+	
+	private String rownum;
 	private String ntno;
 	private String empNo;
 	private String ntTitle;

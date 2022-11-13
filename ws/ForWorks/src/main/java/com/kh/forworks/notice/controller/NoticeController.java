@@ -106,7 +106,7 @@ public class NoticeController {
 		
 		if (result == 1 || result ==2) {
 			// 1 :: 파일 없음  || 2 :: 파일있음
-			session.setAttribute("alertMsg", "공지사항 작성 성공!");
+			session.setAttribute("toastMsg", "공지사항 작성 성공!");
 			return "redirect:/notice/list/1";
 		}else {
 			model.addAttribute("errorMsg","공지사항 작성 실패..");
@@ -124,18 +124,18 @@ public class NoticeController {
 		NoticeVo ntvo = nts.selectOne(no);
 		
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
-		if (!(loginMember.getDeptName().equals(ntvo.getNtAccess()) || ntvo.getNtAccess().equals("전체"))) {
-			session.setAttribute("alertMsg", "열람 권한이 없습니다.");
+		if ( !((ntvo.getNtAccess().equals("전체"))) && !(loginMember.getDeptName().equals(ntvo.getNtAccess())) ) {
+			session.setAttribute("toastMsg", "열람 권한이 없습니다.");
 			return"redirect:/notice/list/1";
 		}
 		
 		//첨부파일 확인
 		NoticeAttachmentsVo ntatVo = nts.checkFile(no);
-		System.out.println("파일 확인::"+ntatVo);
+		//System.out.println("파일 확인::"+ntatVo);
 		
 		if (ntatVo!=null) {
 			String ext = ntatVo.getNtatChange().substring(ntatVo.getNtatChange().lastIndexOf("."));
-			System.out.println(ext);
+			//System.out.println(ext);
 			model.addAttribute("ext",ext);
 		}
 		
@@ -165,7 +165,7 @@ public class NoticeController {
 		
 		if (ntatVo!=null) {
 			String ext = ntatVo.getNtatChange().substring(ntatVo.getNtatChange().lastIndexOf("."));
-			System.out.println(ext);
+			//System.out.println(ext);
 			model.addAttribute("ext",ext);
 		}
 		
@@ -197,7 +197,7 @@ public class NoticeController {
 		if (!(ntvo.getNtFileName().isEmpty())) {
 			String fileName = ntatVo.getNtatOrigin();
 			File f =  new File(savePath +  fileName);
-			System.out.println("f::" + f);
+			//System.out.println("f::" + f);
 			if(f.exists()) { //파일 존재하는지 확인
 				f.delete();
 				//System.out.println("첨부파일(공지) 삭제완료");
@@ -236,7 +236,7 @@ public class NoticeController {
 		int result = nts.delete(no);
 		
 		if (result ==1) {
-			session.setAttribute("alertMsg", "공지사항 삭제 성공!");
+			session.setAttribute("toastMsg", "공지사항 삭제 성공!");
 			return "redirect:/notice/list/1";
 		}else {return"redirect:/error";}
 	}

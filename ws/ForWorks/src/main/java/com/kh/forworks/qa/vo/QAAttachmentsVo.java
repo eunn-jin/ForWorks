@@ -11,4 +11,5 @@ public class QAAttachmentsVo {
 	private String qaatUpload;
 	private String qaNo;
 	
+	private String pno;
 }
