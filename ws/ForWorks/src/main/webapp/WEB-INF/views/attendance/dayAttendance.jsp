@@ -78,14 +78,14 @@
 										<span>출근&ensp;</span>
 										<span> ${workTime.inTime} </span>
 									</div>
-									<button class="btn btn-primary btn-sm" id="goWorkBtn">출근하기</button>
+									<button class="btn btn-primary btn-sm" id="goWorkBtn">출근등록</button>
 								</div>
 								<div class="align-center">
 									<div class="mt-3 mb-2">
 										<span>퇴근&ensp;</span>
 										<span> ${workTime.outTime} </span>
 									</div>
-									<button class="btn btn-primary btn-sm" id="outWorkBtn">퇴근하기</button>
+									<button class="btn btn-primary btn-sm" id="outWorkBtn">퇴근등록</button>
 								</div>
 							</div>
 						</div>
