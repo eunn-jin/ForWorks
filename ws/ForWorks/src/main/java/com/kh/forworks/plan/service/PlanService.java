@@ -13,6 +13,6 @@ public interface PlanService {
 	
 	public int addSchedule(PlanDto dto) throws Exception;
 	
-	public void deleteSchedule(PlanDto dto) throws Exception;
+	public int deleteSchedule(PlanDto dto) throws Exception;
 
 }
