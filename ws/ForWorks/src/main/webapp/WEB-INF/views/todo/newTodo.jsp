@@ -5,18 +5,14 @@
 <html>
 <head>
 	<title>TODO리스트</title>
-	<meta name="viewport" content="width=device-width, initial-sacle=1,0">
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200&display=swap" rel="stylesheet">
 	<link href="stylesheet" href="https://unicons.iconscout.com/release/v4.0./css/line.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <style>
 main *{
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
- 	font-family: 'Noto Serif KR', serif; 
 }
 
 body{
@@ -93,10 +89,10 @@ body{
 	border: none;
 	color: #fff;
 	cursor: pointer;
-	font-szie: 13px;
+	font-size: 13px;
 	border-radius: 4px;
 	padding: 7px 13px;
-	backgorund: #6F5CFA;
+	background: #6F5CFA;
 }
 
 .task-box{
@@ -150,7 +146,7 @@ body{
 	box-shadow: 0 0 6px rgba(0,0,0,0.15);
 }
 
-.settings:hover .task-menu{
+.settings .task-menu.show{
 	transform: scale(1);
 }
 
@@ -177,7 +173,7 @@ body{
 </style>
 
 <body>
-<form action="/todo/newTodo">
+<form action="/ForWorks/todo/newTodo">
 <div id="app">
 	<%@ include file="/WEB-INF/views/common/sidebar.jsp" %>
 
@@ -189,7 +185,6 @@ body{
                              <div id="todo"></div>
                            		<div class="wrapper">
                            			<div class="task-input">
-										<img src="/resources/img/bars-icon.svg" alt="icon">
 										<input type="text" placeholder="새로운 일정을 추가하세요">                            			
                            			</div>
                            			<div class="controls">
@@ -203,44 +198,90 @@ body{
                            			<ul class="task-box"></ul>
                            		</div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %> 
+
 <script>
+
 const taskInput = document.querySelector(".task-input input"),
+filters = document.querySelectorAll(".filters span"),
+ClearAll = document.querySelector(".clear-btn"),
 taskBox = document.querySelector(".task-box");
+
+let editId;
+let isEditedTask = false; 
 
 let todos = JSON.parse(localStorage.getItem("todo-list"));
 
-function showTodo() {
+filters.forEach(btn => {
+	btn.addEventListener("click", () => {
+		console.log("filters " , filters)
+		document.querySelector("span.active").classList.remove("");
+		btn.classList.add("active");
+		showTodo(btn.id);
+	});
+});
+
+function showTodo(filter) {
 	let li="";
 	if(todos){
-		todos.forEach((todo, id)) => {
-			li += 	'<li class="task">
-					<label for="${id}">
-						<input type="updateStatus(this)" type="checkbox" id="${id}">
-						<p>${todo.name}</p>
-					</label>
-					<div class="settings">
-						<i class="uil uil-ellipsis-h"></i>
-						<ul class="task-menu">
-							<li><i class="uil uil-pen"></i>수정하기</li>
-							<li><i class="uil uil-trash"></i>삭제하기</li>
-						</ul>
-					</div>
-					</li>';
+		todos.forEach((todo, id) => {
+			let isCompleted = todo.status == "completed" ? "checked" : "";
+			if(filter == todo.status || filter == "all") {
+				li += 	'<li class="task">'
+				+	'<label for="${id}">'
+					+	'<input type="updateStatus(this)" type="checkbox" id="${id}" ${isCompleted}>'
+						+'<p class="${isCompleted}">${todo.name}</p>'
+					+'</label>'
+					+'<div class="settings">'
+						+'<i onclick="showMenu(this)" class="uil uil-ellipsis-h"></i>'
+						+'<ul class="task-menu">'
+							+'<li onclick="editTask(${id}, ${todo.name})"><i class="uil uil-pen"></i>수정하기</li>'
+							+'<li onclick="deleteTask(${id})"><i class="uil uil-trash"></i>삭제하기</li>'
+						+'</ul>'
+				+'</div>'
+					+'</li>';
+			}
+		
 		});
 	}
 	
-	taskBox.innerHTML = li;
+	taskBox.innerHTML = li || '<span>해야할 업무가 없습니다.</span>';
 }
-showTodo();
+showTodo("all");
+
+function showMenu(selectedTask) {
+	let taskMenu = selectedTask.parentElement.lastElementChild;
+	taskMenu.classList.add("show");
+	document.addEventListener("click", e=> {
+		if(e.target.tagName != "I" || e.target != selectedTask) {
+			taskMenu.classList.add("show");
+		}
+	});
+}
+function editTask(taskId, taskName) {
+	editId = taskId;
+	taskInput.value = taskName;
+}
+
+function deleteTask(deleteId) {
+	todos.splice(deleteId,1);
+	localStorage.setItem("todo-list", JSON.stringify(todos));
+	showTodo("all");
+}
+
+ClearAll.addEventListener("click", () => {
+	todos.splice(0, todos.length);
+	localStorage.setItem("todo-list", JSON.stringify(todos));
+	showTodo("all");
+})
 
 function updateStatus(selectedTask){
 	let taskName = selectedTask.parentElement.lastElementChild;
 	if(selectedTask.checked){
 		taskName.classList.add("checked");
-		todos[selectedTask.id]status = "COMPLETED";
+		todos[selectedTask.id].status = "COMPLETED";
 	} else {
 		taskName.classList.remove("checked");
-		todos[selectedTask.id]status = "PENDING";
+		todos[selectedTask.id].status = "PENDING";
 	}
 	localStorage.setItem("todo-list", JSON.stringify(todos));
 }
@@ -248,21 +289,20 @@ function updateStatus(selectedTask){
 taskInput.addEventListener("keyup", e=> {
 	let userTask = taskInput.value.trim();
 	if(e.key =="Enter" && userTask) {
-		if(!todos) {
-			todos=[];
+		if(!isEditedTask) {
+			if(!todos) {
+				todos=[];
+			}	
+				let taskInfo = {name: userTask, status: "pending"};
+				todos.push(taskInfo);	
+		} else{
+			todos[editId].name = userTask;
 		}
 		taskInput.value = ""; 
-		let taskInfo = {name: userTask, status: "pending"};
-		todos.push(taskInfo);
 		localStorage.setItem("todo-list", JSON.stringify(todos));
-		showTodo();
-		
+		showTodo("all");		
 	}	
 });
-
-
-
-
 </script>
 </body>
 </html>

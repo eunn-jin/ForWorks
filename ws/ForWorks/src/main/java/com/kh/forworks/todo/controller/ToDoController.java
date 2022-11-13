@@ -13,6 +13,7 @@ public class ToDoController {
 	//투두리스트 보여주기
 	@RequestMapping("todo/newTodo")
 	public String newTodo() {
+		System.out.println("asd");
 			return "todo/newTodo";
 		}
 

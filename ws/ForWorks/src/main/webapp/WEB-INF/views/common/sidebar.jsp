@@ -179,9 +179,9 @@
                         <li class="submenu-item" id="calendar">
                             <a href="${root}/plan/calendar">일정</a>
                         </li>
-                        <li class="submenu-item" id="todo">
+                        <%--<li class="submenu-item" id="todo">
                             <a href="${root}/todo/newTodo">해야할일</a>
-                        </li>
+                        </li> --%>
                     </ul>
                 </li> 
                 
