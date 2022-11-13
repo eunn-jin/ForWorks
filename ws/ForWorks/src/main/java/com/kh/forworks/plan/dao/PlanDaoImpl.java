@@ -18,14 +18,21 @@ public class PlanDaoImpl implements PlanDao {
 		@Inject
 		private SqlSession sqlSession;
 
-		private static final String namespace = "com.management.schedule.ScheduleDAO";
+		//private static final String namespace = "com.kh.forworks.plan.dto";
 		
-		public List<PlanDto> showSchedule(String id) throws Exception {
-			return sqlSession.selectList(namespace + ".showSchedule", id);
+		public List<PlanDto> showSchedule() throws Exception {
+			//namespace + ".showSchedule"
+			return sqlSession.selectList("planPopMapper.showSchedule");
 		}
 		
-		public void addSchedule(PlanDto dto) throws Exception  {
-			sqlSession.insert(namespace + ".addSchedule", dto);
+		public int addSchedule(PlanDto dto) throws Exception  {
+			return sqlSession.insert("planPopMapper" + ".addSchedule", dto);
+		}
+		
+		
+		@Override
+		public int deleteSchedule(PlanDto dto)  {
+			return sqlSession.delete("planPopMapper" + ".deleteSchedule", dto);
 		}
 	}
 			

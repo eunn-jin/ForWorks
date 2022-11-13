@@ -11,6 +11,8 @@ public interface PlanService {
 	
 	public List<PlanDto> showSchedule() throws Exception;
 	
-	public void addSchedule(PlanDto dto) throws Exception;
+	public int addSchedule(PlanDto dto) throws Exception;
+	
+	public void deleteSchedule(PlanDto dto) throws Exception;
 
 }

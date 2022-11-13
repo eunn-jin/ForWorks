@@ -3,6 +3,10 @@ package com.kh.forworks.plan.service;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -25,24 +29,23 @@ public class PlanServiceimpl implements PlanService {
 	@Override
 	public List<PlanDto> showSchedule() throws Exception {
 		
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String id = auth.getName();
 		
-		return dao.showSchedule(id);
+		
+		return dao.showSchedule();
 	}
 	
 	@Override
-	public void addSchedule(PlanDto dto) throws Exception{
+	public int addSchedule(PlanDto dto) throws Exception{
 
-
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String id = auth.getName();
 		
-		dto.setName(id);
-		
-		dao.addSchedule(dto);
+		return dao.addSchedule(dto);
 	}
 	
+	@Override
+	public int deleteSchedule(PlanDto dto) throws Exception{
+		
+		return dao.deleteSchedule(dto);
+	}
 	
 	}
 

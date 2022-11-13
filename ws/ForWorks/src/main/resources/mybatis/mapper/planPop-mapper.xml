@@ -5,17 +5,17 @@
 <mapper namespace="planPopMapper">
   <select id="showSchedule" resultType = "PlanDto">
   		SELECT
-    			name,content,startDate,endDate
+    			pname,pcontent,pstart,pend
     		FROM
     			plan
     		ORDER BY
-    			num
+    			eno
     		DESC
   </select>
   <insert id="addSchedule" parameterType = "PlanDto">
 	    	
 	INSERT INTO PLAN (
-	         PNO
+	         ENO
 	        ,PNAME
 	        ,PSTART
 	        ,PEND
@@ -30,4 +30,10 @@
 	        ,#{pcontent}
 )
   </insert>
+  
+  <delete id="deleteSchedule" parameterType = "PlanDto">
+		DELETE FROM PLAN
+		WHERE ENO = SEQ_PLAN_NO.NEXTVAL
+	</delete>
+  
 </mapper>

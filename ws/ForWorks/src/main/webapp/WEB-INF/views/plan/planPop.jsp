@@ -5,6 +5,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+	
 	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
 	<title>일정 등록</title>
 </head>
@@ -156,7 +158,6 @@
 
 
 <body>
-	<form action=/WEB-INF/views/plan/testing.jsp method="post">
 	<div class="pj_popup">
 		<div class="popup_name">일정등록</div>
 		<div class="pj_c_block">
@@ -175,15 +176,14 @@
 					<input type="date" name="pend" data-placeholder="종료일을 선택해주세요." required>
 				</div>
 			</div>
-			<div class="pj_submit" onclick="click_ok();">
-				<a href="">등록</a>
+			<div class="pj_submit">
+				<a href="javascript:click_ok();">등록</a>
 			<div class="pj_close">
 				<a href="">취소</a>
 			</div>
 		</div>
 	</div>
 </div>
-</form>	
 </body>
 <script>
 
@@ -192,30 +192,7 @@ $().ready(function() {
 	$('#ex1').addClass("active");
 });
 
-$(window).load(function() {
-	<%-- // 팝업 창 크기를 HTML 크기에 맞추어 자동으로 크기를 조정하는 함수. --%>
-	var strWidth;
-	var strHeight;
-	//innerWidth / innerHeight / outerWidth / outerHeight 지원 브라우저
-	if ( window.innerWidth && window.innerHeight && window.outerWidth && window.outerHeight ) {
-		strWidth = $('#.pj_popup').outerWidth() + (window.outerWidth - window.innerWidth);
-		strHeight = $('#.pj_popup').outerHeight() + (window.outerHeight - window.innerHeight);
-	}
-	else {
-		var strDocumentWidth = $(document).outerWidth();
-		var strDocumentHeight = $(document).outerHeight();
-		window.resizeTo ( strDocumentWidth, strDocumentHeight );
-		var strMenuWidth = strDocumentWidth - $(window).width();
-		var strMenuHeight = strDocumentHeight - $(window).height();
-		strWidth = $('#.pj_popup').outerWidth() + strMenuWidth;
-		strHeight = $('#.pj_popup').outerHeight() + strMenuHeight;
-	}
-	//resize
-	window.resizeTo( strWidth, strHeight );
-});
-
-	
-	$.fn.serializeObject = function(){
+	/* $.fn.serializeObject = function(){
 	    var o = {};
 	    var a = this.serializeArray();
 	    $.each(a, function() {
@@ -232,18 +209,32 @@ $(window).load(function() {
 	        }
 	    });
 	    return o;
-	};
+	}; */
+	
+	
+	
 	function click_ok(){
 
-		var scheduleData = JSON.stringify($('form#scheduleData').serializeObject());
+		//var scheduleData = JSON.stringify($('form#scheduleData').serializeObject());
+		
+		const pname = document.querySelector('input[name=pname]').value;
+		const pcontent = document.querySelector('input[name=pcontent]').value;
+		const pstart = document.querySelector('input[name=pstart]').value;
+		const pend = document.querySelector('input[name=pend]').value;
 		
 		$.ajax({
-			data : scheduleData,
+			data : {
+				"pname" : pname ,
+				"pcontent" : pcontent ,
+				"pstart" : pstart ,
+				"pend" : pend
+			},
 			url : "addSchedule",
 			type : "POST",
-			dataType : "json",
-			contentType : "application/json; charset=UTF-8",
+			//dataType : "json",
+			//contentType : "application/json; charset=UTF-8",
 			success : function(data) {
+				alert("일정" + data + "개가 추가되었습니다");
 				opener.parent.location.reload();
 				window.close();
 			}
