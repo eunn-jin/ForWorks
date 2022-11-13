@@ -194,6 +194,23 @@
     </script>
     
     <script>
+    	var deleteCookie = function(name) {
+    		document.cookie = name + '=; expires=Thu, 01 Jan 1999 00:00:10 GMT;';
+    	}
+    
+	    $(document).ready(function(){
+			$("#saveCheck").on("click", function() {
+				if($(this).prop('checked')) {
+					
+				} else {
+					deleteCookie('mid');
+					$("#saveCheck").is("checked") == false;
+				}
+			})
+		});
+    </script>
+    
+    <script>
     	function tempPwd() {
     		const empPwdId = document.querySelector("#findPwdId").value;
     		const empPwdName = document.querySelector("#findPwdName").value;

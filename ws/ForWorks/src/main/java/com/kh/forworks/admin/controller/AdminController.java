@@ -35,7 +35,7 @@ public class AdminController {
 	@GetMapping("")
 	public String login(HttpSession session) {
 		session.setAttribute("loginMember", null);
-		session.setAttribute("cheifAdmin", null);
+		session.setAttribute("chiefAdmin", null);
 		
 		return "admin/admin-login";
 	}

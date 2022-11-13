@@ -253,16 +253,16 @@
 	                                      	</c:choose>
 	                                      	<c:choose>
 	                                      		<c:when test="${l.statNo eq 2}">
-			                                        <span class="avatar-status bg-success"></span>
+			                                        <span id="status${l.empNo}" class="avatar-status bg-success"></span>
 	                                      		</c:when>
 	                                      		<c:when test="${l.statNo eq 5}">
-			                                        <span class="avatar-status bg-danger"></span>
+			                                        <span id="status${l.empNo}" class="avatar-status bg-danger"></span>
 	                                      		</c:when>
 	                                      		<c:when test="${l.statNo eq 3 or l.statNo eq 4}">
-			                                        <span class="avatar-status bg-warning"></span>
+			                                        <span id="status${l.empNo}" class="avatar-status bg-warning"></span>
 	                                      		</c:when>
 	                                      		<c:otherwise>
-			                                        <span class="avatar-status bg-secondary"></span>
+			                                        <span id="status${l.empNo}" class="avatar-status bg-secondary"></span>
 	                                      		</c:otherwise>
 	                                      	</c:choose>
 	                                      </div>
@@ -308,6 +308,8 @@
 	
 	function statEdit() {
 	   const statNo = document.querySelector("select[name=statNo]").value;
+	   const statSpan = document.querySelector("#status${loginMember.empNo}");
+	   
 	   $.ajax({
 	     url: "${root}/address/status",
 	     type: "POST",
@@ -315,6 +317,16 @@
 	     success: function (data) {
 	       if (data == 1) {
 	         toastContent.innerText = "상태를 변경하였습니다.";
+	         var status = "bg-secondary";
+	         if(statNo == 2) {
+	        	 status = "bg-success";
+	         } else if(statNo == 3 || statNo == 4) {
+	        	 status = "bg-warning";
+	         } else if(statNo == 5) {
+	        	 status = "bg-danger";
+	         }
+	         statSpan.className = 'avatar-status';
+	         statSpan.classList.add(status);a
 	       } else {
 	         toastContent.innerText = "변경 실패";
 	       }

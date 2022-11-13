@@ -328,13 +328,13 @@
 	function EditModalPopup(clicked_tr) {
 		var row_td = clicked_tr.getElementsByTagName("td");
 		
-		document.getElementById("add_no").value = row_td[0].innerHTML;   
-		document.getElementById("add_name").value = row_td[1].innerHTML;   
-		document.getElementById("add_company").value = row_td[2].innerHTML;
-		document.getElementById("add_job").value = row_td[3].innerHTML;   
-		document.getElementById("add_phone").value = row_td[4].innerHTML;   
-		document.getElementById("add_email").value = row_td[5].innerHTML;
-		document.getElementById("add_note").value = row_td[6].innerHTML;
+		document.getElementById("add_no").value = row_td[1].innerHTML;   
+		document.getElementById("add_name").value = row_td[2].innerHTML;   
+		document.getElementById("add_company").value = row_td[3].innerHTML;
+		document.getElementById("add_job").value = row_td[4].innerHTML;   
+		document.getElementById("add_phone").value = row_td[5].innerHTML;   
+		document.getElementById("add_email").value = row_td[6].innerHTML;
+		document.getElementById("add_note").value = row_td[7].innerHTML;
 		
 		$('#modalExUpdate').modal('show');
 	}
