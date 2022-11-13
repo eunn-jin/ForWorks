@@ -448,7 +448,7 @@
 	<update id="updateDocApprovEdit">
 		UPDATE DOCAPPROVE
 		SET
-		APPROV_STATUS = 'N'
+		APPROVE_STATUS = 'N'
 		WHERE
 		ADOC_NO = #{adocNo} 
 	</update>

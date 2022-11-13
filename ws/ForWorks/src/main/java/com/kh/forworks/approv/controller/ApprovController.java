@@ -248,13 +248,15 @@ public class ApprovController {
 		req.setAttribute("docfile", fileVo);
 		return "approv/reject-detail";
 	}
-	
+	//TODO sdf
 	@GetMapping("edit/{dno}")
 	public String edit(@PathVariable String dno, HttpSession session, HttpServletRequest req) {
 		if(session.getAttribute("loginMember")==null) {
 			session.setAttribute("toastMsg", "로그인이 필요합니다.");
 			return "redirect:/login";
 		}
+		
+		List<DocFormVo> formList = service.selectFormListAll();
 		
 		MemberVo memberVo = (MemberVo) session.getAttribute("loginMember");
 		
@@ -273,7 +275,7 @@ public class ApprovController {
 		
 		vo = service.selectApprovDocOneByNo(vo);
 		
-		
+		req.setAttribute("formList", formList);
 		req.setAttribute("approvDoc", vo);
 		
 		return "approv/approv-edit";
@@ -298,7 +300,7 @@ public class ApprovController {
 	}
 	
 	@PostMapping("edit/{dno}")
-	public String edit(@PathVariable String dno, DocApprovVo vo, HttpSession session) {
+	public String edit(@PathVariable String dno, ApprovDocumentVo vo, HttpSession session) {
 		
 		vo.setAdocNo(dno);
 		MemberVo memberVo = (MemberVo) session.getAttribute("loginMember");
@@ -483,7 +485,7 @@ public class ApprovController {
 		
 		int result = service.deleteFormOne(vo);
 		session.setAttribute("toastMsg", "삭제되었습니다.");	
-		return "redirect:/approv/main";
+		return "redirect:/approv/form/main/1";
 	}
 	
 	@GetMapping("sign/create")
