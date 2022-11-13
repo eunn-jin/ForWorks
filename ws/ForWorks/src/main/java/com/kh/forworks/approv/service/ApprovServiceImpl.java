@@ -183,7 +183,7 @@ public class ApprovServiceImpl implements ApprovService {
 
 	//문서수정
 	@Override
-	public int updateApprovDoc(DocApprovVo vo) {
+	public int updateApprovDoc(ApprovDocumentVo vo) {
 		int result1 = dao.updateApprovDoc(sst,vo);
 		int result2 = dao.updateDocApprovEdit(sst, vo);
 		int result = result1*result2;
