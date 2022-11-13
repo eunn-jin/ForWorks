@@ -180,7 +180,7 @@ public class QADaoImpl implements QADao{
 	//투표 참여햇는지 확인
 	@Override
 	public QAParticipationVo checkQa(SqlSessionTemplate sst, HashMap<String, String> map) {
-		return sst.selectOne("qaMapper.checkVote", map);
+		return sst.selectOne("qaMapper.checkQa", map);
 	}
 	
 	//설문지 항목 추가
