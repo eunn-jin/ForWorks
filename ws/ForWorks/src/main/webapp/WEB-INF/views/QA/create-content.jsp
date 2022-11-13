@@ -96,9 +96,9 @@
     console.log("iii"+i);
 </script>
 
-<!-- 투표기간 체크 -->
+<!-- 설문기간 체크 -->
 <script>
-    //투표 시작일 가져오기
+    //설문 시작일 가져오기
     var start;
     var today =new Date();
     var end;
