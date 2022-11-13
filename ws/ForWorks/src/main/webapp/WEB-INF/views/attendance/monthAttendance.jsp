@@ -56,7 +56,7 @@
 					<div class="card first-card">
 						<div class="card-body">
                 <div id='calendar-container'>
-                    <div id='calendar'></div>
+                    <div id='AttendanceCal'></div>
                 </div>
 						</div>
 					</div>
@@ -101,7 +101,7 @@
 <script>
 
    $(function(){
-     var calendarEl = $('#calendar')[0];
+     var calendarEl = $('#AttendanceCal')[0];
      var calendar = new FullCalendar.Calendar(calendarEl, {
        height: '700px',
        expandRows: true,
