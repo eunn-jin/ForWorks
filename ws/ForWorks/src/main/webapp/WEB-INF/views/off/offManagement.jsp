@@ -96,7 +96,7 @@
 							<div class="modal-body">
 								<div class="form-group">
 									<label>사원 이름: </label>
-									<span>조은진</span>
+									<span>${loginMember.empName}</span>
 								</div>
 								<div class="form-group">
 									<label>기간: </label>
